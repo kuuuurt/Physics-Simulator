@@ -139,6 +139,24 @@ public class DataProviderInstrumentedTest {
         db.close();
     }
 
+    @Test
+    public void testUpdateConstant(){
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor c = database.rawQuery("SELECT " + DataContract.ConstantEntry._ID +
+                " from " + ConstantEntry.TABLE_NAME + " WHERE " + DataContract.ChapterEntry.COLUMN_NAME +
+                " = \"Acceleration of Gravity\"", null);
+        c.moveToFirst();
+
+        ContentValues updatedValues = new ContentValues();
+        updatedValues.put(ConstantEntry.COLUMN_CURRENT, 9.81);
+
+        int rowsUpdated = mContext.getContentResolver().update(ConstantEntry.CONTENT_URI,
+                updatedValues, ConstantEntry._ID + " = ?",
+                new String[] { Long.toString(c.getLong(c.getColumnIndex(ConstantEntry._ID)))}
+        );
+        assertTrue("No rows were updated.", rowsUpdated >= 1);
+    }
+
     static void validateCursor(String error, Cursor valueCursor, ContentValues expectedValues) {
         assertTrue("Empty cursor returned. " + error, valueCursor.moveToFirst());
         validateCurrentRecord(error, valueCursor, expectedValues);
