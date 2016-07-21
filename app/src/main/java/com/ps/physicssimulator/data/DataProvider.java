@@ -173,8 +173,8 @@ public class DataProvider extends ContentProvider{
                 return DataContract.ConstantEntry.CONTENT_ITEM_TYPE;
             case CHAPTER:
                 return DataContract.ChapterEntry.CONTENT_TYPE;
-            case CHAPTER_WITH_NAME:
-                return DataContract.ChapterEntry.CONTENT_ITEM_TYPE;
+//            case CHAPTER_WITH_NAME:
+//                return DataContract.ChapterEntry.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
