@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -192,8 +193,22 @@ public class DataProvider extends ContentProvider{
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+    public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowsUpdated;
+
+        switch(uriMatcher().match(uri)){
+            case CONSTANT:
+                rowsUpdated = db.update(DataContract.ConstantEntry.TABLE_NAME, contentValues,
+                        selection, selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown/Unsupported uri: " + uri);
+        }
+        if(rowsUpdated != 0){
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsUpdated;
     }
 }
 

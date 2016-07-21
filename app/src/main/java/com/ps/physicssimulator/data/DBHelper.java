@@ -113,8 +113,21 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void initConstants(SQLiteDatabase db){
+    public void initConstants(SQLiteDatabase database){
+        if(database.isOpen()) {
+            String[][] constants = {
+                    {"Acceleration of Gravity", "9.8"}
+            };
 
+            for(String[] s: constants){
+                ContentValues values = new ContentValues();
+                values.put(DataContract.ConstantEntry.COLUMN_NAME, s[0]);
+                values.put(DataContract.ConstantEntry.COLUMN_DEFAULT, Double.parseDouble(s[1]));
+                values.put(DataContract.ConstantEntry.COLUMN_CURRENT, Double.parseDouble(s[1]));
+
+                database.insert(DataContract.ConstantEntry.TABLE_NAME, null, values);
+            }
+        }
     }
 }
 
