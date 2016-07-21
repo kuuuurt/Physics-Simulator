@@ -171,8 +171,8 @@ public class DataProvider extends ContentProvider{
                 return DataContract.ConstantEntry.CONTENT_TYPE;
             case CONSTANT_WITH_NAME:
                 return DataContract.ConstantEntry.CONTENT_ITEM_TYPE;
-            case CHAPTER:
-                return DataContract.ChapterEntry.CONTENT_TYPE;
+//            case CHAPTER:
+//                return DataContract.ChapterEntry.CONTENT_TYPE;
 //            case CHAPTER_WITH_NAME:
 //                return DataContract.ChapterEntry.CONTENT_ITEM_TYPE;
             default:
