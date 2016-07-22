@@ -16,12 +16,14 @@ public class DataContract   {
     public static final String PATH_CONSTANT = "constant";
 
     public static final class ChapterEntry implements BaseColumns {
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_CHAPTER).build();
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_CHAPTER).build();
 
         public static final String TABLE_NAME = "chapter";
 
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_DESCRIPTION = "desc";
+        public static final String COLUMN_LOGO = "logo";
 
 
         public static final String CONTENT_TYPE =
@@ -43,7 +45,8 @@ public class DataContract   {
     }
 
     public static final class LessonEntry implements BaseColumns {
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_LESSON).build();
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_LESSON).build();
 
         public static final String TABLE_NAME = "lesson";
 
@@ -51,6 +54,7 @@ public class DataContract   {
         public static final String COLUMN_CHAPTER_KEY = "chapter_id";
         public static final String COLUMN_DESCRIPTION = "desc";
         public static final String COLUMN_CONTENT = "content";
+        public static final String COLUMN_LOGO = "logo";
 
 
         public static final String CONTENT_TYPE =
@@ -66,13 +70,22 @@ public class DataContract   {
             return CONTENT_URI.buildUpon().appendPath(title).build();
         }
 
+        public static Uri buildLessonChapter (String chapter){
+            return CONTENT_URI.buildUpon().appendPath("chapter").appendPath(chapter).build();
+        }
+
         public static String getTitleFromUri(Uri uri){
             return uri.getPathSegments().get(1);
+        }
+
+        public static String getChapterFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
         }
     }
 
     public static final class ConstantEntry implements BaseColumns {
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_CONSTANT).build();
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_CONSTANT).build();
 
         public static final String TABLE_NAME = "constant";
 

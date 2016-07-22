@@ -11,10 +11,12 @@ import android.support.test.runner.AndroidJUnit4;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.content.ComponentName;
+import android.util.Log;
 
 import java.util.Set;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,6 +62,10 @@ public class DataProviderInstrumentedTest {
         assertEquals("Uri should return CONTENT_ITEM_TYPE",
                 LessonEntry.CONTENT_ITEM_TYPE, type);
 
+        type = mContext.getContentResolver().getType(LessonEntry.buildLessonChapter(testVar));
+        assertEquals("Uri should return CONTENT_TYPE",
+                LessonEntry.CONTENT_TYPE, type);
+
         type = mContext.getContentResolver().getType(ChapterEntry.CONTENT_URI);
         assertEquals("Uri should return CONTENT_TYPE",
                 ChapterEntry.CONTENT_TYPE, type);
@@ -79,7 +85,6 @@ public class DataProviderInstrumentedTest {
 
     @Test
     public void testBasicChapterQuery(){
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues testValues = new ContentValues();
         testValues.put(ChapterEntry.COLUMN_NAME, "One-dimensional Motion");
@@ -94,33 +99,27 @@ public class DataProviderInstrumentedTest {
         );
 
         validateCursor("testBasicChapterQuery", chapterCursor, testValues);
-        db.close();
     }
 
-//    @Test
-//    public void testBasicConstantQuery(){
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//
-//        ContentValues testValues = new ContentValues();
-//        testValues.put(ChapterEntry.COLUMN_NAME, "One-dimensional Motion");
-//        testValues.put(ChapterEntry.COLUMN_DESCRIPTION, "");
-//
-//        Cursor chapterCursor = mContext.getContentResolver().query(
-//                ChapterEntry.CONTENT_URI,
-//                null,
-//                null,
-//                null,
-//                null
-//        );
-//
-//        validateCursor("testBasicChapterQuery", chapterCursor, testValues);
-//        db.close();
-//    }
+    @Test
+    public void testBasicConstantQuery(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(ChapterEntry.COLUMN_NAME, "One-dimensional Motion");
+        testValues.put(ChapterEntry.COLUMN_DESCRIPTION, "");
+
+        Cursor chapterCursor = mContext.getContentResolver().query(
+                ChapterEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testBasicChapterQuery", chapterCursor, testValues);
+    }
 
     @Test
     public void testBasicLessonQuery(){
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
         ContentValues testValues = new ContentValues();
         testValues.put(LessonEntry.COLUMN_TITLE, "Scalar and Vector Values");
         testValues.put(LessonEntry.COLUMN_CHAPTER_KEY, "1");
@@ -136,15 +135,31 @@ public class DataProviderInstrumentedTest {
         );
 
         validateCursor("testBasicChapterQuery", lessonCursor, testValues);
-        db.close();
+        lessonCursor.close();
+    }
+
+    @Test
+    public void testLessonWithChapterQuery(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(LessonEntry.COLUMN_CHAPTER_KEY, "1");
+
+        Cursor lessonCursor = mContext.getContentResolver().query(
+                LessonEntry.buildLessonChapter("Two-dimensional Motion"),
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testLessonWithChapterQuery", lessonCursor, testValues);
+        lessonCursor.close();
     }
 
     @Test
     public void testUpdateConstant(){
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
-        Cursor c = database.rawQuery("SELECT " + DataContract.ConstantEntry._ID +
-                " from " + ConstantEntry.TABLE_NAME + " WHERE " + DataContract.ChapterEntry.COLUMN_NAME +
-                " = \"Acceleration of Gravity\"", null);
+        Cursor c = db.rawQuery("SELECT " + DataContract.ConstantEntry._ID +
+                " from " + ConstantEntry.TABLE_NAME + " WHERE " +
+                DataContract.ChapterEntry.COLUMN_NAME + " = \"Acceleration of Gravity\"", null);
         c.moveToFirst();
 
         ContentValues updatedValues = new ContentValues();
@@ -155,6 +170,12 @@ public class DataProviderInstrumentedTest {
                 new String[] { Long.toString(c.getLong(c.getColumnIndex(ConstantEntry._ID)))}
         );
         assertTrue("No rows were updated.", rowsUpdated >= 1);
+        c.close();
+    }
+
+    @After
+    public void close(){
+        db.close();
     }
 
     static void validateCursor(String error, Cursor valueCursor, ContentValues expectedValues) {
@@ -163,7 +184,8 @@ public class DataProviderInstrumentedTest {
         valueCursor.close();
     }
 
-    static void validateCurrentRecord(String error, Cursor valueCursor, ContentValues expectedValues) {
+    static void validateCurrentRecord(String error, Cursor valueCursor,
+                                      ContentValues expectedValues) {
         Set<Map.Entry<String, Object>> valueSet = expectedValues.valueSet();
         for (Map.Entry<String, Object> entry : valueSet) {
             String columnName = entry.getKey();

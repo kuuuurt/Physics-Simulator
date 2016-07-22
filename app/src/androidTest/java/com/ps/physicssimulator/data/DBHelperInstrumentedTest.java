@@ -36,5 +36,12 @@ public class DBHelperInstrumentedTest{
     public void testCreateDB(){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         assertTrue("Database not created!", db.isOpen());
+        db.close();
     }
+
+    @Test
+    public void testDeleteDB(){
+        mContext.deleteDatabase(DBHelper.DATABASE_NAME);
+    }
+
 }
