@@ -9,12 +9,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ps.physicssimulator.LessonsActivity"
-    tools:showIn="@layout/app_bar_lessons">
+    tools:context="com.ps.physicssimulator.LessonActivity"
+    tools:showIn="@layout/activity_lesson">
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/list_view_lessons"
-        />
+        android:id="@+id/list_view_lesson" />
 </RelativeLayout>

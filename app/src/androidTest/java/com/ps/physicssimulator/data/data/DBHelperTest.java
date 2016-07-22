@@ -1,4 +1,4 @@
-package com.ps.physicssimulator.data;
+package com.ps.physicssimulator.data.data;
 
 
 import android.database.sqlite.SQLiteDatabase;
@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  * Created by qwerasdf on 7/21/16.
  */
 @RunWith(AndroidJUnit4.class)
-public class DBHelperInstrumentedTest{
+public class DBHelperTest {
 
     private DBHelper dbHelper;
     private Context mContext;
@@ -36,5 +36,12 @@ public class DBHelperInstrumentedTest{
     public void testCreateDB(){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         assertTrue("Database not created!", db.isOpen());
+        db.close();
     }
+
+    @Test
+    public void testDeleteDB(){
+        mContext.deleteDatabase(DBHelper.DATABASE_NAME);
+    }
+
 }

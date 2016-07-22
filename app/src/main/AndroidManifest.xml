@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ps.physicssimulator">
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LessonsActivity"
+            android:name=".ChapterActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,40 +18,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name=".data.DataProvider"
+            android:authorities="com.ps.physicssimulator" />
+
         <activity
-            android:name=".ValuesActivity"
-            android:label="@string/title_activity_values"
-            android:parentActivityName=".LessonsActivity"
+            android:name=".LessonActivity"
+            android:label="@string/title_activity_lesson"
+            android:parentActivityName=".ChapterActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ps.physicssimulator.LessonsActivity" />
+                android:value="com.ps.physicssimulator.ChapterActivity" />
         </activity>
         <activity
-            android:name=".VelocityActivity"
-            android:label="@string/title_activity_velocity"
-            android:parentActivityName=".LessonsActivity"
+            android:name=".ContentActivity"
+            android:label="@string/title_activity_content"
+            android:parentActivityName=".LessonActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ps.physicssimulator.LessonsActivity" />
+                android:value="com.ps.physicssimulator.LessonActivity" />
         </activity>
         <activity
             android:name=".CalculatorActivity"
             android:label="@string/title_activity_calculator"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".SubLessonsActivity"
-            android:label="@string/title_activity_sub_lessons"
-            android:parentActivityName=".LessonsActivity"
+            android:parentActivityName=".ChapterActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ps.physicssimulator.LessonsActivity" />
+                android:value="com.ps.physicssimulator.ChapterActivity" />
         </activity>
-        <provider
-            android:authorities="com.ps.physicssimulator"
-            android:name=".data.DataProvider" />
     </application>
 
 </manifest>

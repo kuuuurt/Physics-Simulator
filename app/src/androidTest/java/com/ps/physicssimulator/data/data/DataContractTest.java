@@ -1,7 +1,10 @@
-package com.ps.physicssimulator.data;
+package com.ps.physicssimulator.data.data;
 
 import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
+
+import com.ps.physicssimulator.data.DataContract;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -11,7 +14,7 @@ import org.junit.runner.RunWith;
  * Created by qwerasdf on 7/21/16.
  */
 @RunWith(AndroidJUnit4.class)
-public class DataContractInstrumentedTest {
+public class DataContractTest {
 
     private static final long TEST_RECORD_ID = 1234;
     private static final String TEST_LESSON_TITLE = "/Title";
@@ -20,9 +23,9 @@ public class DataContractInstrumentedTest {
 
     @Test
     public void testBuildChapter(){
-        Uri chpaterUri = DataContract.ChapterEntry.buildChapterUri(TEST_RECORD_ID);
-        assertNotNull("Uri not created!", chpaterUri);
-        assertEquals("Uri does not match expected result", chpaterUri.toString(),
+        Uri chapterUri = DataContract.ChapterEntry.buildChapterUri(TEST_RECORD_ID);
+        assertNotNull("Uri not created!", chapterUri);
+        assertEquals("Uri does not match expected result", chapterUri.toString(),
                 DataContract.ChapterEntry.CONTENT_URI + "/"  + TEST_RECORD_ID);
     }
 
@@ -63,11 +66,29 @@ public class DataContractInstrumentedTest {
     }
 
     @Test
+    public void testBuildLessonChapter(){
+        Uri chapterUri = DataContract.LessonEntry.buildLessonChapter(TEST_CHAPTER_NAME);
+        assertNotNull("Uri not created!", chapterUri);
+        assertEquals("Chapter not properly appended to Uri!", TEST_CHAPTER_NAME,
+                chapterUri.getLastPathSegment());
+        assertEquals("Uri does not match expected result", chapterUri.toString(),
+                DataContract.LessonEntry.CONTENT_URI + "/chapter/%2FChapter");
+    }
+
+    @Test
     public void testGetTitleFromUri(){
         Uri titleUri = DataContract.LessonEntry.buildLessonTitle(TEST_LESSON_TITLE);
         String title = DataContract.LessonEntry.getTitleFromUri(titleUri);
         assertNotNull("Uri not created!", titleUri);
         assertEquals("Title not extracted from Uri!", TEST_LESSON_TITLE, title);
+    }
+
+    @Test
+    public void testGetChapterFromUri(){
+        Uri chapterUri = DataContract.LessonEntry.buildLessonChapter(TEST_CHAPTER_NAME);
+        String chapter = DataContract.LessonEntry.getChapterFromUri(chapterUri);
+        assertNotNull("Uri not created!", chapterUri);
+        assertEquals("Chapter not extracted from Uri!", TEST_CHAPTER_NAME, chapter);
     }
 
 
