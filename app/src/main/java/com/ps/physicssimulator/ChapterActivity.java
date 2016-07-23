@@ -3,6 +3,7 @@ package com.ps.physicssimulator;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
@@ -25,6 +26,9 @@ import com.ps.physicssimulator.data.DataContract;
 public class ChapterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         LoaderManager.LoaderCallbacks<Cursor> {
+
+    @VisibleForTesting
+    public static final String ROW_TEXT = "ROW_TEXT";
 
     private static final int CHAPTER_LOADER = 0;
     private static ChapterAdapter mChapterAdap;
