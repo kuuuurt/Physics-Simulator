@@ -1,9 +1,9 @@
-package com.ps.physicssimulator.data.data;
+package com.ps.physicssimulator.tests.data;
 
-import com.ps.physicssimulator.data.DBHelper;
-import com.ps.physicssimulator.data.DataContract;
-import com.ps.physicssimulator.data.DataContract.*;
-import com.ps.physicssimulator.data.DataProvider;
+import com.ps.physicssimulator.tests.DBHelper;
+import com.ps.physicssimulator.tests.DataContract;
+import com.ps.physicssimulator.tests.DataContract.*;
+import com.ps.physicssimulator.tests.DataProvider;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,7 +14,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.content.ComponentName;
-import android.util.Log;
 
 import java.util.Set;
 import java.util.Map;

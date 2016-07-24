@@ -9,7 +9,7 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ps.physicssimulator.data.DataContract;
+import com.ps.physicssimulator.tests.DataContract;
 
 public class LessonAdapter extends CursorAdapter {
 
@@ -20,9 +20,9 @@ public class LessonAdapter extends CursorAdapter {
 
 
         public ViewHolder(View view) {
-            logoView = (ImageView) view.findViewById(R.id.imgLogo);
-            titleView = (TextView) view.findViewById(R.id.txtTitle);
-            descView = (TextView) view.findViewById(R.id.txtDesc);
+            logoView = (ImageView) view.findViewById(R.id.image_logo);
+            titleView = (TextView) view.findViewById(R.id.text_title);
+            descView = (TextView) view.findViewById(R.id.text_description);
         }
     }
 

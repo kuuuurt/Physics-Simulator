@@ -1,16 +1,14 @@
-package com.ps.physicssimulator.data.data;
+package com.ps.physicssimulator.tests.data;
 
 
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.content.Context;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.AndroidTestCase;
 
-import com.ps.physicssimulator.data.DBHelper;
+import com.ps.physicssimulator.tests.DBHelper;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 

@@ -1,10 +1,9 @@
-package com.ps.physicssimulator.data.data;
+package com.ps.physicssimulator.tests.data;
 
 import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
 
-import com.ps.physicssimulator.data.DataContract;
+import com.ps.physicssimulator.tests.DataContract;
 
 import static org.junit.Assert.*;
 import org.junit.Test;

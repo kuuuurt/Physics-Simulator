@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.VisibleForTesting;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -21,7 +19,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.ps.physicssimulator.data.DataContract;
+import com.ps.physicssimulator.tests.DataContract;
 
 public class ChapterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,

@@ -48,7 +48,7 @@ public class ContentActivity extends AppCompatActivity {
 
         String fragName = intent.getStringExtra("FragmentName");
         Fragment frag = Fragment.instantiate(this, fragName);
-        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContent, frag)
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_content, frag)
                 .addToBackStack(null).commit();
 
 

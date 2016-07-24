@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.ps.physicssimulator.data.DataContract;
+import com.ps.physicssimulator.tests.DataContract;
 
 public class LessonActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>{

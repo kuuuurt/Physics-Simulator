@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearanceLarge"
-            android:id="@+id/txtValuesContent1"
+            android:id="@+id/text_values_content_1"
             android:textStyle="bold"
             android:text="Lesson Subheader"/>
 

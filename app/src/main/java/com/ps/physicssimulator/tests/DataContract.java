@@ -1,4 +1,4 @@
-package com.ps.physicssimulator.data;
+package com.ps.physicssimulator.tests;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;

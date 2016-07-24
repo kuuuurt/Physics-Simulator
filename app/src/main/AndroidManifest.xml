@@ -20,7 +20,7 @@
         </activity>
 
         <provider
-            android:name=".data.DataProvider"
+            android:name=".tests.DataProvider"
             android:authorities="com.ps.physicssimulator" />
 
         <activity

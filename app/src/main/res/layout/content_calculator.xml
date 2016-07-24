@@ -5,11 +5,25 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <Spinner
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/spnCalc"/>
+        android:id="@+id/container_spinner"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_chapters"/>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_lessons"/>
+
+    </LinearLayout>
+
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
