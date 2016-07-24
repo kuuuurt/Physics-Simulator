@@ -23,14 +23,12 @@ public class CalculatorActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        String test;
         final SimpleCursorAdapter chaptersAdap = setSpinnerAdapter(
             this.getContentResolver().query(DataContract.ChapterEntry.CONTENT_URI,
                     null, null, null, null),
             new String[]{DataContract.ChapterEntry.COLUMN_NAME}
         );
-
-
-
 
         Spinner spnChapters = (Spinner) findViewById(R.id.spinner_chapters);
         spnChapters.setAdapter(chaptersAdap);
@@ -62,7 +60,6 @@ public class CalculatorActivity extends AppCompatActivity {
 
                         //Load Calculator Fragment
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {}
                 });
@@ -75,7 +72,6 @@ public class CalculatorActivity extends AppCompatActivity {
 
     public SimpleCursorAdapter setSpinnerAdapter(Cursor c, String[] projection){
         int[] views = new int[]{android.R.id.text1};
-
         return new SimpleCursorAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item, c, projection, views, 1);
     }
