@@ -19,6 +19,7 @@ public class DataProvider extends ContentProvider{
     static final int CHAPTER_WITH_NAME = 301;
     static final int FORMULA = 400;
     static final int FORMULA_WITH_LESSON = 401;
+    static final int FORMULA_WITH_NAME = 402;
 
     static UriMatcher uriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -33,6 +34,7 @@ public class DataProvider extends ContentProvider{
         matcher.addURI(authority, DataContract.PATH_CHAPTER + "/*", CHAPTER_WITH_NAME);
         matcher.addURI(authority, DataContract.PATH_FORMULA, FORMULA);
         matcher.addURI(authority, DataContract.PATH_FORMULA + "/*", FORMULA_WITH_LESSON);
+        matcher.addURI(authority, DataContract.PATH_FORMULA + "/*/*", FORMULA_WITH_NAME);
 
         return matcher;
     }
@@ -77,6 +79,9 @@ public class DataProvider extends ContentProvider{
 
     private static final String formulaWithLessonQuery = DataContract.FormulaEntry.TABLE_NAME + "."
             + DataContract.FormulaEntry.COLUMN_LESSON_KEY + " = ? ";
+
+    private static final String formulaWithNameQuery = DataContract.FormulaEntry.TABLE_NAME + "."
+            + DataContract.FormulaEntry.COLUMN_NAME + " = ? ";
 
 
 
@@ -157,6 +162,17 @@ public class DataProvider extends ContentProvider{
         );
     }
 
+    public Cursor getFormulasByName(Uri uri, String[] projection, String sortOrder){
+        return formulaQueryBuilder.query(dbHelper.getReadableDatabase(),
+                projection,
+                formulaWithNameQuery,
+                new String[]{DataContract.FormulaEntry.getNameFromUri(uri)},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
     @Override
     public boolean onCreate() {
         dbHelper = new DBHelper(getContext());
@@ -228,6 +244,9 @@ public class DataProvider extends ContentProvider{
             case FORMULA_WITH_LESSON:
                 data = getFormulasByLesson(uri, projection, sortOrder);
                 break;
+            case FORMULA_WITH_NAME:
+                data = getFormulasByLesson(uri, projection, sortOrder);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -258,6 +277,8 @@ public class DataProvider extends ContentProvider{
             case FORMULA:
                 return DataContract.FormulaEntry.CONTENT_TYPE;
             case FORMULA_WITH_LESSON:
+                return DataContract.FormulaEntry.CONTENT_TYPE;
+            case FORMULA_WITH_NAME:
                 return DataContract.FormulaEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

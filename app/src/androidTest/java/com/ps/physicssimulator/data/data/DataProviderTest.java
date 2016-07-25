@@ -158,7 +158,7 @@ public class DataProviderTest {
     @Test
     public void testBasicFormulaQuery(){
         ContentValues testValues = new ContentValues();
-        testValues.put(FormulaEntry.COLUMN_NAME, "Velocity");
+        testValues.put(FormulaEntry.COLUMN_VAR, "Velocity");
         testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "2");
         testValues.put(FormulaEntry.COLUMN_FORMULA, "");
 
@@ -195,11 +195,32 @@ public class DataProviderTest {
     public void testFormulaWithLessonQuery(){
         ContentValues testValues = new ContentValues();
         testValues.put(FormulaEntry.COLUMN_NAME, "Velocity");
+        testValues.put(FormulaEntry.COLUMN_VAR, "Velocity");
         testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "2");
         testValues.put(FormulaEntry.COLUMN_FORMULA, "");
 
         Cursor formulaCursor = mContext.getContentResolver().query(
                 FormulaEntry.buildFormulaLesson("Velocity"),
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testFormulaWithLessonQuery", formulaCursor, testValues);
+        formulaCursor.close();
+    }
+
+    @Test
+    public void testFormulaWithNameQuery(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(FormulaEntry.COLUMN_NAME, "Velocity");
+        testValues.put(FormulaEntry.COLUMN_VAR, "Velocity");
+        testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "2");
+        testValues.put(FormulaEntry.COLUMN_FORMULA, "");
+
+        Cursor formulaCursor = mContext.getContentResolver().query(
+                FormulaEntry.buildFormulaName("Displacement"),
                 null,
                 null,
                 null,

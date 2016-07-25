@@ -129,4 +129,14 @@ public class DataContractTest {
         assertEquals("Uri does not match expected result", lessonUri.toString(),
                 DataContract.FormulaEntry.CONTENT_URI + "/%2FFormula");
     }
+
+    @Test
+    public void testBuildFormulaName(){
+        Uri nameUri = DataContract.FormulaEntry.buildFormulaName(TEST_FORMULA_NAME);
+        assertNotNull("Uri not created!", nameUri);
+        assertEquals("Name not properly appended to Uri!", TEST_FORMULA_NAME,
+                nameUri.getLastPathSegment());
+        assertEquals("Uri does not match expected result", nameUri.toString(),
+                DataContract.FormulaEntry.CONTENT_URI + "/name/%2FFormula");
+    }
 }

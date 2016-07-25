@@ -45,7 +45,8 @@ public class DBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_FORMULA_TABLE = "CREATE TABLE " +
                 DataContract.FormulaEntry.TABLE_NAME + " (" +
                 DataContract.FormulaEntry._ID + " INTEGET PRIMARY KEY, " +
-                DataContract.FormulaEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
+                DataContract.FormulaEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                DataContract.FormulaEntry.COLUMN_VAR + " TEXT NOT NULL, " +
                 DataContract.FormulaEntry.COLUMN_LESSON_KEY + " INTEGER NOT NULL, " +
                 DataContract.FormulaEntry.COLUMN_FORMULA + " TEXT NOT NULL" + ")";
 
@@ -155,7 +156,17 @@ public class DBHelper extends SQLiteOpenHelper {
     public void initFormulas(SQLiteDatabase database){
         if(database.isOpen()) {
             String[][] formulas = {
-                    {"Velocity", "Velocity", ""}
+                    {"Displacement", "Average Acceleration", "Scalar and Vector Values", ""},
+                    {"Initial Velocity", "Displacement", ""},
+                    {"Final Velocity", "Displacement", ""},
+
+                    {"Average Acceleration", "Average Acceleration", ""},
+                    {"Initial Velocity", "Average Acceleration", ""},
+                    {"Final Velocity", "Average Acceleration", ""},
+                    {"Initial Time", "Average Acceleration", ""},
+                    {"Final Time", "Average Acceleration", ""},
+
+
             };
 
             for(String[] s: formulas){
@@ -166,6 +177,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 ContentValues values = new ContentValues();
                 values.put(DataContract.FormulaEntry.COLUMN_NAME, s[0]);
+                values.put(DataContract.FormulaEntry.COLUMN_VAR, s[0]);
                 values.put(DataContract.FormulaEntry.COLUMN_LESSON_KEY,
                         c.getLong(c.getColumnIndex(DataContract.LessonEntry._ID)));
                 values.put(DataContract.FormulaEntry.COLUMN_FORMULA, s[2]);

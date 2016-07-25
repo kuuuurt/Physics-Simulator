@@ -92,6 +92,7 @@ public class DataContract   {
         public static final String TABLE_NAME = "formula";
 
         public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_VAR = "variable";
         public static final String COLUMN_LESSON_KEY = "lesson_id";
         public static final String COLUMN_FORMULA = "image";
 
@@ -106,7 +107,15 @@ public class DataContract   {
             return CONTENT_URI.buildUpon().appendPath(lesson).build();
         }
 
+        public static Uri buildFormulaName(String name){
+            return CONTENT_URI.buildUpon().appendPath("name").appendPath(name).build();
+        }
+
         public static String getLessonFromUri(Uri uri){
+            return uri.getLastPathSegment();
+        }
+
+        public static String getNameFromUri(Uri uri){
             return uri.getLastPathSegment();
         }
     }
