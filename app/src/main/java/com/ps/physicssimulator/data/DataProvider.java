@@ -1,4 +1,4 @@
-package com.ps.physicssimulator.tests;
+package com.ps.physicssimulator.data;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -17,6 +17,8 @@ public class DataProvider extends ContentProvider{
     static final int CONSTANT_WITH_NAME = 201;
     static final int CHAPTER = 300;
     static final int CHAPTER_WITH_NAME = 301;
+    static final int FORMULA = 400;
+    static final int FORMULA_WITH_LESSON = 401;
 
     static UriMatcher uriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -29,6 +31,8 @@ public class DataProvider extends ContentProvider{
         matcher.addURI(authority, DataContract.PATH_CONSTANT + "/*", CONSTANT_WITH_NAME);
         matcher.addURI(authority, DataContract.PATH_CHAPTER, CHAPTER);
         matcher.addURI(authority, DataContract.PATH_CHAPTER + "/*", CHAPTER_WITH_NAME);
+        matcher.addURI(authority, DataContract.PATH_FORMULA, FORMULA);
+        matcher.addURI(authority, DataContract.PATH_FORMULA + "/*", FORMULA_WITH_LESSON);
 
         return matcher;
     }
@@ -37,6 +41,7 @@ public class DataProvider extends ContentProvider{
     private static final SQLiteQueryBuilder lessonQueryBuilder;
     private static final SQLiteQueryBuilder constantQueryBuilder;
     private static final SQLiteQueryBuilder chapterQueryBuilder;
+    private static final SQLiteQueryBuilder formulaQueryBuilder;
 
     static{
         lessonQueryBuilder = new SQLiteQueryBuilder();
@@ -53,6 +58,9 @@ public class DataProvider extends ContentProvider{
 
         chapterQueryBuilder = new SQLiteQueryBuilder();
         chapterQueryBuilder.setTables(DataContract.LessonEntry.TABLE_NAME);
+
+        formulaQueryBuilder = new SQLiteQueryBuilder();
+        formulaQueryBuilder.setTables(DataContract.FormulaEntry.TABLE_NAME);
     }
 
     private static final String lessonWithTitleQuery = DataContract.LessonEntry.TABLE_NAME + "." +
@@ -66,6 +74,9 @@ public class DataProvider extends ContentProvider{
 
     private static final String chapterWithNameQuery = DataContract.ChapterEntry.TABLE_NAME + "." +
             DataContract.ChapterEntry.COLUMN_NAME + " = ? ";
+
+    private static final String formulaWithLessonQuery = DataContract.FormulaEntry.TABLE_NAME + "."
+            + DataContract.FormulaEntry.COLUMN_LESSON_KEY + " = ? ";
 
 
 
@@ -103,7 +114,7 @@ public class DataProvider extends ContentProvider{
         );
     }
 
-    public Cursor getConstantWithName(Uri uri, String[] projection, String sortOrder){
+    public Cursor getConstantByName(Uri uri, String[] projection, String sortOrder){
         return constantQueryBuilder.query(dbHelper.getReadableDatabase(),
                 projection,
                 constantWithNameQuery,
@@ -114,11 +125,32 @@ public class DataProvider extends ContentProvider{
         );
     }
 
-    public Cursor getChapterWithName(Uri uri, String[] projection, String sortOrder){
+    public Cursor getChapterByName(Uri uri, String[] projection, String sortOrder){
         return chapterQueryBuilder.query(dbHelper.getReadableDatabase(),
                 projection,
                 chapterWithNameQuery,
                 new String[]{DataContract.ChapterEntry.getNameFromUri(uri)},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+    public Cursor getFormulasByLesson(Uri uri, String[] projection, String sortOrder){
+        String lesson = DataContract.FormulaEntry.getLessonFromUri(uri);
+
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor c = database.rawQuery("SELECT " + DataContract.LessonEntry._ID +
+                " from lesson WHERE " + DataContract.LessonEntry.COLUMN_TITLE +
+                " = \"" + lesson + "\"", null);
+
+        c.moveToFirst();
+
+        return formulaQueryBuilder.query(database,
+                projection,
+                formulaWithLessonQuery,
+                new String[]{String.valueOf(c.getLong(c.getColumnIndex(
+                        DataContract.LessonEntry._ID)))},
                 null,
                 null,
                 sortOrder
@@ -166,7 +198,7 @@ public class DataProvider extends ContentProvider{
                 );
                 break;
             case CONSTANT_WITH_NAME:
-                data = getConstantWithName(uri, projection, sortOrder);
+                data = getConstantByName(uri, projection, sortOrder);
                 break;
             case CHAPTER:
                 data = dbHelper.getReadableDatabase().query(
@@ -180,7 +212,21 @@ public class DataProvider extends ContentProvider{
                 );
                 break;
             case CHAPTER_WITH_NAME:
-                data = getChapterWithName(uri, projection, sortOrder);
+                data = getChapterByName(uri, projection, sortOrder);
+                break;
+            case FORMULA:
+                data = dbHelper.getReadableDatabase().query(
+                        DataContract.FormulaEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case FORMULA_WITH_LESSON:
+                data = getFormulasByLesson(uri, projection, sortOrder);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -209,6 +255,10 @@ public class DataProvider extends ContentProvider{
                 return DataContract.ChapterEntry.CONTENT_TYPE;
             case CHAPTER_WITH_NAME:
                 return DataContract.ChapterEntry.CONTENT_ITEM_TYPE;
+            case FORMULA:
+                return DataContract.FormulaEntry.CONTENT_TYPE;
+            case FORMULA_WITH_LESSON:
+                return DataContract.FormulaEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

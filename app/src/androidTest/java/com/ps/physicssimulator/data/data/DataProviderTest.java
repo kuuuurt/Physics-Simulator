@@ -1,29 +1,35 @@
-package com.ps.physicssimulator.tests.data;
+package com.ps.physicssimulator.data.data;
 
-import com.ps.physicssimulator.tests.DBHelper;
-import com.ps.physicssimulator.tests.DataContract;
-import com.ps.physicssimulator.tests.DataContract.*;
-import com.ps.physicssimulator.tests.DataProvider;
-
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.Cursor;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
 import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
-import android.content.ComponentName;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.runner.AndroidJUnit4;
 
-import java.util.Set;
-import java.util.Map;
+import com.ps.physicssimulator.data.DBHelper;
+import com.ps.physicssimulator.data.DataContract;
+import com.ps.physicssimulator.data.DataContract.ChapterEntry;
+import com.ps.physicssimulator.data.DataContract.ConstantEntry;
+import com.ps.physicssimulator.data.DataContract.FormulaEntry;
+import com.ps.physicssimulator.data.DataContract.LessonEntry;
+import com.ps.physicssimulator.data.DataProvider;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
+
+import java.util.Map;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class DataProviderTest {
@@ -84,6 +90,14 @@ public class DataProviderTest {
         type = mContext.getContentResolver().getType(ConstantEntry.buildConstantName(testVar));
         assertEquals("Uri should return CONTENT_ITEM_TYPE",
                 ConstantEntry.CONTENT_ITEM_TYPE, type);
+
+        type = mContext.getContentResolver().getType(FormulaEntry.CONTENT_URI);
+        assertEquals("Uri should return CONTENT_TYPE",
+                FormulaEntry.CONTENT_TYPE, type);
+
+        type = mContext.getContentResolver().getType(FormulaEntry.buildFormulaLesson(testVar));
+        assertEquals("Uri should return CONTENT_TYPE",
+                FormulaEntry.CONTENT_TYPE, type);
     }
 
     @Test
@@ -118,7 +132,7 @@ public class DataProviderTest {
                 null
         );
 
-        validateCursor("testBasicChapterQuery", chapterCursor, testValues);
+        validateCursor("testBasicConstantQuery", chapterCursor, testValues);
     }
 
     @Test
@@ -137,8 +151,27 @@ public class DataProviderTest {
                 null
         );
 
-        validateCursor("testBasicChapterQuery", lessonCursor, testValues);
+        validateCursor("testBasicLessonQuery", lessonCursor, testValues);
         lessonCursor.close();
+    }
+
+    @Test
+    public void testBasicFormulaQuery(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(FormulaEntry.COLUMN_NAME, "Velocity");
+        testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "2");
+        testValues.put(FormulaEntry.COLUMN_FORMULA, "");
+
+        Cursor formulaCursor = mContext.getContentResolver().query(
+                FormulaEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testBasicFormulaQuery", formulaCursor, testValues);
+        formulaCursor.close();
     }
 
     @Test
@@ -156,6 +189,25 @@ public class DataProviderTest {
 
         validateCursor("testLessonWithChapterQuery", lessonCursor, testValues);
         lessonCursor.close();
+    }
+
+    @Test
+    public void testFormulaWithLessonQuery(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(FormulaEntry.COLUMN_NAME, "Velocity");
+        testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "2");
+        testValues.put(FormulaEntry.COLUMN_FORMULA, "");
+
+        Cursor formulaCursor = mContext.getContentResolver().query(
+                FormulaEntry.buildFormulaLesson("Velocity"),
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testFormulaWithLessonQuery", formulaCursor, testValues);
+        formulaCursor.close();
     }
 
     @Test

@@ -9,7 +9,7 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ps.physicssimulator.tests.DataContract;
+import com.ps.physicssimulator.data.DataContract;
 
 public class LessonAdapter extends CursorAdapter {
 

@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.ps.physicssimulator.tests.DataContract;
+import com.ps.physicssimulator.data.DataContract;
 
 public class ChapterActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,

@@ -9,7 +9,7 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ps.physicssimulator.tests.DataContract;
+import com.ps.physicssimulator.data.DataContract;
 
 /**
  * Created by qwerasdf on 7/22/16.

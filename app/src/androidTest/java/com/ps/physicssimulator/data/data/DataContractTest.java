@@ -1,13 +1,15 @@
-package com.ps.physicssimulator.tests.data;
+package com.ps.physicssimulator.data.data;
 
 import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.ps.physicssimulator.tests.DataContract;
+import com.ps.physicssimulator.data.DataContract;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by qwerasdf on 7/21/16.
@@ -19,6 +21,7 @@ public class DataContractTest {
     private static final String TEST_LESSON_TITLE = "/Title";
     private static final String TEST_CHAPTER_NAME = "/Chapter";
     private static final String TEST_CONSTANT_NAME = "/Name";
+    private static final String TEST_FORMULA_NAME = "/Formula";
 
     @Test
     public void testBuildChapter(){
@@ -107,5 +110,23 @@ public class DataContractTest {
                 nameUri.getLastPathSegment());
         assertEquals("Uri does not match expected result", nameUri.toString(),
                 DataContract.ConstantEntry.CONTENT_URI + "/%2FName");
+    }
+
+    @Test
+    public void testBuildFormula(){
+        Uri formulaUri = DataContract.FormulaEntry.buildFormulaUri(TEST_RECORD_ID);
+        assertNotNull("Uri not created!", formulaUri);
+        assertEquals("Uri does not match expected result", formulaUri.toString(),
+                DataContract.FormulaEntry.CONTENT_URI + "/"  + TEST_RECORD_ID);
+    }
+
+    @Test
+    public void testBuildFormulaLesson(){
+        Uri lessonUri = DataContract.FormulaEntry.buildFormulaLesson(TEST_FORMULA_NAME);
+        assertNotNull("Uri not created!", lessonUri);
+        assertEquals("Lessons not properly appended to Uri!", TEST_FORMULA_NAME,
+                lessonUri.getLastPathSegment());
+        assertEquals("Uri does not match expected result", lessonUri.toString(),
+                DataContract.FormulaEntry.CONTENT_URI + "/%2FFormula");
     }
 }

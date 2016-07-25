@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 
-import com.ps.physicssimulator.tests.DataContract;
+import com.ps.physicssimulator.data.DataContract;
 
 public class CalculatorActivity extends AppCompatActivity {
 
@@ -23,7 +23,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        String test;
+
         final SimpleCursorAdapter chaptersAdap = setSpinnerAdapter(
             this.getContentResolver().query(DataContract.ChapterEntry.CONTENT_URI,
                     null, null, null, null),

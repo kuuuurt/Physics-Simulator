@@ -1,4 +1,4 @@
-package com.ps.physicssimulator.tests;
+package com.ps.physicssimulator.data;
 
 
 import android.content.ContentValues;
@@ -42,12 +42,21 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.ConstantEntry.COLUMN_DEFAULT + " REAL UNIQUE NOT NULL, " +
                 DataContract.ConstantEntry.COLUMN_CURRENT + " REAL NOT NULL);";
 
+        final String SQL_CREATE_FORMULA_TABLE = "CREATE TABLE " +
+                DataContract.FormulaEntry.TABLE_NAME + " (" +
+                DataContract.FormulaEntry._ID + " INTEGET PRIMARY KEY, " +
+                DataContract.FormulaEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
+                DataContract.FormulaEntry.COLUMN_LESSON_KEY + " INTEGER NOT NULL, " +
+                DataContract.FormulaEntry.COLUMN_FORMULA + " TEXT NOT NULL" + ")";
+
         sqLiteDatabase.execSQL(SQL_CREATE_CHAPTER_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_LESSON_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_CONSTANT_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_FORMULA_TABLE);
         initChapters(sqLiteDatabase);
         initLessons(sqLiteDatabase);
         initConstants(sqLiteDatabase);
+        initFormulas(sqLiteDatabase);
     }
 
     @Override
@@ -139,6 +148,29 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put(DataContract.ConstantEntry.COLUMN_CURRENT, Double.parseDouble(s[1]));
 
                 database.insert(DataContract.ConstantEntry.TABLE_NAME, null, values);
+            }
+        }
+    }
+
+    public void initFormulas(SQLiteDatabase database){
+        if(database.isOpen()) {
+            String[][] formulas = {
+                    {"Velocity", "Velocity", ""}
+            };
+
+            for(String[] s: formulas){
+                Cursor c = database.rawQuery("SELECT " + DataContract.LessonEntry._ID +
+                        " from lesson WHERE " + DataContract.LessonEntry.COLUMN_TITLE +
+                        " = \"" + s[1] + "\"", null);
+                c.moveToFirst();
+
+                ContentValues values = new ContentValues();
+                values.put(DataContract.FormulaEntry.COLUMN_NAME, s[0]);
+                values.put(DataContract.FormulaEntry.COLUMN_LESSON_KEY,
+                        c.getLong(c.getColumnIndex(DataContract.LessonEntry._ID)));
+                values.put(DataContract.FormulaEntry.COLUMN_FORMULA, s[2]);
+
+                database.insert(DataContract.FormulaEntry.TABLE_NAME, null, values);
             }
         }
     }

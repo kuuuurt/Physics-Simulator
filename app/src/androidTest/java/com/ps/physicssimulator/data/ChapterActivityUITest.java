@@ -1,4 +1,4 @@
-package com.ps.physicssimulator.tests;
+package com.ps.physicssimulator.data;
 
 import android.database.Cursor;
 import android.support.test.InstrumentationRegistry;
