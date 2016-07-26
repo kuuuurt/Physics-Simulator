@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -195,12 +194,12 @@ public class DBHelper extends SQLiteOpenHelper {
         if(database.isOpen()) {
             String[][] formulas = {
                     {"Displacement", "Scalar and Vector Values", ""},
-                    {"Speed", "Velocity", "", ""},
-                    {"Velocity", "Velocity", "", ""},
+                    {"Speed", "Velocity", "$$s = {d \\over t}$$", ""},
+                    {"Velocity", "Velocity", "$$v = d \\over t$$)", ""},
                     {"Average Velocity", "Velocity", "", ""},
                     {"Acceleration", "Acceleration", "", ""},
                     {"Average Acceleration","Acceleration", "", ""},
-                    {"Velocity","Free-fall", "", ""},
+                    {"Free-fall Velocity","Free-fall", "", ""},
                     {"Displacement", "Free-fall", "", ""},
                     {"Horizontal Distance", "Projectile Motion", "", ""},
                     {"Horizontal Velocity", "Projectile Motion", "", ""},
@@ -233,7 +232,6 @@ public class DBHelper extends SQLiteOpenHelper {
             };
 
             for(String[] s: formulas){
-                Log.d("asdf", s[1]);
                 Cursor c = database.rawQuery("SELECT " + DataContract.LessonEntry._ID +
                         " from lesson WHERE " + DataContract.LessonEntry.COLUMN_TITLE +
                         " = \"" + s[1] + "\"", null);
@@ -244,7 +242,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put(DataContract.FormulaEntry.COLUMN_LESSON_KEY,
                         c.getLong(c.getColumnIndex(DataContract.LessonEntry._ID)));
                 values.put(DataContract.FormulaEntry.COLUMN_FORMULA, s[2]);
-//                values.put(DataContract.FormulaEntry.COLUMN_FRAGMENT_NAME, s[4]);
 
                 database.insert(DataContract.FormulaEntry.TABLE_NAME, null, values);
             }
@@ -254,6 +251,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initVariables(SQLiteDatabase database) {
         if(database.isOpen()) {
             String[][] formulas = {
+                    {"Displacement", "Displacement", "", ""},
                     {"Displacement", "Average Acceleration", "", ""},
                     {"Displacement", "Initial Velocity","", ""},
                     {"Displacement", "Final Velocity", "", ""},
@@ -283,15 +281,10 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Average Acceleration", "Initial Time", "", ""},
                     {"Average Acceleration", "Final Time", "", ""},
 
-                    {"Velocity", "Velocity", "", ""},
-                    {"Velocity", "Initial Velocity", "", ""},
-                    {"Velocity", "Acceleration due to Gravity", "", ""},
-                    {"Velocity", "Time", "", ""},
-
-                    {"Displacement", "Displacement","", ""},
-                    {"Displacement", "Initial Velocity","", ""},
-                    {"Displacement", "Acceleration due to Gravity", "", ""},
-                    {"Displacement", "Time",  "", ""},
+                    {"Free-fall Velocity", "Velocity", "", ""},
+                    {"Free-fall Velocity", "Initial Velocity", "", ""},
+                    {"Free-fall Velocity", "Acceleration due to Gravity", "", ""},
+                    {"Free-fall Velocity", "Time", "", ""},
 
                     {"Horizontal Distance", "Horizontal Distance","", ""},
                     {"Horizontal Distance", "Velocity along the x-axis","", ""},
