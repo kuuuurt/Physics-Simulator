@@ -1,4 +1,4 @@
-package com.ps.physicssimulator.lessons;
+package com.ps.physicssimulator.calculator;
 
 
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import com.ps.physicssimulator.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AccelerationFragment extends Fragment {
+public class ValuesFragment extends Fragment {
 
 
-    public AccelerationFragment() {
+    public ValuesFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class AccelerationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_acceleration_lesson, container, false);
+        return inflater.inflate(R.layout.fragment_values_calculator, container, false);
     }
 
 }

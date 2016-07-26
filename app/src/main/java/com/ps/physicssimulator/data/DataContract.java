@@ -56,7 +56,8 @@ public class DataContract   {
         public static final String COLUMN_DESCRIPTION = "desc";
         public static final String COLUMN_CONTENT = "content";
         public static final String COLUMN_LOGO = "logo";
-        public static final String COLUMN_FRAGNAME = "fragname";
+        public static final String COLUMN_LESSONFRAGNAME = "lessonfrag";
+        public static final String COLUMN_CALCFRAGNAME = "calcfrag";
 
 
         public static final String CONTENT_TYPE =
@@ -95,6 +96,7 @@ public class DataContract   {
         public static final String COLUMN_VAR = "variable";
         public static final String COLUMN_LESSON_KEY = "lesson_id";
         public static final String COLUMN_FORMULA = "image";
+        public static final String COLUMN_FRAGNAME = "fragname";
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FORMULA;

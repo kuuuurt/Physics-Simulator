@@ -2,6 +2,7 @@ package com.ps.physicssimulator;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -53,12 +54,15 @@ public class CalculatorActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i,
                                                long l) {
                         Cursor c = (Cursor)lessonsAdap.getItem(i);
-                        String lesson = c.getString(c.getColumnIndex(DataContract.LessonEntry
-                            .COLUMN_TITLE));
+                        String fragName = c.getString(c.getColumnIndex(DataContract.LessonEntry
+                            .COLUMN_CALCFRAGNAME));
 
-                        Log.d("qwer", lesson);
+                        Log.d("asdf", fragName);
 
                         //Load Calculator Fragment
+                        Fragment frag = Fragment.instantiate(CalculatorActivity.this, fragName);
+                        getSupportFragmentManager().beginTransaction().replace(
+                                R.id.fragment_calculator, frag).addToBackStack(null).commit();
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {}
