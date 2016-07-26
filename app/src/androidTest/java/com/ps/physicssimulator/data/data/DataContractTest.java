@@ -20,7 +20,6 @@ public class DataContractTest {
     private static final long TEST_RECORD_ID = 1234;
     private static final String TEST_LESSON_TITLE = "/Title";
     private static final String TEST_CHAPTER_NAME = "/Chapter";
-    private static final String TEST_CONSTANT_NAME = "/Name";
     private static final String TEST_FORMULA_NAME = "/Formula";
 
     @Test
@@ -104,12 +103,12 @@ public class DataContractTest {
 
     @Test
     public void testBuildConstantName(){
-        Uri nameUri = DataContract.ConstantEntry.buildConstantName(TEST_CONSTANT_NAME);
+        Uri nameUri = DataContract.ConstantEntry.buildConstantName(TEST_LESSON_TITLE);
         assertNotNull("Uri not created!", nameUri);
-        assertEquals("Title not properly appended to Uri!", TEST_CONSTANT_NAME,
+        assertEquals("Title not properly appended to Uri!", TEST_LESSON_TITLE,
                 nameUri.getLastPathSegment());
         assertEquals("Uri does not match expected result", nameUri.toString(),
-                DataContract.ConstantEntry.CONTENT_URI + "/%2FName");
+                DataContract.ConstantEntry.CONTENT_URI + "/%2FTitle");
     }
 
     @Test
@@ -122,21 +121,29 @@ public class DataContractTest {
 
     @Test
     public void testBuildFormulaLesson(){
-        Uri lessonUri = DataContract.FormulaEntry.buildFormulaLesson(TEST_FORMULA_NAME);
+        Uri lessonUri = DataContract.FormulaEntry.buildFormulaLesson(TEST_LESSON_TITLE);
         assertNotNull("Uri not created!", lessonUri);
-        assertEquals("Lessons not properly appended to Uri!", TEST_FORMULA_NAME,
+        assertEquals("Title not properly appended to Uri!", TEST_LESSON_TITLE,
                 lessonUri.getLastPathSegment());
         assertEquals("Uri does not match expected result", lessonUri.toString(),
-                DataContract.FormulaEntry.CONTENT_URI + "/%2FFormula");
+                DataContract.FormulaEntry.CONTENT_URI + "/%2FTitle");
     }
 
     @Test
-    public void testBuildFormulaName(){
-        Uri nameUri = DataContract.FormulaEntry.buildFormulaName(TEST_FORMULA_NAME);
+    public void testBuildVariable(){
+        Uri variableUri = DataContract.VariableEntry.buildVariableUri(TEST_RECORD_ID);
+        assertNotNull("Uri not created!", variableUri);
+        assertEquals("Uri does not match expected result", variableUri.toString(),
+                DataContract.VariableEntry.CONTENT_URI + "/"  + TEST_RECORD_ID);
+    }
+
+    @Test
+    public void testBuildVariableName(){
+        Uri nameUri = DataContract.VariableEntry.buildVariableFormula(TEST_FORMULA_NAME);
         assertNotNull("Uri not created!", nameUri);
-        assertEquals("Name not properly appended to Uri!", TEST_FORMULA_NAME,
+        assertEquals("Formula not properly appended to Uri!", TEST_FORMULA_NAME,
                 nameUri.getLastPathSegment());
         assertEquals("Uri does not match expected result", nameUri.toString(),
-                DataContract.FormulaEntry.CONTENT_URI + "/name/%2FFormula");
+                DataContract.VariableEntry.CONTENT_URI + "/%2FFormula");
     }
 }

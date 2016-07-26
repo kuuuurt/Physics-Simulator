@@ -19,7 +19,8 @@ public class DataProvider extends ContentProvider{
     static final int CHAPTER_WITH_NAME = 301;
     static final int FORMULA = 400;
     static final int FORMULA_WITH_LESSON = 401;
-    static final int FORMULA_WITH_NAME = 402;
+    static final int VARIABLE = 500;
+    static final int VARIABLE_WITH_NAME = 501;
 
     static UriMatcher uriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -34,7 +35,8 @@ public class DataProvider extends ContentProvider{
         matcher.addURI(authority, DataContract.PATH_CHAPTER + "/*", CHAPTER_WITH_NAME);
         matcher.addURI(authority, DataContract.PATH_FORMULA, FORMULA);
         matcher.addURI(authority, DataContract.PATH_FORMULA + "/*", FORMULA_WITH_LESSON);
-        matcher.addURI(authority, DataContract.PATH_FORMULA + "/*/*", FORMULA_WITH_NAME);
+        matcher.addURI(authority, DataContract.PATH_VARIABLE, VARIABLE);
+        matcher.addURI(authority, DataContract.PATH_VARIABLE + "/*", VARIABLE_WITH_NAME);
 
         return matcher;
     }
@@ -44,6 +46,7 @@ public class DataProvider extends ContentProvider{
     private static final SQLiteQueryBuilder constantQueryBuilder;
     private static final SQLiteQueryBuilder chapterQueryBuilder;
     private static final SQLiteQueryBuilder formulaQueryBuilder;
+    private static final SQLiteQueryBuilder variableQueryBuilder;
 
     static{
         lessonQueryBuilder = new SQLiteQueryBuilder();
@@ -63,6 +66,9 @@ public class DataProvider extends ContentProvider{
 
         formulaQueryBuilder = new SQLiteQueryBuilder();
         formulaQueryBuilder.setTables(DataContract.FormulaEntry.TABLE_NAME);
+
+        variableQueryBuilder = new SQLiteQueryBuilder();
+        variableQueryBuilder.setTables(DataContract.VariableEntry.TABLE_NAME);
     }
 
     private static final String lessonWithTitleQuery = DataContract.LessonEntry.TABLE_NAME + "." +
@@ -80,8 +86,8 @@ public class DataProvider extends ContentProvider{
     private static final String formulaWithLessonQuery = DataContract.FormulaEntry.TABLE_NAME + "."
             + DataContract.FormulaEntry.COLUMN_LESSON_KEY + " = ? ";
 
-    private static final String formulaWithNameQuery = DataContract.FormulaEntry.TABLE_NAME + "."
-            + DataContract.FormulaEntry.COLUMN_NAME + " = ? ";
+    private static final String variableWithNameQuery = DataContract.VariableEntry.TABLE_NAME + "."
+            + DataContract.VariableEntry.COLUMN_FORMULA_KEY + " = ? ";
 
 
 
@@ -162,11 +168,21 @@ public class DataProvider extends ContentProvider{
         );
     }
 
-    public Cursor getFormulasByName(Uri uri, String[] projection, String sortOrder){
-        return formulaQueryBuilder.query(dbHelper.getReadableDatabase(),
+    public Cursor getVariablesByName(Uri uri, String[] projection, String sortOrder){
+        String formula = DataContract.VariableEntry.getFormulaFromUri(uri);
+
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor c = database.rawQuery("SELECT " + DataContract.FormulaEntry._ID +
+                " from formula WHERE " + DataContract.FormulaEntry.COLUMN_NAME +
+                " = \"" + formula + "\"", null);
+
+        c.moveToFirst();
+
+        return variableQueryBuilder.query(dbHelper.getReadableDatabase(),
                 projection,
-                formulaWithNameQuery,
-                new String[]{DataContract.FormulaEntry.getNameFromUri(uri)},
+                variableWithNameQuery,
+                new String[]{String.valueOf(c.getLong(c.getColumnIndex(
+                        DataContract.FormulaEntry._ID)))},
                 null,
                 null,
                 sortOrder
@@ -244,8 +260,19 @@ public class DataProvider extends ContentProvider{
             case FORMULA_WITH_LESSON:
                 data = getFormulasByLesson(uri, projection, sortOrder);
                 break;
-            case FORMULA_WITH_NAME:
-                data = getFormulasByLesson(uri, projection, sortOrder);
+            case VARIABLE:
+                data = dbHelper.getReadableDatabase().query(
+                        DataContract.VariableEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case VARIABLE_WITH_NAME:
+                data = getVariablesByName(uri, projection, sortOrder);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -278,7 +305,9 @@ public class DataProvider extends ContentProvider{
                 return DataContract.FormulaEntry.CONTENT_TYPE;
             case FORMULA_WITH_LESSON:
                 return DataContract.FormulaEntry.CONTENT_TYPE;
-            case FORMULA_WITH_NAME:
+            case VARIABLE:
+                return DataContract.FormulaEntry.CONTENT_TYPE;
+            case VARIABLE_WITH_NAME:
                 return DataContract.FormulaEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

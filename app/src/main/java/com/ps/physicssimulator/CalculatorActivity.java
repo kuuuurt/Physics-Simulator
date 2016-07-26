@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
@@ -55,12 +54,14 @@ public class CalculatorActivity extends AppCompatActivity {
                                                long l) {
                         Cursor c = (Cursor)lessonsAdap.getItem(i);
                         String fragName = c.getString(c.getColumnIndex(DataContract.LessonEntry
-                            .COLUMN_CALCFRAGNAME));
+                            .COLUMN_CALCULATOR_FRAGMENT_NAME));
 
-                        Log.d("asdf", fragName);
+                        Bundle args = new Bundle();
+                        args.putString("Lesson", c.getString(c.getColumnIndex(
+                                DataContract.LessonEntry.COLUMN_TITLE)));
 
-                        //Load Calculator Fragment
                         Fragment frag = Fragment.instantiate(CalculatorActivity.this, fragName);
+                        frag.setArguments(args);
                         getSupportFragmentManager().beginTransaction().replace(
                                 R.id.fragment_calculator, frag).addToBackStack(null).commit();
                     }

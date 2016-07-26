@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -22,8 +23,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.ChapterEntry.TABLE_NAME + " (" +
                 DataContract.ChapterEntry._ID + " INTEGER PRIMARY KEY, " +
                 DataContract.ChapterEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
-                DataContract.ChapterEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
-                DataContract.ChapterEntry.COLUMN_LOGO + " TEXT NOT NULL" + ");";
+//                DataContract.ChapterEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
+//                DataContract.ChapterEntry.COLUMN_LOGO + " TEXT NOT NULL" + ");";
+                DataContract.ChapterEntry.COLUMN_DESCRIPTION + " TEXT," +
+                DataContract.ChapterEntry.COLUMN_LOGO + " TEXT" + ");";
 
         final String SQL_CREATE_LESSON_TABLE = "CREATE TABLE " +
                 DataContract.LessonEntry.TABLE_NAME + " (" +
@@ -32,8 +35,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.LessonEntry.COLUMN_CHAPTER_KEY + " INTEGER NOT NULL," +
                 DataContract.LessonEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
                 DataContract.LessonEntry.COLUMN_CONTENT + " TEXT NOT NULL," +
-                DataContract.LessonEntry.COLUMN_LESSONFRAGNAME + " TEXT NOT NULL," +
-                DataContract.LessonEntry.COLUMN_CALCFRAGNAME + " TEXT NOT NULL," +
+//                DataContract.LessonEntry.COLUMN_LESSON_FRAGMENT_NAME + " TEXT NOT NULL," +
+//                DataContract.LessonEntry.COLUMN_CALCULATOR_FRAGMENT_NAME + " TEXT NOT NULL," +
+                DataContract.LessonEntry.COLUMN_LESSON_FRAGMENT_NAME + " TEXT," +
+                DataContract.LessonEntry.COLUMN_CALCULATOR_FRAGMENT_NAME + " TEXT," +
                 DataContract.LessonEntry.COLUMN_LOGO + " TEXT NOT NULL" +");";
 
         final String SQL_CREATE_CONSTANT_TABLE = "CREATE TABLE " +
@@ -47,30 +52,47 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.FormulaEntry.TABLE_NAME + " (" +
                 DataContract.FormulaEntry._ID + " INTEGER PRIMARY KEY, " +
                 DataContract.FormulaEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                DataContract.FormulaEntry.COLUMN_VAR + " TEXT NOT NULL, " +
                 DataContract.FormulaEntry.COLUMN_LESSON_KEY + " INTEGER NOT NULL, " +
-                DataContract.FormulaEntry.COLUMN_FORMULA + " TEXT NOT NULL, " +
-                DataContract.FormulaEntry.COLUMN_FRAGNAME + " TEXT NOT NULL"+ ")";
+                DataContract.FormulaEntry.COLUMN_FORMULA + " TEXT" + ")";
+//                DataContract.FormulaEntry.COLUMN_FORMULA + " TEXT NOT NULL" + ")";
+//                DataContract.FormulaEntry.COLUMN_FRAGMENT_NAME + " TEXT NOT NULL"+ ")";
+
+        final String SQL_CREATE_VARIABLE_TABLE = "CREATE TABLE " +
+                DataContract.VariableEntry.TABLE_NAME + " (" +
+                DataContract.VariableEntry._ID + " INTEGER PRIMARY KEY, " +
+                DataContract.VariableEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
+                DataContract.VariableEntry.COLUMN_FORMULA_KEY + " INTEGER NOT NULL, " +
+                DataContract.VariableEntry.COLUMN_FRAGMENT_NAME + " TEXT, " +
+//                DataContract.VariableEntry.COLUMN_FRAGMENT_NAME + " TEXT NOT NULL, " +
+                DataContract.VariableEntry.COLUMN_FORMULA + " TEXT);";
+//                DataContract.VariableEntry.COLUMN_FORMULA + " TEXT NOT NULL);";
 
         sqLiteDatabase.execSQL(SQL_CREATE_CHAPTER_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_LESSON_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_CONSTANT_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_FORMULA_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_VARIABLE_TABLE);
         initChapters(sqLiteDatabase);
         initLessons(sqLiteDatabase);
         initConstants(sqLiteDatabase);
         initFormulas(sqLiteDatabase);
+        initVariables(sqLiteDatabase);
     }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.ChapterEntry.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.LessonEntry.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.ConstantEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.FormulaEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.VariableEntry.TABLE_NAME);
+
         onCreate(sqLiteDatabase);
     }
 
-    public void initChapters(SQLiteDatabase database){
+    private void initChapters(SQLiteDatabase database){
         if(database.isOpen()){
             String[][] chapters = {
                     {"One-dimensional Motion","",""},
@@ -92,7 +114,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void initLessons(SQLiteDatabase database){
+    private void initLessons(SQLiteDatabase database){
         if(database.isOpen()){
             String[][] lessons = {
                     {"Scalar and Vector Values", "One-dimensional Motion",
@@ -145,15 +167,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put(DataContract.LessonEntry.COLUMN_DESCRIPTION, s[2]);
                 values.put(DataContract.LessonEntry.COLUMN_CONTENT, s[3]);
                 values.put(DataContract.LessonEntry.COLUMN_LOGO, s[4]);
-                values.put(DataContract.LessonEntry.COLUMN_LESSONFRAGNAME, s[5]);
-                values.put(DataContract.LessonEntry.COLUMN_CALCFRAGNAME, s[6]);
+                values.put(DataContract.LessonEntry.COLUMN_LESSON_FRAGMENT_NAME, s[5]);
+//                values.put(DataContract.LessonEntry.COLUMN_CALCFRAGNAME, s[6]);
 
                 database.insert(DataContract.LessonEntry.TABLE_NAME, null, values);
             }
         }
     }
 
-    public void initConstants(SQLiteDatabase database){
+    private void initConstants(SQLiteDatabase database){
         if(database.isOpen()) {
             String[][] constants = {
                     {"Acceleration of Gravity", "9.8"}
@@ -170,200 +192,246 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void initFormulas(SQLiteDatabase database){
+    private void initFormulas(SQLiteDatabase database){
         if(database.isOpen()) {
             String[][] formulas = {
-                    {"Displacement", "Average Acceleration", "Scalar and Vector Values", "", ""},
-                    {"Displacement", "Initial Velocity", "Scalar and Vector Values", "", ""},
-                    {"Displacement", "Final Velocity", "Scalar and Vector Values", "", ""},
-
-                    {"Speed", "Speed", "Velocity", "", ""},
-                    {"Speed", "Distance", "Velocity", "", ""},
-                    {"Speed", "Time", "Velocity", "", ""},
-
-                    {"Velocity", "Velocity", "Velocity", "", ""},
-                    {"Velocity", "Initial Position", "Velocity", "", ""},
-                    {"Velocity", "Final Position", "Velocity", "", ""},
-                    {"Velocity", "Time", "Velocity", "", ""},
-
-                    {"Average Velocity", "Average Velocity", "Velocity", "", ""},
-                    {"Average Velocity", "Initial Position", "Velocity", "", ""},
-                    {"Average Velocity", "Final Position", "Velocity", "", ""},
-                    {"Average Velocity", "Initial Time", "Velocity", "", ""},
-                    {"Average Velocity", "Final Time", "Velocity", "", ""},
-
-                    {"Acceleration", "Acceleration", "Acceleration", "", ""},
-                    {"Acceleration", "Total Velocity Change", "Acceleration", "", ""},
-                    {"Acceleration", "Time Interval", "Acceleration", "", ""},
-
-                    {"Average Acceleration", "Average Acceleration", "Acceleration", "", ""},
-                    {"Average Acceleration", "Initial Velocity", "Acceleration", "", ""},
-                    {"Average Acceleration", "Final Velocity", "Acceleration", "", ""},
-                    {"Average Acceleration", "Initial Time", "Acceleration", "", ""},
-                    {"Average Acceleration", "Final Time", "Acceleration", "", ""},
-
-                    {"Velocity", "Velocity", "Free-fall", "", ""},
-                    {"Velocity", "Initial Velocity", "Free-fall", "", ""},
-                    {"Velocity", "Acceleration due to Gravity", "Free-fall", "", ""},
-                    {"Velocity", "Time", "Free-fall", "", ""},
-
-                    {"Displacement", "Displacement", "Free-fall", "", ""},
-                    {"Displacement", "Initial Velocity", "Free-fall", "", ""},
-                    {"Displacement", "Acceleration due to Gravity", "Free-fall", "", ""},
-                    {"Displacement", "Time", "Free-fall", "", ""},
-
-                    {"Horizontal Distance", "Horizontal Distance", "Projectile Motion", "", ""},
-                    {"Horizontal Distance", "Velocity along the x-axis", "Projectile Motion", "", ""},
-                    {"Horizontal Distance", "Time", "Projectile Motion", "", ""},
-
-                    {"Horizontal Velocity", "Velocity along the x-axis", "Projectile Motion", "", ""},
-                    {"Horizontal Velocity", "Initial Velocity along the x-axis",
-                            "Projectile Motion", "", ""},
-
-                    {"Vertical Distance", "Vertical Distance", "Projectile Motion", "", ""},
-                    {"Vertical Distance", "Initial Velocity along the y-axis", "Projectile Motion",
-                            "", ""},
-                    {"Vertical Distance", "Time", "Projectile Motion", "", ""},
-                    {"Vertical Distance", "Acceleration due to Gravity", "Projectile Motion", "", ""},
-
-                    {"Vertical Velocity", "Vertical Velocity", "Projectile Motion", "", ""},
-                    {"Vertical Velocity", "Initial Velocity along the y-axis", "Projectile Motion",
-                            "", ""},
-                    {"Vertical Velocity", "Time", "Projectile Motion", "", ""},
-                    {"Vertical Velocity", "Acceleration due to Gravity", "Projectile Motion", "", ""},
-
-                    {"Time of Flight", "Time of Flight", "Projectile Motion", "", ""},
-                    {"Time of Flight", "Initial Velocity", "Projectile Motion", "", ""},
-                    {"Time of Flight", "Angle of Trajectory", "Projectile Motion", "", ""},
-                    {"Time of Flight", "Acceleration due to Gravity", "Projectile Motion", "", ""},
-
-                    {"Maximum Height Reached", "Maximum Height Reached", "Projectile Motion", "", ""},
-                    {"Maximum Height Reached", "Initial Velocity", "Projectile Motion", "", ""},
-                    {"Maximum Height Reached", "Angle of Trajectory", "Projectile Motion", "", ""},
-                    {"Maximum Height Reached", "Acceleration due to Gravity", "Projectile Motion",
-                            "", ""},
-
-                    {"Horizontal Range", "Horizontal Range", "Projectile Motion", "", ""},
-                    {"Horizontal Range", "Initial Velocity", "Projectile Motion", "", ""},
-                    {"Horizontal Range", "Time of Flight", "Projectile Motion", "", ""},
-
-                    {"Friction", "Frictional Force", "Friction", "", ""},
-                    {"Friction", "Coefficient of Friction", "Friction", "", ""},
-                    {"Friction", "Normal Force", "Friction", "", ""},
-
-                    {"Momentum", "Momentum", "Momentum and Impulse", "", ""},
-                    {"Momentum", "Mass", "Momentum and Impulse", "", ""},
-                    {"Momentum", "Velocity", "Momentum and Impulse", "", ""},
-
-                    {"Impulse", "Force", "Momentum and Impulse", "", ""},
-                    {"Impulse", "Distance", "Momentum and Impulse", "", ""},
-                    {"Impulse", "Change in Velocity", "Momentum and Impulse", "", ""},
-                    {"Impulse", "Time", "Momentum and Impulse", "", ""},
-
-                    {"Conservation of Energy", "Mass", "Law of Conservation of Energy", "", ""},
-                    {"Conservation of Energy", "Final Velocity", "Law of Conservation of Energy",
-                            "", ""},
-                    {"Conservation of Energy", "Height", "Law of Conservation of Energy", "", ""},
-                    {"Conservation of Energy", "Acceleration due to Gravity",
-                            "Law of Conservation of Energy", "", ""},
-
-                    {"Work", "Work", "Work", "", ""},
-                    {"Work", "Force", "Work", "", ""},
-                    {"Work", "Distance", "Work", "", ""},
-
-                    {"Kinetic Energy", "Kinetic Energy", "Energy", "", ""},
-                    {"Kinetic Energy", "Mass", "Energy", "", ""},
-                    {"Kinetic Energy", "Velocity", "Energy", "", ""},
-
-                    {"Gravitational Potential Energy", "Potential Energy",
-                            "Energy", "", ""},
-                    {"Gravitational Potential Energy", "Height", "Energy", "", ""},
-                    {"Gravitational Potential Energy", "Acceleration due to Gravity",
-                            "Energy", "", ""},
-
-                    {"Spring Potential Energy", "Potential Energy", "Energy", "", ""},
-                    {"Spring Potential Energy", "Spring Constant", "Energy", "", ""},
-                    {"Spring Potential Energy", "Spring Displacement", "Energy",
-                            "", ""},
-
-                    {"Total Mechanical Energy", "Total Mechanical Energy",
-                            "Energy", "", ""},
-                    {"Total Mechanical Energy", "Kinetic Energy", "Energy", "", ""},
-                    {"Total Mechanical Energy", "Potential Energy", "Energy", "", ""},
-
-                    {"Average Power", "Average Power", "Power", "", ""},
-                    {"Average Power", "Amount of Work done", "Power", "", ""},
-                    {"Average Power", "Time", "Power", "", ""},
-
-                    {"Instantaneous Power", "Instantaneous Power", "Power", "", ""},
-                    {"Instantaneous Power", "Amount of Work done", "Power", "", ""},
-                    {"Instantaneous Power", "Time", "Power", "", ""},
-                    {"Instantaneous Power", "Force", "Power", "", ""},
-                    {"Instantaneous Power", "Path", "Power", "", ""},
-                    {"Instantaneous Power", "Angle", "Power", "", ""},
-                    {"Instantaneous Power", "Velocity", "Power", "", ""},
-
-                    {"Length of Arc", "Length of Arc", "Uniform Circular Motion", "", ""},
-                    {"Length of Arc", "Radius", "Uniform Circular Motion", "", ""},
-                    {"Length of Arc", "Angle", "Uniform Circular Motion", "", ""},
-
-                    {"Tangential Velocity", "Tangential Velocity", "Uniform Circular Motion", "", ""},
-                    {"Tangential Velocity", "Length of Arc", "Uniform Circular Motion", "", ""},
-                    {"Tangential Velocity", "Time", "Uniform Circular Motion", "", ""},
-
-                    {"Velocity around a Circle", "Velocity around a Circle",
-                            "Uniform Circular Motion", "", ""},
-                    {"Velocity around a Circle", "Radius", "Uniform Circular Motion", "", ""},
-                    {"Velocity around a Circle", "Time", "Uniform Circular Motion", "", ""},
-
-                    {"Angular Velocity", "Angular Velocity", "Uniform Circular Motion", "", ""},
-                    {"Angular Velocity", "Angel", "Uniform Circular Motion", "", ""},
-                    {"Angular Velocity", "Time", "Uniform Circular Motion", "", ""},
-
-                    {"Angular Velocity", "Angular Velocity", "Uniform Circular Motion", "", ""},
-                    {"Angular Velocity", "Angle", "Uniform Circular Motion", "", ""},
-                    {"Angular Velocity", "Time", "Uniform Circular Motion", "", ""},
-
-                    {"Centripetal Acceleration", "Centripetal Acceleration",
-                            "Uniform Circular Motion", "", ""},
-                    {"Centripetal Acceleration", "Angular Velocity", "Uniform Circular Motion", "", ""},
-                    {"Centripetal Acceleration", "Angle", "Uniform Circular Motion", "", ""},
-
-                    {"Centripetal Force", "Centripetal Force",
-                            "Centripetal and Centrifugal Forces", "", ""},
-                    {"Centripetal Force", "Mass", "Centripetal and Centrifugal Forces", "", ""},
-                    {"Centripetal Force", "Tangential Velocity",
-                            "Centripetal and Centrifugal Forces", "", ""},
-                    {"Centripetal Force", "Radius", "Centripetal and Centrifugal Forces", "", ""},
-
-                    {"Moment of Inertia", "Moment of Inertia", "Rotational Motion", "", ""},
-                    {"Moment of Inertia", "Mass", "Rotational Motion", "", ""},
-                    {"Moment of Inertia", "Distance", "Rotational Motion", "", ""},
-
-                    {"Torque", "Torque", "Rotational Motion", "", ""},
-                    {"Torque", "Force", "Rotational Motion", "", ""},
-                    {"Torque", "Position", "Rotational Motion", "", ""},
-
-                    {"Angular Momentum", "Angular Momentum", "Rotational Motion", "", ""},
-                    {"Angular Momentum", "Moment of Inertia", "Rotational Motion", "", ""},
-                    {"Angular Momentum", "Angular Velocity", "Rotational Motion", "", ""},
+                    {"Displacement", "Scalar and Vector Values", ""},
+                    {"Speed", "Velocity", "", ""},
+                    {"Velocity", "Velocity", "", ""},
+                    {"Average Velocity", "Velocity", "", ""},
+                    {"Acceleration", "Acceleration", "", ""},
+                    {"Average Acceleration","Acceleration", "", ""},
+                    {"Velocity","Free-fall", "", ""},
+                    {"Displacement", "Free-fall", "", ""},
+                    {"Horizontal Distance", "Projectile Motion", "", ""},
+                    {"Horizontal Velocity", "Projectile Motion", "", ""},
+                    {"Vertical Distance",  "Projectile Motion", "", ""},
+                    {"Vertical Velocity",  "Projectile Motion", "", ""},
+                    {"Time of Flight", "Projectile Motion", "", ""},
+                    {"Maximum Height Reached", "Projectile Motion", "", ""},
+                    {"Horizontal Range", "Projectile Motion", "", ""},
+                    {"Friction", "Friction", "", ""},
+                    {"Momentum", "Momentum and Impulse", "", ""},
+                    {"Impulse", "Momentum and Impulse", "", ""},
+                    {"Conservation of Energy", "Law of Conservation of Energy", "", ""},
+                    {"Work", "Work", "", ""},
+                    {"Kinetic Energy", "Energy", "", ""},
+                    {"Gravitational Potential Energy", "Energy", "", ""},
+                    {"Spring Potential Energy", "Energy", "", ""},
+                    {"Total Mechanical Energy", "Energy", "", ""},
+                    {"Average Power", "Power", "", ""},
+                    {"Instantaneous Power","Power", "", ""},
+                    {"Length of Arc",  "Uniform Circular Motion", "", ""},
+                    {"Tangential Velocity", "Uniform Circular Motion", "", ""},
+                    {"Velocity around a Circle", "Uniform Circular Motion", "", ""},
+                    {"Angular Velocity", "Uniform Circular Motion", "", ""},
+                    {"Angular Velocity", "Uniform Circular Motion", "", ""},
+                    {"Centripetal Acceleration", "Uniform Circular Motion", "", ""},
+                    {"Centripetal Force","Centripetal and Centrifugal Forces", "", ""},
+                    {"Moment of Inertia", "Rotational Motion", "", ""},
+                    {"Torque","Rotational Motion", "", ""},
+                    {"Angular Momentum", "Rotational Motion", "", ""},
             };
 
             for(String[] s: formulas){
+                Log.d("asdf", s[1]);
                 Cursor c = database.rawQuery("SELECT " + DataContract.LessonEntry._ID +
                         " from lesson WHERE " + DataContract.LessonEntry.COLUMN_TITLE +
-                        " = \"" + s[2] + "\"", null);
+                        " = \"" + s[1] + "\"", null);
                 c.moveToFirst();
 
                 ContentValues values = new ContentValues();
                 values.put(DataContract.FormulaEntry.COLUMN_NAME, s[0]);
-                values.put(DataContract.FormulaEntry.COLUMN_VAR, s[1]);
+                //values.put(DataContract.FormulaEntry.COLUMN_VAR, s[1]);
                 values.put(DataContract.FormulaEntry.COLUMN_LESSON_KEY,
                         c.getLong(c.getColumnIndex(DataContract.LessonEntry._ID)));
-                values.put(DataContract.FormulaEntry.COLUMN_FORMULA, s[3]);
-                values.put(DataContract.FormulaEntry.COLUMN_FRAGNAME, s[4]);
+                values.put(DataContract.FormulaEntry.COLUMN_FORMULA, s[2]);
+//                values.put(DataContract.FormulaEntry.COLUMN_FRAGMENT_NAME, s[4]);
 
                 database.insert(DataContract.FormulaEntry.TABLE_NAME, null, values);
+            }
+        }
+    }
+
+    private void initVariables(SQLiteDatabase database) {
+        if(database.isOpen()) {
+            String[][] formulas = {
+                    {"Displacement", "Average Acceleration", "", ""},
+                    {"Displacement", "Initial Velocity","", ""},
+                    {"Displacement", "Final Velocity", "", ""},
+
+                    {"Speed", "Speed", "", ""},
+                    {"Speed", "Distance", "", ""},
+                    {"Speed", "Time", "", ""},
+
+                    {"Velocity", "Velocity", "", ""},
+                    {"Velocity", "Initial Position", "", ""},
+                    {"Velocity", "Final Position", "", ""},
+                    {"Velocity", "Time", "", ""},
+
+                    {"Average Velocity", "Average Velocity", "", ""},
+                    {"Average Velocity", "Initial Position", "", ""},
+                    {"Average Velocity", "Final Position",  "", ""},
+                    {"Average Velocity", "Initial Time","", ""},
+                    {"Average Velocity", "Final Time", "", ""},
+
+                    {"Acceleration", "Acceleration", "", ""},
+                    {"Acceleration", "Total Velocity Change", "", ""},
+                    {"Acceleration", "Time Interval", "", ""},
+
+                    {"Average Acceleration", "Average Acceleration", "", ""},
+                    {"Average Acceleration", "Initial Velocity", "", ""},
+                    {"Average Acceleration", "Final Velocity", "", ""},
+                    {"Average Acceleration", "Initial Time", "", ""},
+                    {"Average Acceleration", "Final Time", "", ""},
+
+                    {"Velocity", "Velocity", "", ""},
+                    {"Velocity", "Initial Velocity", "", ""},
+                    {"Velocity", "Acceleration due to Gravity", "", ""},
+                    {"Velocity", "Time", "", ""},
+
+                    {"Displacement", "Displacement","", ""},
+                    {"Displacement", "Initial Velocity","", ""},
+                    {"Displacement", "Acceleration due to Gravity", "", ""},
+                    {"Displacement", "Time",  "", ""},
+
+                    {"Horizontal Distance", "Horizontal Distance","", ""},
+                    {"Horizontal Distance", "Velocity along the x-axis","", ""},
+                    {"Horizontal Distance", "Time","", ""},
+
+                    {"Horizontal Velocity", "Velocity along the x-axis", "", ""},
+                    {"Horizontal Velocity", "Initial Velocity along the x-axis", "", ""},
+
+                    {"Vertical Distance", "Vertical Distance", "", ""},
+                    {"Vertical Distance", "Initial Velocity along the y-axis", "", ""},
+                    {"Vertical Distance", "Time","", ""},
+                    {"Vertical Distance", "Acceleration due to Gravity","", ""},
+
+                    {"Vertical Velocity", "Vertical Velocity","", ""},
+                    {"Vertical Velocity", "Initial Velocity along the y-axis", "", ""},
+                    {"Vertical Velocity", "Time","", ""},
+                    {"Vertical Velocity", "Acceleration due to Gravity","", ""},
+
+                    {"Time of Flight", "Time of Flight","", ""},
+                    {"Time of Flight", "Initial Velocity","", ""},
+                    {"Time of Flight", "Angle of Trajectory","", ""},
+                    {"Time of Flight", "Acceleration due to Gravity","", ""},
+
+                    {"Maximum Height Reached", "Maximum Height Reached","", ""},
+                    {"Maximum Height Reached", "Initial Velocity",  "", ""},
+                    {"Maximum Height Reached", "Angle of Trajectory", "", ""},
+                    {"Maximum Height Reached", "Acceleration due to Gravity", "", ""},
+
+                    {"Horizontal Range", "Horizontal Range","", ""},
+                    {"Horizontal Range", "Initial Velocity","", ""},
+                    {"Horizontal Range", "Time of Flight", "", ""},
+
+                    {"Friction", "Frictional Force", "", ""},
+                    {"Friction", "Coefficient of Friction", "", ""},
+                    {"Friction", "Normal Force", "", ""},
+
+                    {"Momentum", "Momentum","", ""},
+                    {"Momentum", "Mass", "", ""},
+                    {"Momentum", "Velocity", "", ""},
+
+                    {"Impulse", "Force","", ""},
+                    {"Impulse", "Distance", "", ""},
+                    {"Impulse", "Change in Velocity", "", ""},
+                    {"Impulse", "Time","", ""},
+
+                    {"Conservation of Energy", "Mass",  "", ""},
+                    {"Conservation of Energy", "Final Velocity", "", ""},
+                    {"Conservation of Energy", "Height",  "", ""},
+                    {"Conservation of Energy", "Acceleration due to Gravity", "", ""},
+
+                    {"Work", "Work", "", ""},
+                    {"Work", "Force", "", ""},
+                    {"Work", "Distance", "", ""},
+
+                    {"Kinetic Energy", "Kinetic Energy", "", ""},
+                    {"Kinetic Energy", "Mass", "", ""},
+                    {"Kinetic Energy", "Velocity", "", ""},
+
+                    {"Gravitational Potential Energy", "Potential Energy",  "", ""},
+                    {"Gravitational Potential Energy", "Height", "", ""},
+                    {"Gravitational Potential Energy", "Acceleration due to Gravity", "", ""},
+
+                    {"Spring Potential Energy", "Potential Energy", "", ""},
+                    {"Spring Potential Energy", "Spring Constant", "", ""},
+                    {"Spring Potential Energy", "Spring Displacement", "", ""},
+
+                    {"Total Mechanical Energy", "Total Mechanical Energy", "", ""},
+                    {"Total Mechanical Energy", "Kinetic Energy", "", ""},
+                    {"Total Mechanical Energy", "Potential Energy", "", ""},
+
+                    {"Average Power", "Average Power", "", ""},
+                    {"Average Power", "Amount of Work done", "", ""},
+                    {"Average Power", "Time", "", ""},
+
+                    {"Instantaneous Power", "Instantaneous Power", "", ""},
+                    {"Instantaneous Power", "Amount of Work done", "", ""},
+                    {"Instantaneous Power", "Time", "", ""},
+                    {"Instantaneous Power", "Force",  "", ""},
+                    {"Instantaneous Power", "Path", "", ""},
+                    {"Instantaneous Power", "Angle", "", ""},
+                    {"Instantaneous Power", "Velocity", "", ""},
+
+                    {"Length of Arc", "Length of Arc", "", ""},
+                    {"Length of Arc", "Radius", "", ""},
+                    {"Length of Arc", "Angle",  "", ""},
+
+                    {"Tangential Velocity", "Tangential Velocity", "", ""},
+                    {"Tangential Velocity", "Length of Arc","", ""},
+                    {"Tangential Velocity", "Time",  "", ""},
+
+                    {"Velocity around a Circle", "Velocity around a Circle", "", ""},
+                    {"Velocity around a Circle", "Radius", "", ""},
+                    {"Velocity around a Circle", "Time","", ""},
+
+                    {"Angular Velocity", "Angular Velocity", "", ""},
+                    {"Angular Velocity", "Angel", "", ""},
+                    {"Angular Velocity", "Time","", ""},
+
+                    {"Angular Velocity", "Angular Velocity",  "", ""},
+                    {"Angular Velocity", "Angle",  "", ""},
+                    {"Angular Velocity", "Time", "", ""},
+
+                    {"Centripetal Acceleration", "Centripetal Acceleration", "", ""},
+                    {"Centripetal Acceleration", "Angular Velocity","", ""},
+                    {"Centripetal Acceleration", "Angle", "", ""},
+
+                    {"Centripetal Force", "Centripetal Force", "", ""},
+                    {"Centripetal Force", "Mass", "", ""},
+                    {"Centripetal Force", "Tangential Velocity", "", ""},
+                    {"Centripetal Force", "Radius","", ""},
+
+                    {"Moment of Inertia", "Moment of Inertia", "", ""},
+                    {"Moment of Inertia", "Mass", "", ""},
+                    {"Moment of Inertia", "Distance","", ""},
+
+                    {"Torque", "Torque","", ""},
+                    {"Torque", "Force", "", ""},
+                    {"Torque", "Position",  "", ""},
+
+                    {"Angular Momentum", "Angular Momentum", "", ""},
+                    {"Angular Momentum", "Moment of Inertia", "", ""},
+                    {"Angular Momentum", "Angular Velocity", "", ""},
+            };
+
+            for(String[] s: formulas){
+                Cursor c = database.rawQuery("SELECT " + DataContract.FormulaEntry._ID +
+                        " from formula WHERE " + DataContract.FormulaEntry.COLUMN_NAME +
+                        " = \"" + s[0] + "\"", null);
+                c.moveToFirst();
+
+                ContentValues values = new ContentValues();
+                values.put(DataContract.VariableEntry.COLUMN_FORMULA_KEY,
+                        c.getLong(c.getColumnIndex(DataContract.FormulaEntry._ID)));
+                values.put(DataContract.VariableEntry.COLUMN_NAME, s[1]);
+                values.put(DataContract.VariableEntry.COLUMN_FORMULA, s[2]);
+                values.put(DataContract.VariableEntry.COLUMN_FRAGMENT_NAME, s[3]);
+
+                database.insert(DataContract.VariableEntry.TABLE_NAME, null, values);
             }
         }
     }
