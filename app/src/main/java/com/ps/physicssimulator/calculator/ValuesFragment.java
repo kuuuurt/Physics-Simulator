@@ -4,6 +4,7 @@ package com.ps.physicssimulator.calculator;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,36 +46,36 @@ public class ValuesFragment extends Fragment {
         spnFormula.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                Cursor c = (Cursor)formulaAdap.getItem(i);
-//                String formulaName = c.getString(c.getColumnIndex(DataContract.FormulaEntry
-//                        .COLUMN_NAME));
-//
-//                final SimpleCursorAdapter varAdap = setSpinnerAdapter(
-//                        getActivity().getContentResolver().query(
-//                                DataContract.FormulaEntry.buildFormulaName(formulaName),
-//                                null, null, null, null),
-//                        new String[]{DataContract.FormulaEntry.COLUMN_VAR}
-//                );
-//
-//                Spinner spnVar = (Spinner) rootView.findViewById(R.id.spinner_variable);
-//                spnVar.setAdapter(varAdap);
-//                spnVar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//                    @Override
-//                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                        Cursor c = (Cursor)varAdap.getItem(i);
-//                        String var = c.getString(c.getColumnIndex(DataContract.FormulaEntry
-//                                .COLUMN_VAR));
-//
-//                        Log.d("asdf", var);
-//
-//                        //Load or generate Fields
-//                    }
-//
-//                    @Override
-//                    public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//                    }
-//                });
+                Cursor c = (Cursor)formulaAdap.getItem(i);
+                String formulaName = c.getString(c.getColumnIndex(DataContract.FormulaEntry
+                        .COLUMN_NAME));
+
+                final SimpleCursorAdapter varAdap = setSpinnerAdapter(
+                        getActivity().getContentResolver().query(
+                                DataContract.VariableEntry.buildVariableFormula(formulaName),
+                                null, null, null, null),
+                        new String[]{DataContract.VariableEntry.COLUMN_NAME}
+                );
+
+                Spinner spnVar = (Spinner) rootView.findViewById(R.id.spinner_variable);
+                spnVar.setAdapter(varAdap);
+                spnVar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        Cursor c = (Cursor)varAdap.getItem(i);
+                        String var = c.getString(c.getColumnIndex(DataContract.VariableEntry
+                                .COLUMN_NAME));
+
+                        Log.d("asdf", var);
+
+                        //Load or generate Fields
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
 
             }
 

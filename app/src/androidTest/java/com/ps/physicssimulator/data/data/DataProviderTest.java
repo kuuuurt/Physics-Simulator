@@ -11,7 +11,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.ps.physicssimulator.data.DBHelper;
-import com.ps.physicssimulator.data.DataContract;
 import com.ps.physicssimulator.data.DataContract.ChapterEntry;
 import com.ps.physicssimulator.data.DataContract.ConstantEntry;
 import com.ps.physicssimulator.data.DataContract.FormulaEntry;
@@ -27,6 +26,8 @@ import org.junit.runner.RunWith;
 import java.util.Map;
 import java.util.Set;
 
+import static com.ps.physicssimulator.data.DataContract.CONTENT_AUTHORITY;
+import static com.ps.physicssimulator.data.DataContract.VariableEntry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -53,8 +54,8 @@ public class DataProviderTest {
         try {
             ProviderInfo providerInfo = pm.getProviderInfo(componentName, 0);
             Assert.assertEquals("DataProvider registered with authority: " + providerInfo.authority +
-                    " instead of authority: " + DataContract.CONTENT_AUTHORITY,
-                    providerInfo.authority, DataContract.CONTENT_AUTHORITY);
+                    " instead of authority: " + CONTENT_AUTHORITY,
+                    providerInfo.authority, CONTENT_AUTHORITY);
         } catch (PackageManager.NameNotFoundException e) {
             assertTrue("DataProvider not registered at " + mContext.getPackageName(), false);
         }
@@ -98,6 +99,14 @@ public class DataProviderTest {
         type = mContext.getContentResolver().getType(FormulaEntry.buildFormulaLesson(testVar));
         assertEquals("Uri should return CONTENT_TYPE",
                 FormulaEntry.CONTENT_TYPE, type);
+
+        type = mContext.getContentResolver().getType(VariableEntry.CONTENT_URI);
+        assertEquals("Uri should return CONTENT_TYPE",
+                VariableEntry.CONTENT_TYPE, type);
+
+        type = mContext.getContentResolver().getType(VariableEntry.buildVariableFormula(testVar));
+        assertEquals("Uri should return CONTENT_TYPE",
+                VariableEntry.CONTENT_TYPE, type);
     }
 
     @Test
@@ -140,7 +149,7 @@ public class DataProviderTest {
         ContentValues testValues = new ContentValues();
         testValues.put(LessonEntry.COLUMN_TITLE, "Scalar and Vector Values");
         testValues.put(LessonEntry.COLUMN_CHAPTER_KEY, "1");
-        testValues.put(LessonEntry.COLUMN_DESCRIPTION, "");
+        testValues.put(LessonEntry.COLUMN_DESCRIPTION, "Definition, Distance and Displacement");
         testValues.put(LessonEntry.COLUMN_CONTENT, "");
 
         Cursor lessonCursor = mContext.getContentResolver().query(
@@ -158,8 +167,8 @@ public class DataProviderTest {
     @Test
     public void testBasicFormulaQuery(){
         ContentValues testValues = new ContentValues();
-        testValues.put(FormulaEntry.COLUMN_VAR, "Velocity");
-        testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "2");
+        testValues.put(FormulaEntry.COLUMN_NAME, "Displacement");
+        testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "1");
         testValues.put(FormulaEntry.COLUMN_FORMULA, "");
 
         Cursor formulaCursor = mContext.getContentResolver().query(
@@ -172,6 +181,46 @@ public class DataProviderTest {
 
         validateCursor("testBasicFormulaQuery", formulaCursor, testValues);
         formulaCursor.close();
+    }
+
+    @Test
+    public void testBasicVariableQuery(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(VariableEntry.COLUMN_NAME, "Average Acceleration");
+        testValues.put(VariableEntry.COLUMN_FORMULA_KEY, "1");
+        testValues.put(VariableEntry.COLUMN_FORMULA, "");
+        testValues.put(VariableEntry.COLUMN_FRAGMENT_NAME, "");
+
+        Cursor varCursor  = mContext.getContentResolver().query(
+                VariableEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testBasicVariableQuery", varCursor, testValues);
+        varCursor.close();
+    }
+
+    @Test
+    public void testVariableWithNameQuery(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(VariableEntry.COLUMN_NAME, "Speed");
+        testValues.put(VariableEntry.COLUMN_FORMULA_KEY, "2");
+        testValues.put(VariableEntry.COLUMN_FORMULA, "");
+        testValues.put(VariableEntry.COLUMN_FRAGMENT_NAME, "");
+
+        Cursor varCursor = mContext.getContentResolver().query(
+                VariableEntry.buildVariableFormula("Speed"),
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testVariableWithNameQuery", varCursor, testValues);
+        varCursor.close();
     }
 
     @Test
@@ -194,8 +243,7 @@ public class DataProviderTest {
     @Test
     public void testFormulaWithLessonQuery(){
         ContentValues testValues = new ContentValues();
-        testValues.put(FormulaEntry.COLUMN_NAME, "Velocity");
-        testValues.put(FormulaEntry.COLUMN_VAR, "Velocity");
+        testValues.put(FormulaEntry.COLUMN_NAME, "Speed");
         testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "2");
         testValues.put(FormulaEntry.COLUMN_FORMULA, "");
 
@@ -214,13 +262,12 @@ public class DataProviderTest {
     @Test
     public void testFormulaWithNameQuery(){
         ContentValues testValues = new ContentValues();
-        testValues.put(FormulaEntry.COLUMN_NAME, "Velocity");
-        testValues.put(FormulaEntry.COLUMN_VAR, "Velocity");
-        testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "2");
+        testValues.put(FormulaEntry.COLUMN_NAME, "Displacement");
+        testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "1");
         testValues.put(FormulaEntry.COLUMN_FORMULA, "");
 
         Cursor formulaCursor = mContext.getContentResolver().query(
-                FormulaEntry.buildFormulaName("Displacement"),
+                FormulaEntry.buildFormulaLesson("Scalar and Vector Values"),
                 null,
                 null,
                 null,
@@ -233,9 +280,9 @@ public class DataProviderTest {
 
     @Test
     public void testUpdateConstant(){
-        Cursor c = db.rawQuery("SELECT " + DataContract.ConstantEntry._ID +
+        Cursor c = db.rawQuery("SELECT " + ConstantEntry._ID +
                 " from " + ConstantEntry.TABLE_NAME + " WHERE " +
-                DataContract.ChapterEntry.COLUMN_NAME + " = \"Acceleration of Gravity\"", null);
+                ChapterEntry.COLUMN_NAME + " = \"Acceleration of Gravity\"", null);
         c.moveToFirst();
 
         ContentValues updatedValues = new ContentValues();

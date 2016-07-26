@@ -51,12 +51,6 @@ public class DataProvider extends ContentProvider{
     static{
         lessonQueryBuilder = new SQLiteQueryBuilder();
         lessonQueryBuilder.setTables(DataContract.LessonEntry.TABLE_NAME);
-//        lessonQueryBuilder.setTables(DataContract.LessonEntry.TABLE_NAME + " LEFT OUTER JOIN " +
-//                DataContract.ChapterEntry.TABLE_NAME + " ON " +
-//                DataContract.LessonEntry.TABLE_NAME + "." +
-//                DataContract.LessonEntry.COLUMN_CHAPTER_KEY + " = " +
-//                DataContract.ChapterEntry.TABLE_NAME + "." +
-//                DataContract.ChapterEntry._ID);
 
         constantQueryBuilder = new SQLiteQueryBuilder();
         constantQueryBuilder.setTables(DataContract.ConstantEntry.TABLE_NAME);
@@ -306,9 +300,9 @@ public class DataProvider extends ContentProvider{
             case FORMULA_WITH_LESSON:
                 return DataContract.FormulaEntry.CONTENT_TYPE;
             case VARIABLE:
-                return DataContract.FormulaEntry.CONTENT_TYPE;
+                return DataContract.VariableEntry.CONTENT_TYPE;
             case VARIABLE_WITH_NAME:
-                return DataContract.FormulaEntry.CONTENT_TYPE;
+                return DataContract.VariableEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

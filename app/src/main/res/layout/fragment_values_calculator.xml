@@ -6,24 +6,7 @@
     android:gravity="center"
     tools:context="com.ps.physicssimulator.calculator.ValuesFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/container_spinner"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
 
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner_formula" />
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner_variable" />
-
-    </LinearLayout>
 
 
 </LinearLayout>

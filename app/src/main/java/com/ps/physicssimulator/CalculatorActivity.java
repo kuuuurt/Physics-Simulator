@@ -2,9 +2,9 @@ package com.ps.physicssimulator;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
@@ -53,17 +53,53 @@ public class CalculatorActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i,
                                                long l) {
                         Cursor c = (Cursor)lessonsAdap.getItem(i);
-                        String fragName = c.getString(c.getColumnIndex(DataContract.LessonEntry
-                            .COLUMN_CALCULATOR_FRAGMENT_NAME));
+                        String lesson = c.getString(c.getColumnIndex(DataContract.LessonEntry
+                            .COLUMN_TITLE));
 
-                        Bundle args = new Bundle();
-                        args.putString("Lesson", c.getString(c.getColumnIndex(
-                                DataContract.LessonEntry.COLUMN_TITLE)));
+                        final SimpleCursorAdapter formulaAdap = setSpinnerAdapter(
+                                CalculatorActivity.this.getContentResolver().query(
+                                        DataContract.FormulaEntry.buildFormulaLesson(lesson),
+                                        null, null, null, null),
+                                new String[]{DataContract.FormulaEntry.COLUMN_NAME}
+                        );
 
-                        Fragment frag = Fragment.instantiate(CalculatorActivity.this, fragName);
-                        frag.setArguments(args);
-                        getSupportFragmentManager().beginTransaction().replace(
-                                R.id.fragment_calculator, frag).addToBackStack(null).commit();
+                        Spinner spnFormula = (Spinner) findViewById(R.id.spinner_formula);
+                        spnFormula.setAdapter(formulaAdap);
+                        spnFormula.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                Cursor c = (Cursor)formulaAdap.getItem(i);
+                                String formulaName = c.getString(c.getColumnIndex(DataContract.FormulaEntry
+                                        .COLUMN_NAME));
+
+                                final SimpleCursorAdapter varAdap = setSpinnerAdapter(
+                                        CalculatorActivity.this.getContentResolver().query(
+                                                DataContract.VariableEntry.buildVariableFormula(formulaName),
+                                                null, null, null, null),
+                                        new String[]{DataContract.VariableEntry.COLUMN_NAME}
+                                );
+
+                                Spinner spnVar = (Spinner) findViewById(R.id.spinner_variable);
+                                spnVar.setAdapter(varAdap);
+                                spnVar.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                        Cursor c = (Cursor)varAdap.getItem(i);
+                                        String var = c.getString(c.getColumnIndex(DataContract.VariableEntry
+                                                .COLUMN_NAME));
+
+                                        Log.d("asdf", var);
+
+                                        //Load or generate Fields
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> adapterView) {}
+                                });
+                            }
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {}
+                        });
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {}

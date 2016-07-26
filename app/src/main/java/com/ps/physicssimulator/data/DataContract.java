@@ -118,7 +118,7 @@ public class DataContract   {
 
     public static final class VariableEntry implements BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_FORMULA).build();
+                .appendPath(PATH_VARIABLE).build();
 
         public static final String TABLE_NAME = "variable";
 
@@ -126,6 +126,10 @@ public class DataContract   {
         public static final String COLUMN_FORMULA_KEY = "formula_id";
         public static final String COLUMN_FORMULA = "formula";
         public static final String COLUMN_FRAGMENT_NAME = "fragname";
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" +
+                        PATH_VARIABLE;
 
         public static Uri buildVariableUri(long id){
             return ContentUris.withAppendedId(CONTENT_URI, id);

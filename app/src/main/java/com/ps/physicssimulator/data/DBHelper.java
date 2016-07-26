@@ -44,7 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_CONSTANT_TABLE = "CREATE TABLE " +
                 DataContract.ConstantEntry.TABLE_NAME + " (" +
                 DataContract.ConstantEntry._ID + " INTEGER PRIMARY KEY, " +
-                DataContract.ConstantEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
+                DataContract.ConstantEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 DataContract.ConstantEntry.COLUMN_DEFAULT + " REAL UNIQUE NOT NULL, " +
                 DataContract.ConstantEntry.COLUMN_CURRENT + " REAL NOT NULL);";
 
@@ -60,7 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_VARIABLE_TABLE = "CREATE TABLE " +
                 DataContract.VariableEntry.TABLE_NAME + " (" +
                 DataContract.VariableEntry._ID + " INTEGER PRIMARY KEY, " +
-                DataContract.VariableEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
+                DataContract.VariableEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 DataContract.VariableEntry.COLUMN_FORMULA_KEY + " INTEGER NOT NULL, " +
                 DataContract.VariableEntry.COLUMN_FRAGMENT_NAME + " TEXT, " +
 //                DataContract.VariableEntry.COLUMN_FRAGMENT_NAME + " TEXT NOT NULL, " +
@@ -168,7 +168,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put(DataContract.LessonEntry.COLUMN_CONTENT, s[3]);
                 values.put(DataContract.LessonEntry.COLUMN_LOGO, s[4]);
                 values.put(DataContract.LessonEntry.COLUMN_LESSON_FRAGMENT_NAME, s[5]);
-//                values.put(DataContract.LessonEntry.COLUMN_CALCFRAGNAME, s[6]);
 
                 database.insert(DataContract.LessonEntry.TABLE_NAME, null, values);
             }
@@ -242,7 +241,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 ContentValues values = new ContentValues();
                 values.put(DataContract.FormulaEntry.COLUMN_NAME, s[0]);
-                //values.put(DataContract.FormulaEntry.COLUMN_VAR, s[1]);
                 values.put(DataContract.FormulaEntry.COLUMN_LESSON_KEY,
                         c.getLong(c.getColumnIndex(DataContract.LessonEntry._ID)));
                 values.put(DataContract.FormulaEntry.COLUMN_FORMULA, s[2]);
