@@ -186,11 +186,10 @@ public class DataProviderTest {
     @Test
     public void testBasicVariableQuery(){
         ContentValues testValues = new ContentValues();
-        testValues.put(VariableEntry.COLUMN_NAME, "Average Acceleration");
+        testValues.put(VariableEntry.COLUMN_NAME, "Displacement");
         testValues.put(VariableEntry.COLUMN_FORMULA_KEY, "1");
-        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
-        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
-        testValues.put(VariableEntry.COLUMN_FRAGMENT_NAME, "");
+//        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
+//        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
 
         Cursor varCursor  = mContext.getContentResolver().query(
                 VariableEntry.CONTENT_URI,
@@ -209,9 +208,8 @@ public class DataProviderTest {
         ContentValues testValues = new ContentValues();
         testValues.put(VariableEntry.COLUMN_NAME, "Speed");
         testValues.put(VariableEntry.COLUMN_FORMULA_KEY, "2");
-        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
-        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
-        testValues.put(VariableEntry.COLUMN_FRAGMENT_NAME, "");
+        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "$$s = {d \\over t}$$");
+        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "d / t");
 
         Cursor varCursor = mContext.getContentResolver().query(
                 VariableEntry.buildVariableFormula("Speed"),
@@ -247,7 +245,7 @@ public class DataProviderTest {
         ContentValues testValues = new ContentValues();
         testValues.put(FormulaEntry.COLUMN_NAME, "Speed");
         testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "2");
-        testValues.put(FormulaEntry.COLUMN_FORMULA, "");
+        testValues.put(FormulaEntry.COLUMN_FORMULA, "$$s = {d \\over t}$$");
 
         Cursor formulaCursor = mContext.getContentResolver().query(
                 FormulaEntry.buildFormulaLesson("Velocity"),

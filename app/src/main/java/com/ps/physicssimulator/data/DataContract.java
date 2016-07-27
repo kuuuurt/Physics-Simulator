@@ -127,7 +127,7 @@ public class DataContract   {
         public static final String COLUMN_FORMULA_DISPLAY = "formula_display";
         public static final String COLUMN_SYMBOL = "symbol";
         public static final String COLUMN_FORMULA_COMPUTE = "formula_compute";
-        public static final String COLUMN_FRAGMENT_NAME = "fragname";
+        public static final String COLUMN_UNIT = "unit";
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" +
