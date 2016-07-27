@@ -4,7 +4,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,6 +16,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 
 import com.ps.physicssimulator.data.DataContract;
+
+import net.objecthunter.exp4j.ExpressionBuilder;
 
 import io.github.kexanie.library.MathView;
 
@@ -70,18 +74,16 @@ public class CalculatorActivity extends AppCompatActivity {
 
                         Spinner spnFormula = (Spinner) findViewById(R.id.spinner_formula);
                         spnFormula.setAdapter(formulaAdap);
-                        spnFormula.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        spnFormula.setOnItemSelectedListener(new AdapterView
+                                .OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> adapterView, View view,
                                                        int i, long l) {
                                 Cursor c = (Cursor)formulaAdap.getItem(i);
-                                String formulaName = c.getString(c.getColumnIndex(
-                                        DataContract.FormulaEntry.COLUMN_NAME));
-                                String formula = c.getString(c.getColumnIndex(
-                                        DataContract.FormulaEntry.COLUMN_FORMULA));
+                                String formulaName = c.getString(c.getColumnIndex(DataContract.FormulaEntry.COLUMN_NAME));
 
-                                MathView txtFormula = (MathView)findViewById(R.id.text_formula);
-                                txtFormula.setText(formula);
+                                MathView txtFormula = (MathView)findViewById(R.id.text_main_formula);
+                                txtFormula.setText(c.getString(c.getColumnIndex(DataContract.FormulaEntry.COLUMN_FORMULA)));
 
 
                                 final SimpleCursorAdapter varAdap = setSpinnerAdapter(
@@ -96,34 +98,60 @@ public class CalculatorActivity extends AppCompatActivity {
                                 spnVar.setOnItemSelectedListener(
                                         new AdapterView.OnItemSelectedListener() {
                                     @Override
-                                    public void onItemSelected(AdapterView<?> adapterView,
-                                                               View view, int i, long l) {
+                                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                        Cursor selected = (Cursor)varAdap.getItem(i);
+
+                                        MathView txtFormula = (MathView)findViewById(R.id.text_formula);
+                                        txtFormula.setText(selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_FORMULA_DISPLAY)));
+
+                                        ExpressionBuilder e = new ExpressionBuilder(selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_FORMULA_COMPUTE)));
+
                                         Cursor c = varAdap.getCursor();
                                         c.moveToFirst();
+//                                        c.move(i);
+
+//                                        MathView txtFormula = (MathView)findViewById(R.id.text_formula);
+//                                        txtFormula.setText(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_FORMULA)));
 
                                         LinearLayout linearLayout = (LinearLayout)
                                                 findViewById(R.id.input_container);
                                         linearLayout.removeAllViews();
 
+
+
                                         for(int k = 0; k < c.getCount(); k++){
                                             if(k != i){
-                                                EditText txtInput =
-                                                        new EditText(CalculatorActivity.this);
-                                                txtInput.setLayoutParams(new ViewGroup
-                                                        .LayoutParams(
+                                                EditText txtInput = new EditText(CalculatorActivity.this);
+                                                txtInput.setLayoutParams(new ViewGroup.LayoutParams(
                                                         ViewGroup.LayoutParams.MATCH_PARENT,
                                                         ViewGroup.LayoutParams.WRAP_CONTENT
                                                 ));
-                                                txtInput.setHint(c.getString(c.getColumnIndex(
-                                                        DataContract.VariableEntry
-                                                                .COLUMN_NAME)));
+                                                txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)));
                                                 txtInput.setInputType(InputType.TYPE_CLASS_NUMBER);
                                                 txtInput.setEms(10);
                                                 txtInput.setPadding(16, 16, 16, 16);
+                                                txtInput.addTextChangedListener(new TextWatcher() {
+                                                    @Override
+                                                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void afterTextChanged(Editable editable) {
+
+                                                    }
+                                                });
                                                 linearLayout.addView(txtInput);
                                             }
                                             c.moveToNext();
                                         }
+
+
 
                                     }
 

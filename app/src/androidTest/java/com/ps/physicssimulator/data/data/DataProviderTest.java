@@ -188,7 +188,8 @@ public class DataProviderTest {
         ContentValues testValues = new ContentValues();
         testValues.put(VariableEntry.COLUMN_NAME, "Average Acceleration");
         testValues.put(VariableEntry.COLUMN_FORMULA_KEY, "1");
-        testValues.put(VariableEntry.COLUMN_FORMULA, "");
+        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
+        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
         testValues.put(VariableEntry.COLUMN_FRAGMENT_NAME, "");
 
         Cursor varCursor  = mContext.getContentResolver().query(
@@ -208,7 +209,8 @@ public class DataProviderTest {
         ContentValues testValues = new ContentValues();
         testValues.put(VariableEntry.COLUMN_NAME, "Speed");
         testValues.put(VariableEntry.COLUMN_FORMULA_KEY, "2");
-        testValues.put(VariableEntry.COLUMN_FORMULA, "");
+        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
+        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
         testValues.put(VariableEntry.COLUMN_FRAGMENT_NAME, "");
 
         Cursor varCursor = mContext.getContentResolver().query(

@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             auto:engine="MathJax"
-            android:id="@+id/text_formula">
+            android:id="@+id/text_main_formula">
 
         </io.github.kexanie.library.MathView>
 
@@ -63,6 +63,16 @@
 
 
         </LinearLayout>
+
+        <io.github.kexanie.library.MathView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:engine="MathJax"
+            android:id="@+id/text_formula">
+
+        </io.github.kexanie.library.MathView>
+
+
 
         <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"

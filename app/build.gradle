@@ -40,6 +40,7 @@ dependencies {
     compile 'com.android.support:design:24.1.1'
     compile 'com.android.support:support-v4:24.1.1'
     compile 'io.github.kexanie.library:MathView:0.0.6'
+    compile 'net.objecthunter:exp4j:0.4.7'
 }
 
 
