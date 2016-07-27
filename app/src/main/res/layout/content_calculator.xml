@@ -46,21 +46,13 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <io.github.kexanie.library.MathView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            auto:engine="MathJax"
+            android:id="@+id/text_formula">
 
-            <io.github.kexanie.library.MathView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                auto:engine="MathJax"
-                android:id="@+id/text_formula">
-
-            </io.github.kexanie.library.MathView>
-
-        </LinearLayout>
+        </io.github.kexanie.library.MathView>
 
         <LinearLayout
             android:layout_width="match_parent"
