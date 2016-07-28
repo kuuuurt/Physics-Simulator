@@ -40,6 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.ConstantEntry.TABLE_NAME + " (" +
                 DataContract.ConstantEntry._ID + " INTEGER PRIMARY KEY, " +
                 DataContract.ConstantEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                DataContract.ConstantEntry.COLUMN_VARIABLE_KEY + " INTEGER NOT NULL, " +
                 DataContract.ConstantEntry.COLUMN_DEFAULT + " REAL UNIQUE NOT NULL, " +
                 DataContract.ConstantEntry.COLUMN_CURRENT + " REAL NOT NULL);";
 

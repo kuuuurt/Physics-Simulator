@@ -153,6 +153,7 @@ public class DataContract   {
         public static final String TABLE_NAME = "constant";
 
         public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_VARIABLE_KEY = "variable_id";
         public static final String COLUMN_DEFAULT = "def";
         public static final String COLUMN_CURRENT = "current";
 

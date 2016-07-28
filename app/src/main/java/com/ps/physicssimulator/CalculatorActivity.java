@@ -14,7 +14,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
@@ -36,7 +35,6 @@ public class CalculatorActivity extends AppCompatActivity {
     static String currentFormula;
     static String variableToSolve;
     static String[][] values;
-    static Button btnCalc;
 
 
     @Override
@@ -78,6 +76,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
                 Spinner spnLessons = (Spinner) findViewById(R.id.spinner_lessons);
                 spnLessons.setAdapter(lessonsAdap);
+                spnLessons.setSelection(0);
                 spnLessons.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i,
@@ -95,6 +94,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
                         Spinner spnFormula = (Spinner) findViewById(R.id.spinner_formula);
                         spnFormula.setAdapter(formulaAdap);
+                        spnFormula.setSelection(0);
                         spnFormula.setOnItemSelectedListener(new AdapterView
                                 .OnItemSelectedListener() {
                             @Override
@@ -116,6 +116,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
                                 Spinner spnVar = (Spinner) findViewById(R.id.spinner_variable);
                                 spnVar.setAdapter(varAdap);
+                                spnVar.setSelection(0);
                                 spnVar.setOnItemSelectedListener(
                                         new AdapterView.OnItemSelectedListener() {
                                     @Override
@@ -131,12 +132,6 @@ public class CalculatorActivity extends AppCompatActivity {
 
                                         MathView txtFormula = (MathView)findViewById(R.id.text_formula);
                                         txtFormula.setText(formula);
-
-
-
-
-                                        MathView txtSub = (MathView)findViewById(R.id.text_substitute);
-                                        txtSub.setText(formula);
 
                                         currentFormula = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_FORMULA_COMPUTE));
                                         variableToSolve = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL));
@@ -198,6 +193,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                     1.0f
                                             ));
                                             layoutInput.setOrientation(OrientationHelper.HORIZONTAL);
+                                            layoutInput.setPadding(0,8,0,8);
                                             layoutInput.setGravity(Gravity.CENTER_HORIZONTAL);
                                             try{
                                                 layoutInput.addView(inputFields.get(j++));
@@ -207,7 +203,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                             }
                                             linearLayout.addView(layoutInput);
                                         }
-
+                                        substituteValues();
                                         expression = expressionBuilder.build();
                                     }
 
@@ -222,19 +218,13 @@ public class CalculatorActivity extends AppCompatActivity {
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {}
                 });
-                spnLessons.setSelection(1);
+                //spnLessons.setSelection(1);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
-        btnCalc = (Button)findViewById(R.id.button_calculate);
-        btnCalc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculate();
-            }
-        });
+        spnChapters.setSelection(1);
     }
 
     public void calculate(){
@@ -288,25 +278,14 @@ public class CalculatorActivity extends AppCompatActivity {
     public TextWatcher createTextWatcher(final String variable){
         return new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
                     values[findVariableIndex(variable)][2] = charSequence.toString();
-                    if(checkValues()){
-                        btnCalc.setEnabled(true);
-                    } else {
-                        btnCalc.setEnabled(false);
-                    }
-                    //values.put(variable, Double.parseDouble();
-                    //expression.setVariable(variable, Double.parseDouble(charSequence.toString()));
-
                 } catch (Exception ex){
                     values[findVariableIndex(variable)][2] = null;
-                    btnCalc.setEnabled(false);
                 }
                 substituteValues();
             }
@@ -315,6 +294,8 @@ public class CalculatorActivity extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 if(checkValues()){
                     calculate();
+                } else {
+                    resetSteps();
                 }
             }
         };
