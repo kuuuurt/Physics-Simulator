@@ -56,15 +56,22 @@
             <io.github.kexanie.library.MathView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                auto:engine="MathJax"
+                android:layout_weight="0.4"
+                auto:engine="KaTeX"
                 android:id="@+id/text_main_formula"/>
+
+            <io.github.kexanie.library.MathView
+                android:id="@+id/text_arrow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                auto:engine="KaTeX"/>
 
             <io.github.kexanie.library.MathView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                auto:engine="MathJax"
+                android:layout_weight="0.4"
+                auto:engine="KaTeX"
                 android:id="@+id/text_formula"/>
 
         </LinearLayout>

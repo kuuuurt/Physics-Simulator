@@ -23,7 +23,7 @@ import com.ps.physicssimulator.data.DataContract;
 import com.ps.physicssimulator.utils.ExpressionBuilderModified;
 import com.ps.physicssimulator.utils.ExpressionModified;
 
-import java.util.Map;
+import java.util.List;
 
 import io.github.kexanie.library.MathView;
 
@@ -52,6 +52,9 @@ public class CalculatorActivity extends AppCompatActivity {
                     null, null, null, null),
             new String[]{DataContract.ChapterEntry.COLUMN_NAME}
         );
+
+        MathView txtArrow = (MathView)findViewById(R.id.text_arrow);
+        txtArrow.setText("$$\\Rightarrow$$");
 
 
 
@@ -127,6 +130,9 @@ public class CalculatorActivity extends AppCompatActivity {
                                         MathView txtFormula = (MathView)findViewById(R.id.text_formula);
                                         txtFormula.setText(formula);
 
+
+
+
                                         MathView txtSub = (MathView)findViewById(R.id.text_substitute);
                                         txtSub.setText(formula);
 
@@ -183,7 +189,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                         ViewGroup.LayoutParams.WRAP_CONTENT,
                                                         0.3f
                                                 ));
-                                                txtUnit.setEngine(MathView.Engine.MATHJAX);
+                                                txtUnit.setEngine(MathView.Engine.KATEX);
                                                 txtUnit.setText(unit);
 
                                                 LinearLayout webViewCenterHack = new LinearLayout(CalculatorActivity.this);
@@ -239,9 +245,8 @@ public class CalculatorActivity extends AppCompatActivity {
                 for(String[] s : values){
                     expression.setVariable(s[0], Double.parseDouble(s[2]), s[1]);
                 }
-                Map<String[], String> results = expression.evaluate();
-                Object[] res = results.keySet().toArray();
-                Object[] form = results.values().toArray();
+                List<String> results = expression.evaluate();
+                Object[] steps = results.toArray();
 
                 MathView txtSub = (MathView) findViewById(R.id.text_substitute);
 
@@ -249,23 +254,23 @@ public class CalculatorActivity extends AppCompatActivity {
 
                 LinearLayout linearLayout = (LinearLayout)findViewById(R.id.steps_container);
 
-                for(int i = results.size()-1; i >= 0 ; i--){
+                for(int i = 0; i < steps.length ; i++){
                     MathView txtStep = new MathView(CalculatorActivity.this, null);
                     txtStep.setLayoutParams(new LinearLayout.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT
                     ));
-                    txtStep.setEngine(MathView.Engine.MATHJAX);
-                    String result[] = (String[])res[i];
+                    txtStep.setEngine(MathView.Engine.KATEX);
+                    String result[] = (String[])steps[i];
                     if(Double.parseDouble(result[0].toString()) % 1 == 0){
                         result[0] = result[0].replace(".0", "");
                     }
 
-                    String strForm = form[i].toString();
+                    String strForm = result[2].toString();
                     if(formulaDisplay.contains("(" + strForm + ")")){
                         formulaDisplay = formulaDisplay.replace("(" + strForm + ")", strForm);
                     }
-                    if(i == 0) {
+                    if(i == steps.length-1) {
                         formulaDisplay = formulaDisplay.replace(strForm, result[0] + "{" + result[1] + "}");
                     } else {
                         formulaDisplay = formulaDisplay.replace(strForm, result[0] + result[1]);

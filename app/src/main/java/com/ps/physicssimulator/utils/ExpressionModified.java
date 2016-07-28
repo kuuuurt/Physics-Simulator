@@ -154,9 +154,9 @@ public class ExpressionModified {
 
 
 
-    public Map<String[], String> evaluate() {
+    public List<String> evaluate() {
         final ArrayStack output = new ArrayStack();
-        Map<String[], String> steps = new HashMap<>();
+        List steps = new ArrayList<String>();
 
         for (int i = 0; i < tokens.length; i++) {
             Token t = tokens[i];
@@ -196,7 +196,7 @@ public class ExpressionModified {
 
                     String formula = strLeftArg + leftUnit + " " + getFormattedSymbol(op.getOperator().getSymbol()) + " " + strRightArg + rightUnit;
                     String unit = getUnit(leftUnit, op.getOperator().getSymbol(), rightUnit);
-                    steps.put(new String[]{String.valueOf(res), unit}, formula);
+                    steps.add(new String[]{String.valueOf(res), unit, formula} );
 
                     output.push(unit);
                     output.push(String.valueOf(res));
@@ -205,7 +205,7 @@ public class ExpressionModified {
                     double arg = Double.parseDouble(output.pop());
                     double res = op.getOperator().apply(arg);
                     output.push(String.valueOf(res));
-                    steps.put(new String[]{String.valueOf(res), ""}, "");
+                    steps.add(new String[]{String.valueOf(res), "", ""});
                 }
             } else if (t.getType() == Token.TOKEN_FUNCTION) {
                 FunctionToken func = (FunctionToken) t;
@@ -246,33 +246,149 @@ public class ExpressionModified {
     }
 
     public String getUnit(String left, String op, String right){
-        switch (op){
+        boolean leftIsFrac = left.contains("\\over"), rightIsFrac = right.contains("\\over");
+        String leftUnits[] = null, rightUnits[] = null;
+        String num[] = {"1", "1"}, den[] = {"1", "1"};
+        switch (op) {
             case "/":
-                if(left.equals(right)){
-                    return "";
-                } else {
-                    return left + "\\over" + right;
+                if (left.equals(right)) {
+                    return "1";
+                } else if(right.equals("1")){
+                    return left;
+                } else if(left.equals("1")){
+                    return "1 \\over " + right;
+                } else if (leftIsFrac || rightIsFrac) {
+
+                    left = left.replace("{", "").replace("}", "");
+                    right = right.replace("{", "").replace("}", "");
+
+                    num[0] = left;
+                    den[1] = right;
+
+                    if(rightIsFrac) {
+                        rightUnits = right.split(" ");
+                        num[1] = rightUnits[2];
+                        den[1] = rightUnits[0];
+                    }
+                    String rightSide = num[1] + " \\over " + den[1];
+                    return "{" + getUnit(left, "*", rightSide) + "}";
+                } else if(left.contains("^") || right.contains("^")) {
+                    if(left.contains("^"))
+                        leftUnits = left.split("\\^");
+                    if(right.contains("^"))
+                        rightUnits = right.split("\\^");
+                    try {
+                        if (leftUnits[0].equals(rightUnits[0])) {
+                            int exponentLeft = Integer.parseInt(leftUnits[1]);
+                            int exponentRight = Integer.parseInt(rightUnits[1]);
+                            if (exponentLeft > exponentRight)
+                                return leftUnits[0] + "^" + (exponentLeft - exponentRight);
+                            else if (exponentLeft < exponentRight)
+                                return "1 \\over " + rightUnits[0] + "^" + (exponentLeft - exponentRight);
+                            else
+                                return leftUnits[0];
+
+                        }
+                    } catch (Exception ex){
+                        try {
+                            if (leftUnits[0].equals(right)) {
+                                int exponent = Integer.parseInt(leftUnits[1]) - 1;
+                                if(exponent > 1)
+                                    return leftUnits[0] + "^" + exponent;
+                                else
+                                    return leftUnits[0];
+                            }
+                        } catch (Exception ex2){
+                            if (rightUnits[0].equals(left)) {
+                                int exponent = Integer.parseInt(rightUnits[1]) - 1;
+                                if(exponent > 1)
+                                    return "1 \\over " + rightUnits[0] + "^" + exponent;
+                                else
+                                    return "1 \\over " + rightUnits[0];
+                            }
+                        }
+                    }
                 }
+                return left + " \\over " + right;
+
             case "*":
-                if(left.equals(right)){
-                    return "left^2";
-                } else {
-                    return left + right;
+                if(left.equals(right)) {
+                    return "{" + left + "^2}";
+                } else if(left.equals("1")) {
+                    return right;
+                } else if(right.equals("1")) {
+                    return left;
+                } else if (leftIsFrac || rightIsFrac) {
+
+                    left = left.replace("{","").replace("}", "");
+                    right = right.replace("{","").replace("}", "");
+
+                    num[0] = left;
+                    num[1] = right;
+
+                    if(leftIsFrac) {
+                        leftUnits = left.split(" ");
+                        num[0] = leftUnits[0];
+                        den[0] = leftUnits[2];
+                    }
+                    if(rightIsFrac) {
+                        rightUnits = right.split(" ");
+                        num[1] = rightUnits[0];
+                        den[1] = rightUnits[2];
+                    }
+
+                    String temp = "";
+                    for(int i = 0; i < num.length; i++){
+                        for(int k = 0; k < den.length; k++) {
+                            if(!num[i].equals("1") && !den[k].equals("1")) {
+                                temp = getUnit(num[i], "/", den[k]);
+                                if (temp.contains("\\over")) {
+                                    String tempArr[] = temp.split(" ");
+                                    num[i] = tempArr[0];
+                                    den[k] = tempArr[2];
+                                } else {
+                                    num[i] = temp;
+                                    den[k] = temp;
+                                }
+                            }
+                        }
+                    }
+                    String leftSide = "1", rightSide = "1";
+                    if(num[0].equals("1") ^ num[1].equals("1"))
+                        leftSide = getUnit(num[0], "*", num[1]);
+                    if(den[0].equals("1") ^ den[1].equals("1"))
+                        rightSide = getUnit(den[0], "*", den[1]);
+                    return "{" + getUnit(leftSide, "/", rightSide) + "}";
+
+                } else if(left.contains("^")) {
+                    leftUnits = left.split("\\^");
+                    if(leftUnits[0].equals(right)){
+                        int exponent = Integer.parseInt(leftUnits[1]) + 1;
+                        if(exponent > 1)
+                            return leftUnits[0] + "^" + exponent;
+                    }
+                } else if(right.contains("^")) {
+                    rightUnits = right.split("\\^");
+                    if(rightUnits[0].equals(left)){
+                        int exponent = Integer.parseInt(rightUnits[1]) + 1;
+                        return rightUnits[0] + "^" + exponent;
+                    }
                 }
+                return left + right;
             case "+":
                 if(left.equals(right)){
                     return left;
-                } else {
-                    return left + " + " + right;
                 }
+                return left + " + " + right;
+
             case "-":
                 if(left.equals(right)){
                     return left;
-                } else {
-                    return left + " - " + right;
                 }
+                return left + " - " + right;
             default:
                 return "Error";
         }
     }
+
 }
