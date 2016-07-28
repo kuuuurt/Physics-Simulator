@@ -50,26 +50,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:weightSum="1">
+
 
             <io.github.kexanie.library.MathView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-
+                android:layout_weight="0.45"
                 auto:engine="KaTeX"
                 android:id="@+id/text_main_formula"/>
 
             <io.github.kexanie.library.MathView
                 android:id="@+id/text_arrow"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.1"
                 auto:engine="KaTeX"/>
 
+
             <io.github.kexanie.library.MathView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.45"
                 auto:engine="KaTeX"
                 android:id="@+id/text_formula"/>
+
+
+
+
+
 
         </LinearLayout>
 
