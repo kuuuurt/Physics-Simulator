@@ -154,7 +154,7 @@ public class ExpressionBuilderModified {
             }
         }
         return new ExpressionModified(ShuntingYard.convertToRPN(this.expression, this.userFunctions, this.userOperators, this.variableNames),
-                this.userFunctions.keySet());
+                 this.userFunctions.keySet());
     }
 
 }

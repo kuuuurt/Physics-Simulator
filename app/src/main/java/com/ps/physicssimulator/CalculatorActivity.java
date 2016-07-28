@@ -23,9 +23,6 @@ import com.ps.physicssimulator.data.DataContract;
 import com.ps.physicssimulator.utils.ExpressionBuilderModified;
 import com.ps.physicssimulator.utils.ExpressionModified;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import io.github.kexanie.library.MathView;
@@ -34,11 +31,9 @@ public class CalculatorActivity extends AppCompatActivity {
 
     static ExpressionBuilderModified expressionBuilder;
     static ExpressionModified expression;
-    static String resultUnit;
     static String currentFormula;
     static String variableToSolve;
     static String[][] values;
-    static Button btnSteps;
     static Button btnCalc;
 
 
@@ -122,6 +117,8 @@ public class CalculatorActivity extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                                         Cursor selected = (Cursor)varAdap.getItem(i);
 
+                                        resetSteps();
+
                                         MathView txtResult = (MathView)findViewById(R.id.text_result);
                                         txtResult.setText("");
 
@@ -133,7 +130,6 @@ public class CalculatorActivity extends AppCompatActivity {
                                         MathView txtSub = (MathView)findViewById(R.id.text_substitute);
                                         txtSub.setText(formula);
 
-                                        resultUnit = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_UNIT));
                                         currentFormula = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_FORMULA_COMPUTE));
                                         variableToSolve = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL));
                                         expressionBuilder = new ExpressionBuilderModified(currentFormula);
@@ -146,8 +142,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                         values = new String[c.getCount() - 1][3];
                                         int varCtr = 0;
 
-                                        LinearLayout linearLayout = (LinearLayout)
-                                                findViewById(R.id.input_container);
+                                        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.input_container);
                                         linearLayout.removeAllViews();
 
                                         for(int k = 0; k < c.getCount(); k++){
@@ -240,50 +235,46 @@ public class CalculatorActivity extends AppCompatActivity {
         btnCalc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MathView txtResult = (MathView)findViewById(R.id.text_result);
-                if(checkValues()) {
-                    for(String[] s : values){
-                        expression.setVariable(s[0], Double.parseDouble(s[2]));
-                    }
-                    Map<String, Double> results = expression.evaluate();
-                    Object[] rep = results.keySet().toArray();
-                    Object[] res = results.values().toArray();
-
-                    String formula = currentFormula;
-
-                    for(String[] s : values){
-                        formula = formula.replace(s[0], s[2]);
-                    }
-
-                    LinearLayout linearLayout = (LinearLayout)findViewById(R.id.steps_container);
-
-                    for(int i = results.size()-1; i >= 0; i--){
-                        MathView txtStep = new MathView(CalculatorActivity.this, null);
-                        txtStep.setLayoutParams(new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                        ));
-                        txtStep.setEngine(MathView.Engine.MATHJAX);
-                        String result = res[i].toString();
-                        if(Double.parseDouble(res[i].toString()) % 1 == 0){
-                            result = result.replace(".0", "");
-                        }
-                        if(formula.contains("(" + rep[i].toString() + ")")){
-                            formula = formula.replace("(" + rep[i].toString() + ")", rep[i].toString());
-                        }
-
-                        formula = formula.replace(rep[i].toString(), result);
-                        if(i == 0){
-                            formula += resultUnit; //Format unit
-                        }
-                        txtStep.setText("$$" + variableToSolve + " = {" + formula + "}$$");
-                        linearLayout.addView(txtStep);
-                    }
-
-                    //txtResult.setText("$$Result: " + String.valueOf(expression.evaluate()) + resultUnit.replace("\\(", "{").replace("\\)", "}") + "$$");
-                } else {
-                    //display error not all values set
+                resetSteps();
+                for(String[] s : values){
+                    expression.setVariable(s[0], Double.parseDouble(s[2]), s[1]);
                 }
+                Map<String[], String> results = expression.evaluate();
+                Object[] res = results.keySet().toArray();
+                Object[] form = results.values().toArray();
+
+                MathView txtSub = (MathView) findViewById(R.id.text_substitute);
+
+                String formulaDisplay = txtSub.getText();
+
+                LinearLayout linearLayout = (LinearLayout)findViewById(R.id.steps_container);
+
+                for(int i = results.size()-1; i >= 0 ; i--){
+                    MathView txtStep = new MathView(CalculatorActivity.this, null);
+                    txtStep.setLayoutParams(new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                    ));
+                    txtStep.setEngine(MathView.Engine.MATHJAX);
+                    String result[] = (String[])res[i];
+                    if(Double.parseDouble(result[0].toString()) % 1 == 0){
+                        result[0] = result[0].replace(".0", "");
+                    }
+
+                    String strForm = form[i].toString();
+                    if(formulaDisplay.contains("(" + strForm + ")")){
+                        formulaDisplay = formulaDisplay.replace("(" + strForm + ")", strForm);
+                    }
+                    if(i == 0) {
+                        formulaDisplay = formulaDisplay.replace(strForm, result[0] + "{" + result[1] + "}");
+                    } else {
+                        formulaDisplay = formulaDisplay.replace(strForm, result[0] + result[1]);
+                    }
+
+                    txtStep.setText(formulaDisplay);
+                    linearLayout.addView(txtStep);
+                }
+
             }
         });
     }
@@ -337,68 +328,6 @@ public class CalculatorActivity extends AppCompatActivity {
         return true;
     }
 
-    public Object[] getSteps(){
-
-        List<String> steps = new ArrayList<String>();
-        //steps.add()
-
-        String formula = currentFormula;
-        String formattedFormula = formula;
-        //Substitute values
-        for(String[] s : values){
-            formattedFormula = formattedFormula.replace(s[0], s[2] + s[1].replace("\\(", "{").replace("\\)", "}"));
-            formula = formula.replace(s[0], s[2]);
-        }
-        formattedFormula = formattedFormula.replace("/", "\\over");
-        steps.add(formattedFormula);
-        //Calculate
-        String[] componentsArray = formula.split(" ");
-        List<String> components = Arrays.asList(componentsArray);
-        while(hasOperators(components)){
-            if(formula.contains("/")){
-                for(int i = 0; i < componentsArray.length; i++){
-                    if(componentsArray[i].equals("/")){
-
-                        String strNum1 = componentsArray[i-1];
-                        String strNum2 = componentsArray[i+1];
-
-                        double result = Double.parseDouble(strNum1) / Double.parseDouble(strNum2);
-                        formula = formula.replace(strNum1 + " / " + strNum2, String.valueOf(result));
-                        formattedFormula = formula;
-                        steps.add(formattedFormula);
-
-                        componentsArray = formula.split(" ");
-                        components = Arrays.asList(componentsArray);
-
-                    }
-                }
-            }
-        }
-
-
-//        Log.d("asdf", values.keySet().toArray()[1].toString());
-//        Log.d("asdf", values.values().toArray()[1].toString());
-        return steps.toArray();
-    }
-
-    public boolean hasOperators(List<String> components){
-        String[][] operators = {
-                {"(", ")"},
-                {"/", "*"},
-                {"+", "-"}
-        };
-        for(String s : components){
-            for(String[] o : operators){
-                for(String p : o){
-                    if(s.contains(p)){
-                         return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     public void substituteValues(){
         String formula = currentFormula;
         //Substitute values
@@ -410,13 +339,16 @@ public class CalculatorActivity extends AppCompatActivity {
         txtSub.setText("$$" + variableToSolve + " = {" + formula + "}$$");
     }
 
-
-
     public int findVariableIndex(String variable){
         for(int i = 0; i < values.length; i++){
             if(values[i][0].equals(variable))
                 return i;
         }
         return -1;
+    }
+
+    public void resetSteps(){
+        LinearLayout stepsContainer = (LinearLayout)findViewById(R.id.steps_container);
+        stepsContainer.removeAllViews();
     }
 }
