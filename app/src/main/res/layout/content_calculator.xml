@@ -82,14 +82,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             auto:engine="MathJax"
+            android:id="@+id/text_substitute" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:id="@+id/steps_container">
+
+        </LinearLayout>
+
+        <io.github.kexanie.library.MathView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:engine="MathJax"
             android:id="@+id/text_result" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="CALCULATE"
-            android:id="@+id/button_calculate"/>
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:enabled="false"
+                android:text="CALCULATE"
+                android:id="@+id/button_calculate"/>
+
+
+
+
     </LinearLayout>
 
 </ScrollView>
