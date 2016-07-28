@@ -75,11 +75,6 @@
                 auto:engine="KaTeX"
                 android:id="@+id/text_formula"/>
 
-
-
-
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -111,19 +106,6 @@
             android:layout_height="wrap_content"
             auto:engine="MathJax"
             android:id="@+id/text_result" />
-
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:enabled="false"
-                android:text="CALCULATE"
-                android:id="@+id/button_calculate"/>
-
-
-
 
     </LinearLayout>
 
