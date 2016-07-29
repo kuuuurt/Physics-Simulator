@@ -15,6 +15,7 @@ public class DataProvider extends ContentProvider{
     static final int LESSON_WITH_CHAPTER = 102;
     static final int CONSTANT = 200;
     static final int CONSTANT_WITH_NAME = 201;
+    static final int CONSTANT_WITH_ID = 202;
     static final int CHAPTER = 300;
     static final int CHAPTER_WITH_NAME = 301;
     static final int FORMULA = 400;
@@ -30,6 +31,7 @@ public class DataProvider extends ContentProvider{
         matcher.addURI(authority, DataContract.PATH_LESSON + "/*", LESSON_WITH_TITLE);
         matcher.addURI(authority, DataContract.PATH_LESSON + "/*/*", LESSON_WITH_CHAPTER);
         matcher.addURI(authority, DataContract.PATH_CONSTANT, CONSTANT);
+        matcher.addURI(authority, DataContract.PATH_CONSTANT + "/#", CONSTANT_WITH_ID);
         matcher.addURI(authority, DataContract.PATH_CONSTANT + "/*", CONSTANT_WITH_NAME);
         matcher.addURI(authority, DataContract.PATH_CHAPTER, CHAPTER);
         matcher.addURI(authority, DataContract.PATH_CHAPTER + "/*", CHAPTER_WITH_NAME);
@@ -73,6 +75,9 @@ public class DataProvider extends ContentProvider{
 
     private static final String constantWithNameQuery = DataContract.ConstantEntry.TABLE_NAME +
             "." + DataContract.ConstantEntry.COLUMN_NAME + " = ? ";
+
+    private static final String constantWithIdQuery = DataContract.ConstantEntry.TABLE_NAME +
+            "." + DataContract.ConstantEntry._ID + " = ? ";
 
     private static final String chapterWithNameQuery = DataContract.ChapterEntry.TABLE_NAME + "." +
             DataContract.ChapterEntry.COLUMN_NAME + " = ? ";
@@ -124,6 +129,17 @@ public class DataProvider extends ContentProvider{
                 projection,
                 constantWithNameQuery,
                 new String[]{DataContract.ConstantEntry.getNameFromUri(uri)},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+    public Cursor getConstantById(Uri uri, String[] projection, String sortOrder){
+        return constantQueryBuilder.query(dbHelper.getReadableDatabase(),
+                projection,
+                constantWithIdQuery,
+                new String[]{DataContract.ConstantEntry.getIDFromUri(uri)},
                 null,
                 null,
                 sortOrder
@@ -223,6 +239,9 @@ public class DataProvider extends ContentProvider{
                         sortOrder
                 );
                 break;
+            case CONSTANT_WITH_ID:
+                data = getConstantById(uri, projection, sortOrder);
+                break;
             case CONSTANT_WITH_NAME:
                 data = getConstantByName(uri, projection, sortOrder);
                 break;
@@ -289,6 +308,8 @@ public class DataProvider extends ContentProvider{
                 return DataContract.LessonEntry.CONTENT_TYPE;
             case CONSTANT:
                 return DataContract.ConstantEntry.CONTENT_TYPE;
+            case CONSTANT_WITH_ID:
+                return DataContract.ConstantEntry.CONTENT_ITEM_TYPE;
             case CONSTANT_WITH_NAME:
                 return DataContract.ConstantEntry.CONTENT_ITEM_TYPE;
             case CHAPTER:

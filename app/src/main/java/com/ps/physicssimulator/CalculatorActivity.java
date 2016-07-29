@@ -2,6 +2,7 @@ package com.ps.physicssimulator;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -14,7 +15,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -125,8 +125,6 @@ public class CalculatorActivity extends AppCompatActivity {
 
                                         resetSteps();
 
-                                        MathView txtResult = (MathView)findViewById(R.id.text_result);
-                                        txtResult.setText("");
 
                                         String formula = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_FORMULA_DISPLAY));
 
@@ -138,7 +136,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                         expressionBuilder = new ExpressionBuilderModified(currentFormula);
 
 
-                                        final Cursor c = varAdap.getCursor();
+                                        Cursor c = varAdap.getCursor();
                                         c.moveToFirst();
 
 
@@ -149,39 +147,61 @@ public class CalculatorActivity extends AppCompatActivity {
                                         linearLayout.removeAllViews();
 
                                         List<TextInputLayout> inputFields = new ArrayList<>();
+                                        List<MathView> constItems = new ArrayList<>();
 
-                                        for(int k = 0; k < c.getCount(); k++){
-                                            if(k != i){
+                                        for(int k = 0; k < c.getCount(); k++) {
+
+                                            if (k != i) {
                                                 String symbol = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL));
                                                 String unit = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_UNIT));
+                                                long const_id = c.getLong(c.getColumnIndex(DataContract.VariableEntry.COLUMN_CONSTANT_KEY));
 
                                                 expressionBuilder.variable(symbol);
                                                 values[varCtr][0] = symbol;
                                                 values[varCtr][1] = unit;
                                                 values[varCtr++][2] = "";
 
-                                                TextInputLayout txtLayout = new TextInputLayout(CalculatorActivity.this);
-                                                txtLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                                                        0,
-                                                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                        0.5f
-                                                ));
 
 
 
-                                                EditText txtInput = new EditText(CalculatorActivity.this);
-                                                txtInput.setLayoutParams(new LinearLayout.LayoutParams(
-                                                        LinearLayout.LayoutParams.MATCH_PARENT,
-                                                        LinearLayout.LayoutParams.WRAP_CONTENT
-                                                ));
-                                                txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)) +
-                                                        " (" + c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL)) + ")");
-                                                txtInput.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                                txtInput.setEms(10);
-                                                txtInput.addTextChangedListener(createTextWatcher(symbol));
+                                                if (const_id == -1) {
+                                                    TextInputLayout txtLayout = new TextInputLayout(CalculatorActivity.this);
+                                                    txtLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                                                            0,
+                                                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                            0.5f
+                                                    ));
+                                                    TextInputEditText txtInput = new TextInputEditText(CalculatorActivity.this);
+                                                    txtInput.setLayoutParams(new LinearLayout.LayoutParams(
+                                                            LinearLayout.LayoutParams.MATCH_PARENT,
+                                                            LinearLayout.LayoutParams.WRAP_CONTENT
+                                                    ));
+                                                    txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)) +
+                                                            " (" + c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL)) + ")");
+                                                    txtInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                                    txtInput.setEms(10);
+                                                    txtInput.addTextChangedListener(createTextWatcher(symbol));
 
-                                                txtLayout.addView(txtInput);
-                                                inputFields.add(txtLayout);
+                                                    txtLayout.addView(txtInput);
+                                                    inputFields.add(txtLayout);
+                                                } else {
+                                                    Cursor a = CalculatorActivity.this.getContentResolver().query(
+                                                            DataContract.ConstantEntry.buildConstantUri(const_id),
+                                                            null,
+                                                            null,
+                                                            null,
+                                                            null);
+                                                    a.moveToFirst();
+                                                    String value = symbol + " = " + a.getString(a.getColumnIndex(DataContract.ConstantEntry.COLUMN_CURRENT)) + unit;
+                                                    MathView txtConstant = new MathView(CalculatorActivity.this, null);
+                                                    txtConstant.setLayoutParams(new LinearLayout.LayoutParams(
+                                                            ViewGroup.LayoutParams.MATCH_PARENT,
+                                                            ViewGroup.LayoutParams.WRAP_CONTENT
+                                                    ));
+                                                    txtConstant.setEngine(MathView.Engine.KATEX);
+                                                    txtConstant.setText("\\(" + value + "\\)");
+                                                    constItems.add(txtConstant);
+                                                }
                                             }
                                             c.moveToNext();
                                         }
@@ -203,6 +223,24 @@ public class CalculatorActivity extends AppCompatActivity {
                                             }
                                             linearLayout.addView(layoutInput);
                                         }
+                                        for(int j = 0; j < constItems.size(); j++){
+                                            LinearLayout layoutConst = new LinearLayout(CalculatorActivity.this);
+                                            layoutConst.setLayoutParams(new LinearLayoutCompat.LayoutParams(
+                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                    1.0f
+                                            ));
+                                            layoutConst.setOrientation(OrientationHelper.HORIZONTAL);
+                                            layoutConst.setPadding(0,8,0,8);
+                                            layoutConst.setGravity(Gravity.CENTER_HORIZONTAL);
+                                            try{
+                                                layoutConst.addView(constItems.get(j++));
+                                                layoutConst.addView(constItems.get(j));
+                                            } catch (Exception ex){
+
+                                            }
+                                            linearLayout.addView(layoutConst);
+                                        }
                                         substituteValues();
                                         expression = expressionBuilder.build();
                                     }
@@ -218,13 +256,13 @@ public class CalculatorActivity extends AppCompatActivity {
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {}
                 });
-                //spnLessons.setSelection(1);
+                spnLessons.setSelection(1);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
-        spnChapters.setSelection(1);
+        //spnChapters.setSelection(1);
     }
 
     public void calculate(){
@@ -254,8 +292,13 @@ public class CalculatorActivity extends AppCompatActivity {
             }
 
             String strForm = result[2].toString();
-            if(formulaDisplay.contains("(" + strForm + ")")){
-                formulaDisplay = formulaDisplay.replace("(" + strForm + ")", strForm);
+            if(strForm.contains(" ^ ")){
+                int idx = strForm.indexOf("^");
+                strForm = "(" + strForm.substring(0, idx-1) + ")" + strForm.substring(idx-1);
+            }
+
+            if(formulaDisplay.contains("{" + strForm + "}")){
+                formulaDisplay = formulaDisplay.replace("{" + strForm + "}", strForm);
             }
             if(i == steps.length-1) {
                 formulaDisplay = formulaDisplay.replace(strForm, result[0] + "{" + result[1] + "}");
@@ -311,11 +354,18 @@ public class CalculatorActivity extends AppCompatActivity {
 
     public void substituteValues(){
         String formula = currentFormula;
+        formula = formula.replace("/", "\\over");
+        formula = formula.replace("(", "{").replace(")", "}");
+        if(formula.contains("^")){
+            int i = formula.indexOf("^");
+            formula = formula.substring(0, i-2) + "(" + formula.charAt(i-2) + ")" + formula.substring(i-1);
+        }
         //Substitute values
         for(String[] s : values){
-            formula = formula.replace(s[0], s[2] + s[1].replace("\\(", "{").replace("\\)", "}"));
+            formula = formula.replace(s[0], s[2] + s[1]);
         }
-        formula = formula.replace("/", "\\over");
+
+
         MathView txtSub = (MathView)findViewById(R.id.text_substitute);
         txtSub.setText("$$" + variableToSolve + " = {" + formula + "}$$");
     }

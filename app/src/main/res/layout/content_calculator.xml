@@ -98,16 +98,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:id="@+id/steps_container">
+            android:id="@+id/steps_container"/>
 
-        </LinearLayout>
-
-        <io.github.kexanie.library.MathView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            auto:engine="MathJax"
-            android:id="@+id/text_result" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:id="@+id/const_container">
 
+         </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

@@ -92,6 +92,10 @@ public class DataProviderTest {
         assertEquals("Uri should return CONTENT_ITEM_TYPE",
                 ConstantEntry.CONTENT_ITEM_TYPE, type);
 
+        type = mContext.getContentResolver().getType(ConstantEntry.buildConstantUri(1234));
+        assertEquals("Uri should return CONTENT_ITEM_TYPE",
+                ConstantEntry.CONTENT_ITEM_TYPE, type);
+
         type = mContext.getContentResolver().getType(FormulaEntry.CONTENT_URI);
         assertEquals("Uri should return CONTENT_TYPE",
                 FormulaEntry.CONTENT_TYPE, type);
@@ -114,7 +118,7 @@ public class DataProviderTest {
 
         ContentValues testValues = new ContentValues();
         testValues.put(ChapterEntry.COLUMN_NAME, "One-dimensional Motion");
-        testValues.put(ChapterEntry.COLUMN_DESCRIPTION, "");
+
 
         Cursor chapterCursor = mContext.getContentResolver().query(
                 ChapterEntry.CONTENT_URI,
@@ -130,18 +134,21 @@ public class DataProviderTest {
     @Test
     public void testBasicConstantQuery(){
         ContentValues testValues = new ContentValues();
-        testValues.put(ChapterEntry.COLUMN_NAME, "One-dimensional Motion");
-        testValues.put(ChapterEntry.COLUMN_DESCRIPTION, "");
+        testValues.put(ConstantEntry.COLUMN_NAME, "Acceleration due to Gravity");
+        testValues.put(ConstantEntry.COLUMN_DEFAULT, 9.8);
+        testValues.put(ConstantEntry.COLUMN_CURRENT, 9.8);
 
-        Cursor chapterCursor = mContext.getContentResolver().query(
-                ChapterEntry.CONTENT_URI,
+        Cursor constantCursor = mContext.getContentResolver().query(
+                ConstantEntry.CONTENT_URI,
                 null,
                 null,
                 null,
                 null
         );
 
-        validateCursor("testBasicConstantQuery", chapterCursor, testValues);
+
+        validateCursor("testBasicConstantQuery", constantCursor, testValues);
+        constantCursor.close();
     }
 
     @Test
@@ -150,7 +157,6 @@ public class DataProviderTest {
         testValues.put(LessonEntry.COLUMN_TITLE, "Scalar and Vector Values");
         testValues.put(LessonEntry.COLUMN_CHAPTER_KEY, "1");
         testValues.put(LessonEntry.COLUMN_DESCRIPTION, "Definition, Distance and Displacement");
-        testValues.put(LessonEntry.COLUMN_CONTENT, "");
 
         Cursor lessonCursor = mContext.getContentResolver().query(
                 LessonEntry.CONTENT_URI,
@@ -201,6 +207,49 @@ public class DataProviderTest {
 
         validateCursor("testBasicVariableQuery", varCursor, testValues);
         varCursor.close();
+    }
+
+    @Test
+    public void testConstantWithName(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(ConstantEntry.COLUMN_NAME, "Acceleration due to Gravity");
+        testValues.put(ConstantEntry.COLUMN_DEFAULT, 9.8);
+        testValues.put(ConstantEntry.COLUMN_CURRENT, 9.8);
+
+        Cursor constantCursor = mContext.getContentResolver().query(
+                ConstantEntry.buildConstantName("Acceleration due to Gravity"),
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testConstantWithName", constantCursor, testValues);
+        constantCursor.close();
+    }
+
+    @Test
+    public void testConstantWithId(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(ConstantEntry.COLUMN_NAME, "Acceleration due to Gravity");
+        testValues.put(ConstantEntry.COLUMN_DEFAULT, 9.8);
+        testValues.put(ConstantEntry.COLUMN_CURRENT, 9.8);
+
+        Cursor c = dbHelper.getReadableDatabase().rawQuery("SELECT " + ConstantEntry._ID + " FROM constant"
+        + " WHERE " + ConstantEntry.COLUMN_NAME + " = 'Acceleration due to Gravity'", null);
+
+        c.moveToFirst();
+
+        Cursor constantCursor = mContext.getContentResolver().query(
+                ConstantEntry.buildConstantUri(c.getLong(c.getColumnIndex(ConstantEntry._ID))),
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testConstantWithId", constantCursor, testValues);
+        constantCursor.close();
     }
 
     @Test
@@ -282,11 +331,11 @@ public class DataProviderTest {
     public void testUpdateConstant(){
         Cursor c = db.rawQuery("SELECT " + ConstantEntry._ID +
                 " from " + ConstantEntry.TABLE_NAME + " WHERE " +
-                ChapterEntry.COLUMN_NAME + " = \"Acceleration of Gravity\"", null);
+                ChapterEntry.COLUMN_NAME + " = \"Acceleration due to Gravity\"", null);
         c.moveToFirst();
 
         ContentValues updatedValues = new ContentValues();
-        updatedValues.put(ConstantEntry.COLUMN_CURRENT, 9.81);
+        updatedValues.put(ConstantEntry.COLUMN_CURRENT, 9.8);
 
         int rowsUpdated = mContext.getContentResolver().update(ConstantEntry.CONTENT_URI,
                 updatedValues, ConstantEntry._ID + " = ?",

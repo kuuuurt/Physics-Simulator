@@ -21,6 +21,7 @@ public class DataContractTest {
     private static final String TEST_LESSON_TITLE = "/Title";
     private static final String TEST_CHAPTER_NAME = "/Chapter";
     private static final String TEST_FORMULA_NAME = "/Formula";
+    private static final String TEST_CONSTANT_NAME = "/Constant";
 
     @Test
     public void testBuildChapter(){
@@ -97,18 +98,20 @@ public class DataContractTest {
     public void testBuildConstant(){
         Uri constantUri = DataContract.ConstantEntry.buildConstantUri(TEST_RECORD_ID);
         assertNotNull("Uri not created!", constantUri);
+        assertEquals("Name not properly appended to Uri!", String.valueOf(TEST_RECORD_ID),
+                DataContract.ConstantEntry.getIDFromUri(constantUri));
         assertEquals("Uri does not match expected result", constantUri.toString(),
                 DataContract.ConstantEntry.CONTENT_URI + "/"  + TEST_RECORD_ID);
     }
 
     @Test
     public void testBuildConstantName(){
-        Uri nameUri = DataContract.ConstantEntry.buildConstantName(TEST_LESSON_TITLE);
+        Uri nameUri = DataContract.ConstantEntry.buildConstantName(TEST_CONSTANT_NAME);
         assertNotNull("Uri not created!", nameUri);
-        assertEquals("Title not properly appended to Uri!", TEST_LESSON_TITLE,
+        assertEquals("Name not properly appended to Uri!", TEST_CONSTANT_NAME,
                 nameUri.getLastPathSegment());
         assertEquals("Uri does not match expected result", nameUri.toString(),
-                DataContract.ConstantEntry.CONTENT_URI + "/%2FTitle");
+                DataContract.ConstantEntry.CONTENT_URI + "/%2FConstant");
     }
 
     @Test

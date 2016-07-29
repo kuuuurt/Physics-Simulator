@@ -94,10 +94,8 @@ public class DataContract   {
         public static final String TABLE_NAME = "formula";
 
         public static final String COLUMN_NAME = "name";
-//        public static final String COLUMN_VAR = "variable";
         public static final String COLUMN_LESSON_KEY = "lesson_id";
         public static final String COLUMN_FORMULA = "formula";
-//        public static final String COLUMN_FRAGMENT_NAME = "fragname";
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FORMULA;
@@ -125,8 +123,9 @@ public class DataContract   {
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_FORMULA_KEY = "formula_id";
         public static final String COLUMN_FORMULA_DISPLAY = "formula_display";
-        public static final String COLUMN_SYMBOL = "symbol";
         public static final String COLUMN_FORMULA_COMPUTE = "formula_compute";
+        public static final String COLUMN_SYMBOL = "symbol";
+        public static final String COLUMN_CONSTANT_KEY = "constant_id";
         public static final String COLUMN_UNIT = "unit";
 
         public static final String CONTENT_TYPE =
@@ -151,9 +150,7 @@ public class DataContract   {
                 .appendPath(PATH_CONSTANT).build();
 
         public static final String TABLE_NAME = "constant";
-
         public static final String COLUMN_NAME = "name";
-        public static final String COLUMN_VARIABLE_KEY = "variable_id";
         public static final String COLUMN_DEFAULT = "def";
         public static final String COLUMN_CURRENT = "current";
 
@@ -170,8 +167,12 @@ public class DataContract   {
             return CONTENT_URI.buildUpon().appendPath(name).build();
         }
 
+        public static String getIDFromUri(Uri uri){
+            return uri.getLastPathSegment();
+        }
+
         public static String getNameFromUri(Uri uri){
-            return uri.getPathSegments().get(1);
+            return uri.getLastPathSegment();
         }
     }
 }
