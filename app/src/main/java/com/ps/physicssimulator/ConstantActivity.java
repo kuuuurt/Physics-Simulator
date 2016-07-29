@@ -1,11 +1,12 @@
 package com.ps.physicssimulator;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -25,12 +26,11 @@ public class ConstantActivity extends AppCompatActivity implements LoaderManager
     private static final int CONSTANT_LOADER = 0;
     private static ConstantAdapter mConstantAdap;
     private static String formulaName;
+    private static Intent backIntent;
 
     @Override
     public Intent getSupportParentActivityIntent() {
-        Intent intent = super.getSupportParentActivityIntent();
-        return intent;
-        //return intent.putExtra(Intent.EXTRA_TEXT, mChapter);
+        return backIntent;
     }
 
 
@@ -41,14 +41,6 @@ public class ConstantActivity extends AppCompatActivity implements LoaderManager
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getSupportLoaderManager().initLoader(CONSTANT_LOADER, null, this);
@@ -57,6 +49,19 @@ public class ConstantActivity extends AppCompatActivity implements LoaderManager
         Intent intent = getIntent();
         if(intent != null){
             formulaName = intent.getStringExtra("formulaName");
+            Bundle b = intent.getExtras();
+            backIntent = super.getSupportParentActivityIntent();
+            backIntent.putExtra("currentChapter", b.getInt("currentChapter"));
+            backIntent.putExtra("currentLesson", b.getInt("currentLesson"));
+            backIntent.putExtra("currentFormula", b.getInt("currentFormula"));
+            backIntent.putExtra("currentVariable", b.getInt("currentVariable"));
+            backIntent.putExtra("currentFormula", b.getInt("currentFormula"));
+            backIntent.putExtra("formulaName", b.getString("currentChapter"));
+            backIntent.putExtra("size", b.getInt("size"));
+            int size = intent.getIntExtra("size", 0);
+            for (int i = 0; i < size; i++) {
+                backIntent.putExtra("value" + i, b.getStringArray("value" + i));
+            }
         }
 
         setTitle("Constants in " + formulaName);
@@ -71,21 +76,42 @@ public class ConstantActivity extends AppCompatActivity implements LoaderManager
                 Cursor data = mConstantAdap.getCursor();
                 data.move(i);
 
+                final Cursor constant = ConstantActivity.this.getContentResolver().query(
+                        DataContract.ConstantEntry.buildConstantUri(data.getLong(data.getColumnIndex(
+                                DataContract.FormulaConstantEntry.COLUMN_CONSTANT_KEY))),
+                        null,
+                        null,
+                        null,
+                        null
+                );
+
+                constant.moveToFirst();
                 AlertDialog.Builder builder = new AlertDialog.Builder(ConstantActivity.this);
                 LayoutInflater inflater = ConstantActivity.this.getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.dialog_change_constant, null);
+                final View dialogView = inflater.inflate(R.layout.dialog_change_constant, null);
                 TextView txtDefault = (TextView)dialogView.findViewById(R.id.text_default_value);
-                txtDefault.setText(txtDefault.getText() + ": " + data.getString(data.getColumnIndex(DataContract.ConstantEntry.COLUMN_DEFAULT)));
+                txtDefault.setText(txtDefault.getText() + ": " + constant.getString(constant.getColumnIndex(DataContract.ConstantEntry.COLUMN_DEFAULT)));
 
                 TextView txtCurrent = (TextView)dialogView.findViewById(R.id.text_current_value);
-                txtCurrent.setText(txtCurrent.getText() + ": " + data.getString(data.getColumnIndex(DataContract.ConstantEntry.COLUMN_CURRENT)));
+                txtCurrent.setText(txtCurrent.getText() + ": " + constant.getString(constant.getColumnIndex(DataContract.ConstantEntry.COLUMN_CURRENT)));
 
-                builder.setTitle(data.getString(data.getColumnIndex(DataContract.ConstantEntry.COLUMN_NAME)));
+                builder.setTitle(constant.getString(constant.getColumnIndex(DataContract.ConstantEntry.COLUMN_NAME)));
                 builder.setView(dialogView)
                          .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                              @Override
                              public void onClick(DialogInterface dialogInterface, int i) {
+                                 TextInputEditText txtNewValue = (TextInputEditText)dialogView.findViewById(R.id.input_new_value);
 
+                                 ContentValues values = new ContentValues();
+                                 values.put(DataContract.ConstantEntry.COLUMN_CURRENT, Double.parseDouble(String.valueOf(txtNewValue.getText())));
+
+                                 ConstantActivity.this.getContentResolver().update(
+                                         DataContract.ConstantEntry.CONTENT_URI,
+                                         values,
+                                         DataContract.ConstantEntry._ID + " = ?",
+                                         new String[] { Long.toString(constant.getLong(constant.getColumnIndex(DataContract.ConstantEntry._ID)))}
+                                 );
+                                 Snackbar.make(findViewById(android.R.id.content), "Constant Updated", Snackbar.LENGTH_SHORT).show();
                              }
                          })
                          .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -97,24 +123,27 @@ public class ConstantActivity extends AppCompatActivity implements LoaderManager
                          .setNeutralButton("Reset", new DialogInterface.OnClickListener() {
                              @Override
                              public void onClick(DialogInterface dialogInterface, int i) {
+                                 ContentValues values = new ContentValues();
+                                 values.put(DataContract.ConstantEntry.COLUMN_CURRENT, constant.getDouble(constant.getColumnIndex(DataContract.ConstantEntry.COLUMN_DEFAULT)));
 
+                                 ConstantActivity.this.getContentResolver().update(
+                                         DataContract.ConstantEntry.CONTENT_URI,
+                                         values,
+                                         DataContract.ConstantEntry._ID + " = ?",
+                                         new String[] { Long.toString(constant.getLong(constant.getColumnIndex(DataContract.ConstantEntry._ID)))}
+                                 );
+                                 Snackbar.make(findViewById(android.R.id.content), "Constant Reverted to Default Value", Snackbar.LENGTH_SHORT).show();
                              }
-                         });
+                         })
+                .create().show();
 
-
-                AlertDialog dialog = builder.create();
-
-
-
-
-                dialog.show();
             }
         });
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, DataContract.ConstantEntry.buildConstantFormula("Free-fall Velocity"),
+        return new CursorLoader(this, DataContract.FormulaConstantEntry.buildFormulaConstant("Free-fall Velocity"),
                 null, null, null, null);
     }
 

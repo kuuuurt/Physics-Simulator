@@ -22,6 +22,8 @@ public class DataProvider extends ContentProvider{
     static final int FORMULA_WITH_LESSON = 401;
     static final int VARIABLE = 500;
     static final int VARIABLE_WITH_NAME = 501;
+    static final int FORMULA_CONSTANT = 600;
+    static final int FORMULA_CONSTANT_WITH_FORMULA = 601;
 
     static UriMatcher uriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -32,13 +34,14 @@ public class DataProvider extends ContentProvider{
         matcher.addURI(authority, DataContract.PATH_LESSON + "/*/*", LESSON_WITH_CHAPTER);
         matcher.addURI(authority, DataContract.PATH_CONSTANT, CONSTANT);
         matcher.addURI(authority, DataContract.PATH_CONSTANT + "/#", CONSTANT_WITH_ID);
-        matcher.addURI(authority, DataContract.PATH_CONSTANT + "/*", CONSTANT_WITH_FORMULA);
         matcher.addURI(authority, DataContract.PATH_CHAPTER, CHAPTER);
         matcher.addURI(authority, DataContract.PATH_CHAPTER + "/*", CHAPTER_WITH_NAME);
         matcher.addURI(authority, DataContract.PATH_FORMULA, FORMULA);
         matcher.addURI(authority, DataContract.PATH_FORMULA + "/*", FORMULA_WITH_LESSON);
         matcher.addURI(authority, DataContract.PATH_VARIABLE, VARIABLE);
         matcher.addURI(authority, DataContract.PATH_VARIABLE + "/*", VARIABLE_WITH_NAME);
+        matcher.addURI(authority, DataContract.PATH_FORMULA_CONSTANT, FORMULA_CONSTANT);
+        matcher.addURI(authority, DataContract.PATH_FORMULA_CONSTANT + "/*", FORMULA_CONSTANT_WITH_FORMULA);
 
         return matcher;
     }
@@ -49,6 +52,7 @@ public class DataProvider extends ContentProvider{
     private static final SQLiteQueryBuilder chapterQueryBuilder;
     private static final SQLiteQueryBuilder formulaQueryBuilder;
     private static final SQLiteQueryBuilder variableQueryBuilder;
+    private static final SQLiteQueryBuilder formulaConstantQueryBuilder;
 
     static{
         lessonQueryBuilder = new SQLiteQueryBuilder();
@@ -65,6 +69,9 @@ public class DataProvider extends ContentProvider{
 
         variableQueryBuilder = new SQLiteQueryBuilder();
         variableQueryBuilder.setTables(DataContract.VariableEntry.TABLE_NAME);
+
+        formulaConstantQueryBuilder = new SQLiteQueryBuilder();
+        formulaConstantQueryBuilder.setTables(DataContract.FormulaConstantEntry.TABLE_NAME);
     }
 
     private static final String lessonWithTitleQuery = DataContract.LessonEntry.TABLE_NAME + "." +
@@ -72,9 +79,6 @@ public class DataProvider extends ContentProvider{
 
     private static final String lessonWithChapterQuery = DataContract.LessonEntry.TABLE_NAME +
             "." + DataContract.LessonEntry.COLUMN_CHAPTER_KEY + " = ?";
-
-    private static final String constantWithFormulaQuery = DataContract.ConstantEntry.TABLE_NAME +
-            "." + DataContract.ConstantEntry.COLUMN_FORMULA_KEY + " = ? ";
 
     private static final String constantWithIdQuery = DataContract.ConstantEntry.TABLE_NAME +
             "." + DataContract.ConstantEntry._ID + " = ? ";
@@ -87,6 +91,9 @@ public class DataProvider extends ContentProvider{
 
     private static final String variableWithNameQuery = DataContract.VariableEntry.TABLE_NAME + "."
             + DataContract.VariableEntry.COLUMN_FORMULA_KEY + " = ? ";
+
+    private static final String formulaConstantQuery = DataContract.FormulaConstantEntry.TABLE_NAME + "."
+            + DataContract.FormulaConstantEntry.COLUMN_FORMULA_KEY + " = ?";
 
 
 
@@ -111,8 +118,6 @@ public class DataProvider extends ContentProvider{
 
         c.moveToFirst();
 
-
-
         return lessonQueryBuilder.query(database,
                 projection,
                 lessonWithChapterQuery,
@@ -124,25 +129,6 @@ public class DataProvider extends ContentProvider{
         );
     }
 
-    public Cursor getConstantByName(Uri uri, String[] projection, String sortOrder){
-        String formula = DataContract.ConstantEntry.getFormulaFromUri(uri);
-
-        SQLiteDatabase database = dbHelper.getReadableDatabase();
-        Cursor c = database.rawQuery("SELECT " + DataContract.FormulaEntry._ID +
-                " from formula WHERE " + DataContract.FormulaEntry.COLUMN_NAME +
-                " = \"" + formula + "\"", null);
-
-        c.moveToFirst();
-        return constantQueryBuilder.query(dbHelper.getReadableDatabase(),
-                projection,
-                constantWithFormulaQuery,
-                new String[]{String.valueOf(c.getLong(c.getColumnIndex(
-                        DataContract.FormulaEntry._ID)))},
-                null,
-                null,
-                sortOrder
-        );
-    }
 
     public Cursor getConstantById(Uri uri, String[] projection, String sortOrder){
         return constantQueryBuilder.query(dbHelper.getReadableDatabase(),
@@ -208,6 +194,27 @@ public class DataProvider extends ContentProvider{
         );
     }
 
+    public Cursor getFormulaConstants(Uri uri, String[] projection, String sortOrder){
+        String formula = DataContract.FormulaConstantEntry.getFormulaFromUri(uri);
+
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor c = database.rawQuery("SELECT " + DataContract.FormulaEntry._ID +
+                " from formula WHERE " + DataContract.FormulaEntry.COLUMN_NAME +
+                " = \"" + formula + "\"", null);
+
+        c.moveToFirst();
+
+        return formulaConstantQueryBuilder.query(database,
+                projection,
+                formulaConstantQuery,
+                new String[]{String.valueOf(c.getLong(c.getColumnIndex(DataContract.FormulaEntry._ID)))},
+                null,
+                null,
+                sortOrder
+        );
+
+    }
+
     @Override
     public boolean onCreate() {
         dbHelper = new DBHelper(getContext());
@@ -251,9 +258,6 @@ public class DataProvider extends ContentProvider{
             case CONSTANT_WITH_ID:
                 data = getConstantById(uri, projection, sortOrder);
                 break;
-            case CONSTANT_WITH_FORMULA:
-                data = getConstantByName(uri, projection, sortOrder);
-                break;
             case CHAPTER:
                 data = dbHelper.getReadableDatabase().query(
                         DataContract.ChapterEntry.TABLE_NAME,
@@ -296,6 +300,20 @@ public class DataProvider extends ContentProvider{
             case VARIABLE_WITH_NAME:
                 data = getVariablesByName(uri, projection, sortOrder);
                 break;
+            case FORMULA_CONSTANT:
+                data = dbHelper.getReadableDatabase().query(
+                        DataContract.FormulaConstantEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case FORMULA_CONSTANT_WITH_FORMULA:
+                data = getFormulaConstants(uri, projection, sortOrder);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -333,6 +351,10 @@ public class DataProvider extends ContentProvider{
                 return DataContract.VariableEntry.CONTENT_TYPE;
             case VARIABLE_WITH_NAME:
                 return DataContract.VariableEntry.CONTENT_TYPE;
+            case FORMULA_CONSTANT:
+                return DataContract.FormulaConstantEntry.CONTENT_TYPE;
+            case FORMULA_CONSTANT_WITH_FORMULA:
+                return DataContract.FormulaConstantEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

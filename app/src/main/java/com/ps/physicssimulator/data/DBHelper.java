@@ -39,7 +39,6 @@ public class DBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_CONSTANT_TABLE = "CREATE TABLE " +
                 DataContract.ConstantEntry.TABLE_NAME + " (" +
                 DataContract.ConstantEntry._ID + " INTEGER PRIMARY KEY, " +
-                DataContract.ConstantEntry.COLUMN_FORMULA_KEY + " INTEGER NOT NULL, " +
                 DataContract.ConstantEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 DataContract.ConstantEntry.COLUMN_DESC + " TEXT NOT NULL, " +
                 DataContract.ConstantEntry.COLUMN_SYMBOL + " TEXT NOT NULL, " +
@@ -52,6 +51,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.FormulaEntry.COLUMN_NAME + " TEXT NOT NULL, " +
                 DataContract.FormulaEntry.COLUMN_LESSON_KEY + " INTEGER NOT NULL, " +
                 DataContract.FormulaEntry.COLUMN_FORMULA + " TEXT" + ")";
+
+        final String SQL_CREATE_FORMULA_CONSTANT_TABLE = "CREATE TABLE " +
+                DataContract.FormulaConstantEntry.TABLE_NAME + " (" +
+                DataContract.FormulaConstantEntry._ID + " INTEGER PRIMARY KEY, " +
+                DataContract.FormulaConstantEntry.COLUMN_CONSTANT_KEY + " INTEGER NOT NULL, " +
+                DataContract.FormulaConstantEntry.COLUMN_FORMULA_KEY + " INTEGER NOT NULL " + ")";
 
         final String SQL_CREATE_VARIABLE_TABLE = "CREATE TABLE " +
                 DataContract.VariableEntry.TABLE_NAME + " (" +
@@ -68,11 +73,13 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_LESSON_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_CONSTANT_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_FORMULA_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_FORMULA_CONSTANT_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_VARIABLE_TABLE);
         initChapters(sqLiteDatabase);
         initLessons(sqLiteDatabase);
         initFormulas(sqLiteDatabase);
         initConstants(sqLiteDatabase);
+        initFormulaConstants(sqLiteDatabase);
         initVariables(sqLiteDatabase);
     }
 
@@ -606,30 +613,61 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initConstants(SQLiteDatabase database){
         if(database.isOpen()) {
             String[][] constants = {
-                    {"Acceleration due to Gravity", "9.8", "The acceleration for any object moving under the sole influence of gravity", "g", "Free-fall Velocity"}
+                    {"Acceleration due to Gravity", "9.8", "The acceleration for any object moving under the sole influence of gravity", "g"}
             };
 
 
             for(String[] s: constants){
-                Cursor c = database.query(
-                        DataContract.FormulaEntry.TABLE_NAME,
-                        new String[]{DataContract.FormulaEntry._ID},
-                        DataContract.FormulaEntry.COLUMN_NAME + " = ?",
-                        new String[]{s[4]},
-                        null,
-                        null,
-                        null
-                );
-                c.moveToFirst();
+
                 ContentValues values = new ContentValues();
                 values.put(DataContract.ConstantEntry.COLUMN_NAME, s[0]);
                 values.put(DataContract.ConstantEntry.COLUMN_DEFAULT, Double.parseDouble(s[1]));
                 values.put(DataContract.ConstantEntry.COLUMN_CURRENT, Double.parseDouble(s[1]));
                 values.put(DataContract.ConstantEntry.COLUMN_DESC, s[2]);
                 values.put(DataContract.ConstantEntry.COLUMN_SYMBOL, s[3]);
-                values.put(DataContract.ConstantEntry.COLUMN_FORMULA_KEY,
-                        c.getString(c.getColumnIndex(DataContract.FormulaEntry._ID)));
+
                 database.insert(DataContract.ConstantEntry.TABLE_NAME, null, values);
+            }
+        }
+    }
+
+    private void initFormulaConstants(SQLiteDatabase database){
+        if(database.isOpen()){
+            String[][] formula_constants = {
+                    {"Acceleration due to Gravity", "Free-fall Velocity"}
+            };
+
+            for(String[] s: formula_constants){
+                Cursor a = database.query(
+                        DataContract.ConstantEntry.TABLE_NAME,
+                        new String[]{DataContract.ConstantEntry._ID},
+                        DataContract.ConstantEntry.COLUMN_NAME + " = ?",
+                        new String[]{s[0]},
+                        null,
+                        null,
+                        null
+                );
+                Cursor b = database.query(
+                        DataContract.FormulaEntry.TABLE_NAME,
+                        new String[]{DataContract.FormulaEntry._ID},
+                        DataContract.FormulaEntry.COLUMN_NAME + " = ?",
+                        new String[]{s[1]},
+                        null,
+                        null,
+                        null
+                );
+                a.moveToFirst();
+                b.moveToFirst();
+                ContentValues values = new ContentValues();
+                values.put(DataContract.FormulaConstantEntry.COLUMN_CONSTANT_KEY,
+                        a.getLong(a.getColumnIndex(DataContract.ConstantEntry._ID)));
+                values.put(DataContract.FormulaConstantEntry.COLUMN_FORMULA_KEY,
+                        b.getLong(b.getColumnIndex(DataContract.FormulaEntry._ID)));
+
+                a.close();
+                b.close();
+
+                database.insert(DataContract.FormulaConstantEntry.TABLE_NAME, null, values);
             }
         }
     }
@@ -637,10 +675,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initVariables(SQLiteDatabase database) {
         if(database.isOpen()) {
             String[][] variables = {
-                    {"Displacement", "Displacement", "", "", "", ""},
-                    {"Displacement", "Average Acceleration", "", "", "", ""},
-                    {"Displacement", "Initial Velocity","", "", "", ""},
-                    {"Displacement", "Final Velocity", "", "", "", ""},
+//                    {"Displacement", "Displacement", "", "", "", ""},
+//                    {"Displacement", "Average Acceleration", "", "", "", ""},
+//                    {"Displacement", "Initial Velocity","", "", "", ""},
+//                    {"Displacement", "Final Velocity", "", "", "", ""},
 
                     {"Speed", "Speed", "$$s = {d \\over t}$$", "d / t", "s", "{m \\over s}"},
                     {"Speed", "Distance", "$$d = {s \\cdot t}$$", "s * t", "d", "{m}"},

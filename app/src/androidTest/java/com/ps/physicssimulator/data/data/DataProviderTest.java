@@ -11,6 +11,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.ps.physicssimulator.data.DBHelper;
+import com.ps.physicssimulator.data.DataContract;
 import com.ps.physicssimulator.data.DataContract.ChapterEntry;
 import com.ps.physicssimulator.data.DataContract.ConstantEntry;
 import com.ps.physicssimulator.data.DataContract.FormulaEntry;
@@ -88,10 +89,6 @@ public class DataProviderTest {
         assertEquals("Uri should return CONTENT_TYPE",
                 ConstantEntry.CONTENT_TYPE, type);
 
-        type = mContext.getContentResolver().getType(ConstantEntry.buildConstantFormula(testVar));
-        assertEquals("Uri should return CONTENT_ITEM_TYPE",
-                ConstantEntry.CONTENT_ITEM_TYPE, type);
-
         type = mContext.getContentResolver().getType(ConstantEntry.buildConstantUri(1234));
         assertEquals("Uri should return CONTENT_ITEM_TYPE",
                 ConstantEntry.CONTENT_ITEM_TYPE, type);
@@ -111,6 +108,10 @@ public class DataProviderTest {
         type = mContext.getContentResolver().getType(VariableEntry.buildVariableFormula(testVar));
         assertEquals("Uri should return CONTENT_TYPE",
                 VariableEntry.CONTENT_TYPE, type);
+
+        type = mContext.getContentResolver().getType(DataContract.FormulaConstantEntry.buildFormulaConstant(testVar));
+        assertEquals("Uri should return CONTENT_TYPE",
+                DataContract.FormulaConstantEntry.CONTENT_TYPE, type);
     }
 
     @Test
@@ -192,8 +193,8 @@ public class DataProviderTest {
     @Test
     public void testBasicVariableQuery(){
         ContentValues testValues = new ContentValues();
-        testValues.put(VariableEntry.COLUMN_NAME, "Displacement");
-        testValues.put(VariableEntry.COLUMN_FORMULA_KEY, "1");
+        testValues.put(VariableEntry.COLUMN_NAME, "Speed");
+        testValues.put(VariableEntry.COLUMN_FORMULA_KEY, "2");
 //        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
 //        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
 
@@ -210,22 +211,63 @@ public class DataProviderTest {
     }
 
     @Test
-    public void testConstantWithName(){
-        ContentValues testValues = new ContentValues();
-        testValues.put(ConstantEntry.COLUMN_NAME, "Acceleration due to Gravity");
-        testValues.put(ConstantEntry.COLUMN_DEFAULT, 9.8);
-        testValues.put(ConstantEntry.COLUMN_CURRENT, 9.8);
+    public void testBasicFormulaConstantQuery(){
+        Cursor b = dbHelper.getReadableDatabase().rawQuery("SELECT " + FormulaEntry._ID + " FROM formula"
+                + " WHERE " + FormulaEntry.COLUMN_NAME + " = 'Free-fall Velocity'", null);
 
-        Cursor constantCursor = mContext.getContentResolver().query(
-                ConstantEntry.buildConstantFormula("Free-fall Velocity"),
+        b.moveToFirst();
+
+        Cursor c = dbHelper.getReadableDatabase().rawQuery("SELECT " + ConstantEntry._ID + " FROM constant"
+                + " WHERE " + ConstantEntry.COLUMN_NAME + " = 'Acceleration due to Gravity'", null);
+
+        c.moveToFirst();
+
+        ContentValues testValues = new ContentValues();
+        testValues.put(DataContract.FormulaConstantEntry.COLUMN_CONSTANT_KEY, c.getLong(c.getColumnIndex(FormulaEntry._ID)));
+        testValues.put(DataContract.FormulaConstantEntry.COLUMN_FORMULA_KEY, b.getLong(b.getColumnIndex(ConstantEntry._ID)));
+//        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
+//        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
+
+        Cursor formulaConstantCursor  = mContext.getContentResolver().query(
+                DataContract.FormulaConstantEntry.CONTENT_URI,
                 null,
                 null,
                 null,
                 null
         );
 
-        validateCursor("testConstantWithName", constantCursor, testValues);
-        constantCursor.close();
+        validateCursor("testBasicFormulaConstantQuery", formulaConstantCursor, testValues);
+        formulaConstantCursor.close();
+    }
+
+    @Test
+    public void testBasicFormulaConstantWithFormulaQuery(){
+        Cursor b = dbHelper.getReadableDatabase().rawQuery("SELECT " + FormulaEntry._ID + " FROM formula"
+                + " WHERE " + FormulaEntry.COLUMN_NAME + " = 'Free-fall Velocity'", null);
+
+        b.moveToFirst();
+
+        Cursor c = dbHelper.getReadableDatabase().rawQuery("SELECT " + ConstantEntry._ID + " FROM constant"
+                + " WHERE " + ConstantEntry.COLUMN_NAME + " = 'Acceleration due to Gravity'", null);
+
+        c.moveToFirst();
+
+        ContentValues testValues = new ContentValues();
+        testValues.put(DataContract.FormulaConstantEntry.COLUMN_CONSTANT_KEY, c.getLong(c.getColumnIndex(FormulaEntry._ID)));
+        testValues.put(DataContract.FormulaConstantEntry.COLUMN_FORMULA_KEY, b.getLong(b.getColumnIndex(ConstantEntry._ID)));
+//        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
+//        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
+
+        Cursor formulaConstantCursor  = mContext.getContentResolver().query(
+                DataContract.FormulaConstantEntry.buildFormulaConstant("Free-fall Velocity"),
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testBasicFormulaConstantWithFormulaQuery", formulaConstantCursor, testValues);
+        formulaConstantCursor.close();
     }
 
     @Test

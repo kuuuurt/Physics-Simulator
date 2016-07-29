@@ -15,6 +15,8 @@ import com.ps.physicssimulator.data.DataContract;
  */
 public class ConstantAdapter extends CursorAdapter {
 
+
+    private static Context mContext;
     public static class ViewHolder {
         public final TextView symbolView;
         public final TextView titleView;
@@ -30,6 +32,7 @@ public class ConstantAdapter extends CursorAdapter {
 
     public ConstantAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
+        mContext = context;
     }
 
     @Override
@@ -46,12 +49,20 @@ public class ConstantAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
-
-        //viewHolder.logoView.setImageResource();
-        viewHolder.symbolView.setText(cursor.getString(cursor.getColumnIndex(DataContract.ConstantEntry.COLUMN_SYMBOL)));
-        viewHolder.titleView.setText(cursor.getString(cursor.getColumnIndex(
+        Cursor constant = mContext.getContentResolver().query(
+                DataContract.ConstantEntry.buildConstantUri(cursor.getLong(cursor.getColumnIndex(
+                        DataContract.FormulaConstantEntry.COLUMN_CONSTANT_KEY))),
+                null,
+                null,
+                null,
+                null
+        );
+        constant.moveToFirst();
+        viewHolder.symbolView.setText(constant.getString(constant.getColumnIndex(
+                DataContract.ConstantEntry.COLUMN_SYMBOL)));
+        viewHolder.titleView.setText(constant.getString(constant.getColumnIndex(
                 DataContract.ConstantEntry.COLUMN_NAME)));
-        viewHolder.descView.setText(cursor.getString(cursor.getColumnIndex(
+        viewHolder.descView.setText(constant.getString(constant.getColumnIndex(
                 DataContract.ConstantEntry.COLUMN_DESC)));
 
     }

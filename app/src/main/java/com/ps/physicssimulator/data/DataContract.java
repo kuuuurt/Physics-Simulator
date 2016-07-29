@@ -15,6 +15,7 @@ public class DataContract   {
     public static final String PATH_LESSON = "lesson";
     public static final String PATH_CONSTANT = "constant";
     public static final String PATH_FORMULA = "formula";
+    public static final String PATH_FORMULA_CONSTANT = "formula_constant";
     public static final String PATH_VARIABLE = "variable";
 
     public static final class ChapterEntry implements BaseColumns {
@@ -145,6 +146,30 @@ public class DataContract   {
         }
     }
 
+    public static final class FormulaConstantEntry implements BaseColumns {
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_FORMULA_CONSTANT).build();
+
+        public static final String TABLE_NAME = "formula_constant";
+        public static final String COLUMN_FORMULA_KEY = "formula_id";
+        public static final String COLUMN_CONSTANT_KEY = "constant_id";
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FORMULA_CONSTANT;
+
+        public static Uri buildFormulaConstantUri(long id){
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildFormulaConstant(String formula){
+            return CONTENT_URI.buildUpon().appendPath(formula).build();
+        }
+
+        public static String getFormulaFromUri(Uri uri){
+            return uri.getLastPathSegment();
+        }
+    }
+
     public static final class ConstantEntry implements BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_CONSTANT).build();
@@ -153,7 +178,6 @@ public class DataContract   {
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_DESC = "description";
         public static final String COLUMN_SYMBOL = "symbol";
-        public static final String COLUMN_FORMULA_KEY = "formula_id";
         public static final String COLUMN_DEFAULT = "def";
         public static final String COLUMN_CURRENT = "current";
 

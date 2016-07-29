@@ -39,7 +39,8 @@ public class CalculatorActivity extends AppCompatActivity {
     static String variableToSolve;
     static String formulaName;
     static String[][] values;
-
+    static Bundle b;
+    static boolean fromConstants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,20 @@ public class CalculatorActivity extends AppCompatActivity {
         final Spinner spnFormula = (Spinner) findViewById(R.id.spinner_formula);
         final Spinner spnVar = (Spinner) findViewById(R.id.spinner_variable);
 
+        final Intent intent = getIntent();
+        fromConstants = intent != null && intent.hasExtra("currentChapter");
+        if(fromConstants){
+            b = intent.getExtras();
+            values = new String[b.getInt("size")][];
+            for (int i = 0; i < values.length; i++) {
+                values[i] = intent.getStringArrayExtra("value" + i);
+            }
+        }
+
+
         spnChapters.setAdapter(chaptersAdap);
+        if(fromConstants)
+            spnChapters.setSelection(b.getInt("currentChapter"));
         spnChapters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -85,7 +99,8 @@ public class CalculatorActivity extends AppCompatActivity {
 
 
                 spnLessons.setAdapter(lessonsAdap);
-                spnLessons.setSelection(0);
+                if(fromConstants)
+                    spnLessons.setSelection(b.getInt("currentLesson"));
                 spnLessons.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i,
@@ -103,7 +118,8 @@ public class CalculatorActivity extends AppCompatActivity {
 
 
                         spnFormula.setAdapter(formulaAdap);
-                        spnFormula.setSelection(0);
+                        if(fromConstants)
+                            spnFormula.setSelection(b.getInt("currentFormula"));
                         spnFormula.setOnItemSelectedListener(new AdapterView
                                 .OnItemSelectedListener() {
                             @Override
@@ -125,7 +141,8 @@ public class CalculatorActivity extends AppCompatActivity {
 
 
                                 spnVar.setAdapter(varAdap);
-                                spnVar.setSelection(0);
+                                if(fromConstants)
+                                    spnVar.setSelection(b.getInt("currentVariable"));
                                 spnVar.setOnItemSelectedListener(
                                         new AdapterView.OnItemSelectedListener() {
                                             @Override
@@ -146,9 +163,10 @@ public class CalculatorActivity extends AppCompatActivity {
                                                 Cursor c = varAdap.getCursor();
                                                 c.moveToFirst();
 
-
-                                                values = new String[c.getCount() - 1][3];
                                                 int varCtr = 0;
+                                                if(!fromConstants) {
+                                                    values = new String[c.getCount() - 1][3];
+                                                }
 
                                                 LinearLayout inputContainer = (LinearLayout) findViewById(R.id.input_container);
                                                 inputContainer.removeAllViews();
@@ -167,8 +185,10 @@ public class CalculatorActivity extends AppCompatActivity {
                                                         long const_id = c.getLong(c.getColumnIndex(DataContract.VariableEntry.COLUMN_CONSTANT_KEY));
 
                                                         expressionBuilder.variable(symbol);
-                                                        values[varCtr][0] = symbol;
-                                                        values[varCtr][1] = unit;
+                                                        if(!fromConstants) {
+                                                            values[varCtr][0] = symbol;
+                                                            values[varCtr][1] = unit;
+                                                        }
                                                         String val = "";
 
                                                         if (const_id == -1) {
@@ -188,6 +208,8 @@ public class CalculatorActivity extends AppCompatActivity {
                                                             txtInput.setInputType(InputType.TYPE_CLASS_NUMBER);
                                                             txtInput.setEms(10);
                                                             txtInput.addTextChangedListener(createTextWatcher(symbol));
+                                                            if(fromConstants)
+                                                                txtInput.setText(values[varCtr][2]);
 
                                                             txtLayout.addView(txtInput);
                                                             inputFields.add(txtLayout);
@@ -204,8 +226,11 @@ public class CalculatorActivity extends AppCompatActivity {
 
                                                             String value = symbol + " = " + val + unit;
                                                             constValues.add(value);
+                                                            values[varCtr][2] = val;
                                                         }
-                                                        values[varCtr++][2] = val;
+                                                        if(!fromConstants)
+                                                            values[varCtr][2] = val;
+                                                        varCtr++;
                                                     }
                                                     c.moveToNext();
                                                 }
@@ -251,8 +276,6 @@ public class CalculatorActivity extends AppCompatActivity {
                                                         txtConstant.setText("$$" + constants.substring(0, constants.length() - 2) + "$$");
                                                         constContainer.addView(txtConstant);
                                                     }
-
-
                                                     btnChangeConstants.setVisibility(View.VISIBLE);
 
                                                 } else {
@@ -263,6 +286,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
                                                 substituteValues();
                                                 expression = expressionBuilder.build();
+                                                fromConstants = false;
                                             }
 
                                             @Override
@@ -281,7 +305,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     public void onNothingSelected(AdapterView<?> adapterView) {
                     }
                 });
-                spnLessons.setSelection(1);
+
             }
 
             @Override
@@ -299,22 +323,18 @@ public class CalculatorActivity extends AppCompatActivity {
                 intent.putExtra("currentVariable", spnVar.getSelectedItemPosition());
                 intent.putExtra("currentFormula", currentFormula);
                 intent.putExtra("formulaName", formulaName);
-                intent.putExtra("values", values);
+                int i = 0;
+                intent.putExtra("size", values.length);
+                for (String[] value : values) {
+                    intent.putExtra("value"+ i++, value);
+                }
                 startActivity(intent);
             }
         });
 
-        Intent intent = getIntent();
 
-        if(intent != null && intent.hasExtra("values")){
-            Bundle b = intent.getExtras();
-            spnChapters.setSelection(b.getInt("currentChapter"));
-            spnLessons.setSelection(b.getInt("currentLesson"));
-            spnFormula.setSelection(b.getInt("currentFormula"));
-            spnVar.setSelection(b.getInt("currentVariable"));
-            currentFormula = b.getString("currentFormula");
-            values = (String[][])b.get("values");
-        }
+
+
     }
 
     public void calculate() {
