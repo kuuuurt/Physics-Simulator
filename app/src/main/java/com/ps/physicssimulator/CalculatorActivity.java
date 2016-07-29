@@ -1,5 +1,6 @@
 package com.ps.physicssimulator;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -15,9 +16,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.ps.physicssimulator.data.DataContract;
 import com.ps.physicssimulator.utils.ExpressionBuilderModified;
@@ -34,6 +37,7 @@ public class CalculatorActivity extends AppCompatActivity {
     static ExpressionModified expression;
     static String currentFormula;
     static String variableToSolve;
+    static String formulaName;
     static String[][] values;
 
 
@@ -46,24 +50,29 @@ public class CalculatorActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        final Button btnChangeConstants = (Button) findViewById(R.id.button_change_constants);
+
 
         final SimpleCursorAdapter chaptersAdap = setSpinnerAdapter(
-            this.getContentResolver().query(DataContract.ChapterEntry.CONTENT_URI,
-                    null, null, null, null),
-            new String[]{DataContract.ChapterEntry.COLUMN_NAME}
+                this.getContentResolver().query(DataContract.ChapterEntry.CONTENT_URI,
+                        null, null, null, null),
+                new String[]{DataContract.ChapterEntry.COLUMN_NAME}
         );
 
-        MathView txtArrow = (MathView)findViewById(R.id.text_arrow);
+        MathView txtArrow = (MathView) findViewById(R.id.text_arrow);
         txtArrow.setText("$$\\Rightarrow$$");
 
 
+        final Spinner spnChapters = (Spinner) findViewById(R.id.spinner_chapters);
+        final Spinner spnLessons = (Spinner) findViewById(R.id.spinner_lessons);
+        final Spinner spnFormula = (Spinner) findViewById(R.id.spinner_formula);
+        final Spinner spnVar = (Spinner) findViewById(R.id.spinner_variable);
 
-        Spinner spnChapters = (Spinner) findViewById(R.id.spinner_chapters);
         spnChapters.setAdapter(chaptersAdap);
         spnChapters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Cursor c = (Cursor)chaptersAdap.getItem(i);
+                Cursor c = (Cursor) chaptersAdap.getItem(i);
                 String chapter =
                         c.getString(c.getColumnIndex(DataContract.ChapterEntry.COLUMN_NAME));
 
@@ -74,16 +83,16 @@ public class CalculatorActivity extends AppCompatActivity {
                         new String[]{DataContract.LessonEntry.COLUMN_TITLE}
                 );
 
-                Spinner spnLessons = (Spinner) findViewById(R.id.spinner_lessons);
+
                 spnLessons.setAdapter(lessonsAdap);
                 spnLessons.setSelection(0);
                 spnLessons.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i,
                                                long l) {
-                        Cursor c = (Cursor)lessonsAdap.getItem(i);
+                        Cursor c = (Cursor) lessonsAdap.getItem(i);
                         String lesson = c.getString(c.getColumnIndex(DataContract.LessonEntry
-                            .COLUMN_TITLE));
+                                .COLUMN_TITLE));
 
                         final SimpleCursorAdapter formulaAdap = setSpinnerAdapter(
                                 CalculatorActivity.this.getContentResolver().query(
@@ -92,7 +101,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                 new String[]{DataContract.FormulaEntry.COLUMN_NAME}
                         );
 
-                        Spinner spnFormula = (Spinner) findViewById(R.id.spinner_formula);
+
                         spnFormula.setAdapter(formulaAdap);
                         spnFormula.setSelection(0);
                         spnFormula.setOnItemSelectedListener(new AdapterView
@@ -100,10 +109,10 @@ public class CalculatorActivity extends AppCompatActivity {
                             @Override
                             public void onItemSelected(AdapterView<?> adapterView, View view,
                                                        int i, long l) {
-                                Cursor c = (Cursor)formulaAdap.getItem(i);
-                                String formulaName = c.getString(c.getColumnIndex(DataContract.FormulaEntry.COLUMN_NAME));
+                                Cursor c = (Cursor) formulaAdap.getItem(i);
+                                formulaName = c.getString(c.getColumnIndex(DataContract.FormulaEntry.COLUMN_NAME));
 
-                                MathView txtFormula = (MathView)findViewById(R.id.text_main_formula);
+                                MathView txtFormula = (MathView) findViewById(R.id.text_main_formula);
                                 txtFormula.setText(c.getString(c.getColumnIndex(DataContract.FormulaEntry.COLUMN_FORMULA)));
 
 
@@ -114,160 +123,203 @@ public class CalculatorActivity extends AppCompatActivity {
                                         new String[]{DataContract.VariableEntry.COLUMN_NAME}
                                 );
 
-                                Spinner spnVar = (Spinner) findViewById(R.id.spinner_variable);
+
                                 spnVar.setAdapter(varAdap);
                                 spnVar.setSelection(0);
                                 spnVar.setOnItemSelectedListener(
                                         new AdapterView.OnItemSelectedListener() {
-                                    @Override
-                                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                                        Cursor selected = (Cursor)varAdap.getItem(i);
+                                            @Override
+                                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                                Cursor selected = (Cursor) varAdap.getItem(i);
 
-                                        resetSteps();
+                                                resetSteps();
+                                                String formula = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_FORMULA_DISPLAY));
 
+                                                MathView txtFormula = (MathView) findViewById(R.id.text_formula);
+                                                txtFormula.setText(formula);
 
-                                        String formula = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_FORMULA_DISPLAY));
-
-                                        MathView txtFormula = (MathView)findViewById(R.id.text_formula);
-                                        txtFormula.setText(formula);
-
-                                        currentFormula = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_FORMULA_COMPUTE));
-                                        variableToSolve = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL));
-                                        expressionBuilder = new ExpressionBuilderModified(currentFormula);
+                                                currentFormula = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_FORMULA_COMPUTE));
+                                                variableToSolve = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL));
+                                                expressionBuilder = new ExpressionBuilderModified(currentFormula);
 
 
-                                        Cursor c = varAdap.getCursor();
-                                        c.moveToFirst();
+                                                Cursor c = varAdap.getCursor();
+                                                c.moveToFirst();
 
 
-                                        values = new String[c.getCount() - 1][3];
-                                        int varCtr = 0;
+                                                values = new String[c.getCount() - 1][3];
+                                                int varCtr = 0;
 
-                                        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.input_container);
-                                        linearLayout.removeAllViews();
+                                                LinearLayout inputContainer = (LinearLayout) findViewById(R.id.input_container);
+                                                inputContainer.removeAllViews();
 
-                                        List<TextInputLayout> inputFields = new ArrayList<>();
-                                        List<MathView> constItems = new ArrayList<>();
+                                                LinearLayout constContainer = (LinearLayout) findViewById(R.id.const_container);
+                                                constContainer.removeAllViews();
 
-                                        for(int k = 0; k < c.getCount(); k++) {
+                                                List<TextInputLayout> inputFields = new ArrayList<>();
+                                                List<String> constValues = new ArrayList<>();
 
-                                            if (k != i) {
-                                                String symbol = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL));
-                                                String unit = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_UNIT));
-                                                long const_id = c.getLong(c.getColumnIndex(DataContract.VariableEntry.COLUMN_CONSTANT_KEY));
+                                                for (int k = 0; k < c.getCount(); k++) {
 
-                                                expressionBuilder.variable(symbol);
-                                                values[varCtr][0] = symbol;
-                                                values[varCtr][1] = unit;
-                                                values[varCtr++][2] = "";
+                                                    if (k != i) {
+                                                        String symbol = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL));
+                                                        String unit = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_UNIT));
+                                                        long const_id = c.getLong(c.getColumnIndex(DataContract.VariableEntry.COLUMN_CONSTANT_KEY));
 
+                                                        expressionBuilder.variable(symbol);
+                                                        values[varCtr][0] = symbol;
+                                                        values[varCtr][1] = unit;
+                                                        String val = "";
 
+                                                        if (const_id == -1) {
+                                                            TextInputLayout txtLayout = new TextInputLayout(CalculatorActivity.this);
+                                                            txtLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                                                                    0,
+                                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                                    0.5f
+                                                            ));
+                                                            TextInputEditText txtInput = new TextInputEditText(CalculatorActivity.this);
+                                                            txtInput.setLayoutParams(new LinearLayout.LayoutParams(
+                                                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                                                    LinearLayout.LayoutParams.WRAP_CONTENT
+                                                            ));
+                                                            txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)) +
+                                                                    " (" + c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL)) + ")");
+                                                            txtInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                                            txtInput.setEms(10);
+                                                            txtInput.addTextChangedListener(createTextWatcher(symbol));
 
+                                                            txtLayout.addView(txtInput);
+                                                            inputFields.add(txtLayout);
 
-                                                if (const_id == -1) {
-                                                    TextInputLayout txtLayout = new TextInputLayout(CalculatorActivity.this);
-                                                    txtLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                                                            0,
-                                                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                            0.5f
-                                                    ));
-                                                    TextInputEditText txtInput = new TextInputEditText(CalculatorActivity.this);
-                                                    txtInput.setLayoutParams(new LinearLayout.LayoutParams(
-                                                            LinearLayout.LayoutParams.MATCH_PARENT,
-                                                            LinearLayout.LayoutParams.WRAP_CONTENT
-                                                    ));
-                                                    txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)) +
-                                                            " (" + c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL)) + ")");
-                                                    txtInput.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                                    txtInput.setEms(10);
-                                                    txtInput.addTextChangedListener(createTextWatcher(symbol));
+                                                        } else {
+                                                            Cursor a = CalculatorActivity.this.getContentResolver().query(
+                                                                    DataContract.ConstantEntry.buildConstantUri(const_id),
+                                                                    null,
+                                                                    null,
+                                                                    null,
+                                                                    null);
+                                                            a.moveToFirst();
+                                                            val = a.getString(a.getColumnIndex(DataContract.ConstantEntry.COLUMN_CURRENT));
 
-                                                    txtLayout.addView(txtInput);
-                                                    inputFields.add(txtLayout);
-                                                } else {
-                                                    Cursor a = CalculatorActivity.this.getContentResolver().query(
-                                                            DataContract.ConstantEntry.buildConstantUri(const_id),
-                                                            null,
-                                                            null,
-                                                            null,
-                                                            null);
-                                                    a.moveToFirst();
-                                                    String value = symbol + " = " + a.getString(a.getColumnIndex(DataContract.ConstantEntry.COLUMN_CURRENT)) + unit;
-                                                    MathView txtConstant = new MathView(CalculatorActivity.this, null);
-                                                    txtConstant.setLayoutParams(new LinearLayout.LayoutParams(
-                                                            ViewGroup.LayoutParams.MATCH_PARENT,
-                                                            ViewGroup.LayoutParams.WRAP_CONTENT
-                                                    ));
-                                                    txtConstant.setEngine(MathView.Engine.KATEX);
-                                                    txtConstant.setText("\\(" + value + "\\)");
-                                                    constItems.add(txtConstant);
+                                                            String value = symbol + " = " + val + unit;
+                                                            constValues.add(value);
+                                                        }
+                                                        values[varCtr++][2] = val;
+                                                    }
+                                                    c.moveToNext();
                                                 }
-                                            }
-                                            c.moveToNext();
-                                        }
-                                        for(int j = 0; j < inputFields.size(); j++){
-                                            LinearLayout layoutInput = new LinearLayout(CalculatorActivity.this);
-                                            layoutInput.setLayoutParams(new LinearLayoutCompat.LayoutParams(
-                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                    1.0f
-                                            ));
-                                            layoutInput.setOrientation(OrientationHelper.HORIZONTAL);
-                                            layoutInput.setPadding(0,8,0,8);
-                                            layoutInput.setGravity(Gravity.CENTER_HORIZONTAL);
-                                            try{
-                                                layoutInput.addView(inputFields.get(j++));
-                                                layoutInput.addView(inputFields.get(j));
-                                            } catch (Exception ex){
 
-                                            }
-                                            linearLayout.addView(layoutInput);
-                                        }
-                                        for(int j = 0; j < constItems.size(); j++){
-                                            LinearLayout layoutConst = new LinearLayout(CalculatorActivity.this);
-                                            layoutConst.setLayoutParams(new LinearLayoutCompat.LayoutParams(
-                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                                    1.0f
-                                            ));
-                                            layoutConst.setOrientation(OrientationHelper.HORIZONTAL);
-                                            layoutConst.setPadding(0,8,0,8);
-                                            layoutConst.setGravity(Gravity.CENTER_HORIZONTAL);
-                                            try{
-                                                layoutConst.addView(constItems.get(j++));
-                                                layoutConst.addView(constItems.get(j));
-                                            } catch (Exception ex){
 
-                                            }
-                                            linearLayout.addView(layoutConst);
-                                        }
-                                        substituteValues();
-                                        expression = expressionBuilder.build();
-                                    }
+                                                for (int j = 0; j < inputFields.size(); j++) {
+                                                    LinearLayout layoutInput = new LinearLayout(CalculatorActivity.this);
+                                                    layoutInput.setLayoutParams(new LinearLayoutCompat.LayoutParams(
+                                                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                                                            1.0f
+                                                    ));
+                                                    layoutInput.setOrientation(OrientationHelper.HORIZONTAL);
+                                                    layoutInput.setPadding(0, 8, 0, 8);
+                                                    layoutInput.setGravity(Gravity.CENTER_HORIZONTAL);
+                                                    try {
+                                                        layoutInput.addView(inputFields.get(j++));
+                                                        layoutInput.addView(inputFields.get(j));
+                                                    } catch (Exception ex) {
 
-                                    @Override
-                                    public void onNothingSelected(AdapterView<?> adapterView) {}
-                                });
+                                                    }
+                                                    inputContainer.addView(layoutInput);
+                                                }
+                                                TextView txt = (TextView) findViewById(R.id.text_constants_label);
+
+                                                if (constValues.size() > 0) {
+                                                    txt.setVisibility(View.VISIBLE);
+                                                    for (int j = 0; j < constValues.size(); j++) {
+                                                        MathView txtConstant = new MathView(CalculatorActivity.this, null);
+                                                        txtConstant.setLayoutParams(new LinearLayout.LayoutParams(
+                                                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                                                ViewGroup.LayoutParams.WRAP_CONTENT
+                                                        ));
+                                                        txtConstant.setEngine(MathView.Engine.KATEX);
+                                                        String constants = "";
+                                                        try {
+                                                            for (int o = 0; o < 5; o++) {
+                                                                constants += constValues.get(j++) + ", ";
+                                                            }
+                                                        } catch (Exception ex) {
+
+                                                        }
+                                                        txtConstant.setText("$$" + constants.substring(0, constants.length() - 2) + "$$");
+                                                        constContainer.addView(txtConstant);
+                                                    }
+
+
+                                                    btnChangeConstants.setVisibility(View.VISIBLE);
+
+                                                } else {
+                                                    txt.setVisibility(View.GONE);
+                                                    constContainer.removeAllViews();
+                                                    btnChangeConstants.setVisibility(View.GONE);
+                                                }
+
+                                                substituteValues();
+                                                expression = expressionBuilder.build();
+                                            }
+
+                                            @Override
+                                            public void onNothingSelected(AdapterView<?> adapterView) {
+                                            }
+                                        });
                             }
+
                             @Override
-                            public void onNothingSelected(AdapterView<?> adapterView) {}
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+                            }
                         });
                     }
+
                     @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {}
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+                    }
                 });
                 spnLessons.setSelection(1);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
         //spnChapters.setSelection(1);
+        btnChangeConstants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CalculatorActivity.this, ConstantActivity.class);
+                intent.putExtra("currentChapter", spnChapters.getSelectedItemPosition());
+                intent.putExtra("currentLesson", spnLessons.getSelectedItemPosition());
+                intent.putExtra("currentFormula", spnFormula.getSelectedItemPosition());
+                intent.putExtra("currentVariable", spnVar.getSelectedItemPosition());
+                intent.putExtra("currentFormula", currentFormula);
+                intent.putExtra("formulaName", formulaName);
+                intent.putExtra("values", values);
+                startActivity(intent);
+            }
+        });
+
+        Intent intent = getIntent();
+
+        if(intent != null && intent.hasExtra("values")){
+            Bundle b = intent.getExtras();
+            spnChapters.setSelection(b.getInt("currentChapter"));
+            spnLessons.setSelection(b.getInt("currentLesson"));
+            spnFormula.setSelection(b.getInt("currentFormula"));
+            spnVar.setSelection(b.getInt("currentVariable"));
+            currentFormula = b.getString("currentFormula");
+            values = (String[][])b.get("values");
+        }
     }
 
-    public void calculate(){
+    public void calculate() {
         resetSteps();
-        for(String[] s : values){
+        for (String[] s : values) {
             expression.setVariable(s[0], Double.parseDouble(s[2]), s[1]);
         }
         List<String> results = expression.evaluate();
@@ -277,30 +329,30 @@ public class CalculatorActivity extends AppCompatActivity {
 
         String formulaDisplay = txtSub.getText();
 
-        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.steps_container);
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.steps_container);
 
-        for(int i = 0; i < steps.length ; i++){
+        for (int i = 0; i < steps.length; i++) {
             MathView txtStep = new MathView(CalculatorActivity.this, null);
             txtStep.setLayoutParams(new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
             ));
             txtStep.setEngine(MathView.Engine.KATEX);
-            String result[] = (String[])steps[i];
-            if(Double.parseDouble(result[0].toString()) % 1 == 0){
+            String result[] = (String[]) steps[i];
+            if (Double.parseDouble(result[0].toString()) % 1 == 0) {
                 result[0] = result[0].replace(".0", "");
             }
 
             String strForm = result[2].toString();
-            if(strForm.contains(" ^ ")){
+            if (strForm.contains(" ^ ")) {
                 int idx = strForm.indexOf("^");
-                strForm = "(" + strForm.substring(0, idx-1) + ")" + strForm.substring(idx-1);
+                strForm = "(" + strForm.substring(0, idx - 1) + ")" + strForm.substring(idx - 1);
             }
 
-            if(formulaDisplay.contains("{" + strForm + "}")){
+            if (formulaDisplay.contains("{" + strForm + "}")) {
                 formulaDisplay = formulaDisplay.replace("{" + strForm + "}", strForm);
             }
-            if(i == steps.length-1) {
+            if (i == steps.length - 1) {
                 formulaDisplay = formulaDisplay.replace(strForm, result[0] + "{" + result[1] + "}");
             } else {
                 formulaDisplay = formulaDisplay.replace(strForm, result[0] + result[1]);
@@ -312,22 +364,23 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
 
-    public SimpleCursorAdapter setSpinnerAdapter(Cursor c, String[] projection){
+    public SimpleCursorAdapter setSpinnerAdapter(Cursor c, String[] projection) {
         int[] views = new int[]{android.R.id.text1};
         return new SimpleCursorAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item, c, projection, views, 1);
     }
 
-    public TextWatcher createTextWatcher(final String variable){
+    public TextWatcher createTextWatcher(final String variable) {
         return new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
                     values[findVariableIndex(variable)][2] = charSequence.toString();
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     values[findVariableIndex(variable)][2] = null;
                 }
                 substituteValues();
@@ -335,7 +388,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(checkValues()){
+                if (checkValues()) {
                     calculate();
                 } else {
                     resetSteps();
@@ -345,41 +398,41 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     private boolean checkValues() {
-        for(String[] s : values){
-            if(s[2].equals(""))
+        for (String[] s : values) {
+            if (s[2].equals(""))
                 return false;
         }
         return true;
     }
 
-    public void substituteValues(){
+    public void substituteValues() {
         String formula = currentFormula;
         formula = formula.replace("/", "\\over");
         formula = formula.replace("(", "{").replace(")", "}");
-        if(formula.contains("^")){
+        if (formula.contains("^")) {
             int i = formula.indexOf("^");
-            formula = formula.substring(0, i-2) + "(" + formula.charAt(i-2) + ")" + formula.substring(i-1);
+            formula = formula.substring(0, i - 2) + "(" + formula.charAt(i - 2) + ")" + formula.substring(i - 1);
         }
         //Substitute values
-        for(String[] s : values){
+        for (String[] s : values) {
             formula = formula.replace(s[0], s[2] + s[1]);
         }
 
 
-        MathView txtSub = (MathView)findViewById(R.id.text_substitute);
+        MathView txtSub = (MathView) findViewById(R.id.text_substitute);
         txtSub.setText("$$" + variableToSolve + " = {" + formula + "}$$");
     }
 
-    public int findVariableIndex(String variable){
-        for(int i = 0; i < values.length; i++){
-            if(values[i][0].equals(variable))
+    public int findVariableIndex(String variable) {
+        for (int i = 0; i < values.length; i++) {
+            if (values[i][0].equals(variable))
                 return i;
         }
         return -1;
     }
 
-    public void resetSteps(){
-        LinearLayout stepsContainer = (LinearLayout)findViewById(R.id.steps_container);
+    public void resetSteps() {
+        LinearLayout stepsContainer = (LinearLayout) findViewById(R.id.steps_container);
         stepsContainer.removeAllViews();
     }
 }

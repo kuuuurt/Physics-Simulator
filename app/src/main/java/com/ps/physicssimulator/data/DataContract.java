@@ -151,6 +151,9 @@ public class DataContract   {
 
         public static final String TABLE_NAME = "constant";
         public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_DESC = "description";
+        public static final String COLUMN_SYMBOL = "symbol";
+        public static final String COLUMN_FORMULA_KEY = "formula_id";
         public static final String COLUMN_DEFAULT = "def";
         public static final String COLUMN_CURRENT = "current";
 
@@ -163,7 +166,7 @@ public class DataContract   {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildConstantName(String name){
+        public static Uri buildConstantFormula(String name){
             return CONTENT_URI.buildUpon().appendPath(name).build();
         }
 
@@ -171,8 +174,9 @@ public class DataContract   {
             return uri.getLastPathSegment();
         }
 
-        public static String getNameFromUri(Uri uri){
+        public static String getFormulaFromUri(Uri uri){
             return uri.getLastPathSegment();
         }
     }
 }
+

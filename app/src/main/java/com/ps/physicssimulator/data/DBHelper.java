@@ -39,7 +39,10 @@ public class DBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_CONSTANT_TABLE = "CREATE TABLE " +
                 DataContract.ConstantEntry.TABLE_NAME + " (" +
                 DataContract.ConstantEntry._ID + " INTEGER PRIMARY KEY, " +
+                DataContract.ConstantEntry.COLUMN_FORMULA_KEY + " INTEGER NOT NULL, " +
                 DataContract.ConstantEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                DataContract.ConstantEntry.COLUMN_DESC + " TEXT NOT NULL, " +
+                DataContract.ConstantEntry.COLUMN_SYMBOL + " TEXT NOT NULL, " +
                 DataContract.ConstantEntry.COLUMN_DEFAULT + " REAL NOT NULL, " +
                 DataContract.ConstantEntry.COLUMN_CURRENT + " REAL NOT NULL);";
 
@@ -68,8 +71,8 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_VARIABLE_TABLE);
         initChapters(sqLiteDatabase);
         initLessons(sqLiteDatabase);
-        initConstants(sqLiteDatabase);
         initFormulas(sqLiteDatabase);
+        initConstants(sqLiteDatabase);
         initVariables(sqLiteDatabase);
     }
 
@@ -79,8 +82,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.ChapterEntry.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.LessonEntry.TABLE_NAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.ConstantEntry.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.FormulaEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.ConstantEntry.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.VariableEntry.TABLE_NAME);
 
         onCreate(sqLiteDatabase);
@@ -536,22 +539,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    private void initConstants(SQLiteDatabase database){
-        if(database.isOpen()) {
-            String[][] constants = {
-                    {"Acceleration due to Gravity", "9.8"}
-            };
 
-            for(String[] s: constants){
-                ContentValues values = new ContentValues();
-                values.put(DataContract.ConstantEntry.COLUMN_NAME, s[0]);
-                values.put(DataContract.ConstantEntry.COLUMN_DEFAULT, Double.parseDouble(s[1]));
-                values.put(DataContract.ConstantEntry.COLUMN_CURRENT, Double.parseDouble(s[1]));
-
-                database.insert(DataContract.ConstantEntry.TABLE_NAME, null, values);
-            }
-        }
-    }
 
     private void initFormulas(SQLiteDatabase database){
         if(database.isOpen()) {
@@ -611,6 +599,37 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 c.close();
                 database.insert(DataContract.FormulaEntry.TABLE_NAME, null, values);
+            }
+        }
+    }
+
+    private void initConstants(SQLiteDatabase database){
+        if(database.isOpen()) {
+            String[][] constants = {
+                    {"Acceleration due to Gravity", "9.8", "The acceleration for any object moving under the sole influence of gravity", "g", "Free-fall Velocity"}
+            };
+
+
+            for(String[] s: constants){
+                Cursor c = database.query(
+                        DataContract.FormulaEntry.TABLE_NAME,
+                        new String[]{DataContract.FormulaEntry._ID},
+                        DataContract.FormulaEntry.COLUMN_NAME + " = ?",
+                        new String[]{s[4]},
+                        null,
+                        null,
+                        null
+                );
+                c.moveToFirst();
+                ContentValues values = new ContentValues();
+                values.put(DataContract.ConstantEntry.COLUMN_NAME, s[0]);
+                values.put(DataContract.ConstantEntry.COLUMN_DEFAULT, Double.parseDouble(s[1]));
+                values.put(DataContract.ConstantEntry.COLUMN_CURRENT, Double.parseDouble(s[1]));
+                values.put(DataContract.ConstantEntry.COLUMN_DESC, s[2]);
+                values.put(DataContract.ConstantEntry.COLUMN_SYMBOL, s[3]);
+                values.put(DataContract.ConstantEntry.COLUMN_FORMULA_KEY,
+                        c.getString(c.getColumnIndex(DataContract.FormulaEntry._ID)));
+                database.insert(DataContract.ConstantEntry.TABLE_NAME, null, values);
             }
         }
     }

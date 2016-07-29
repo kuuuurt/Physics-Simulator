@@ -88,7 +88,7 @@ public class DataProviderTest {
         assertEquals("Uri should return CONTENT_TYPE",
                 ConstantEntry.CONTENT_TYPE, type);
 
-        type = mContext.getContentResolver().getType(ConstantEntry.buildConstantName(testVar));
+        type = mContext.getContentResolver().getType(ConstantEntry.buildConstantFormula(testVar));
         assertEquals("Uri should return CONTENT_ITEM_TYPE",
                 ConstantEntry.CONTENT_ITEM_TYPE, type);
 
@@ -217,7 +217,7 @@ public class DataProviderTest {
         testValues.put(ConstantEntry.COLUMN_CURRENT, 9.8);
 
         Cursor constantCursor = mContext.getContentResolver().query(
-                ConstantEntry.buildConstantName("Acceleration due to Gravity"),
+                ConstantEntry.buildConstantFormula("Free-fall Velocity"),
                 null,
                 null,
                 null,

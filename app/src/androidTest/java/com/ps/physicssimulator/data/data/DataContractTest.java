@@ -106,7 +106,7 @@ public class DataContractTest {
 
     @Test
     public void testBuildConstantName(){
-        Uri nameUri = DataContract.ConstantEntry.buildConstantName(TEST_CONSTANT_NAME);
+        Uri nameUri = DataContract.ConstantEntry.buildConstantFormula(TEST_CONSTANT_NAME);
         assertNotNull("Uri not created!", nameUri);
         assertEquals("Name not properly appended to Uri!", TEST_CONSTANT_NAME,
                 nameUri.getLastPathSegment());
