@@ -94,7 +94,11 @@ public class DataProvider extends ContentProvider{
             DataContract.LessonEntry.COLUMN_TITLE + " = ? ";
 
     private static final String lessonWithChapterQuery = DataContract.LessonEntry.TABLE_NAME +
-            "." + DataContract.LessonEntry.COLUMN_CHAPTER_KEY + " = ?";
+            "." + DataContract.LessonEntry.COLUMN_CHAPTER_KEY + " = ? ";
+
+    private static final String lessonWithChapterCalcQuery = DataContract.LessonEntry.TABLE_NAME +
+            "." + DataContract.LessonEntry.COLUMN_CHAPTER_KEY + " = ? AND " +
+            DataContract.LessonEntry.COLUMN_HAS_CALCULATOR +  " = ?";
 
     private static final String constantWithIdQuery = DataContract.ConstantEntry.TABLE_NAME +
             "." + DataContract.ConstantEntry._ID + " = ? ";
@@ -140,15 +144,26 @@ public class DataProvider extends ContentProvider{
 
         c.moveToFirst();
 
-        return lessonQueryBuilder.query(database,
+        if(sortOrder.equals("HasCalc"))
+            return lessonQueryBuilder.query(database,
                 projection,
-                lessonWithChapterQuery,
+                lessonWithChapterCalcQuery,
                 new String[]{String.valueOf(c.getLong(c.getColumnIndex(
-                        DataContract.ChapterEntry._ID)))},
+                        DataContract.ChapterEntry._ID))), "1"},
                 null,
                 null,
-                sortOrder
-        );
+                null
+            );
+        else
+            return lessonQueryBuilder.query(database,
+                    projection,
+                    lessonWithChapterQuery,
+                    new String[]{String.valueOf(c.getLong(c.getColumnIndex(
+                            DataContract.ChapterEntry._ID)))},
+                    null,
+                    null,
+                    null
+            );
     }
 
 

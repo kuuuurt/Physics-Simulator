@@ -14,6 +14,7 @@ import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -126,6 +127,24 @@ public class ContentActivity extends AppCompatActivity {
 
             sections.moveToNext();
         }
+
+        Cursor lesson = this.getContentResolver().query(
+                DataContract.LessonEntry.buildLessonTitle(mLesson),
+                null, null, null, null
+        );
+
+        lesson.moveToFirst();
+
+        if(lesson.getInt(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_HAS_SIMULATION)) == 1) {
+            Button btnSimulate = new Button(this);
+            btnSimulate.setLayoutParams(new LinearLayoutCompat.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            ));
+            btnSimulate.setText("Simulate");
+            contentContainer.addView(btnSimulate);
+        }
+
     }
 
     public LinearLayout addImage(String imageName, String caption){

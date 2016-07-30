@@ -93,7 +93,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 final SimpleCursorAdapter lessonsAdap = setSpinnerAdapter(
                         CalculatorActivity.this.getContentResolver().query(
                                 DataContract.LessonEntry.buildLessonChapter(chapter),
-                                null, null, null, null),
+                                null, null, null, "HasCalc"),
                         new String[]{DataContract.LessonEntry.COLUMN_TITLE}
                 );
 

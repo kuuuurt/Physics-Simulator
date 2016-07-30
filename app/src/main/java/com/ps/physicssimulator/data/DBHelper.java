@@ -32,6 +32,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.LessonEntry.COLUMN_CHAPTER_KEY + " INTEGER NOT NULL," +
                 DataContract.LessonEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
                 DataContract.LessonEntry.COLUMN_CONTENT + " TEXT NOT NULL," +
+                DataContract.LessonEntry.COLUMN_HAS_CALCULATOR + " INTEGER NOT NULL," +
+                DataContract.LessonEntry.COLUMN_HAS_SIMULATION + " INTEGER NOT NULL," +
                 DataContract.LessonEntry.COLUMN_LOGO + " TEXT NOT NULL" +");";
 
         final String SQL_CREATE_SECTION_TABLE = "CREATE TABLE " +
@@ -164,8 +166,8 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\\(x_i\\) = initial position of the object<br/>" +
                                     "\\(x_f\\) = final position of the object<br/></p>",
                             "",
-                            "com.ps.physicssimulator.lessons.ValuesFragment",
-                            "com.ps.physicssimulator.calculator.ValuesFragment"},
+                            "1",
+                            "0"},
                     {"Velocity", "One-dimensional Motion",
                             "Definition, Speed and Velocity, Average Velocity, Instantaneous " +
                                     "Velocity",
@@ -195,8 +197,8 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "<h2><b>Instantaneous Velocity</b></h2><br/>" +
                                     "Instantaneous velocity is the measure of the velocity of an object at a particular moment.<br/></p>",
                             "",
-                            "com.ps.physicssimulator.lessons.VelocityFragment",
-                            "com.ps.physicssimulator.calculator.VelocityFragment"},
+                            "1",
+                            "1"},
                     {"Acceleration", "One-dimensional Motion", "Definition, Acceleration, Average " +
                             "Acceleration, Instantaneous Acceleration",
                             "<p><h2><b>Definition</b></h2><br/>" +
@@ -217,7 +219,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "<b>t2</b> = time when the object had velocity x2<br/>" +
                                     "<h2><b>Instantaneous Acceleration</b></h2><br/>" +
                                     "Instantaneous acceleration is the change of velocity at infinitesimal (very small) time interval.<br/></p>",
-                            "", "", ""},
+                            "", "1", "1"},
                     {"Free-fall", "One-dimensional Motion", "Definition, Free fall",
                             "<p><h2><b>Definition</b></h2><br/>" +
                                     "Free fall:<br/>" +
@@ -233,7 +235,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "//<Insert formula><br/>" +
                                     "The displacement along y-axis at any instant t:<br/>" +
                                     "//<Insert formula><br/></p>",
-                            "", "", ""},
+                            "", "1", "1"},
                     {"Projectile Motion", "Two-dimensional Motion", "Definition, " +
                             "Projectile Motion",
                             "<p><h2><b>Definition</b></h2><br/>" +
@@ -276,7 +278,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "<b>v1</b> = initial velocity of the object<br/>" +
                                     "<b>sin θ</b> = component along y-axis<br/>" +
                                     "<b>cos θ</b> = component along x-axis<br/></p>",
-                            "", "", ""},
+                            "", "1", "1"},
                     {"Friction", "Isaac Newton's Laws of Motion", "Definition, Two types of " +
                             "Friction",
                             "<p><h2><b>Definition</b></h2><br/>" +
@@ -299,7 +301,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "<b>Ff</b> = frictional force <br/>" +
                                     "<b>μ</b> = coefficient of friction<br/>" +
                                     "<b>Fn</b> = normal force<br/></p>",
-                            "", "", ""},
+                            "", "1", "1"},
                     {"Free-body Diagrams", "Isaac Newton's Laws of Motion", "Definition, Free " +
                             "Body Diagrams",
                             "<p><h2><b>Definition</b></h2><br/>" +
@@ -329,7 +331,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "•\tThe normal force will always push straight up from a surface.<br/>" +
                                     "•\tIf an object is moving in one direction, friction is acting in the opposite direction.<br/>" +
                                     "•\tThink about whether the forces on opposite sides are balanced or not. If they are, the two arrows should be about the same length. <br/></p>",
-                            "", "", ""},
+                            "", "1", "1"},
                     {"Momentum and Impulse", "Momentum and Impulse", "Definition, Momentum, " +
                             "Impulse",
                             "<p><h2><b>Definition</b></h2><br/>" +
@@ -357,7 +359,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "In a collision:<br/>" +
                                     "•\tobjects experience an impulse<br/>" +
                                     "•\tthe impulse causes and is equal to the change in momentum<br/></p>",
-                            "", "", ""},
+                            "", "1", "1"},
                     {"Law of Conservation of Energy", "Momentum and Impulse", "Definition, " +
                             "Conservation of Energy",
                             "<p><h2><b>Definition</b></h2><br/>" +
@@ -378,7 +380,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "<b>v</b> = final velocity after falling from a height of <b>h</b><br/>" +
                                     "<b>g</b> = acceleration due to gravity<br/>" +
                                     "<br/></p>",
-                            "", "", ""},
+                            "", "0", "0"},
                     {"Work", "Work, Energy, and Power", "Definition, Work",
                             "<p><h2><b>Definition</b></h2><br/>" +
                                     "Work:<br/>" +
@@ -392,11 +394,10 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Where:<br/>" +
                                     "<b>→F</b> = force vector<br/>" +
                                     "<b>→x</b> = position vector<br/></p>",
-                            "", "", ""},
+                            "", "1", "1"},
                     {"Energy", "Work, Energy, and Power", "Definition, Kinetic Energy, " +
                             "Potential Energy, Total Mechanical Energy",
-                            "<p></p>",
-                            "", "<h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2><br/>" +
                             "Energy:<br/>" +
                             "•\tis the capacity of performing work<br/>" +
                             "•\tmay exist in various forms (potential, kinetic, electric, chemical etc.)<br/>" +
@@ -422,7 +423,8 @@ public class DBHelper extends SQLiteOpenHelper {
                             "<b>x</b> = amount spring is displaced from initial point<br/>" +
                             "<h2><b>Total Mechanical Energy</b></h2><br/>" +
                             "Total mechanical energy is the sum of the kinetic and potential energy of a conservative system:<br/>" +
-                            "//<Insert formula><br/>", ""},
+                            "//<Insert formula><br/>",
+                            "", "1", "1"},
                     {"Power", "Work, Energy, and Power", "Definition, Average Power, " +
                             "Instantaneous Power",
                             "<p><h2><b>Definition</b></h2><br/>" +
@@ -449,7 +451,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "<b>x</b> = path made by the object<br/>" +
                                     "<b>a</b> = angle between the force and the position vectors<br/>" +
                                     "<b>v</b> = velocity of the object<br/></p>",
-                            "", "", ""},
+                            "", "1", "1"},
                     {"Uniform Circular Motion", "Uniform Circular Motion", "Definition, " +
                             "Measurements of a Circle, Frequency, Angular Displacement, " +
                             "Length of Arc, Tangential Velocity, Angular Velocity, " +
@@ -497,7 +499,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "The centripetal acceleration is always pointing towards the center of the circle in motion.<br/>" +
                                     "Centripetal acceleration can be calculated using this formula:<br/>" +
                                     "//<Insert formula><br/></p>",
-                            "", "", ""},
+                            "", "1", "1"},
                     {"Centripetal and Centrifugal Forces", "Uniform Circular Motion",
                             "Definition, Centripetal and Centrifugal Forces",
                             "<p><h2><b>Definition</b></h2><br/>" +
@@ -516,7 +518,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "<b>v</b> = tangential velocity of the object<br/>" +
                                     "<b>r</b> = radius of curvature cause by the force<br/>" +
                                     "Newton’s third law of motion states that every action has an equal and opposite reaction. Therefore, in this case, there must be an equal and opposite reaction force to the centripetal force which is called the centrifugal force.<br/></p>",
-                            "", "", ""},
+                            "", "1", "0"},
                     {"Rotational Motion", "Uniform Circular Motion", "Definition, Moment of " +
                             "Inertia, Torque, Angular Momentum",
                             "<p><h2><b>Definition</b></h2><br/>" +
@@ -534,7 +536,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "The angular momentum (L) is the quantity of rotation of a body. It is dependent on the moment of inertia (I) of the object and its angular velocity vector (ω).<br/>" +
                                     "Angular momentum can be calculated using this formula:<br/>" +
                                     "//<Insert formula><br/></p>",
-                            "", "", ""}
+                            "", "1", "0"}
             };
 
             for(String[] s : lessons){
@@ -556,6 +558,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put(DataContract.LessonEntry.COLUMN_DESCRIPTION, s[2]);
                 values.put(DataContract.LessonEntry.COLUMN_CONTENT, s[3]);
                 values.put(DataContract.LessonEntry.COLUMN_LOGO, s[4]);
+                values.put(DataContract.LessonEntry.COLUMN_HAS_CALCULATOR, s[5]);
+                values.put(DataContract.LessonEntry.COLUMN_HAS_SIMULATION, s[6]);
 
                 c.close();
 

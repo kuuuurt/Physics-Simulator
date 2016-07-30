@@ -60,7 +60,8 @@ public class DataContract   {
         public static final String COLUMN_DESCRIPTION = "desc";
         public static final String COLUMN_CONTENT = "content";
         public static final String COLUMN_LOGO = "logo";
-        public static final String COLUMN_LESSON_FRAGMENT_NAME = "lessonfrag";
+        public static final String COLUMN_HAS_SIMULATION = "has_simulation";
+        public static final String COLUMN_HAS_CALCULATOR = "has_calculator";
 
 
         public static final String CONTENT_TYPE =
