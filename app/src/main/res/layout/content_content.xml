@@ -1,20 +1,24 @@
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:id="@+id/content_container"
-    android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
 
-    <!--<io.github.kexanie.library.MathView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/text_content"/>-->
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.ps.physicssimulator.ContentActivity"
+    tools:showIn="@layout/activity_content">
 
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/content_container"
+        android:padding="16dp"
+        android:orientation="vertical"
+        >
 
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
 <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
     <!--android:layout_height="wrap_content"-->

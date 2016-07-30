@@ -51,8 +51,6 @@ public class LessonActivity extends AppCompatActivity implements
                 intent.putExtra("Lesson", data.getString(data.getColumnIndex(
                         DataContract.LessonEntry.COLUMN_TITLE)));
                 intent.putExtra("Chapter", mChapter);
-                intent.putExtra("FragmentName", data.getString(data.getColumnIndex(
-                        DataContract.LessonEntry.COLUMN_LESSON_FRAGMENT_NAME)));
                 startActivity(intent);
             }
         });

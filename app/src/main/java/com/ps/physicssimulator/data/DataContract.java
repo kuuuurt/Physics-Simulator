@@ -96,7 +96,6 @@ public class DataContract   {
         public static final String TABLE_NAME = "section";
 
         public static final String COLUMN_NAME = "name";
-        public static final String COLUMN_HEADER = "header";
         public static final String COLUMN_CONTENT = "content";
         public static final String COLUMN_LESSON_KEY = "lesson_id";
 

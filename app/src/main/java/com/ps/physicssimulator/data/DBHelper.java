@@ -38,7 +38,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.SectionEntry.TABLE_NAME + " (" +
                 DataContract.SectionEntry._ID + " INTEGER PRIMARY KEY, " +
                 DataContract.SectionEntry.COLUMN_NAME + " TEXT NOT NULL, " +
-                DataContract.SectionEntry.COLUMN_HEADER + " TEXT, " +
                 DataContract.SectionEntry.COLUMN_CONTENT + " TEXT, " +
                 DataContract.SectionEntry.COLUMN_LESSON_KEY + " INTEGER NOT NULL" + ");";
 
@@ -568,7 +567,14 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initSections(SQLiteDatabase database){
         if(database.isOpen()){
             String[][] sections = {
-                    {"Scalar and Vector Values","Scalar and Vector Values Definition","a","a"}
+                    {"Scalar and Vector Values","Scalar and Vector Values Definition","" +
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "Scalar quantity:<br />" +
+                            "\t•\tthas a magnitude<br />" +
+                            "\t•\ttis one dimensional<br/>|" +
+                            "Vector quantity:<br/>" +
+                            "\t•\tthas a magnitude and a direction<br/>" +
+                            "\t•\ttis two dimensional<br/></p>"}
             };
 
             for(String[] s: sections){
@@ -587,11 +593,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put(DataContract.SectionEntry.COLUMN_LESSON_KEY,
                         c.getLong(c.getColumnIndex(DataContract.LessonEntry._ID)));
                 values.put(DataContract.SectionEntry.COLUMN_NAME, s[1]);
-                values.put(DataContract.SectionEntry.COLUMN_HEADER, s[2]);
-                values.put(DataContract.SectionEntry.COLUMN_CONTENT, s[3]);
+                values.put(DataContract.SectionEntry.COLUMN_CONTENT, s[2]);
 
-                long i = database.insert(DataContract.SectionEntry.TABLE_NAME, null, values);
-                String tes = "";
+                database.insert(DataContract.SectionEntry.TABLE_NAME, null, values);
             }
         }
     }
@@ -599,7 +603,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initImages(SQLiteDatabase database){
         if(database.isOpen()){
             String[][] images = {
-                    {"Scalar and Vector Values Definition", "", ""}
+                    {"Scalar and Vector Values Definition", "ic_chapter_momentum_impulse", "Figure 1: asdfasdf"},
+                    {"Scalar and Vector Values Definition", "ic_chapter_two_dimensional_motion", "Figure 2: qwerqwer"}
             };
 
             for(String[] s: images){
