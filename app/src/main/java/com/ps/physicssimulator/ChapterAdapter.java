@@ -16,6 +16,8 @@ import com.ps.physicssimulator.data.DataContract;
  */
 public class ChapterAdapter extends CursorAdapter {
 
+    private static Context mContext;
+
     public static class ViewHolder {
         public final ImageView logoView;
         public final TextView titleView;
@@ -31,6 +33,7 @@ public class ChapterAdapter extends CursorAdapter {
 
     public ChapterAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
+        mContext = context;
     }
 
     @Override
@@ -48,7 +51,10 @@ public class ChapterAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        //viewHolder.logoView.setImageResource();
+        viewHolder.logoView.setImageResource(mContext.getResources().getIdentifier(
+                cursor.getString(cursor
+                .getColumnIndex(DataContract.ChapterEntry.COLUMN_LOGO)),
+                "drawable", mContext.getPackageName()));
         viewHolder.titleView.setText(cursor.getString(cursor.getColumnIndex(
                 DataContract.ChapterEntry.COLUMN_NAME)));
         viewHolder.descView.setText(cursor.getString(cursor.getColumnIndex(

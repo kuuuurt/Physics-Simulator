@@ -99,12 +99,12 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initChapters(SQLiteDatabase database){
         if(database.isOpen()){
             String[][] chapters = {
-                    {"One-dimensional Motion","Scalar and Vector Values, Velocity, Acceleration, Free fall",""},
-                    {"Two-dimensional Motion","Projectile Motion",""},
-                    {"Isaac Newton's Laws of Motion","Friction, Free Body Diagrams",""},
-                    {"Momentum and Impulse","Momentum and Impulse",""},
-                    {"Work, Energy, and Power","Work, Energy, Power",""},
-                    {"Uniform Circular Motion","Uniform Circular Motion, Centripetal and Centrifugal Forces, Rotational Motion",""}
+                    {"One-dimensional Motion","Scalar and Vector Values, Velocity, Acceleration, Free fall","ic_chapter_one_dimensional_motion"},
+                    {"Two-dimensional Motion","Projectile Motion","ic_chapter_two_dimensional_motion"},
+                    {"Isaac Newton's Laws of Motion","Friction, Free Body Diagrams","ic_chapter_newtons_laws"},
+                    {"Momentum and Impulse","Momentum and Impulse","ic_chapter_momentum_impulse"},
+                    {"Work, Energy, and Power","Work, Energy, Power","ic_chapter_work_energy_power"},
+                    {"Uniform Circular Motion","Uniform Circular Motion, Centripetal and Centrifugal Forces, Rotational Motion","ic_chapter_uniform_circular_motion"}
             };
             for(String[] s : chapters){
                 ContentValues values = new ContentValues();

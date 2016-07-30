@@ -17,6 +17,10 @@ public class DataContract   {
     public static final String PATH_FORMULA = "formula";
     public static final String PATH_FORMULA_CONSTANT = "formula_constant";
     public static final String PATH_VARIABLE = "variable";
+    public static final String PATH_LESSON_SECTION = "lesson_section";
+    public static final String PATH_SECTION = "section";
+    public static final String PATH_IMAGE = "image";
+    public static final String PATH_SECTION_IMAGE = "section_image";
 
     public static final class ChapterEntry implements BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
@@ -86,6 +90,11 @@ public class DataContract   {
         public static String getChapterFromUri(Uri uri){
             return uri.getPathSegments().get(2);
         }
+    }
+
+    public static final class SectionEntry implements BaseColumns {
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_LESSON).build();
     }
 
     public static final class FormulaEntry implements BaseColumns {
