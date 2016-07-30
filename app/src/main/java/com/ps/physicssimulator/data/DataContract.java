@@ -17,10 +17,8 @@ public class DataContract   {
     public static final String PATH_FORMULA = "formula";
     public static final String PATH_FORMULA_CONSTANT = "formula_constant";
     public static final String PATH_VARIABLE = "variable";
-    public static final String PATH_LESSON_SECTION = "lesson_section";
     public static final String PATH_SECTION = "section";
     public static final String PATH_IMAGE = "image";
-    public static final String PATH_SECTION_IMAGE = "section_image";
 
     public static final class ChapterEntry implements BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
@@ -63,7 +61,6 @@ public class DataContract   {
         public static final String COLUMN_CONTENT = "content";
         public static final String COLUMN_LOGO = "logo";
         public static final String COLUMN_LESSON_FRAGMENT_NAME = "lessonfrag";
-        public static final String COLUMN_CALCULATOR_FRAGMENT_NAME = "calcfrag";
 
 
         public static final String CONTENT_TYPE =
@@ -94,7 +91,57 @@ public class DataContract   {
 
     public static final class SectionEntry implements BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(PATH_LESSON).build();
+                .appendPath(PATH_SECTION).build();
+
+        public static final String TABLE_NAME = "section";
+
+        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_HEADER = "header";
+        public static final String COLUMN_CONTENT = "content";
+        public static final String COLUMN_LESSON_KEY = "lesson_id";
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_SECTION;
+
+        public static Uri buildSectionUri(long id){
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildSectionLesson(String lesson){
+            return CONTENT_URI.buildUpon().appendPath(lesson).build();
+        }
+
+        public static String getLessonFromUri(Uri uri){
+            return uri.getLastPathSegment();
+        }
+    }
+
+    public static final class ImageEntry implements BaseColumns {
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_IMAGE).build();
+
+        public static final String TABLE_NAME = "image";
+
+        public static final String COLUMN_RESOURCE_NAME = "resname";
+        public static final String COLUMN_CAPTION = "caption";
+        public static final String COLUMN_SECTION_KEY = "section_id";
+
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_IMAGE;
+
+        public static Uri buildImageUri(long id){
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static Uri buildImageSectionUri(String section){
+            return CONTENT_URI.buildUpon().appendPath(section).build();
+        }
+
+        public static String getSectionFromUri(Uri uri){
+            return uri.getLastPathSegment();
+        }
+
     }
 
     public static final class FormulaEntry implements BaseColumns {
@@ -199,15 +246,7 @@ public class DataContract   {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-        public static Uri buildConstantFormula(String name){
-            return CONTENT_URI.buildUpon().appendPath(name).build();
-        }
-
         public static String getIDFromUri(Uri uri){
-            return uri.getLastPathSegment();
-        }
-
-        public static String getFormulaFromUri(Uri uri){
             return uri.getLastPathSegment();
         }
     }

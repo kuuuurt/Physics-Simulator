@@ -15,7 +15,9 @@ import com.ps.physicssimulator.data.DataContract;
 import com.ps.physicssimulator.data.DataContract.ChapterEntry;
 import com.ps.physicssimulator.data.DataContract.ConstantEntry;
 import com.ps.physicssimulator.data.DataContract.FormulaEntry;
+import com.ps.physicssimulator.data.DataContract.ImageEntry;
 import com.ps.physicssimulator.data.DataContract.LessonEntry;
+import com.ps.physicssimulator.data.DataContract.SectionEntry;
 import com.ps.physicssimulator.data.DataProvider;
 
 import org.junit.After;
@@ -112,6 +114,22 @@ public class DataProviderTest {
         type = mContext.getContentResolver().getType(DataContract.FormulaConstantEntry.buildFormulaConstant(testVar));
         assertEquals("Uri should return CONTENT_TYPE",
                 DataContract.FormulaConstantEntry.CONTENT_TYPE, type);
+
+        type = mContext.getContentResolver().getType(SectionEntry.buildSectionUri(1234));
+        assertEquals("Uri should return CONTENT_TYPE",
+                SectionEntry.CONTENT_TYPE, type);
+
+        type = mContext.getContentResolver().getType(SectionEntry.buildSectionLesson(testVar));
+        assertEquals("Uri should return CONTENT_TYPE",
+                SectionEntry.CONTENT_TYPE, type);
+
+        type = mContext.getContentResolver().getType(ImageEntry.buildImageUri(1234));
+        assertEquals("Uri should return CONTENT_TYPE",
+                ImageEntry.CONTENT_TYPE, type);
+
+        type = mContext.getContentResolver().getType(ImageEntry.buildImageSectionUri(testVar));
+        assertEquals("Uri should return CONTENT_TYPE",
+                ImageEntry.CONTENT_TYPE, type);
     }
 
     @Test
@@ -176,7 +194,7 @@ public class DataProviderTest {
         ContentValues testValues = new ContentValues();
         testValues.put(FormulaEntry.COLUMN_NAME, "Displacement");
         testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "1");
-        testValues.put(FormulaEntry.COLUMN_FORMULA, "");
+        testValues.put(FormulaEntry.COLUMN_FORMULA, "$$d = {x_f - x_i}$$");
 
         Cursor formulaCursor = mContext.getContentResolver().query(
                 FormulaEntry.CONTENT_URI,
@@ -193,8 +211,8 @@ public class DataProviderTest {
     @Test
     public void testBasicVariableQuery(){
         ContentValues testValues = new ContentValues();
-        testValues.put(VariableEntry.COLUMN_NAME, "Speed");
-        testValues.put(VariableEntry.COLUMN_FORMULA_KEY, "2");
+        testValues.put(VariableEntry.COLUMN_NAME, "Displacement");
+        testValues.put(VariableEntry.COLUMN_FORMULA_KEY, 1);
 //        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
 //        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
 
@@ -208,6 +226,88 @@ public class DataProviderTest {
 
         validateCursor("testBasicVariableQuery", varCursor, testValues);
         varCursor.close();
+    }
+
+    @Test
+    public void testBasicSectionQuery(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(SectionEntry.COLUMN_NAME, "Scalar and Vector Values Definition");
+        testValues.put(SectionEntry.COLUMN_LESSON_KEY, 1);
+//        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
+//        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
+
+        Cursor sectionCursor  = mContext.getContentResolver().query(
+                SectionEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testBasicSectionQuery", sectionCursor, testValues);
+        sectionCursor.close();
+    }
+
+    @Test
+    public void testBasicImageQuery(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(ImageEntry.COLUMN_SECTION_KEY, 1);
+//        testValues.put(ImageEntry.COLUMN_RESOURCE_NAME, "Scalar and Vector Values Definition");
+//        testValues.put(ImageEntry.COLUMN_CAPTION, "1");
+//        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
+//        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
+
+        Cursor imageCursor  = mContext.getContentResolver().query(
+                ImageEntry.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testBasicImageQuery", imageCursor, testValues);
+        imageCursor.close();
+    }
+
+    @Test
+    public void testSectionWithLessonQuery(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(SectionEntry.COLUMN_NAME, "Scalar and Vector Values Definition");
+        testValues.put(SectionEntry.COLUMN_LESSON_KEY, 1);
+//        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
+//        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
+
+        Cursor sectionCursor  = mContext.getContentResolver().query(
+                SectionEntry.buildSectionLesson("Scalar and Vector Values"),
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testSectionWithLessonQuery", sectionCursor, testValues);
+        sectionCursor.close();
+    }
+
+    @Test
+    public void testImageWithSectionQuery(){
+        ContentValues testValues = new ContentValues();
+        testValues.put(ImageEntry.COLUMN_SECTION_KEY, 1);
+//        testValues.put(ImageEntry.COLUMN_RESOURCE_NAME, "Scalar and Vector Values Definition");
+//        testValues.put(ImageEntry.COLUMN_CAPTION, "1");
+//        testValues.put(VariableEntry.COLUMN_FORMULA_DISPLAY, "");
+//        testValues.put(VariableEntry.COLUMN_FORMULA_COMPUTE, "");
+
+        Cursor imageCursor  = mContext.getContentResolver().query(
+                ImageEntry.buildImageSectionUri("Scalar and Vector Values Definition"),
+                null,
+                null,
+                null,
+                null
+        );
+
+        validateCursor("testImageWithSectionQuery", imageCursor, testValues);
+        imageCursor.close();
     }
 
     @Test
@@ -355,7 +455,7 @@ public class DataProviderTest {
         ContentValues testValues = new ContentValues();
         testValues.put(FormulaEntry.COLUMN_NAME, "Displacement");
         testValues.put(FormulaEntry.COLUMN_LESSON_KEY, "1");
-        testValues.put(FormulaEntry.COLUMN_FORMULA, "");
+        testValues.put(FormulaEntry.COLUMN_FORMULA, "$$d = {x_f - x_i}$$");
 
         Cursor formulaCursor = mContext.getContentResolver().query(
                 FormulaEntry.buildFormulaLesson("Scalar and Vector Values"),

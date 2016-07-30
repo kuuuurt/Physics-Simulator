@@ -24,6 +24,10 @@ public class DataProvider extends ContentProvider{
     static final int VARIABLE_WITH_NAME = 501;
     static final int FORMULA_CONSTANT = 600;
     static final int FORMULA_CONSTANT_WITH_FORMULA = 601;
+    static final int SECTION = 700;
+    static final int SECTION_WITH_LESSON = 701;
+    static final int IMAGE = 800;
+    static final int IMAGE_WITH_SECTION = 801;
 
     static UriMatcher uriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -42,6 +46,10 @@ public class DataProvider extends ContentProvider{
         matcher.addURI(authority, DataContract.PATH_VARIABLE + "/*", VARIABLE_WITH_NAME);
         matcher.addURI(authority, DataContract.PATH_FORMULA_CONSTANT, FORMULA_CONSTANT);
         matcher.addURI(authority, DataContract.PATH_FORMULA_CONSTANT + "/*", FORMULA_CONSTANT_WITH_FORMULA);
+        matcher.addURI(authority, DataContract.PATH_SECTION, SECTION);
+        matcher.addURI(authority, DataContract.PATH_SECTION + "/*", SECTION_WITH_LESSON);
+        matcher.addURI(authority, DataContract.PATH_IMAGE, IMAGE);
+        matcher.addURI(authority, DataContract.PATH_IMAGE + "/*", IMAGE_WITH_SECTION);
 
         return matcher;
     }
@@ -53,6 +61,8 @@ public class DataProvider extends ContentProvider{
     private static final SQLiteQueryBuilder formulaQueryBuilder;
     private static final SQLiteQueryBuilder variableQueryBuilder;
     private static final SQLiteQueryBuilder formulaConstantQueryBuilder;
+    private static final SQLiteQueryBuilder sectionQueryBuilder;
+    private static final SQLiteQueryBuilder imageQueryBuilder;
 
     static{
         lessonQueryBuilder = new SQLiteQueryBuilder();
@@ -72,6 +82,12 @@ public class DataProvider extends ContentProvider{
 
         formulaConstantQueryBuilder = new SQLiteQueryBuilder();
         formulaConstantQueryBuilder.setTables(DataContract.FormulaConstantEntry.TABLE_NAME);
+
+        sectionQueryBuilder = new SQLiteQueryBuilder();
+        sectionQueryBuilder.setTables(DataContract.SectionEntry.TABLE_NAME);
+
+        imageQueryBuilder = new SQLiteQueryBuilder();
+        imageQueryBuilder.setTables(DataContract.ImageEntry.TABLE_NAME);
     }
 
     private static final String lessonWithTitleQuery = DataContract.LessonEntry.TABLE_NAME + "." +
@@ -94,6 +110,12 @@ public class DataProvider extends ContentProvider{
 
     private static final String formulaConstantQuery = DataContract.FormulaConstantEntry.TABLE_NAME + "."
             + DataContract.FormulaConstantEntry.COLUMN_FORMULA_KEY + " = ?";
+
+    private static final String sectionLessonQuery = DataContract.SectionEntry.TABLE_NAME + "."
+            + DataContract.SectionEntry.COLUMN_LESSON_KEY + " = ? ";
+
+    private static final String imageSectionQuery = DataContract.ImageEntry.TABLE_NAME + "."
+            + DataContract.ImageEntry.COLUMN_SECTION_KEY + " = ? ";
 
 
 
@@ -212,7 +234,46 @@ public class DataProvider extends ContentProvider{
                 null,
                 sortOrder
         );
+    }
 
+    public Cursor getSectionsByLesson(Uri uri, String[] projection, String sortOrder){
+        String lesson = DataContract.SectionEntry.getLessonFromUri(uri);
+
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor c = database.rawQuery("SELECT " + DataContract.LessonEntry._ID +
+                " from lesson WHERE " + DataContract.LessonEntry.COLUMN_TITLE +
+                " = \"" + lesson + "\"", null);
+
+        c.moveToFirst();
+
+        return sectionQueryBuilder.query(database,
+                projection,
+                sectionLessonQuery,
+                new String[]{String.valueOf(c.getLong(c.getColumnIndex(DataContract.LessonEntry._ID)))},
+                null,
+                null,
+                sortOrder
+        );
+    }
+
+    public Cursor getImagesBySection(Uri uri, String[] projection, String sortOrder){
+        String section = DataContract.ImageEntry.getSectionFromUri(uri);
+
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor c = database.rawQuery("SELECT " + DataContract.SectionEntry._ID +
+                " from section WHERE " + DataContract.SectionEntry.COLUMN_NAME +
+                " = \"" + section + "\"", null);
+
+        c.moveToFirst();
+
+        return imageQueryBuilder.query(database,
+                projection,
+                imageSectionQuery,
+                new String[]{c.getString(c.getColumnIndex(DataContract.SectionEntry._ID))},
+                null,
+                null,
+                sortOrder
+        );
     }
 
     @Override
@@ -314,6 +375,34 @@ public class DataProvider extends ContentProvider{
             case FORMULA_CONSTANT_WITH_FORMULA:
                 data = getFormulaConstants(uri, projection, sortOrder);
                 break;
+            case SECTION:
+                data = dbHelper.getReadableDatabase().query(
+                        DataContract.SectionEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case SECTION_WITH_LESSON:
+                data = getSectionsByLesson(uri, projection, sortOrder);
+                break;
+            case IMAGE:
+                data = dbHelper.getReadableDatabase().query(
+                        DataContract.ImageEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case IMAGE_WITH_SECTION:
+                data = getImagesBySection(uri, projection, sortOrder);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -355,6 +444,14 @@ public class DataProvider extends ContentProvider{
                 return DataContract.FormulaConstantEntry.CONTENT_TYPE;
             case FORMULA_CONSTANT_WITH_FORMULA:
                 return DataContract.FormulaConstantEntry.CONTENT_TYPE;
+            case SECTION:
+                return DataContract.SectionEntry.CONTENT_TYPE;
+            case SECTION_WITH_LESSON:
+                return DataContract.SectionEntry.CONTENT_TYPE;
+            case IMAGE:
+                return DataContract.ImageEntry.CONTENT_TYPE;
+            case IMAGE_WITH_SECTION:
+                return DataContract.ImageEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

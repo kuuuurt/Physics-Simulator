@@ -2,18 +2,12 @@ package com.ps.physicssimulator;
 
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.View;
-import android.widget.TextView;
-
-import com.ps.physicssimulator.data.DataContract;
 
 public class ContentActivity extends AppCompatActivity {
 
@@ -48,23 +42,17 @@ public class ContentActivity extends AppCompatActivity {
         mLesson = intent.getStringExtra("Lesson");
         mChapter = intent.getStringExtra("Chapter");
 
-        String fragName = intent.getStringExtra("FragmentName");
-        Fragment frag = Fragment.instantiate(this, fragName);
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_content, frag)
-                .addToBackStack(null).commit();
+//        String fragName = intent.getStringExtra("FragmentName");
+//        Fragment frag = Fragment.instantiate(this, fragName);
+//        Bundle b = new Bundle();
+//        b.putString("lesson", mLesson);
+//        frag.setArguments(b);
+//        getSupportFragmentManager().beginTransaction().add(R.id.fragment_content, frag)
+//                .addToBackStack(null).commit();
 
         setTitle(mLesson);
 
-        Cursor lesson = this.getContentResolver().query(
-                DataContract.LessonEntry.buildLessonTitle(mLesson),
-                null,null,null,null
-        );
 
-        lesson.moveToFirst();
-
-
-        TextView txtContent = (TextView)findViewById(R.id.text_values_content_1);
-        txtContent.setText(Html.fromHtml(lesson.getString(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_CONTENT))));
     }
 
 

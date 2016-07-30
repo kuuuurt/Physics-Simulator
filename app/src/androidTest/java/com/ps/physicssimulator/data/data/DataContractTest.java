@@ -21,7 +21,7 @@ public class DataContractTest {
     private static final String TEST_LESSON_TITLE = "/Title";
     private static final String TEST_CHAPTER_NAME = "/Chapter";
     private static final String TEST_FORMULA_NAME = "/Formula";
-    private static final String TEST_CONSTANT_NAME = "/Constant";
+    private static final String TEST_SECTION_NAME = "/Section";
 
     @Test
     public void testBuildChapter(){
@@ -105,16 +105,6 @@ public class DataContractTest {
     }
 
     @Test
-    public void testBuildConstantName(){
-        Uri nameUri = DataContract.ConstantEntry.buildConstantFormula(TEST_CONSTANT_NAME);
-        assertNotNull("Uri not created!", nameUri);
-        assertEquals("Name not properly appended to Uri!", TEST_CONSTANT_NAME,
-                nameUri.getLastPathSegment());
-        assertEquals("Uri does not match expected result", nameUri.toString(),
-                DataContract.ConstantEntry.CONTENT_URI + "/%2FConstant");
-    }
-
-    @Test
     public void testBuildFormula(){
         Uri formulaUri = DataContract.FormulaEntry.buildFormulaUri(TEST_RECORD_ID);
         assertNotNull("Uri not created!", formulaUri);
@@ -166,5 +156,41 @@ public class DataContractTest {
                 formulaUri.getLastPathSegment());
         assertEquals("Uri does not match expected result", formulaUri.toString(),
                 DataContract.FormulaConstantEntry.CONTENT_URI + "/%2FFormula");
+    }
+
+    @Test
+    public void testBuildSection(){
+        Uri sectionUri = DataContract.SectionEntry.buildSectionUri(TEST_RECORD_ID);
+        assertNotNull("Uri not created!", sectionUri);
+        assertEquals("Uri does not match expected result", sectionUri.toString(),
+                DataContract.SectionEntry.CONTENT_URI + "/"  + TEST_RECORD_ID);
+    }
+
+    @Test
+    public void testBuildSectionLesson(){
+        Uri lessonUri = DataContract.SectionEntry.buildSectionLesson(TEST_LESSON_TITLE);
+        assertNotNull("Uri not created!", lessonUri);
+        assertEquals("Lesson not properly appended to Uri!", TEST_LESSON_TITLE,
+                lessonUri.getLastPathSegment());
+        assertEquals("Uri does not match expected result", lessonUri.toString(),
+                DataContract.SectionEntry.CONTENT_URI + "/%2FTitle");
+    }
+
+    @Test
+    public void testBuildImage(){
+        Uri imageUri = DataContract.ImageEntry.buildImageUri(TEST_RECORD_ID);
+        assertNotNull("Uri not created!", imageUri);
+        assertEquals("Uri does not match expected result", imageUri.toString(),
+                DataContract.ImageEntry.CONTENT_URI + "/"  + TEST_RECORD_ID);
+    }
+
+    @Test
+    public void testBuildImageSection(){
+        Uri sectionUri = DataContract.ImageEntry.buildImageSectionUri(TEST_SECTION_NAME);
+        assertNotNull("Uri not created!", sectionUri);
+        assertEquals("Section not properly appended to Uri!", TEST_SECTION_NAME,
+                sectionUri.getLastPathSegment());
+        assertEquals("Uri does not match expected result", sectionUri.toString(),
+                DataContract.ImageEntry.CONTENT_URI + "/%2FSection");
     }
 }

@@ -32,9 +32,22 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.LessonEntry.COLUMN_CHAPTER_KEY + " INTEGER NOT NULL," +
                 DataContract.LessonEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
                 DataContract.LessonEntry.COLUMN_CONTENT + " TEXT NOT NULL," +
-                DataContract.LessonEntry.COLUMN_LESSON_FRAGMENT_NAME + " TEXT," +
-                DataContract.LessonEntry.COLUMN_CALCULATOR_FRAGMENT_NAME + " TEXT," +
                 DataContract.LessonEntry.COLUMN_LOGO + " TEXT NOT NULL" +");";
+
+        final String SQL_CREATE_SECTION_TABLE = "CREATE TABLE " +
+                DataContract.SectionEntry.TABLE_NAME + " (" +
+                DataContract.SectionEntry._ID + " INTEGER PRIMARY KEY, " +
+                DataContract.SectionEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                DataContract.SectionEntry.COLUMN_HEADER + " TEXT, " +
+                DataContract.SectionEntry.COLUMN_CONTENT + " TEXT, " +
+                DataContract.SectionEntry.COLUMN_LESSON_KEY + " INTEGER NOT NULL" + ");";
+
+        final String SQL_CREATE_IMAGE_TABLE = "CREATE TABLE " +
+                DataContract.ImageEntry.TABLE_NAME + " (" +
+                DataContract.ImageEntry._ID + " INTEGER PRIMARY KEY, " +
+                DataContract.ImageEntry.COLUMN_RESOURCE_NAME + " TEXT NOT NULL, " +
+                DataContract.ImageEntry.COLUMN_CAPTION + " TEXT NOT NULL, " +
+                DataContract.ImageEntry.COLUMN_SECTION_KEY + " INTEGER NOT NULL" + ")";
 
         final String SQL_CREATE_CONSTANT_TABLE = "CREATE TABLE " +
                 DataContract.ConstantEntry.TABLE_NAME + " (" +
@@ -71,12 +84,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL(SQL_CREATE_CHAPTER_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_LESSON_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_SECTION_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_IMAGE_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_CONSTANT_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_FORMULA_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_FORMULA_CONSTANT_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_VARIABLE_TABLE);
         initChapters(sqLiteDatabase);
         initLessons(sqLiteDatabase);
+        initSections(sqLiteDatabase);
+        initImages(sqLiteDatabase);
         initFormulas(sqLiteDatabase);
         initConstants(sqLiteDatabase);
         initFormulaConstants(sqLiteDatabase);
@@ -92,6 +109,9 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.FormulaEntry.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.ConstantEntry.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.VariableEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.FormulaConstantEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.SectionEntry.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DataContract.ImageEntry.TABLE_NAME);
 
         onCreate(sqLiteDatabase);
     }
@@ -123,398 +143,398 @@ public class DBHelper extends SQLiteOpenHelper {
             String[][] lessons = {
                     {"Scalar and Vector Values", "One-dimensional Motion",
                             "Definition, Distance and Displacement",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Scalar quantity:\n" +
-                                    "•\thas a magnitude\n" +
-                                    "•\tis one dimensional\n" +
-                                    "Vector quantity:\n" +
-                                    "•\thas a magnitude and a direction\n" +
-                                    "•\tis two dimensional\n" +
-                                    "<h2><b>Distance and Displacement</b></h2>\n" +
-                                    "Distance:\n" +
-                                    "•\tis a scalar quantity\n" +
-                                    "•\tmeasures the interval between two points that is measured along the actual path that was made that connects them\n" +
-                                    "Displacement:\n" +
-                                    "•\tis a vector quantity\n" +
-                                    "•\tmeasures the interval between two points along the shortest path that connects them \n" +
-                                    "//<Insert diagram>\n" +
-                                    "The SI unit used for distance and displacement is meter (m).\n" +
-                                    "Displacement can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "Where:\n" +
-                                    "<b>x1</b> = initial position of the object\n" +
-                                    "<b>x2</b> = final position of the object\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Scalar quantity:<br />" +
+                                    "•\thas a magnitude<br />" +
+                                    "•\tis one dimensional<br/>" +
+                                    "Vector quantity:<br/>" +
+                                    "•\thas a magnitude and a direction<br/>" +
+                                    "•\tis two dimensional<br/>" +
+                                    "<h2><b>Distance and Displacement</b></h2><br/>" +
+                                    "Distance:<br/>" +
+                                    "•\tis a scalar quantity<br/>" +
+                                    "•\tmeasures the interval between two points that is measured along the actual path that was made that connects them<br/>" +
+                                    "Displacement:<br/>" +
+                                    "•\tis a vector quantity<br/>" +
+                                    "•\tmeasures the interval between two points along the shortest path that connects them <br/>" +
+                                    "//<Insert diagram><br/>" +
+                                    "The SI unit used for distance and displacement is meters\\($m\\).<br/>" +
+                                    "Displacement can be calculated using this formula:<br/>" +
+                                    "$$d = x_f - x_i$$<br/>" +
+                                    "Where:<br/>" +
+                                    "\\(x_i\\) = initial position of the object<br/>" +
+                                    "\\(x_f\\) = final position of the object<br/></p>",
                             "",
                             "com.ps.physicssimulator.lessons.ValuesFragment",
                             "com.ps.physicssimulator.calculator.ValuesFragment"},
                     {"Velocity", "One-dimensional Motion",
                             "Definition, Speed and Velocity, Average Velocity, Instantaneous " +
                                     "Velocity",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Speed:\n" +
-                                    "•\tshows the rate at which an object is able to move\n" +
-                                    "Velocity:\n" +
-                                    "•\tshows the rate at which an object is able to move in a given direction\n" +
-                                    "The SI unit used for speed and velocity is meter per second (m/s).\n" +
-                                    "<h2><b>Speed and Velocity</b></h2>\n" +
-                                    "Speed can be calculated by dividing distance over time:\n" +
-                                    "//<Insert formula>\n" +
-                                    "Velocity can be calculated by dividing displacement over time:\n" +
-                                    "//<Insert formula>\n" +
-                                    "<h2><b>Average Velocity</b></h2>\n" +
-                                    "Average velocity is the ratio of total displacement (Δx) taken over time interval (Δt)\n" +
-                                    "//<Insert diagram>\n" +
-                                    "The average velocity from when the object starts to move up to the time when the object stops can be described as:\n" +
-                                    "//<Insert formula>\n" +
-                                    "Where:\n" +
-                                    "<b>Δx</b> = change in velocity\n" +
-                                    "<b>Δt</b> = change in time\n" +
-                                    "<b>x1</b> = initial position of the object\n" +
-                                    "<b>x2</b> = final position of the object\n" +
-                                    "<b>t1</b> = time when the object was at position x1\n" +
-                                    "<b>t2</b> = time when the object was at position x2\n" +
-                                    "<h2><b>Instantaneous Velocity</b></h2>\n" +
-                                    "Instantaneous velocity is the measure of the velocity of an object at a particular moment.\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Speed:<br/>" +
+                                    "•\tshows the rate at which an object is able to move<br/>" +
+                                    "Velocity:<br/>" +
+                                    "•\tshows the rate at which an object is able to move in a given direction<br/>" +
+                                    "The SI unit used for speed and velocity is meter per second (m/s).<br/>" +
+                                    "<h2><b>Speed and Velocity</b></h2><br/>" +
+                                    "Speed can be calculated by dividing distance over time:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Velocity can be calculated by dividing displacement over time:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "<h2><b>Average Velocity</b></h2><br/>" +
+                                    "Average velocity is the ratio of total displacement (Δx) taken over time interval (Δt)<br/>" +
+                                    "//<Insert diagram><br/>" +
+                                    "The average velocity from when the object starts to move up to the time when the object stops can be described as:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Where:<br/>" +
+                                    "<b>Δx</b> = change in velocity<br/>" +
+                                    "<b>Δt</b> = change in time<br/>" +
+                                    "<b>x1</b> = initial position of the object<br/>" +
+                                    "<b>x2</b> = final position of the object<br/>" +
+                                    "<b>t1</b> = time when the object was at position x1<br/>" +
+                                    "<b>t2</b> = time when the object was at position x2<br/>" +
+                                    "<h2><b>Instantaneous Velocity</b></h2><br/>" +
+                                    "Instantaneous velocity is the measure of the velocity of an object at a particular moment.<br/></p>",
                             "",
                             "com.ps.physicssimulator.lessons.VelocityFragment",
                             "com.ps.physicssimulator.calculator.VelocityFragment"},
                     {"Acceleration", "One-dimensional Motion", "Definition, Acceleration, Average " +
                             "Acceleration, Instantaneous Acceleration",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Acceleration:\n" +
-                                    "•\tis the rate of change of velocity with respect to time\n" +
-                                    "•\tcan be positive (speeding up) or negative (slowing down)\n" +
-                                    "The SI unit used for acceleration is meter per second squared (m/s²).\n" +
-                                    "<h2><b>Acceleration</b></h2>\n" +
-                                    "Acceleration is the ratio of total velocity change (Δv) taken over time interval (Δt).\n" +
-                                    "//<Insert formula>\n" +
-                                    "<h2><b>Average Acceleration</b></h2>\n" +
-                                    "Average acceleration can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "Where:\n" +
-                                    "<b>v1</b> = initial velocity of the object\n" +
-                                    "<b>v2</b> = final velocity of the object\n" +
-                                    "<b>t1</b> = time when the object had velocity x1\n" +
-                                    "<b>t2</b> = time when the object had velocity x2\n" +
-                                    "<h2><b>Instantaneous Acceleration</b></h2>\n" +
-                                    "Instantaneous acceleration is the change of velocity at infinitesimal (very small) time interval.\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Acceleration:<br/>" +
+                                    "•\tis the rate of change of velocity with respect to time<br/>" +
+                                    "•\tcan be positive (speeding up) or negative (slowing down)<br/>" +
+                                    "The SI unit used for acceleration is meter per second squared (m/s²).<br/>" +
+                                    "<h2><b>Acceleration</b></h2><br/>" +
+                                    "Acceleration is the ratio of total velocity change (Δv) taken over time interval (Δt).<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "<h2><b>Average Acceleration</b></h2><br/>" +
+                                    "Average acceleration can be calculated using this formula:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Where:<br/>" +
+                                    "<b>v1</b> = initial velocity of the object<br/>" +
+                                    "<b>v2</b> = final velocity of the object<br/>" +
+                                    "<b>t1</b> = time when the object had velocity x1<br/>" +
+                                    "<b>t2</b> = time when the object had velocity x2<br/>" +
+                                    "<h2><b>Instantaneous Acceleration</b></h2><br/>" +
+                                    "Instantaneous acceleration is the change of velocity at infinitesimal (very small) time interval.<br/></p>",
                             "", "", ""},
                     {"Free-fall", "One-dimensional Motion", "Definition, Free fall",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Free fall:\n" +
-                                    "•\trefers to the motion of an object where its motion is affected only by gravity\n" +
-                                    "•\tacts only along the y-axis\n" +
-                                    "Acceleration due to gravity:\t\n" +
-                                    "•\tis equal to 9.8 m/s²\n" +
-                                    "•\tis constant regardless of the object’s mass\n" +
-                                    "<h2><b>Free fall</b></h2>\n" +
-                                    "//<Insert diagram>\n" +
-                                    "An object is thrown with an initial velocity u along the y-axis. The position and speed of an object in free fall motion can be calculated from the motion equations.\n" +
-                                    "Velocity along the y-axis at any instant t:\n" +
-                                    "//<Insert formula>\n" +
-                                    "The displacement along y-axis at any instant t:\n" +
-                                    "//<Insert formula>\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Free fall:<br/>" +
+                                    "•\trefers to the motion of an object where its motion is affected only by gravity<br/>" +
+                                    "•\tacts only along the y-axis<br/>" +
+                                    "Acceleration due to gravity:\t<br/>" +
+                                    "•\tis equal to 9.8 m/s²<br/>" +
+                                    "•\tis constant regardless of the object’s mass<br/>" +
+                                    "<h2><b>Free fall</b></h2><br/>" +
+                                    "//<Insert diagram><br/>" +
+                                    "An object is thrown with an initial velocity u along the y-axis. The position and speed of an object in free fall motion can be calculated from the motion equations.<br/>" +
+                                    "Velocity along the y-axis at any instant t:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "The displacement along y-axis at any instant t:<br/>" +
+                                    "//<Insert formula><br/></p>",
                             "", "", ""},
                     {"Projectile Motion", "Two-dimensional Motion", "Definition, " +
                             "Projectile Motion",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Projectile:\n" +
-                                    "•\tis an object thrown with an initial velocity in a vertical plane\n" +
-                                    "•\tmoves in two dimensions\n" +
-                                    "•\tacts under the action of gravity alone without being propelled\n" +
-                                    "Projectile Motion:\n" +
-                                    "•\tis the motion done by the projectile\n" +
-                                    "Trajectory:\n" +
-                                    "•\tIs the path passed by the projectile\n" +
-                                    "<h2><b>Projectile Motion</b></h2>\n" +
-                                    "Projectile motion is a two dimensional motion. Any two dimensional motion case can be split up into two cases of one dimensional motion.\n" +
-                                    "An important reminder is that the motion along the x-axis does not affect the motion along the y-axis. It also applies in vice versa. Each motion along each axis is independent of each other.\n" +
-                                    "//<Insert diagram>\n" +
-                                    "Projectile motion formula is given by the following:\n" +
-                                    "Horizontal distance (m):\n" +
-                                    "//<Insert formula>\n" +
-                                    "Horizontal velocity (m/s):\n" +
-                                    "//<Insert formula>\n" +
-                                    "Vertical distance (m):\n" +
-                                    "//<Insert formula>\n" +
-                                    "Vertical velocity (m/s):\n" +
-                                    "//<Insert formula>\n" +
-                                    "Where:\n" +
-                                    "<b>vx</b> = velocity of the object along x-axis\n" +
-                                    "<b>vx1</b> = initial velocity of the object along x-axis\n" +
-                                    "<b>vy</b> = velocity of the object along y-axis\n" +
-                                    "<b>vy1</b> = initial velocity of the object along y-axis\n" +
-                                    "<b>g</b> = acceleration due to gravity \n" +
-                                    "<b>t</b> = time duration\n" +
-                                    "Formulas related to trajectory motion is given by the following:\n" +
-                                    "Time of flight (s):\n" +
-                                    "//<Insert formula>\n" +
-                                    "Maximum height reached (m):\n" +
-                                    "//<Insert formula>\n" +
-                                    "Horizontal range (m):\n" +
-                                    "//<Insert formula>\n" +
-                                    "Where:\n" +
-                                    "<b>v1</b> = initial velocity of the object\n" +
-                                    "<b>sin θ</b> = component along y-axis\n" +
-                                    "<b>cos θ</b> = component along x-axis\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Projectile:<br/>" +
+                                    "•\tis an object thrown with an initial velocity in a vertical plane<br/>" +
+                                    "•\tmoves in two dimensions<br/>" +
+                                    "•\tacts under the action of gravity alone without being propelled<br/>" +
+                                    "Projectile Motion:<br/>" +
+                                    "•\tis the motion done by the projectile<br/>" +
+                                    "Trajectory:<br/>" +
+                                    "•\tIs the path passed by the projectile<br/>" +
+                                    "<h2><b>Projectile Motion</b></h2><br/>" +
+                                    "Projectile motion is a two dimensional motion. Any two dimensional motion case can be split up into two cases of one dimensional motion.<br/>" +
+                                    "An important reminder is that the motion along the x-axis does not affect the motion along the y-axis. It also applies in vice versa. Each motion along each axis is independent of each other.<br/>" +
+                                    "//<Insert diagram><br/>" +
+                                    "Projectile motion formula is given by the following:<br/>" +
+                                    "Horizontal distance (m):<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Horizontal velocity (m/s):<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Vertical distance (m):<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Vertical velocity (m/s):<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Where:<br/>" +
+                                    "<b>vx</b> = velocity of the object along x-axis<br/>" +
+                                    "<b>vx1</b> = initial velocity of the object along x-axis<br/>" +
+                                    "<b>vy</b> = velocity of the object along y-axis<br/>" +
+                                    "<b>vy1</b> = initial velocity of the object along y-axis<br/>" +
+                                    "<b>g</b> = acceleration due to gravity <br/>" +
+                                    "<b>t</b> = time duration<br/>" +
+                                    "Formulas related to trajectory motion is given by the following:<br/>" +
+                                    "Time of flight (s):<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Maximum height reached (m):<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Horizontal range (m):<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Where:<br/>" +
+                                    "<b>v1</b> = initial velocity of the object<br/>" +
+                                    "<b>sin θ</b> = component along y-axis<br/>" +
+                                    "<b>cos θ</b> = component along x-axis<br/></p>",
                             "", "", ""},
                     {"Friction", "Isaac Newton's Laws of Motion", "Definition, Two types of " +
                             "Friction",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Friction Force:\n" +
-                                    "•\tis the force that is exerted by a surface as an object moves across it\n" +
-                                    "//<Insert Diagram>\n" +
-                                    "When an object is being pushed across a surface, the surface offers resistance to the movement of the object.\n" +
-                                    "The friction force is opposite to the direction of the motion of the object.\n" +
-                                    "<h2><b>Two types of Friction</b></h2>\n" +
-                                    "1. Static Friction:\n" +
-                                    "•\tis the friction between multiple solid objects that are not moving relative to each other\n" +
-                                    "2. Kinetic Friction:\n" +
-                                    "•\tis the friction between multiple solid objects that are moving relative to each other\n" +
-                                    "The friction force is dependent on two factors:\n" +
-                                    "•\tthe material of the objects that are in contact\n" +
-                                    "•\tthe force that pushes both surfaces together\n" +
-                                    "The following is the equation that summarizes the topic:\n" +
-                                    "//<Insert formula>\n" +
-                                    "Where:\n" +
-                                    "<b>Ff</b> = frictional force \n" +
-                                    "<b>μ</b> = coefficient of friction\n" +
-                                    "<b>Fn</b> = normal force\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Friction Force:<br/>" +
+                                    "•\tis the force that is exerted by a surface as an object moves across it<br/>" +
+                                    "//<Insert Diagram><br/>" +
+                                    "When an object is being pushed across a surface, the surface offers resistance to the movement of the object.<br/>" +
+                                    "The friction force is opposite to the direction of the motion of the object.<br/>" +
+                                    "<h2><b>Two types of Friction</b></h2><br/>" +
+                                    "1. Static Friction:<br/>" +
+                                    "•\tis the friction between multiple solid objects that are not moving relative to each other<br/>" +
+                                    "2. Kinetic Friction:<br/>" +
+                                    "•\tis the friction between multiple solid objects that are moving relative to each other<br/>" +
+                                    "The friction force is dependent on two factors:<br/>" +
+                                    "•\tthe material of the objects that are in contact<br/>" +
+                                    "•\tthe force that pushes both surfaces together<br/>" +
+                                    "The following is the equation that summarizes the topic:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Where:<br/>" +
+                                    "<b>Ff</b> = frictional force <br/>" +
+                                    "<b>μ</b> = coefficient of friction<br/>" +
+                                    "<b>Fn</b> = normal force<br/></p>",
                             "", "", ""},
                     {"Free-body Diagrams", "Isaac Newton's Laws of Motion", "Definition, Free " +
                             "Body Diagrams",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Free Body Diagrams:\n" +
-                                    "•\talso known as “Force Diagram”\n" +
-                                    "•\ta graphical illustration used to visualize the applied forces, movements and resulting reaction on a body in a steady state condition\n" +
-                                    "•\tshows all the forces acting on an object or a “body” that is singled out from or “freed” from a group of objects\n" +
-                                    "<h2><b>Free Body Diagrams</b></h2>\n" +
-                                    "There are four types of forces typically used in free body diagrams. These are the forces used.\n" +
-                                    "1. Gravity (G) - its force is directed towards the ground (downwards).\n" +
-                                    "2. Normal (N) - its force is directed perpendicular to the object’s surface.\n" +
-                                    "3. Tension (T) - its force is directed along a string, rope, chain or anything an object is attached to.\n" +
-                                    "4. Friction (fr) - its force’s direction opposes the relative motion of the object.\n" +
-                                    "\n" +
-                                    "Drawing Free Body Diagrams\n" +
-                                    "\n" +
-                                    "There are a few rules we should follow when drawing a free body diagram.\n" +
-                                    "1.\tAlways draw the forces from the center of the object.\n" +
-                                    "2.\tThe stronger the force is, the longer the arrow is.\n" +
-                                    "3.\tThe arrow should point in the direction for force is acting.\n" +
-                                    "4.\tLabel the forces acting with letters/symbols.\n" +
-                                    "\n" +
-                                    "//<Insert diagram>\n" +
-                                    "\n" +
-                                    "Here are a few hints when working with free body diagrams: \n" +
-                                    "•\tThe force of gravity always points straight down. \n" +
-                                    "•\tThe normal force will always push straight up from a surface.\n" +
-                                    "•\tIf an object is moving in one direction, friction is acting in the opposite direction.\n" +
-                                    "•\tThink about whether the forces on opposite sides are balanced or not. If they are, the two arrows should be about the same length. \n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Free Body Diagrams:<br/>" +
+                                    "•\talso known as “Force Diagram”<br/>" +
+                                    "•\ta graphical illustration used to visualize the applied forces, movements and resulting reaction on a body in a steady state condition<br/>" +
+                                    "•\tshows all the forces acting on an object or a “body” that is singled out from or “freed” from a group of objects<br/>" +
+                                    "<h2><b>Free Body Diagrams</b></h2><br/>" +
+                                    "There are four types of forces typically used in free body diagrams. These are the forces used.<br/>" +
+                                    "1. Gravity (G) - its force is directed towards the ground (downwards).<br/>" +
+                                    "2. Normal (N) - its force is directed perpendicular to the object’s surface.<br/>" +
+                                    "3. Tension (T) - its force is directed along a string, rope, chain or anything an object is attached to.<br/>" +
+                                    "4. Friction (fr) - its force’s direction opposes the relative motion of the object.<br/>" +
+                                    "<br/>" +
+                                    "Drawing Free Body Diagrams<br/>" +
+                                    "<br/>" +
+                                    "There are a few rules we should follow when drawing a free body diagram.<br/>" +
+                                    "1.\tAlways draw the forces from the center of the object.<br/>" +
+                                    "2.\tThe stronger the force is, the longer the arrow is.<br/>" +
+                                    "3.\tThe arrow should point in the direction for force is acting.<br/>" +
+                                    "4.\tLabel the forces acting with letters/symbols.<br/>" +
+                                    "<br/>" +
+                                    "//<Insert diagram><br/>" +
+                                    "<br/>" +
+                                    "Here are a few hints when working with free body diagrams: <br/>" +
+                                    "•\tThe force of gravity always points straight down. <br/>" +
+                                    "•\tThe normal force will always push straight up from a surface.<br/>" +
+                                    "•\tIf an object is moving in one direction, friction is acting in the opposite direction.<br/>" +
+                                    "•\tThink about whether the forces on opposite sides are balanced or not. If they are, the two arrows should be about the same length. <br/></p>",
                             "", "", ""},
                     {"Momentum and Impulse", "Momentum and Impulse", "Definition, Momentum, " +
                             "Impulse",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Momentum:\n" +
-                                    "•\tis defined as “mass in motion”\n" +
-                                    "•\tdepends upon the variables mass and velocity\n" +
-                                    "•\tis a vector quantity\n" +
-                                    "<h2><b>Momentum</b></h2>\n" +
-                                    "In terms of an equation, the momentum of an object is equal to the mass of the object times the velocity of the object. \n" +
-                                    "<b><i>Momentum = mass * velocity</i></b>\n" +
-                                    "In physics, the symbol for the quantity momentum is the lower case p. Thus, the above equation can be rewritten as:\n" +
-                                    "//<Insert formula>\n" +
-                                    "where:\n" +
-                                    "<b>m</b> = mass of the object\n" +
-                                    "<b>v</b> = velocity of the object\n" +
-                                    "The equation illustrates that momentum is:\n" +
-                                    "•\tdirectly proportional to an object's mass \n" +
-                                    "•\tdirectly proportional to the object's velocity\n" +
-                                    "Momentum is also a vector quantity. The momentum of an object then is fully described by both magnitude and direction.\n" +
-                                    "<h2><b>Impulse</b></h2>\n" +
-                                    "Impulse is known as quantity force multiplied by time. \n" +
-                                    "And since the quantity m•Δv is the change in momentum. The equation really says that the Impulse is equal to Change in Momentum.\n" +
-                                    "The physics of collisions are governed by the laws of momentum. The first law is the equation known as the impulse-momentum change equation. The law can be expressed this way:\n" +
-                                    "//<Insert formula>\n" +
-                                    "In a collision:\n" +
-                                    "•\tobjects experience an impulse\n" +
-                                    "•\tthe impulse causes and is equal to the change in momentum\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Momentum:<br/>" +
+                                    "•\tis defined as “mass in motion”<br/>" +
+                                    "•\tdepends upon the variables mass and velocity<br/>" +
+                                    "•\tis a vector quantity<br/>" +
+                                    "<h2><b>Momentum</b></h2><br/>" +
+                                    "In terms of an equation, the momentum of an object is equal to the mass of the object times the velocity of the object. <br/>" +
+                                    "<b><i>Momentum = mass * velocity</i></b><br/>" +
+                                    "In physics, the symbol for the quantity momentum is the lower case p. Thus, the above equation can be rewritten as:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "where:<br/>" +
+                                    "<b>m</b> = mass of the object<br/>" +
+                                    "<b>v</b> = velocity of the object<br/>" +
+                                    "The equation illustrates that momentum is:<br/>" +
+                                    "•\tdirectly proportional to an object's mass <br/>" +
+                                    "•\tdirectly proportional to the object's velocity<br/>" +
+                                    "Momentum is also a vector quantity. The momentum of an object then is fully described by both magnitude and direction.<br/>" +
+                                    "<h2><b>Impulse</b></h2><br/>" +
+                                    "Impulse is known as quantity force multiplied by time. <br/>" +
+                                    "And since the quantity m•Δv is the change in momentum. The equation really says that the Impulse is equal to Change in Momentum.<br/>" +
+                                    "The physics of collisions are governed by the laws of momentum. The first law is the equation known as the impulse-momentum change equation. The law can be expressed this way:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "In a collision:<br/>" +
+                                    "•\tobjects experience an impulse<br/>" +
+                                    "•\tthe impulse causes and is equal to the change in momentum<br/></p>",
                             "", "", ""},
                     {"Law of Conservation of Energy", "Momentum and Impulse", "Definition, " +
                             "Conservation of Energy",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Law of Conservation of Energy\n" +
-                                    "•\tstates that the total energy of an isolated system remains constant\n" +
-                                    "•\tIt implies that energy can neither be created nor destroyed, but can be change from one form to another\n" +
-                                    "•\tthe change in energy of an object due to a transformation is equal to the work done on the object or by the object for that transformation\n" +
-                                    "<h2><b>Conservation of Energy</b></h2>\n" +
-                                    "The different types of energy are the potential energy, kinetic energy, and the total mechanical energy. These types of energy will further be discussed in a different part (Energy) of this application.\n" +
-                                    "The basic formula for the conservation of energy is:\n" +
-                                    "//<Insert formula>\n" +
-                                    "The formula can be more explicitly written as Conservation of Energy Equation depending on the context. \n" +
-                                    "•\tAn object when dropped from a height transforms its potential energy into kinetic energy.\n" +
-                                    "Mathematically it can be expressed as a Conservation of Energy Equation as follows:\n" +
-                                    "//<Insert formula>\n" +
-                                    "Where:\n" +
-                                    "<b>m</b> = mass of the object\n" +
-                                    "<b>v</b> = final velocity after falling from a height of <b>h</b>\n" +
-                                    "<b>g</b> = acceleration due to gravity\n" +
-                                    "\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Law of Conservation of Energy<br/>" +
+                                    "•\tstates that the total energy of an isolated system remains constant<br/>" +
+                                    "•\tIt implies that energy can neither be created nor destroyed, but can be change from one form to another<br/>" +
+                                    "•\tthe change in energy of an object due to a transformation is equal to the work done on the object or by the object for that transformation<br/>" +
+                                    "<h2><b>Conservation of Energy</b></h2><br/>" +
+                                    "The different types of energy are the potential energy, kinetic energy, and the total mechanical energy. These types of energy will further be discussed in a different part (Energy) of this application.<br/>" +
+                                    "The basic formula for the conservation of energy is:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "The formula can be more explicitly written as Conservation of Energy Equation depending on the context. <br/>" +
+                                    "•\tAn object when dropped from a height transforms its potential energy into kinetic energy.<br/>" +
+                                    "Mathematically it can be expressed as a Conservation of Energy Equation as follows:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Where:<br/>" +
+                                    "<b>m</b> = mass of the object<br/>" +
+                                    "<b>v</b> = final velocity after falling from a height of <b>h</b><br/>" +
+                                    "<b>g</b> = acceleration due to gravity<br/>" +
+                                    "<br/></p>",
                             "", "", ""},
                     {"Work", "Work, Energy, and Power", "Definition, Work",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Work:\n" +
-                                    "•\tis the measure of energy being transferred occurring when an object is moved over a distance\n" +
-                                    "//<Insert diagram>\n" +
-                                    "The SI unit used for work is Joule (J). Joule’s base units is kg • m2/s2.\n" +
-                                    "<h2><b>Work</b></h2>\n" +
-                                    "A force is doing work when it acts on an object which displaces it from the point of application.\n" +
-                                    "Constant work can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "Where:\n" +
-                                    "<b>→F</b> = force vector\n" +
-                                    "<b>→x</b> = position vector\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Work:<br/>" +
+                                    "•\tis the measure of energy being transferred occurring when an object is moved over a distance<br/>" +
+                                    "//<Insert diagram><br/>" +
+                                    "The SI unit used for work is Joule (J). Joule’s base units is kg • m2/s2.<br/>" +
+                                    "<h2><b>Work</b></h2><br/>" +
+                                    "A force is doing work when it acts on an object which displaces it from the point of application.<br/>" +
+                                    "Constant work can be calculated using this formula:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Where:<br/>" +
+                                    "<b>→F</b> = force vector<br/>" +
+                                    "<b>→x</b> = position vector<br/></p>",
                             "", "", ""},
                     {"Energy", "Work, Energy, and Power", "Definition, Kinetic Energy, " +
                             "Potential Energy, Total Mechanical Energy",
                             "<p></p>",
-                            "", "<h2><b>Definition</b></h2>\n" +
-                            "Energy:\n" +
-                            "•\tis the capacity of performing work\n" +
-                            "•\tmay exist in various forms (potential, kinetic, electric, chemical etc.)\n" +
-                            "The SI unit for energy is the same with work, Joule (J).\n" +
-                            "<h2><b>Kinetic Energy</b></h2>\n" +
-                            "Kinetic energy is an energy that is possessed by means of its motion.\n" +
-                            "Kinetic energy can be calculated using this formula:\n" +
-                            "//<Insert formula>\n" +
-                            "Where:\n" +
-                            "<b>m</b> = mass of the object\n" +
-                            "<b>v</b> = velocity of the object\n" +
-                            "<h2><b>Potential Energy</b></h2>\n" +
-                            "Potential energy is an energy that is possessed by means of its position relative to others.\n" +
-                            "Gravitational potential energy can be calculated using this formula:\n" +
-                            "//<Insert formula>\n" +
-                            "Where:\n" +
-                            "<b>h</b> = height of the object above the ground\n" +
-                            "<b>g</b> = acceleration due to gravity\n" +
-                            "Spring potential energy can be calculated using this formula:\n" +
-                            "//<Insert formula>\n" +
-                            "Where:\n" +
-                            "<b>k</b> = spring constant measured in Newton per meter\n" +
-                            "<b>x</b> = amount spring is displaced from initial point\n" +
-                            "<h2><b>Total Mechanical Energy</b></h2>\n" +
-                            "Total mechanical energy is the sum of the kinetic and potential energy of a conservative system:\n" +
-                            "//<Insert formula>\n", ""},
+                            "", "<h2><b>Definition</b></h2><br/>" +
+                            "Energy:<br/>" +
+                            "•\tis the capacity of performing work<br/>" +
+                            "•\tmay exist in various forms (potential, kinetic, electric, chemical etc.)<br/>" +
+                            "The SI unit for energy is the same with work, Joule (J).<br/>" +
+                            "<h2><b>Kinetic Energy</b></h2><br/>" +
+                            "Kinetic energy is an energy that is possessed by means of its motion.<br/>" +
+                            "Kinetic energy can be calculated using this formula:<br/>" +
+                            "//<Insert formula><br/>" +
+                            "Where:<br/>" +
+                            "<b>m</b> = mass of the object<br/>" +
+                            "<b>v</b> = velocity of the object<br/>" +
+                            "<h2><b>Potential Energy</b></h2><br/>" +
+                            "Potential energy is an energy that is possessed by means of its position relative to others.<br/>" +
+                            "Gravitational potential energy can be calculated using this formula:<br/>" +
+                            "//<Insert formula><br/>" +
+                            "Where:<br/>" +
+                            "<b>h</b> = height of the object above the ground<br/>" +
+                            "<b>g</b> = acceleration due to gravity<br/>" +
+                            "Spring potential energy can be calculated using this formula:<br/>" +
+                            "//<Insert formula><br/>" +
+                            "Where:<br/>" +
+                            "<b>k</b> = spring constant measured in Newton per meter<br/>" +
+                            "<b>x</b> = amount spring is displaced from initial point<br/>" +
+                            "<h2><b>Total Mechanical Energy</b></h2><br/>" +
+                            "Total mechanical energy is the sum of the kinetic and potential energy of a conservative system:<br/>" +
+                            "//<Insert formula><br/>", ""},
                     {"Power", "Work, Energy, and Power", "Definition, Average Power, " +
                             "Instantaneous Power",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Power:\n" +
-                                    "•\tis the rate of doing work\n" +
-                                    "•\thas no direction\n" +
-                                    "•\tis a scalar quantity\n" +
-                                    "The SI unit for power is Watt (W), or Joule per second (J/s).\n" +
-                                    "<h2><b>Average Power</b></h2>\n" +
-                                    "Average power, or simple “power”, is the average amount of work done converted per unit of time.\n" +
-                                    "Average power can be calculated by using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "Where:\n" +
-                                    "<b>ΔW</b> = amount of work performed\n" +
-                                    "<b>Δt</b> = time duration\n" +
-                                    "<h2><b>Instantaneous Power</b></h2>\n" +
-                                    "Instantaneous power is the limiting value of the average power as the time interval approaches to zero.\n" +
-                                    "Average power can be calculated by using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "Where:\n" +
-                                    "<b>W</b> = work done\n" +
-                                    "<b>t</b> = time duration\n" +
-                                    "<b>F</b> = force applied on the object\n" +
-                                    "<b>x</b> = path made by the object\n" +
-                                    "<b>a</b> = angle between the force and the position vectors\n" +
-                                    "<b>v</b> = velocity of the object\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Power:<br/>" +
+                                    "•\tis the rate of doing work<br/>" +
+                                    "•\thas no direction<br/>" +
+                                    "•\tis a scalar quantity<br/>" +
+                                    "The SI unit for power is Watt (W), or Joule per second (J/s).<br/>" +
+                                    "<h2><b>Average Power</b></h2><br/>" +
+                                    "Average power, or simple “power”, is the average amount of work done converted per unit of time.<br/>" +
+                                    "Average power can be calculated by using this formula:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Where:<br/>" +
+                                    "<b>ΔW</b> = amount of work performed<br/>" +
+                                    "<b>Δt</b> = time duration<br/>" +
+                                    "<h2><b>Instantaneous Power</b></h2><br/>" +
+                                    "Instantaneous power is the limiting value of the average power as the time interval approaches to zero.<br/>" +
+                                    "Average power can be calculated by using this formula:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Where:<br/>" +
+                                    "<b>W</b> = work done<br/>" +
+                                    "<b>t</b> = time duration<br/>" +
+                                    "<b>F</b> = force applied on the object<br/>" +
+                                    "<b>x</b> = path made by the object<br/>" +
+                                    "<b>a</b> = angle between the force and the position vectors<br/>" +
+                                    "<b>v</b> = velocity of the object<br/></p>",
                             "", "", ""},
                     {"Uniform Circular Motion", "Uniform Circular Motion", "Definition, " +
                             "Measurements of a Circle, Frequency, Angular Displacement, " +
                             "Length of Arc, Tangential Velocity, Angular Velocity, " +
                             "Centripetal Acceleration",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Uniform Circular Motion:\n" +
-                                    "•\tis the motion of an object traveling at a constant speed on a path that is circular\n" +
-                                    "<h2><b>Measurements of a Circle</b></h2>\n" +
-                                    "The arc of a circle is a portion of the circumference.\n" +
-                                    "The length of an arc is the length of its portion of the circumference.\n" +
-                                    "The radian is the standard unit of angular measure. When it is drawn as a central angle, it subtends an arc whose length is equal to the length of the radius of the circle.\n" +
-                                    "//<Insert diagram>\n" +
-                                    "The relationship between the degrees and radians is:\n" +
-                                    "//<Insert formula>\n" +
-                                    "<h2><b>Frequency</b></h2>\n" +
-                                    "The frequency (f) is the number of revolutions completed per time unit.\n" +
-                                    "The SI unit used for frequency is hertz (Hz). Hertz’ base units is 1/s.\n" +
-                                    "Another unit of measure for frequency is revolutions per minute (RPM). 60 RPM is equal to 1 hertz.\n" +
-                                    "Period (T):\n" +
-                                    "•\tis the time an object takes to travel one revolution around the circle.\n" +
-                                    "The SI unit used for period is second (s). This is based on the reciprocal value of frequency where T = 1/f.\n" +
-                                    "<h2><b>Angular Displacement</b></h2>\n" +
-                                    "//<Insert diagram>\n" +
-                                    "The angular displacement (Δθ) is the angle traveled by the object while moving from point B to C around the circular path.\n" +
-                                    "<h2><b>Length of Arc</b></h2>\n" +
-                                    "The length of arc (ΔS) is directly proportional to the angular displacement subtended traced at the center of circle by the ends of the arc.\n" +
-                                    "Length of arc can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "<h2><b>Tangential Velocity</b></h2>\n" +
-                                    "The tangential velocity (v) is the velocity measured at any tangential point in a circle.\n" +
-                                    "Tangential velocity can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "The velocity around the circle can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "<h2><b>Angular Velocity</b></h2>\n" +
-                                    "The angular velocity (ω) is rate of change of angular position of a body that is rotating.\n" +
-                                    "The SI unit used for angular velocity is radian per second (rad/s).\n" +
-                                    "Angular velocity can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "Since angular velocity is a vector quantity, it is defined as positive when the motion in the circle is in counter-clockwise, and is defined as negative when the motion in the circle is in clockwise.\n" +
-                                    "The relationship between the linear velocity and angular velocity is:\n" +
-                                    "//<Insert formula>\n" +
-                                    "<h2><b>Centripetal Acceleration</b></h2>\n" +
-                                    "The centripetal acceleration is the rate of change of tangential velocity.\n" +
-                                    "The centripetal acceleration is always pointing towards the center of the circle in motion.\n" +
-                                    "Centripetal acceleration can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Uniform Circular Motion:<br/>" +
+                                    "•\tis the motion of an object traveling at a constant speed on a path that is circular<br/>" +
+                                    "<h2><b>Measurements of a Circle</b></h2><br/>" +
+                                    "The arc of a circle is a portion of the circumference.<br/>" +
+                                    "The length of an arc is the length of its portion of the circumference.<br/>" +
+                                    "The radian is the standard unit of angular measure. When it is drawn as a central angle, it subtends an arc whose length is equal to the length of the radius of the circle.<br/>" +
+                                    "//<Insert diagram><br/>" +
+                                    "The relationship between the degrees and radians is:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "<h2><b>Frequency</b></h2><br/>" +
+                                    "The frequency (f) is the number of revolutions completed per time unit.<br/>" +
+                                    "The SI unit used for frequency is hertz (Hz). Hertz’ base units is 1/s.<br/>" +
+                                    "Another unit of measure for frequency is revolutions per minute (RPM). 60 RPM is equal to 1 hertz.<br/>" +
+                                    "Period (T):<br/>" +
+                                    "•\tis the time an object takes to travel one revolution around the circle.<br/>" +
+                                    "The SI unit used for period is second (s). This is based on the reciprocal value of frequency where T = 1/f.<br/>" +
+                                    "<h2><b>Angular Displacement</b></h2><br/>" +
+                                    "//<Insert diagram><br/>" +
+                                    "The angular displacement (Δθ) is the angle traveled by the object while moving from point B to C around the circular path.<br/>" +
+                                    "<h2><b>Length of Arc</b></h2><br/>" +
+                                    "The length of arc (ΔS) is directly proportional to the angular displacement subtended traced at the center of circle by the ends of the arc.<br/>" +
+                                    "Length of arc can be calculated using this formula:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "<h2><b>Tangential Velocity</b></h2><br/>" +
+                                    "The tangential velocity (v) is the velocity measured at any tangential point in a circle.<br/>" +
+                                    "Tangential velocity can be calculated using this formula:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "The velocity around the circle can be calculated using this formula:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "<h2><b>Angular Velocity</b></h2><br/>" +
+                                    "The angular velocity (ω) is rate of change of angular position of a body that is rotating.<br/>" +
+                                    "The SI unit used for angular velocity is radian per second (rad/s).<br/>" +
+                                    "Angular velocity can be calculated using this formula:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Since angular velocity is a vector quantity, it is defined as positive when the motion in the circle is in counter-clockwise, and is defined as negative when the motion in the circle is in clockwise.<br/>" +
+                                    "The relationship between the linear velocity and angular velocity is:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "<h2><b>Centripetal Acceleration</b></h2><br/>" +
+                                    "The centripetal acceleration is the rate of change of tangential velocity.<br/>" +
+                                    "The centripetal acceleration is always pointing towards the center of the circle in motion.<br/>" +
+                                    "Centripetal acceleration can be calculated using this formula:<br/>" +
+                                    "//<Insert formula><br/></p>",
                             "", "", ""},
                     {"Centripetal and Centrifugal Forces", "Uniform Circular Motion",
                             "Definition, Centripetal and Centrifugal Forces",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Centripetal Force:\n" +
-                                    "•\tis a force that acts on an object that is moving in a circular path and is directed towards the center where the object is moving\n" +
-                                    "Centrifugal Force:\n" +
-                                    "•\tis the opposing reaction force of the centripetal force\n" +
-                                    "•\tis a force acting outwards of an object that is moving in a circular path\n" +
-                                    "<h2><b>Centripetal and Centrifugal Forces</b></h2>\n" +
-                                    "According the Newton’s second law motion, where there is an acceleration (centripetal acceleration), there is a force (centripetal force).\n" +
-                                    "//<Insert diagram>\n" +
-                                    "Magnitude of the centripetal force can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "Where:\n" +
-                                    "<b>m</b> = mass of the object\n" +
-                                    "<b>v</b> = tangential velocity of the object\n" +
-                                    "<b>r</b> = radius of curvature cause by the force\n" +
-                                    "Newton’s third law of motion states that every action has an equal and opposite reaction. Therefore, in this case, there must be an equal and opposite reaction force to the centripetal force which is called the centrifugal force.\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Centripetal Force:<br/>" +
+                                    "•\tis a force that acts on an object that is moving in a circular path and is directed towards the center where the object is moving<br/>" +
+                                    "Centrifugal Force:<br/>" +
+                                    "•\tis the opposing reaction force of the centripetal force<br/>" +
+                                    "•\tis a force acting outwards of an object that is moving in a circular path<br/>" +
+                                    "<h2><b>Centripetal and Centrifugal Forces</b></h2><br/>" +
+                                    "According the Newton’s second law motion, where there is an acceleration (centripetal acceleration), there is a force (centripetal force).<br/>" +
+                                    "//<Insert diagram><br/>" +
+                                    "Magnitude of the centripetal force can be calculated using this formula:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "Where:<br/>" +
+                                    "<b>m</b> = mass of the object<br/>" +
+                                    "<b>v</b> = tangential velocity of the object<br/>" +
+                                    "<b>r</b> = radius of curvature cause by the force<br/>" +
+                                    "Newton’s third law of motion states that every action has an equal and opposite reaction. Therefore, in this case, there must be an equal and opposite reaction force to the centripetal force which is called the centrifugal force.<br/></p>",
                             "", "", ""},
                     {"Rotational Motion", "Uniform Circular Motion", "Definition, Moment of " +
                             "Inertia, Torque, Angular Momentum",
-                            "<p><h2><b>Definition</b></h2>\n" +
-                                    "Rotational Motion:\n" +
-                                    "•\tis a motion of an object in a circular path around a center (or point) of rotation\n" +
-                                    "<h2><b>Moment of Inertia</b></h2>\n" +
-                                    "The moment of inertia (I) is the measure of the object’s resistance to the change to its rotation. It is dependent to the object’s mass (m) and distance (r) of the mass further from the center of the rotational motion.\n" +
-                                    "Moment of inertia can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "<h2><b>Torque</b></h2>\n" +
-                                    "The torque (τ) is the twisting force (F) that tends to cause the rotation of an object which is at position (r) from its axis of rotation. \n" +
-                                    "Torque can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n" +
-                                    "<h2><b>Angular Momentum</b></h2>\n" +
-                                    "The angular momentum (L) is the quantity of rotation of a body. It is dependent on the moment of inertia (I) of the object and its angular velocity vector (ω).\n" +
-                                    "Angular momentum can be calculated using this formula:\n" +
-                                    "//<Insert formula>\n</p>",
+                            "<p><h2><b>Definition</b></h2><br/>" +
+                                    "Rotational Motion:<br/>" +
+                                    "•\tis a motion of an object in a circular path around a center (or point) of rotation<br/>" +
+                                    "<h2><b>Moment of Inertia</b></h2><br/>" +
+                                    "The moment of inertia (I) is the measure of the object’s resistance to the change to its rotation. It is dependent to the object’s mass (m) and distance (r) of the mass further from the center of the rotational motion.<br/>" +
+                                    "Moment of inertia can be calculated using this formula:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "<h2><b>Torque</b></h2><br/>" +
+                                    "The torque (τ) is the twisting force (F) that tends to cause the rotation of an object which is at position (r) from its axis of rotation. <br/>" +
+                                    "Torque can be calculated using this formula:<br/>" +
+                                    "//<Insert formula><br/>" +
+                                    "<h2><b>Angular Momentum</b></h2><br/>" +
+                                    "The angular momentum (L) is the quantity of rotation of a body. It is dependent on the moment of inertia (I) of the object and its angular velocity vector (ω).<br/>" +
+                                    "Angular momentum can be calculated using this formula:<br/>" +
+                                    "//<Insert formula><br/></p>",
                             "", "", ""}
             };
 
@@ -537,7 +557,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put(DataContract.LessonEntry.COLUMN_DESCRIPTION, s[2]);
                 values.put(DataContract.LessonEntry.COLUMN_CONTENT, s[3]);
                 values.put(DataContract.LessonEntry.COLUMN_LOGO, s[4]);
-                values.put(DataContract.LessonEntry.COLUMN_LESSON_FRAGMENT_NAME, s[5]);
 
                 c.close();
 
@@ -546,12 +565,70 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    private void initSections(SQLiteDatabase database){
+        if(database.isOpen()){
+            String[][] sections = {
+                    {"Scalar and Vector Values","Scalar and Vector Values Definition","a","a"}
+            };
 
+            for(String[] s: sections){
+                Cursor c = database.query(
+                        DataContract.LessonEntry.TABLE_NAME,
+                        new String[]{DataContract.LessonEntry._ID},
+                        DataContract.LessonEntry.COLUMN_TITLE + " = ?",
+                        new String[]{s[0]},
+                        null,
+                        null,
+                        null
+                );
+                c.moveToFirst();
+
+                ContentValues values = new ContentValues();
+                values.put(DataContract.SectionEntry.COLUMN_LESSON_KEY,
+                        c.getLong(c.getColumnIndex(DataContract.LessonEntry._ID)));
+                values.put(DataContract.SectionEntry.COLUMN_NAME, s[1]);
+                values.put(DataContract.SectionEntry.COLUMN_HEADER, s[2]);
+                values.put(DataContract.SectionEntry.COLUMN_CONTENT, s[3]);
+
+                long i = database.insert(DataContract.SectionEntry.TABLE_NAME, null, values);
+                String tes = "";
+            }
+        }
+    }
+
+    private void initImages(SQLiteDatabase database){
+        if(database.isOpen()){
+            String[][] images = {
+                    {"Scalar and Vector Values Definition", "", ""}
+            };
+
+            for(String[] s: images){
+                Cursor c = database.query(
+                        DataContract.SectionEntry.TABLE_NAME,
+                        new String[]{DataContract.SectionEntry._ID},
+                        DataContract.SectionEntry.COLUMN_NAME + " = ?",
+                        new String[]{s[0]},
+                        null,
+                        null,
+                        null
+                );
+                c.moveToFirst();
+
+                ContentValues values = new ContentValues();
+                values.put(DataContract.ImageEntry.COLUMN_SECTION_KEY,
+                        c.getLong(c.getColumnIndex(DataContract.SectionEntry._ID)));
+                values.put(DataContract.ImageEntry.COLUMN_RESOURCE_NAME, s[1]);
+                values.put(DataContract.ImageEntry.COLUMN_CAPTION, s[2]);
+
+                database.insert(DataContract.ImageEntry.TABLE_NAME, null, values);
+            }
+        }
+    }
 
     private void initFormulas(SQLiteDatabase database){
         if(database.isOpen()) {
             String[][] formulas = {
-                    {"Displacement", "Scalar and Vector Values", ""},
+                    {"Displacement", "Scalar and Vector Values", "$$d = {x_f - x_i}$$"},
                     {"Speed", "Velocity", "$$s = {d \\over t}$$", ""},
                     {"Velocity", "Velocity", "$$v = {x_f - x_i \\over t}$$", ""},
                     {"Average Velocity", "Velocity", "$$v_{av} = {x_f - x_i \\over t_f - t_i}$$", ""},
@@ -675,10 +752,9 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initVariables(SQLiteDatabase database) {
         if(database.isOpen()) {
             String[][] variables = {
-//                    {"Displacement", "Displacement", "", "", "", ""},
-//                    {"Displacement", "Average Acceleration", "", "", "", ""},
-//                    {"Displacement", "Initial Velocity","", "", "", ""},
-//                    {"Displacement", "Final Velocity", "", "", "", ""},
+                    {"Displacement", "Displacement", "$$d = {x_f - x_i}$$", "xf - xi", "d", "{m}"},
+                    {"Displacement", "Initial Velocity","$$x_i= {x_f - d}$$", "xf - d", "xi", "{m}"},
+                    {"Displacement", "Final Velocity", "$$x_f= {x_i + d}$$", "xi + d", "xf", "{m}"},
 
                     {"Speed", "Speed", "$$s = {d \\over t}$$", "d / t", "s", "{m \\over s}"},
                     {"Speed", "Distance", "$$d = {s \\cdot t}$$", "s * t", "d", "{m}"},

@@ -1,14 +1,31 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:id="@+id/fragment_content"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    />
-<!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
+    android:id="@+id/content_container"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <!--<io.github.kexanie.library.MathView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/text_content"/>-->
+
+
+
+</LinearLayout>
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:id="@+id/fragmentContent"-->
+    <!--android:layout_height="wrap_content"-->
     <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
+    <!--android:id="@+id/fragment_content"-->
     <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-    <!--android:name="com.ps.physicssimulator.lessons.ValuesActivityFragment" />-->
+    <!--/>-->
+<!--&lt;!&ndash;<fragment xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
+    <!--&lt;!&ndash;xmlns:app="http://schemas.android.com/apk/res-auto"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/fragmentContent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:layout_behavior="@string/appbar_scrolling_view_behavior"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:name="com.ps.physicssimulator.lessons.ValuesActivityFragment" />&ndash;&gt;-->
