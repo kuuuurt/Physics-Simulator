@@ -578,7 +578,22 @@ public class DBHelper extends SQLiteOpenHelper {
                             "\t•\ttis one dimensional<br/>|" +
                             "Vector quantity:<br/>" +
                             "\t•\tthas a magnitude and a direction<br/>" +
-                            "\t•\ttis two dimensional<br/></p>"}
+                            "\t•\ttis two dimensional<br/></p>"},
+                    {"Scalar and Vector Values","Distance and Displacement",
+                            "<h2><b>Distance and Displacement</b></h2><br/>" +
+                            "Distance:<br/>" +
+                            "•\tis a scalar quantity<br/>" +
+                            "•\tmeasures the interval between two points that is measured along the actual path that was made that connects them<br/>" +
+                            "Displacement:<br/>" +
+                            "•\tis a vector quantity<br/>" +
+                            "•\tmeasures the interval between two points along the shortest path that connects them <br/>"},
+                    {"Scalar and Vector Values","Scalar and Vector Values Formula",
+                            "The SI unit used for distance and displacement is meters\\($m\\).<br/>" +
+                            "Displacement can be calculated using this formula:<br/>" +
+                            "$$d = x_f - x_i$$<br/>" +
+                            "Where:<br/>" +
+                            "\\(x_i\\) = initial position of the object<br/>" +
+                            "\\(x_f\\) = final position of the object<br/></p>"}
             };
 
             for(String[] s: sections){

@@ -36,6 +36,7 @@ public class ContentActivity extends AppCompatActivity {
     String mLesson;
     String mChapter;
     LinearLayout mContentContainer;
+    int hasCalc;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -147,8 +148,9 @@ public class ContentActivity extends AppCompatActivity {
                 null, null, null, null
         );
 
-        lesson.moveToFirst();
 
+        lesson.moveToFirst();
+        hasCalc = lesson.getInt(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_HAS_CALCULATOR));
         if (lesson.getInt(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_HAS_SIMULATION)) == 1) {
             Button btnSimulate = new Button(this);
             btnSimulate.setLayoutParams(new LinearLayoutCompat.LayoutParams(
@@ -191,8 +193,17 @@ public class ContentActivity extends AppCompatActivity {
         return imageContainer;
     }
 
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if(hasCalc == 0)
+            menu.removeItem(R.id.action_calc);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.menu_content, menu);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             final SearchView search = (SearchView) menu.findItem(R.id.action_search).setActionView(new SearchView(this)).getActionView();
