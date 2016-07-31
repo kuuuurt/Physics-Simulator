@@ -3,6 +3,7 @@ package com.ps.physicssimulator;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -37,10 +38,24 @@ public class CalculatorActivity extends AppCompatActivity {
     static ExpressionModified expression;
     static String currentFormula;
     static String variableToSolve;
+    String mChapter, mLesson;
     static String formulaName;
     static String[][] values;
     static Bundle b;
-    static boolean fromConstants;
+    static boolean fromConstants, fromLesson;
+
+    @Nullable
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        if(fromLesson){
+            return new Intent(this, ContentActivity.class)
+                    .putExtra("Chapter", mChapter)
+                    .putExtra("Lesson", mLesson);
+
+        }
+
+        return super.getSupportParentActivityIntent();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +68,14 @@ public class CalculatorActivity extends AppCompatActivity {
 
         final Button btnChangeConstants = (Button) findViewById(R.id.button_change_constants);
 
+        MathView txtArrow = (MathView) findViewById(R.id.text_arrow);
+        txtArrow.setText("$$\\Rightarrow$$");
 
         final SimpleCursorAdapter chaptersAdap = setSpinnerAdapter(
                 this.getContentResolver().query(DataContract.ChapterEntry.CONTENT_URI,
                         null, null, null, null),
                 new String[]{DataContract.ChapterEntry.COLUMN_NAME}
         );
-
-        MathView txtArrow = (MathView) findViewById(R.id.text_arrow);
-        txtArrow.setText("$$\\Rightarrow$$");
-
 
         final Spinner spnChapters = (Spinner) findViewById(R.id.spinner_chapters);
         final Spinner spnLessons = (Spinner) findViewById(R.id.spinner_lessons);
@@ -71,18 +84,25 @@ public class CalculatorActivity extends AppCompatActivity {
 
         final Intent intent = getIntent();
         fromConstants = intent != null && intent.hasExtra("currentChapter");
-        if(fromConstants){
+        fromLesson = intent != null && intent.hasExtra("Lesson");
+
+        spnChapters.setAdapter(chaptersAdap);
+        if(fromConstants) {
             b = intent.getExtras();
             values = new String[b.getInt("size")][];
             for (int i = 0; i < values.length; i++) {
                 values[i] = intent.getStringArrayExtra("value" + i);
             }
+            spnChapters.setSelection(b.getInt("currentChapter"));
+        }
+        if(fromLesson){
+            b = intent.getExtras();
+            mChapter = b.getString("Chapter");
+            mLesson = b.getString("Lesson");
+            spnChapters.setSelection(getTextIndex(chaptersAdap.getCursor(), DataContract.ChapterEntry.COLUMN_NAME,
+                    mChapter));
         }
 
-
-        spnChapters.setAdapter(chaptersAdap);
-        if(fromConstants)
-            spnChapters.setSelection(b.getInt("currentChapter"));
         spnChapters.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -101,6 +121,10 @@ public class CalculatorActivity extends AppCompatActivity {
                 spnLessons.setAdapter(lessonsAdap);
                 if(fromConstants)
                     spnLessons.setSelection(b.getInt("currentLesson"));
+                if(fromLesson){
+                    spnLessons.setSelection(getTextIndex(lessonsAdap.getCursor(), DataContract.LessonEntry.COLUMN_TITLE,
+                            mLesson));
+                }
                 spnLessons.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i,
@@ -331,11 +355,21 @@ public class CalculatorActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
     }
+
+    public int getTextIndex(Cursor c, String column, String text){
+        int i = 0;
+        c.moveToFirst();
+        while(i < c.getCount()){
+            if(c.getString(c.getColumnIndex(column)).equals(text)){
+                break;
+            }
+            c.moveToNext();
+            i++;
+        }
+        return i;
+    }
+
 
     public void calculate() {
         resetSteps();

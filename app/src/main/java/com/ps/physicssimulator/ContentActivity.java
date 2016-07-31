@@ -1,14 +1,17 @@
 package com.ps.physicssimulator;
 
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.view.Gravity;
@@ -33,6 +36,11 @@ public class ContentActivity extends AppCompatActivity {
     String mLesson;
     String mChapter;
     LinearLayout mContentContainer;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+
 
     @Override
     public Intent getSupportParentActivityIntent() {
@@ -64,14 +72,14 @@ public class ContentActivity extends AppCompatActivity {
 
         setTitle(mLesson);
 
-        mContentContainer = (LinearLayout)findViewById(R.id.content_container);
+        mContentContainer = (LinearLayout) findViewById(R.id.content_container);
 
         Cursor sections = this.getContentResolver().query(
                 DataContract.SectionEntry.buildSectionLesson(mLesson),
                 null, null, null, null
         );
         sections.moveToFirst();
-        for(int i = 0; i < sections.getCount(); i++){
+        for (int i = 0; i < sections.getCount(); i++) {
             Cursor images = this.getContentResolver().query(
                     DataContract.ImageEntry.buildImageSectionUri(
                             sections.getString(
@@ -92,7 +100,7 @@ public class ContentActivity extends AppCompatActivity {
                     sections.getColumnIndex(DataContract.SectionEntry.COLUMN_CONTENT))
                     .split("\\|");
             int k = 0;
-            for(String content : contentText){
+            for (String content : contentText) {
                 SpannableString text = new SpannableString(content);
 
                 final MathView txtContent = new MathView(this, null);
@@ -104,7 +112,7 @@ public class ContentActivity extends AppCompatActivity {
                 txtContent.setText(text.toString());
                 txtContent.setTag("content" + k++);
                 sectionContainer.addView(txtContent);
-                if(imageExists){
+                if (imageExists) {
                     sectionContainer.addView(
                             addImage(
                                     images.getString(images
@@ -117,14 +125,14 @@ public class ContentActivity extends AppCompatActivity {
                 }
             }
 
-            while(imageExists){
+            while (imageExists) {
                 sectionContainer.addView(
-                    addImage(
-                            images.getString(images
-                                .getColumnIndex(DataContract.ImageEntry.COLUMN_RESOURCE_NAME)),
-                            images.getString(
-                                images.getColumnIndex(DataContract.ImageEntry.COLUMN_CAPTION))
-                    )
+                        addImage(
+                                images.getString(images
+                                        .getColumnIndex(DataContract.ImageEntry.COLUMN_RESOURCE_NAME)),
+                                images.getString(
+                                        images.getColumnIndex(DataContract.ImageEntry.COLUMN_CAPTION))
+                        )
                 );
                 imageExists = images.moveToNext();
             }
@@ -141,7 +149,7 @@ public class ContentActivity extends AppCompatActivity {
 
         lesson.moveToFirst();
 
-        if(lesson.getInt(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_HAS_SIMULATION)) == 1) {
+        if (lesson.getInt(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_HAS_SIMULATION)) == 1) {
             Button btnSimulate = new Button(this);
             btnSimulate.setLayoutParams(new LinearLayoutCompat.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -150,11 +158,9 @@ public class ContentActivity extends AppCompatActivity {
             btnSimulate.setText("Simulate");
             mContentContainer.addView(btnSimulate);
         }
-
-
     }
 
-    public LinearLayout addImage(String imageName, String caption){
+    public LinearLayout addImage(String imageName, String caption) {
         LinearLayout imageContainer = new LinearLayout(this);
         imageContainer.setLayoutParams(new LinearLayoutCompat.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -169,7 +175,7 @@ public class ContentActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT
         ));
         img.setImageResource(this.getResources().getIdentifier(
-               imageName,
+                imageName,
                 "drawable", this.getPackageName()));
         TextView txtCaption = new TextView(this);
         txtCaption.setLayoutParams(new LinearLayoutCompat.LayoutParams(
@@ -187,11 +193,49 @@ public class ContentActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_content, menu);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            final SearchView search = (SearchView) menu.findItem(R.id.action_search).setActionView(new SearchView(this)).getActionView();
+
+            search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                @Override
+                public boolean onQueryTextChange(String query) {
+                    if (query != null) {
+                        View mathView = null;
+                        int i = 0;
+                        while ((mathView = mContentContainer.findViewWithTag("content" + i++)) != null) {
+                            MathView txtContent = (MathView) mathView;
+                            txtContent.findAllAsync(query);
+
+                            try {
+                                Method m = WebView.class.getMethod("setFindIsUp", Boolean.TYPE);
+                                m.invoke(txtContent, true);
+                            } catch (Throwable ignored) {
+                            }
+                        }
+                        return true;
+                    }
+
+                    return false;
+
+                }
+
+            });
+
+        }
         return true;
     }
 
+
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -200,22 +244,15 @@ public class ContentActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            View mathView = null;
-            int i = 0;
-            while((mathView = mContentContainer.findViewWithTag("content" + i++)) != null){
-                MathView txtContent = (MathView)mathView;
-                txtContent.findAllAsync("magnitude");
-
-                try {
-                    Method m = WebView.class.getMethod("setFindIsUp", Boolean.TYPE);
-                    m.invoke(txtContent, true);
-                } catch (Throwable ignored) {
-                }
-            }
+        if (id == R.id.action_calc) {
+            Intent intent = new Intent(this, CalculatorActivity.class);
+            intent.putExtra("Lesson", mLesson);
+            intent.putExtra("Chapter", mChapter);
+            startActivity(intent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }
