@@ -144,26 +144,28 @@ public class DataProvider extends ContentProvider{
 
         c.moveToFirst();
 
-        if(sortOrder.equals("HasCalc"))
-            return lessonQueryBuilder.query(database,
-                projection,
-                lessonWithChapterCalcQuery,
-                new String[]{String.valueOf(c.getLong(c.getColumnIndex(
-                        DataContract.ChapterEntry._ID))), "1"},
-                null,
-                null,
-                null
-            );
-        else
+
+        if (sortOrder != null && sortOrder.equals("HasCalc"))
             return lessonQueryBuilder.query(database,
                     projection,
-                    lessonWithChapterQuery,
+                    lessonWithChapterCalcQuery,
                     new String[]{String.valueOf(c.getLong(c.getColumnIndex(
-                            DataContract.ChapterEntry._ID)))},
+                            DataContract.ChapterEntry._ID))), "1"},
                     null,
                     null,
                     null
             );
+
+        return lessonQueryBuilder.query(database,
+                projection,
+                lessonWithChapterQuery,
+                new String[]{String.valueOf(c.getLong(c.getColumnIndex(
+                        DataContract.ChapterEntry._ID)))},
+                null,
+                null,
+                null
+        );
+
     }
 
 

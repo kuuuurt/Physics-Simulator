@@ -12,8 +12,11 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,12 +24,15 @@ import android.widget.TextView;
 
 import com.ps.physicssimulator.data.DataContract;
 
+import java.lang.reflect.Method;
+
 import io.github.kexanie.library.MathView;
 
 public class ContentActivity extends AppCompatActivity {
 
     String mLesson;
     String mChapter;
+    LinearLayout mContentContainer;
 
     @Override
     public Intent getSupportParentActivityIntent() {
@@ -58,7 +64,7 @@ public class ContentActivity extends AppCompatActivity {
 
         setTitle(mLesson);
 
-        LinearLayout contentContainer = (LinearLayout)findViewById(R.id.content_container);
+        mContentContainer = (LinearLayout)findViewById(R.id.content_container);
 
         Cursor sections = this.getContentResolver().query(
                 DataContract.SectionEntry.buildSectionLesson(mLesson),
@@ -85,18 +91,18 @@ public class ContentActivity extends AppCompatActivity {
             String[] contentText = sections.getString(
                     sections.getColumnIndex(DataContract.SectionEntry.COLUMN_CONTENT))
                     .split("\\|");
+            int k = 0;
             for(String content : contentText){
                 SpannableString text = new SpannableString(content);
 
-                MathView txtContent = new MathView(this, null);
+                final MathView txtContent = new MathView(this, null);
                 txtContent.setLayoutParams(new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 ));
                 txtContent.setEngine(MathView.Engine.KATEX);
                 txtContent.setText(text.toString());
-
-
+                txtContent.setTag("content" + k++);
                 sectionContainer.addView(txtContent);
                 if(imageExists){
                     sectionContainer.addView(
@@ -123,7 +129,7 @@ public class ContentActivity extends AppCompatActivity {
                 imageExists = images.moveToNext();
             }
 
-            contentContainer.addView(sectionContainer);
+            mContentContainer.addView(sectionContainer);
 
             sections.moveToNext();
         }
@@ -142,8 +148,9 @@ public class ContentActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT
             ));
             btnSimulate.setText("Simulate");
-            contentContainer.addView(btnSimulate);
+            mContentContainer.addView(btnSimulate);
         }
+
 
     }
 
@@ -178,6 +185,37 @@ public class ContentActivity extends AppCompatActivity {
         return imageContainer;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_content, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            View mathView = null;
+            int i = 0;
+            while((mathView = mContentContainer.findViewWithTag("content" + i++)) != null){
+                MathView txtContent = (MathView)mathView;
+                txtContent.findAllAsync("magnitude");
+
+                try {
+                    Method m = WebView.class.getMethod("setFindIsUp", Boolean.TYPE);
+                    m.invoke(txtContent, true);
+                } catch (Throwable ignored) {
+                }
+            }
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
