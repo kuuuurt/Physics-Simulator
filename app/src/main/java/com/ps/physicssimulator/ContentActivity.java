@@ -37,10 +37,6 @@ public class ContentActivity extends AppCompatActivity {
     String mChapter;
     LinearLayout mContentContainer;
     int hasCalc;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
 
 
     @Override
@@ -80,6 +76,7 @@ public class ContentActivity extends AppCompatActivity {
                 null, null, null, null
         );
         sections.moveToFirst();
+        int k = 0;
         for (int i = 0; i < sections.getCount(); i++) {
             Cursor images = this.getContentResolver().query(
                     DataContract.ImageEntry.buildImageSectionUri(
@@ -100,7 +97,7 @@ public class ContentActivity extends AppCompatActivity {
             String[] contentText = sections.getString(
                     sections.getColumnIndex(DataContract.SectionEntry.COLUMN_CONTENT))
                     .split("\\|");
-            int k = 0;
+
             for (String content : contentText) {
                 SpannableString text = new SpannableString(content);
 
@@ -218,7 +215,7 @@ public class ContentActivity extends AppCompatActivity {
                 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public boolean onQueryTextChange(String query) {
-                    if (query != null) {
+                    if (!query.equals("")) {
                         View mathView = null;
                         int i = 0;
                         while ((mathView = mContentContainer.findViewWithTag("content" + i++)) != null) {
