@@ -195,10 +195,30 @@ public class ExpressionModified {
                         strLeftArg = strLeftArg.replace(".0" , "");
                     }
 
+                    String leftUnitTemp = convertUnit(leftUnit);
+                    String rightUnitTemp = convertUnit(rightUnit);
+
+                    if(!leftUnit.equals(leftUnitTemp)){
+
+                        String formula = strLeftArg + leftUnit;
+                        leftUnit = leftUnitTemp;
+                        steps.add(new String[]{strLeftArg, leftUnit, formula});
+
+                    }
+
+                    if(!rightUnit.equals(rightUnitTemp)){
+
+                        String formula = strRightArg + rightUnit;
+                        rightUnit = rightUnitTemp;
+                        steps.add(new String[]{strRightArg, rightUnit, formula});
+                    }
 
                     String formula = strLeftArg + leftUnit + " " + getFormattedSymbol(op.getOperator().getSymbol()) + " " + strRightArg + rightUnit;
                     String unit = getUnit(leftUnit, op.getOperator().getSymbol(), rightUnit, String.valueOf(rightArg));
+                    unit = convertUnit(unit);
                     steps.add(new String[]{String.valueOf(res), unit, formula} );
+
+
 
                     output.push(unit);
                     output.push(String.valueOf(res));
@@ -230,6 +250,19 @@ public class ExpressionModified {
             throw new IllegalArgumentException("Invalid number of items on the output queue. Might be caused by an invalid number of arguments for a function.");
         }
         return steps;
+    }
+
+    private String convertUnit(String unit) {
+        switch (unit) {
+            case "{J}":
+                return "{kgm^2 \\over s^2}";
+            case "{kgm^2 \\over s^2}":
+                return "{J}";
+            default:
+                return unit;
+
+        }
+
     }
 
     public String getFormattedSymbol(String operator){
@@ -279,46 +312,52 @@ public class ExpressionModified {
                     num[0] = left;
                     den[1] = right;
 
-                    if(rightIsFrac) {
+                    if (rightIsFrac) {
                         rightUnits = right.split(" ");
                         num[1] = rightUnits[2];
                         den[1] = rightUnits[0];
                     }
                     String rightSide = num[1] + " \\over " + den[1];
                     return "{" + getUnit(left, "*", rightSide, "") + "}";
-                } else if(left.contains("^") || right.contains("^")) {
+                } else if(left.contains(right) || right.contains(left)) {
                     if(left.contains("^"))
                         leftUnits = left.split("\\^");
                     if(right.contains("^"))
                         rightUnits = right.split("\\^");
+
+//                    if(left.contains(right))
+//                        return left.replace(right, "");
+//                    if(right.contains(left))
+//                        return right.replace(left, "");
+//
                     try {
-                        if (leftUnits[0].equals(rightUnits[0])) {
+                        if (leftUnits[0].contains(rightUnits[0])) {
                             int exponentLeft = Integer.parseInt(leftUnits[1]);
                             int exponentRight = Integer.parseInt(rightUnits[1]);
                             if (exponentLeft > exponentRight)
-                                return leftUnits[0] + "^" + (exponentLeft - exponentRight) + " \\over 1";
+                                return leftUnits[0].charAt(leftUnits[0].length()-1) + "^" + (exponentLeft - exponentRight) + " \\over 1";
                             else if (exponentLeft < exponentRight)
-                                return "1 \\over " + rightUnits[0] + "^" + (exponentLeft - exponentRight);
+                                return "1 \\over " + rightUnits[0].charAt(rightUnits[0].length()-1) + "^" + (exponentLeft - exponentRight);
                             else
-                                return leftUnits[0]  + " \\over 1";
+                                return leftUnits[0].replace(rightUnits[0], "") + " \\over 1";
 
                         }
                     } catch (Exception ex){
                         try {
-                            if (leftUnits[0].equals(right)) {
+                            if (leftUnits[0].contains(right)) {
                                 int exponent = Integer.parseInt(leftUnits[1]) - 1;
                                 if(exponent > 1)
-                                    return leftUnits[0] + "^" + exponent + " \\over 1";
+                                    return leftUnits[0].charAt(leftUnits[0].length()-1) + "^" + exponent + " \\over 1";
                                 else
-                                    return leftUnits[0] + " \\over 1";
+                                    return leftUnits[0].replace(right, "") + " \\over 1";
                             }
                         } catch (Exception ex2){
-                            if (rightUnits[0].equals(left)) {
+                            if (rightUnits[0].contains(left)) {
                                 int exponent = Integer.parseInt(rightUnits[1]) - 1;
                                 if(exponent > 1)
-                                    return "1 \\over " + rightUnits[0] + "^" + exponent;
+                                    return "1 \\over " + rightUnits[0].charAt(rightUnits[0].length()-1) + "^" + exponent;
                                 else
-                                    return "1 \\over " + rightUnits[0];
+                                    return "1 \\over " + rightUnits[0].replace(left, "");
                             }
                         }
                     }
@@ -394,7 +433,7 @@ public class ExpressionModified {
                         }
                     }
                 }
-                return left + right;
+                return left +right;
             case "+":
                 if(left.equals(right)){
                     return left;

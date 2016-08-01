@@ -248,7 +248,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                             a.moveToFirst();
                                                             val = a.getString(a.getColumnIndex(DataContract.ConstantEntry.COLUMN_CURRENT));
 
-                                                            String value = symbol + " = " + val + unit;
+                                                            String value = a.getString(a.getColumnIndex(DataContract.ConstantEntry.COLUMN_SYMBOL)) + " = " + val + unit;
                                                             constValues.add(value);
                                                             values[varCtr][2] = val;
                                                         }
