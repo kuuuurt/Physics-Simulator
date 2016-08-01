@@ -47,7 +47,7 @@ public class CalculatorActivity extends AppCompatActivity {
     @Nullable
     @Override
     public Intent getSupportParentActivityIntent() {
-        if(fromLesson){
+        if(mChapter != null && mLesson != null){
             return new Intent(this, ContentActivity.class)
                     .putExtra("Chapter", mChapter)
                     .putExtra("Lesson", mLesson);
@@ -229,7 +229,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                             ));
                                                             txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)) +
                                                                     " (" + c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL)) + ")");
-                                                            txtInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                                            txtInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                                                             txtInput.setEms(10);
                                                             txtInput.addTextChangedListener(createTextWatcher(symbol));
                                                             if(fromConstants)
@@ -311,6 +311,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                 substituteValues();
                                                 expression = expressionBuilder.build();
                                                 fromConstants = false;
+                                                fromLesson = false;
                                             }
 
                                             @Override

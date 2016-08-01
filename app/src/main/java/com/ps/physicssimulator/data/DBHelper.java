@@ -574,11 +574,11 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Scalar and Vector Values","Scalar and Vector Values Definition","" +
                             "<p><h2><b>Definition</b></h2><br/>" +
                             "Scalar quantity:<br />" +
-                            "\t•\tthas a magnitude<br />" +
-                            "\t•\ttis one dimensional<br/>|" +
+                            "\t•\thas a magnitude<br />" +
+                            "\t•\tis one dimensional<br/>|" +
                             "Vector quantity:<br/>" +
-                            "\t•\tthas a magnitude and a direction<br/>" +
-                            "\t•\ttis two dimensional<br/></p>"},
+                            "\t•\thas a magnitude and a direction<br/>" +
+                            "\t•\tis two dimensional<br/></p>"},
                     {"Scalar and Vector Values","Distance and Displacement",
                             "<h2><b>Distance and Displacement</b></h2><br/>" +
                             "Distance:<br/>" +
