@@ -776,35 +776,35 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initVariables(SQLiteDatabase database) {
         if(database.isOpen()) {
             String[][] variables = {
-                    {"Displacement", "Displacement", "$$d = {x_f - x_i}$$", "xf - xi", "d", "{m}"},
-                    {"Displacement", "Initial Velocity","$$x_i= {x_f - d}$$", "xf - d", "xi", "{m}"},
-                    {"Displacement", "Final Velocity", "$$x_f= {x_i + d}$$", "xi + d", "xf", "{m}"},
+                    {"Displacement", "Displacement", "$$d = {x_f - x_i}$$", "xf - xi", "d", "{{m}}"},
+                    {"Displacement", "Initial Velocity","$$x_i= {x_f - d}$$", "xf - d", "xi", "{{m}}"},
+                    {"Displacement", "Final Velocity", "$$x_f= {x_i + d}$$", "xi + d", "xf", "{{m}}"},
 
-                    {"Speed", "Speed", "$$s = {d \\over t}$$", "d / t", "s", "{m \\over s}"},
-                    {"Speed", "Distance", "$$d = {s \\cdot t}$$", "s * t", "d", "{m}"},
-                    {"Speed", "Time", "$$t = {d \\over s}$$", "d / s", "t", "{s}"},
+                    {"Speed", "Speed", "$$s = {d \\over t}$$", "d / t", "s", "{{m} \\over {s}}"},
+                    {"Speed", "Distance", "$$d = {s \\cdot t}$$", "s * t", "d", "{{m}}"},
+                    {"Speed", "Time", "$$t = {d \\over s}$$", "d / s", "t", "{{s}}"},
 
-                    {"Velocity", "Velocity", "$$v = {x_f - x_i \\over t}$$", "(xf - xi) / t", "v", "{m \\over s}"},
-                    {"Velocity", "Initial Position", "$$x_i = x_f - vt$$", "xf - (v * t)", "xi", "{m}"},
-                    {"Velocity", "Final Position", "$$x_f = vt + x_i$$", "(v * t) + xi", "xf", "{m}"},
-                    {"Velocity", "Time", "$$t = {x_f - x_i \\over v}$$", "(xf - xi) / v", "t", "{s}"},
+                    {"Velocity", "Velocity", "$$v = {x_f - x_i \\over t}$$", "(xf - xi) / t", "a", "{{m} \\over {s}}"},
+                    {"Velocity", "Initial Position", "$$x_i = x_f - vt$$", "xf - (a * t)", "xi", "{{m}}"},
+                    {"Velocity", "Final Position", "$$x_f = vt + x_i$$", "(a * t) + xi", "xf", "{{m}}"},
+                    {"Velocity", "Time", "$$t = {x_f - x_i \\over v}$$", "(xf - xi) / a", "t", "{{s}}"},
 
-                    {"Average Velocity", "Average Velocity", "$$v_{av} = {x_f - x_i \\over t_f - t_i}$$", "(xf - xi) / (tf - ti)", "v", "{m \\over s}"},
-                    {"Average Velocity", "Initial Position", "$$x_i = x_f - v_{av}(t_f - t_i)$$", "xf - (v * (tf - ti))", "xi", "{m}"},
-                    {"Average Velocity", "Final Position",  "$$x_f = v_{av}(t_f - t_i) + x_i$$", "(v * (tf - ti)) + xi", "xf", "{m}"},
-                    {"Average Velocity", "Initial Time","$$t_i = t_f - (x_f - x_i \\over v_{av})$$", "tf - ((xf - xi) / v)", "ti", "{s}"},
-                    {"Average Velocity", "Final Time", "$$t_f = (x_f - x_i \\over v_{av}) + t_i$$", "((xf - xi) / v) + ti", "tf", "{s}"},
+                    {"Average Velocity", "Average Velocity", "$$v_{av} = {x_f - x_i \\over t_f - t_i}$$", "(xf - xi) / (tf - ti)", "v", "{{m} \\over {s}}"},
+                    {"Average Velocity", "Initial Position", "$$x_i = x_f - v_{av}(t_f - t_i)$$", "xf - (v * (tf - ti))", "xi", "{{m}}"},
+                    {"Average Velocity", "Final Position",  "$$x_f = v_{av}(t_f - t_i) + x_i$$", "(v * (tf - ti)) + xi", "xf", "{{m}}"},
+                    {"Average Velocity", "Initial Time","$$t_i = t_f - (x_f - x_i \\over v_{av})$$", "tf - ((xf - xi) / v)", "ti", "{{s}}"},
+                    {"Average Velocity", "Final Time", "$$t_f = (x_f - x_i \\over v_{av}) + t_i$$", "((xf - xi) / v) + ti", "tf", "{{s}}"},
 
-                    {"Acceleration", "Acceleration", "$$a = {v_f - v_i \\over t}$$", "(vf - vi) / t", "a", "{m \\over s^2}"},
-                    {"Acceleration", "Initial Velocity", "$$v_i = v_f - at$$", "vf - (a * t)", "vi", "{m \\over s}"},
-                    {"Acceleration", "Final Velocity", "$$v_f = at + v_i$$", "(a * t) + vi", "vf", "{m \\over s}"},
-                    {"Acceleration", "Time Interval", "$$t = {v_f - v_i \\over a}$$", "(vf - vi) / a", "t", "{s}"},
+                    {"Acceleration", "Acceleration", "$$a = {v_f - v_i \\over t}$$", "(vf - vi) / t", "a", "{{m} \\over {s^2}}"},
+                    {"Acceleration", "Initial Velocity", "$$v_i = v_f - at$$", "vf - (a * t)", "vi", "{{m} \\over {s}}"},
+                    {"Acceleration", "Final Velocity", "$$v_f = at + v_i$$", "(a * t) + vi", "vf", "{{m} \\over {s}}"},
+                    {"Acceleration", "Time Interval", "$$t = {v_f - v_i \\over a}$$", "(vf - vi) / a", "t", "{{s}}"},
 
-                    {"Average Acceleration", "Average Acceleration", "$$a_{av} = {v_f - v_i \\over t_f - t_i}$$", "(vf - vi) / (tf - ti)", "a", "{m \\over s^2}"},
-                    {"Average Acceleration", "Initial Velocity", "$$v_i = v_f - a_{av}(t_f - t_i)$$", "vf - (a * (tf - ti))", "vi", "{m \\over s}"},
-                    {"Average Acceleration", "Final Velocity", "$$v_f = a_{av}(t_f - t_i) + v_i$$", "(a * (tf - ti)) + vi", "vf", "{m \\over s}"},
-                    {"Average Acceleration", "Initial Time", "$$t_i = t_f - (v_f - v_i \\over a_{av})$$", "tf - ((vf - vi) / a)", "ti", "{s}"},
-                    {"Average Acceleration", "Final Time", "$$$$t_f = (v_f - v_i \\over a_{av}) + t_i$$", "((vf - vi) / a) + ti", "tf", "{s}"},
+                    {"Average Acceleration", "Average Acceleration", "$$a_{av} = {v_f - v_i \\over t_f - t_i}$$", "(vf - vi) / (tf - ti)", "a", "{{m \\over s^2}}"},
+                    {"Average Acceleration", "Initial Velocity", "$$v_i = v_f - a_{av}(t_f - t_i)$$", "vf - (a * (tf - ti))", "vi", "{{m \\over s}}"},
+                    {"Average Acceleration", "Final Velocity", "$$v_f = a_{av}(t_f - t_i) + v_i$$", "(a * (tf - ti)) + vi", "vf", "{{m \\over s}}"},
+                    {"Average Acceleration", "Initial Time", "$$t_i = t_f - (v_f - v_i \\over a_{av})$$", "tf - ((vf - vi) / a)", "ti", "{{s}}"},
+                    {"Average Acceleration", "Final Time", "$$$$t_f = (v_f - v_i \\over a_{av}) + t_i$$", "((vf - vi) / a) + ti", "tf", "{{s}}"},
 
                     {"Free-fall Velocity", "Velocity", "$$v_y = u + g \\cdot t$$", "u + (g * t)", "v", "{m \\over s}"},
                     {"Free-fall Velocity", "Initial Velocity", "$$u = v - g \\cdot t$$", "v - (g / t)", "u", "{m \\over s}"},
@@ -866,7 +866,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Gravitational Potential Energy", "Potential Energy",  "$$PE_g = m \\cdot g \\cdot h$$", "m * (a * h)", "PE", "{J}"},
                     {"Gravitational Potential Energy", "Mass", "$$m = {PE_g \\over g \\cdot h}$$", "PE / (a * h)", "m", "{kg}"}, //add to lesson *missing from lesson
                     {"Gravitational Potential Energy", "Height", "$$h = {PE_g \\over m \\cdot g}$$", "PE / (m * a)", "h", "{m}"},
-                    {"Gravitational Potential Energy", "Acceleration due to Gravity", "$$g = {PE_g \\over m \\cdot h}$$", "PE / (m * h)", "a", "{m \\over s^2}", "Acceleration due to Gravity"},
+                    {"Gravitational Potential Energy", "Acceleration due to Gravity", "$$g = {PE_g \\over m \\cdot h}$$", "PE / (m * h)", "a", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
 
 
 
