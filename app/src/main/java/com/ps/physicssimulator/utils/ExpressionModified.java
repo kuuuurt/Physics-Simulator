@@ -255,7 +255,7 @@ public class ExpressionModified {
     private String convertUnit(String unit) {
         switch (unit) {
             case "{J}":
-                return "{kgm^2 \\over s^2}";
+                return "{{kg}{m}^2 \\over s^2}";
             case "{kgm^2 \\over s^2}":
                 return "{J}";
             default:
@@ -284,6 +284,7 @@ public class ExpressionModified {
 
     public String getUnit(String left, String op, String right, String rightArg){
         boolean leftIsFrac = left.contains("\\over"), rightIsFrac = right.contains("\\over");
+        boolean leftHasExp = left.contains("^"), rightHasExp = right.contains("^");
         String leftUnits[] = null, rightUnits[] = null;
         if (left.equals(""))
             left = "1";
@@ -309,7 +310,7 @@ public class ExpressionModified {
                     left = left.replace("{", "").replace("}", "");
                     right = right.replace("{", "").replace("}", "");
 
-                    num[0] = left;
+                    leftUnits = left.split("\\^");     num[0] = left;
                     den[1] = right;
 
                     if (rightIsFrac) {
@@ -319,48 +320,59 @@ public class ExpressionModified {
                     }
                     String rightSide = num[1] + " \\over " + den[1];
                     return "{" + getUnit(left, "*", rightSide, "") + "}";
-                } else if(left.contains(right) || right.contains(left)) {
-                    if(left.contains("^"))
-                        leftUnits = left.split("\\^");
-                    if(right.contains("^"))
-                        rightUnits = right.split("\\^");
+                } else if(leftHasExp|| rightHasExp) {
 
-//                    if(left.contains(right))
-//                        return left.replace(right, "");
-//                    if(right.contains(left))
-//                        return right.replace(left, "");
-//
-                    try {
-                        if (leftUnits[0].contains(rightUnits[0])) {
-                            int exponentLeft = Integer.parseInt(leftUnits[1]);
-                            int exponentRight = Integer.parseInt(rightUnits[1]);
-                            if (exponentLeft > exponentRight)
-                                return leftUnits[0].charAt(leftUnits[0].length()-1) + "^" + (exponentLeft - exponentRight) + " \\over 1";
-                            else if (exponentLeft < exponentRight)
-                                return "1 \\over " + rightUnits[0].charAt(rightUnits[0].length()-1) + "^" + (exponentLeft - exponentRight);
-                            else
-                                return leftUnits[0].replace(rightUnits[0], "") + " \\over 1";
+                    leftUnits = left.split("\\^");
+                    rightUnits = right.split("\\^");
 
+
+                    if (leftUnits[0].contains(rightUnits[0]) || rightUnits[0].contains(leftUnits[0])) {
+                        int exponentLeft = 1;
+                        int exponentRight = 1;
+                        if(leftHasExp && rightHasExp) {
+                            exponentLeft = Integer.parseInt(leftUnits[1]);
+                            exponentRight = Integer.parseInt(rightUnits[1]);
+                        } else if (leftHasExp) {
+                            exponentLeft = Integer.parseInt(leftUnits[1]);
+                        } else if (rightHasExp) {
+                            exponentRight =  Integer.parseInt(rightUnits[1]);
                         }
-                    } catch (Exception ex){
-                        try {
-                            if (leftUnits[0].contains(right)) {
-                                int exponent = Integer.parseInt(leftUnits[1]) - 1;
-                                if(exponent > 1)
-                                    return leftUnits[0].charAt(leftUnits[0].length()-1) + "^" + exponent + " \\over 1";
-                                else
-                                    return leftUnits[0].replace(right, "") + " \\over 1";
-                            }
-                        } catch (Exception ex2){
-                            if (rightUnits[0].contains(left)) {
-                                int exponent = Integer.parseInt(rightUnits[1]) - 1;
-                                if(exponent > 1)
-                                    return "1 \\over " + rightUnits[0].charAt(rightUnits[0].length()-1) + "^" + exponent;
-                                else
-                                    return "1 \\over " + rightUnits[0].replace(left, "");
-                            }
+
+                        int exp = Math.abs(exponentLeft - exponentRight);
+
+                        if (exp > 1) {
+                            if(exponentLeft > exponentRight)
+                                return leftUnits[0] + "^" + exp + " \\over 1";
+                            else
+                                return "1 \\over " + rightUnits[0] + "^" + exp;
+                        } else if (exp == 1){
+                            if(exponentLeft > exponentRight)
+                                return leftUnits[0] + " \\over 1";
+                            else
+                                return "1 \\over " + rightUnits[0];
+                        } else {
+                            return "1 \\over 1";
                         }
                     }
+//                    } catch (Exception ex){
+//                        try {
+//                            if (leftUnits[0].contains(right)) {
+//                                int exponent = Integer.parseInt(leftUnits[1]) - 1;
+//                                if(exponent > 1)
+//                                    return leftUnits[0].charAt(leftUnits[0].length()-1) + "^" + exponent + " \\over 1";
+//                                else
+//                                    return leftUnits[0].replace(right, "") + " \\over 1";
+//                            }
+//                        } catch (Exception ex2){
+//                            if (rightUnits[0].contains(left)) {
+//                                int exponent = Integer.parseInt(rightUnits[1]) - 1;
+//                                if(exponent > 1)
+//                                    return "1 \\over " + rightUnits[0].charAt(rightUnits[0].length()-1) + "^" + exponent;
+//                                else
+//                                    return "1 \\over " + rightUnits[0].replace(left, "");
+//                            }
+//                        }
+//                    }
                 }
                 return left + " \\over " + right;
 
