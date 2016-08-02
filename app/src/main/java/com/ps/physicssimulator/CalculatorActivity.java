@@ -229,7 +229,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                             ));
                                                             txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)) +
                                                                     " (" + c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL)) + ")");
-                                                            txtInput.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                                                            txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                                                             txtInput.setEms(10);
                                                             txtInput.addTextChangedListener(createTextWatcher(symbol));
                                                             if(fromConstants)
