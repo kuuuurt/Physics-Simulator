@@ -92,6 +92,14 @@
             android:gravity="center_horizontal"
             android:id="@+id/input_container"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Calculate"
+            android:enabled="false"
+            android:id="@+id/button_calculate"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

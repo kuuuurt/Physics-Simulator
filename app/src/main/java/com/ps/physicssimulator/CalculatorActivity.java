@@ -41,6 +41,7 @@ public class CalculatorActivity extends AppCompatActivity {
     String mChapter, mLesson;
     static String formulaName;
     static String[][] values;
+    static Button btnCalc;
     static Bundle b;
     static boolean fromConstants, fromLesson;
 
@@ -356,6 +357,14 @@ public class CalculatorActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnCalc = (Button) findViewById(R.id.button_calculate);
+        btnCalc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calculate();
+            }
+        });
     }
 
     public int getTextIndex(Cursor c, String column, String text){
@@ -435,19 +444,20 @@ public class CalculatorActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
                     values[findVariableIndex(variable)][2] = charSequence.toString();
+                    if(checkValues())
+                        btnCalc.setEnabled(true);
+                    else
+                        btnCalc.setEnabled(false);
                 } catch (Exception ex) {
                     values[findVariableIndex(variable)][2] = null;
+                    btnCalc.setEnabled(false);
                 }
                 substituteValues();
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (checkValues()) {
-                    calculate();
-                } else {
-                    resetSteps();
-                }
+
             }
         };
     }
