@@ -318,7 +318,7 @@ public class ExpressionModified {
                     }
                     String rightSide = getUnit("{" + num[1] + "}","/", "{" + den[1] + "}", "");
                     return getUnit("{" + left + "}", "*", rightSide, "");
-                } else if(left.contains(right) || right.contains(left) || left.contains("}{") || right.contains("}{")) {
+                } else if(left.contains(right.substring(1, right.length()-1)) || right.contains(left.substring(0, left.length()-1)) || left.contains("}{") || right.contains("}{")) {
                     String leftItems[] = left.split("\\}\\{");
                     for(int i = 0; i < leftItems.length; i++){
                         leftItems[i] = leftItems[i].replace("{", "").replace("}", "");
