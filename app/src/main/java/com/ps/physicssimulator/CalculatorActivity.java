@@ -229,7 +229,8 @@ public class CalculatorActivity extends AppCompatActivity {
                                                                     LinearLayout.LayoutParams.WRAP_CONTENT
                                                             ));
                                                             txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)) +
-                                                                    " (" + c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY)) + ")");
+                                                                    " (" + c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY)).replace("_", "")
+                                                                    + ")");
                                                             txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                                                             txtInput.setEms(10);
                                                             txtInput.addTextChangedListener(createTextWatcher(symbol));

@@ -7,8 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.concurrent.ExecutionException;
-
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -780,8 +778,8 @@ public class DBHelper extends SQLiteOpenHelper {
         if(database.isOpen()) {
             String[][] variables = {
                     {"Displacement", "Displacement", "$$d = {x_f - x_i}$$", "xf - xi", "d", "d", "{{m}}"},
-                    {"Displacement", "Initial Velocity","$$x_i= {x_f - d}$$", "xf - d", "xi", "xi", "{{m}}"},
-                    {"Displacement", "Final Velocity", "$$x_f= {x_i + d}$$", "xi + d", "xf", "xf", "{{m}}"},
+                    {"Displacement", "Initial Velocity","$$x_i= {x_f - d}$$", "xf - d", "x_i", "xi", "{{m}}"},
+                    {"Displacement", "Final Velocity", "$$x_f= {x_i + d}$$", "xi + d", "x_f", "xf", "{{m}}"},
 
                     {"Speed", "Speed", "$$s = {d \\over t}$$", "d / tt", "s", "s" ,"{{m} \\over {s}}"},
                     {"Speed", "Distance", "$$d = {s \\cdot t}$$", "s * tt", "d", "d", "{{m}}"},
