@@ -851,7 +851,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Free-fall Displacement", "Time", "$$t = {\\sqrt{{(2 \\cdot {y \\over g})}}}$$", "sqrt(2 * (y / g))","{t}", "t", "{{s}}"},
 
                     //asdf - shai
-                    {"Horizontal Distance", "Horizontal Distance","$$x = {v_{x} \\cdot {t}}$$", "v * t", "x", "x", "{{m}}"},
+                    {"Horizontal Distance", "Horizontal Distance","$$x = {v_x \\cdot {t}}$$", "v * t", "x", "x", "{{m}}"},
                     {"Horizontal Distance", "Velocity along the x-axis","$$v_x = {x \\over {t}}$$", "x / t","v_x", "v", "{{m} \\over {s}}"},
                     {"Horizontal Distance", "Time","$$t = {x \\over v_x}$$", "x / v","{t}", "t", "{{s}}"},
 
