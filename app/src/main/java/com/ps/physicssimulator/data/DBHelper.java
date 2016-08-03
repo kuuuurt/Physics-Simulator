@@ -841,42 +841,44 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Average Acceleration", "Final Time", "$$t_f = {{(v_f - v_i) \\over a_{av}} + t_i}$$", "((vf - vi) / a) + ti","t_f", "tf", "{{s}}"},
 
                     {"Free-fall Velocity", "Velocity", "$$v_y = {u + (g \\cdot {t})}$$", "u + (g * t)","v_y", "v", "{{m} \\over {s}}"},
-                    {"Free-fall Velocity", "Initial Velocity", "$$u = {v - {g \\over {t}}}$$", "v - (g / t)","u","u", "{{m} \\over {s}}"},
-                    {"Free-fall Velocity", "Acceleration due to Gravity", "$$g = {v - {u \\over {t}}}$$", "v - (u / t)", "g","g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
-                    {"Free-fall Velocity", "Time", "$$t = {v - {u \\over g}}$$", "v - (u / g)", "{t}", "t", "{{s}}"},
+                    {"Free-fall Velocity", "Initial Velocity", "$$u = {v_y - (g \\cdot {t})}$$", "v - (g * t)", "u", "u", "{{m} \\over {s}}"},
+                    {"Free-fall Velocity", "Acceleration due to Gravity", "$$g = {(v_y - u) \\over {t}}$$", "(v - u) / t", "g","g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
+                    {"Free-fall Velocity", "Time", "$$t = {(v_y - u) \\over g}$$", "(v - u) / g", "{t}", "t", "{{s}}"},
 
-                    {"Free-fall Displacement", "Displacement", "$$y = {{1 \\over 2}g  \\cdot {t^2}}$$", "(g / 2) * t ^ 2","y", "y", "{{m}}"}, //qwer
-                    {"Free-fall Displacement", "Acceleration due to Gravity", "$$g = {2 \\cdot {y \\over {t^2}}}$$", "2 * (y / t^2)","g", "g", "{{m} \\over {s^2}}"},
-                    {"Free-fall Displacement", "Time", "$$t = {\\sqrt(2 \\cdot {y \\over g})}$$", "sqrt(2 * (y / g))","t", "t", "{{s}}"},
+                    {"Free-fall Displacement", "Displacement", "$$y = {({1 \\over 2} \\cdot g) \\cdot {({t})^2}}$$", "((1 / 2) * g) * (t) ^ 2","y", "y", "{{m}}"},
+                    {"Free-fall Displacement", "Acceleration due to Gravity", "$$g = {2 \\cdot {y \\over {{t}^2}}}$$", "2 * (y / t^2)","g", "g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
+                    {"Free-fall Displacement", "Time", "$$t = {\\sqrt(2 \\cdot {y \\over g})}$$", "sqrt(2 * (y / g))","{t}", "t", "{{s}}"},
 
                     //asdf - shai
-                    {"Horizontal Distance", "Horizontal Distance","$$x = {v_{x} \\cdot t}$$", "v * t", "x", "x", "{{m}}"},//zxcv
-                    {"Horizontal Distance", "Velocity along the x-axis","$$v_x = {x \\over t}$$", "x / t","v_x", "v", "{{m \\over s}}"},
-                    {"Horizontal Distance", "Time","$$t = { x \\over v_x}$$", "x / v","t", "t", "{{s}}"},//qwer
+                    {"Horizontal Distance", "Horizontal Distance","$$x = {v_{x} \\cdot {t}}$$", "v * t", "x", "x", "{{m}}"},
+                    {"Horizontal Distance", "Velocity along the x-axis","$$v_x = {x \\over {t}}$$", "x / t","v_x", "v", "{{m} \\over {s}}"},
+                    {"Horizontal Distance", "Time","$$t = {x \\over v_x}$$", "x / v","{t}", "t", "{{s}}"},
 
 
-                    {"Horizontal Velocity", "Velocity along the x-axis", "$$v_x = {v_{xi}}$$", "vi","v_x", "v", "{{m \\over s}}"},//qwer
-                    {"Horizontal Velocity", "Initial Velocity along the x-axis", "$$$$", "v", "vi", "{{m \\over s}}"},//qwer
+                    {"Horizontal Velocity", "Velocity along the x-axis", "$$v_x = {v_{xi}}$$", "vi","v_x", "v", "{{m} \\over {s}}"},//zxcvs
+                    {"Horizontal Velocity", "Initial Velocity along the x-axis", "$$$$", "v", "vi", "{{m} \\over {s}}"},//zxcv
 
-                    {"Vertical Distance", "Vertical Distance", "$$y = {v_{yi}t - {1 \\over 2}g \\cdot t^2$$", "","y", "y", "{{m}}"},//qwer
-                    {"Vertical Distance", "Initial Velocity along the y-axis", "$$TEXT NA NAKA CAPS$$", "", "vi", "{{m \\over s}}"},//zxcv
+                    {"Vertical Distance", "Vertical Distance", "$$y = {v_{yi}t - {1 \\over 2}g \\cdot {t^2}}$$", "","y", "y", "{{m}}"}, //zxcv
+                    {"Vertical Distance", "Initial Velocity along the y-axis", "$$TEXT NA NAKA CAPS$$", "", "vi", "{{m} \\over {s}}"},//zxcv
                     {"Vertical Distance", "Time","$$PARA MAKITA NATIN$$", "", "t", "{{s}}"},//zxcv
-                    {"Vertical Distance", "Acceleration due to Gravity","$$IF EVER$$", "", "g", "{{m \\over s^2}}"},//zxcv
+                    {"Vertical Distance", "Acceleration due to Gravity","$$IF EVER$$", "", "g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},//zxcv
 
-                    {"Vertical Velocity", "Vertical Velocity","$$v_y = {v_{yi} - (g \\cdot t)}$$", "vi - (g * t)","v_y", "v", "{{m \\over s}}"},
-                    {"Vertical Velocity", "Initial Velocity along the y-axis", "$$v_{yi} = {v_y + (g \\cdot t)}$$", "v + (g * t)","v_{yi}", "vi", "{{m \\over s}}"},
-                    {"Vertical Velocity", "Time","$$g = {v_{yi} - v_y \\over t}$$", "(vi - v) / g","g", "t", "{{s}}"},//qwer
-                    {"Vertical Velocity", "Acceleration due to Gravity","$$t = {v_{yi} - v_y \\over g}$$", "(vi - v) / t","t", "g", "{{m \\over s^2}}"},//qwer
+                    {"Vertical Velocity", "Vertical Velocity","$$v_y = {v_{yi} - (g \\cdot {t})}$$", "vi - (g * t)", "v_y", "v", "{{m} \\over {s}}"},
+                    {"Vertical Velocity", "Initial Velocity along the y-axis", "$$v_{yi} = {v_y + (g \\cdot {t})}$$", "v + (g * t)","v_{yi}", "vi", "{{m} \\over {s}}"},
+                    {"Vertical Velocity", "Time","$$t = {(v_{yi} - v_y) \\over g}$$", "(vi - v) / g", "{t}", "t", "{{s}}"},
+                    {"Vertical Velocity", "Acceleration due to Gravity","$$g = {(v_{yi} - v_y) \\over {t}}$$", "(vi - v) / t", "g", "g", "{{m \\over s^2}}", "Acceleration due to Gravity"},
 
-                    {"Time of Flight", "Time of Flight","$$t = {(2v_{1}sin \\Theta \\over g}$$", "((2 * v) * sin(a)) / g","t", "t", "{{s}}"},
-                    {"Time of Flight", "Initial Velocity","$$g = {2v_{1}sin \\Theta \\over t}$$", "((2 * v) * sin(a)) / t", "v", "{{m \\over s}}"},
-                    {"Time of Flight", "Angle of Trajectory","\\Theta = sin^{-1} {gt \\ 2v}", "asin((g * t) / (2 * v))", "a", "{{\\Theta }}"},
-                    {"Time of Flight", "Acceleration due to Gravity","$$$$v_{yi} = {gt \\over 2sin \\Theta}$$$$", "(t * g) / (2 * sin(a))", "g", "{{m \\over s^2}}"},
+                    {"Time of Flight", "Time of Flight","$$t = {((2 \\cdot v_{yi}) \\cdot sin(\\Theta)) \\over g}$$", "((2 * v) * sin(a)) / g", "{t}", "t", "{{s}}"},
+                    {"Time of Flight", "Initial Velocity","$$v_{yi} = {({t} \\cdot g) \\over (2 \\cdot sin(\\Theta))}$$", "(t * g) / (2 * sin(a))", "v_{yi}", "v", "{{m} \\over {s}}"},
+                    {"Time of Flight", "Angle of Trajectory","$$\\Theta = {sin^{-1}({(g \\cdot {t}) \\over (2 \\cdot v_{yi})})}$$", "asin((g * t) / (2 * v))", "\\Theta","a", "^{{\\circ}}"},
+                    {"Time of Flight", "Acceleration due to Gravity","$$g = {((2 \\cdot v_{yi}) \\cdot sin(\\Theta)) \\over {t}}$$", "((2 * v) * sin(a)) / t","g", "g", "{{m} \\over {s^2}}",
+                            "Acceleration due to Gravity"},
 
-                    {"Maximum Height Reached", "Maximum Height Reached","$$H = {v_{1}^{2}sin^{2} \\Theta \\over 2g}$$", "(v^2 * sin(a) * sin(a)) / 2 * g", "H", "{{m}}"},
-                    {"Maximum Height Reached", "Initial Velocity",  "$$v_{1} = \\sqrt{2gH \\over sin^2 \\Theta}$$", "sqrt((2 * g *H) / (sin(a) * sin(a)))", "v", "{{m \\over s}}"},
-                    {"Maximum Height Reached", "Angle of Trajectory", "$$\\Theta = sin^{2-1}{2gH \\over v_{1}^{2}}$$", "asin(sqrt((2 * g * H) / (v^2)))", "a", "{{\\Theta }}"},
-                    {"Maximum Height Reached", "Acceleration due to Gravity", "$$g = {v_{1}^{2}sin^{2} \\Theta \\over 2H}$$", "(v^2 * sin(a) * sin(a)) / 2 * H", "g", "{{m \\over s^2}}"},
+                    {"Maximum Height Reached", "Maximum Height Reached","$$H = {(v_{1}^2 \\cdot (sin^{\\Theta}^2)) \\over (2 \\cdot g)}$$", "(v^2 * (sin(a)^2)) / (2 * g)", "H", "H", "{{m}}"},
+                    {"Maximum Height Reached", "Initial Velocity",  "$$v_{1} = \\sqrt{2gH \\over sin^2 \\Theta}$$", "sqrt((2 * g *H) / (sin(a) * sin(a)))", "v", "{{m} \\over {s}}"},
+                    {"Maximum Height Reached", "Angle of Trajectory", "$$\\Theta = sin^{2-1}{2gH \\over v_{1}^{2}}$$", "asin(sqrt((2 * g * H) / (v^2)))", "a", "{{\\Theta}}"},
+                    {"Maximum Height Reached", "Acceleration due to Gravity", "$$g = {v_{1}^{2}sin^{2} \\Theta \\over 2H}$$", "(v^2 * sin(a) * sin(a)) / 2 * H", "g", "{{m} \\over {s^2}}",
+                            "Acceleration due to Gravity"},
 
                     {"Horizontal Range", "Horizontal Range","$$R = {v_{1}^{2}sin2 \\Theta \\over g}$$", "(v^2 * sin(2 * a)) / g", "R", "{{m}}"},
                     {"Horizontal Range", "Initial Velocity","$$v_{1} = \\sqrt{gR \\over sin2 \\Theta}$$", "sqrt((g * R) / (sin(2 * a)))", "v", "{{m \\over s}}"},

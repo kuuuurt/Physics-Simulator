@@ -213,8 +213,14 @@ public class ExpressionModified {
                         steps.add(new String[]{strRightArg, rightUnit, formula});
                     }
 
-                    String formula = strLeftArg + leftUnit + " " + getFormattedSymbol(op.getOperator().getSymbol()) + " " + strRightArg + rightUnit;
+                    String formula = getFormula(strLeftArg,leftUnit,getFormattedSymbol(op.getOperator().getSymbol()),strRightArg,rightUnit);
+                    if(leftUnit.equals(""))
+                        leftUnit = "{1}";
+                    if(rightUnit.equals(""))
+                        rightUnit = "{1}";
                     String unit = getUnit(leftUnit, op.getOperator().getSymbol(), rightUnit, String.valueOf(rightArg));
+                    if(unit.equals("{1}"))
+                        unit = "";
                     steps.add(new String[]{String.valueOf(res), unit, formula} );
                     if(!convertUnit(unit).equals(unit)) {
                         formula = String.valueOf(res) + unit;
@@ -240,13 +246,25 @@ public class ExpressionModified {
                     throw new IllegalArgumentException("Invalid number of arguments available for '" + func.getFunction().getName() + "' function");
                 }
                 /* collect the arguments from the stack */
+                String formula = convertFunction(func.getFunction().getName()) + "(";
                 double[] args = new double[numArguments];
                 for (int j = numArguments - 1; j >= 0; j--) {
                     args[j] = Double.parseDouble(output.pop());
+                    String arg = String.valueOf(args[j]);
+                    if(args[j] % 1 == 0)
+                        arg = arg.replace(".0", "");
+                    formula += arg;
+                    String unit = output.pop();
+                    formula += unit;
+                    if(unit.equals("^{{\\circ}}"))
+                        args[j] *= (3.14 / 180);
                 }
                 double res = func.getFunction().apply(args);
-                //String formula[] = func.getFunction().getName() + "(" +
-                //String rep = func.getFunction().getName() + "(" +
+                formula += ")";
+
+                steps.add(new String[]{String.valueOf(res), "", formula});
+
+                output.push("");
                 output.push(String.valueOf(res));
             }
         }
@@ -256,12 +274,34 @@ public class ExpressionModified {
         return steps;
     }
 
+    private String getFormula(String leftArg, String leftUnit, String op, String rightArg, String righUnit){
+        switch(op){
+            case "^":
+                return "(" + leftArg + leftUnit + ")" + op + rightArg;
+            default:
+                return leftArg + leftUnit + " " + op + " " + rightArg + righUnit;
+        }
+    }
+
+    private String convertFunction(String function){
+        switch (function){
+            case "asin":
+                return "sin^{-1}";
+            default:
+                return function;
+        }
+    }
+
     private String convertUnit(String unit) {
         switch (unit) {
             case "{{J}}":
                 return "{{kg}{m^2} \\over {s^2}}";
             case "{{kg}{m^2} \\over {s^2}}":
                 return "{{J}}";
+            case "^{{\\circ}}":
+                return "{{\\circ}}";
+            case "{{\\circ}}":
+                return "^{{\\circ}}";
             default:
                 return unit;
 

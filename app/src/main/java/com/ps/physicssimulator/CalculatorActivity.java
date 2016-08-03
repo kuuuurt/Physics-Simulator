@@ -389,6 +389,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
 
     public void calculate() {
+        removeEditTextFocus();
         resetSteps();
         for (String[] s : values) {
             expression.setVariable(s[0], Double.parseDouble(s[2]), s[1]);
@@ -436,6 +437,11 @@ public class CalculatorActivity extends AppCompatActivity {
             txtStep.setText(formulaDisplay);
             linearLayout.addView(txtStep);
         }
+    }
+
+    private void removeEditTextFocus() {
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.input_container);
+        linearLayout.getFocusedChild().clearFocus();
     }
 
 
@@ -486,10 +492,11 @@ public class CalculatorActivity extends AppCompatActivity {
         formula = formula.replace("*", "\\cdot");
         formula = formula.replace("/", "\\over");
         //formula = formula.replace("(", "{").replace(")", "}");
-        if (formula.contains("^")) {
-            int i = formula.indexOf("^");
-            formula = formula.substring(0, i - 2) + "(" + formula.charAt(i - 2) + ")" + formula.substring(i - 1);
-        }
+//        if (formula.contains("^")) {
+//            int i = formula.indexOf("^");
+//            //if(formula.charAt(i-2) == ' ' || formula.charAt(i+1) == ' ')
+//                formula = formula.substring(0, i) + "(" + formula.charAt(i) + ")" + formula.substring(i + 1);
+//        }
         //Substitute values
         for (String[] s : values) {
             formula = formula.replace(s[3], s[2] + s[1]);
