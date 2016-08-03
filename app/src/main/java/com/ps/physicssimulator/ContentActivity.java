@@ -170,8 +170,8 @@ public class ContentActivity extends AppCompatActivity {
 
         ImageView img = new ImageView(this);
         img.setLayoutParams(new LinearLayoutCompat.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                320,
+                240
         ));
         img.setImageResource(this.getResources().getIdentifier(
                 imageName,

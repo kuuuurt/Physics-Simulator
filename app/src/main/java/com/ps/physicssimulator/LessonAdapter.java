@@ -13,6 +13,8 @@ import com.ps.physicssimulator.data.DataContract;
 
 public class LessonAdapter extends CursorAdapter {
 
+    private static Context mContext;
+
     public static class ViewHolder {
         public final ImageView logoView;
         public final TextView titleView;
@@ -28,6 +30,7 @@ public class LessonAdapter extends CursorAdapter {
 
     public LessonAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
+        mContext = context;
     }
 
     @Override
@@ -46,7 +49,10 @@ public class LessonAdapter extends CursorAdapter {
 
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
-        //viewHolder.logoView.setImageResource();
+        viewHolder.logoView.setImageResource(mContext.getResources().getIdentifier(
+                cursor.getString(cursor
+                        .getColumnIndex(DataContract.LessonEntry.COLUMN_LOGO)),
+                "drawable", mContext.getPackageName()));
         viewHolder.titleView.setText(cursor.getString(cursor.getColumnIndex(
                 DataContract.LessonEntry.COLUMN_TITLE)));
         viewHolder.descView.setText(cursor.getString(cursor.getColumnIndex(
