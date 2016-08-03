@@ -92,7 +92,7 @@ public class ContentActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT)
             );
             sectionContainer.setOrientation(OrientationHelper.VERTICAL);
-            sectionContainer.setPadding(16, 16, 16, 16);
+            sectionContainer.setPadding(16, 0, 16, 16);
 
             String[] contentText = sections.getString(
                     sections.getColumnIndex(DataContract.SectionEntry.COLUMN_CONTENT))
@@ -169,10 +169,15 @@ public class ContentActivity extends AppCompatActivity {
         imageContainer.setPadding(16, 16, 16, 16);
 
         ImageView img = new ImageView(this);
-        img.setLayoutParams(new LinearLayoutCompat.LayoutParams(
-                320,
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
                 240
-        ));
+        );
+
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+
+        img.setLayoutParams(params);
+        img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         img.setImageResource(this.getResources().getIdentifier(
                 imageName,
                 "drawable", this.getPackageName()));

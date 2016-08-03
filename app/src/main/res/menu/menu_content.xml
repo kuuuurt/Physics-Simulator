@@ -6,14 +6,14 @@
         android:id="@+id/action_search"
         android:orderInCategory="100"
         android:title="Search"
-        android:icon="@drawable/ic_find_in_page"
+        android:icon="@drawable/ic_find_in_page_white"
         app:showAsAction="collapseActionView|ifRoom" >
     </item>
 
     <item
         android:id="@+id/action_calc"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_calculator"
+        android:icon="@drawable/ic_calculator_white"
         android:title="Go to Calculator"
         app:showAsAction="always" >
     </item>
