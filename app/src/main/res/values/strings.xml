@@ -15,5 +15,15 @@
     <string name="title_activity_constant">ConstantActivity</string>
 
     <string name="search"> Search Word </string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_autoplay">Enable Autoplay Audio on Lessons</string>
+    <string name="pref_description_autoplay_true">Audio lessons will be automatically played</string>
+    <string name="pref_description_autoplay_false">Audio lessons will not be automatically played</string>
+    <string name="pref_autoplay_key">pref_autoplay</string>
+    <string name="pref_autoplay_default">false</string>
+
 
 </resources>

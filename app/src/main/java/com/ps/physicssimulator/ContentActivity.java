@@ -3,9 +3,11 @@ package com.ps.physicssimulator;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -62,6 +64,13 @@ public class ContentActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean autoplay = prefs.getBoolean(getString(R.string.pref_autoplay_key), Boolean.parseBoolean(getString(R.string.pref_autoplay_default)));
+
+        if(autoplay){
+            //play audio
+        }
 
         Intent intent = getIntent();
         mLesson = intent.getStringExtra("Lesson");
