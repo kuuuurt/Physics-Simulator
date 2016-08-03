@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -35,6 +36,7 @@ import io.github.kexanie.library.MathView;
 
 public class ContentActivity extends AppCompatActivity {
 
+    boolean isAudioPlaying;
     String mLesson;
     String mChapter;
     LinearLayout mContentContainer;
@@ -54,16 +56,32 @@ public class ContentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_content);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        isAudioPlaying = false;
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                if(isAudioPlaying){
+                    isAudioPlaying = false;
+                    fab.setImageResource(R.drawable.ic_play);
+                    Snackbar.make(view, "Audio lesson paused", Snackbar.LENGTH_LONG)
+                            .setAction("Stop", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                }
+                            }).setActionTextColor(Color.WHITE).show();
+                } else {
+                    isAudioPlaying = true;
+                    fab.setImageResource(R.drawable.ic_pause);
+                }
+
+
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean autoplay = prefs.getBoolean(getString(R.string.pref_autoplay_key), Boolean.parseBoolean(getString(R.string.pref_autoplay_default)));
