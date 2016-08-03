@@ -871,9 +871,6 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Gravitational Potential Energy", "Height", "$$h = {PE_g \\over m \\cdot g}$$", "PE / (m * a)", "h", "{{m}}"},
                     {"Gravitational Potential Energy", "Acceleration due to Gravity", "$$g = {PE_g \\over m \\cdot h}$$", "PE / (m * h)", "a", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
 
-
-
-
                     {"Spring Potential Energy", "Potential Energy", "$$PE_{sp} = {1 \\over 2}k \\cdot \\Delta x^2$$", "(k / 2) * x^2", "PE", "{{J}}"},
                     {"Spring Potential Energy", "Spring Constant", "$$k = {2PE \\over \\Delta x^2}$$", "(2 * PE) / x^2", "k", "{{N}}"},
                     {"Spring Potential Energy", "Spring Displacement", "$$\\Delta x = \\sqrt{2PE \\over k}$$", "sqrt((2 * PE) / k)", "x", "{{m}}"},
