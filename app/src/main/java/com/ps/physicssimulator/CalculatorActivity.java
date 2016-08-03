@@ -441,7 +441,9 @@ public class CalculatorActivity extends AppCompatActivity {
 
     private void removeEditTextFocus() {
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.input_container);
-        linearLayout.getFocusedChild().clearFocus();
+        try {
+            linearLayout.getFocusedChild().clearFocus();
+        } catch (Exception ex) {}
     }
 
 

@@ -245,8 +245,11 @@ public class ExpressionModified {
                 if (output.size() < numArguments) {
                     throw new IllegalArgumentException("Invalid number of arguments available for '" + func.getFunction().getName() + "' function");
                 }
+
                 /* collect the arguments from the stack */
-                String formula = convertFunction(func.getFunction().getName()) + "(";
+                String function = func.getFunction().getName();
+                String formula = convertFunction(function);
+                String unit = "";
                 double[] args = new double[numArguments];
                 for (int j = numArguments - 1; j >= 0; j--) {
                     args[j] = Double.parseDouble(output.pop());
@@ -254,17 +257,35 @@ public class ExpressionModified {
                     if(args[j] % 1 == 0)
                         arg = arg.replace(".0", "");
                     formula += arg;
-                    String unit = output.pop();
+                    unit = output.pop();
                     formula += unit;
-                    if(unit.equals("^{{\\circ}}"))
+                    if(function.equals("sin") || function.equals("asin") || function.equals("cos"))
                         args[j] *= (3.14 / 180);
                 }
                 double res = func.getFunction().apply(args);
-                formula += ")";
 
-                steps.add(new String[]{String.valueOf(res), "", formula});
+                if(function.equals("sqrt")) {
+                    String[] exp = unit.substring(2, unit.length()-2).split("\\^");
+                    int expCur = Integer.parseInt(exp[1]);
+                    int expDiv = 2;
+                    int exponent = expCur/ expDiv;
+                    if(exponent > 1)
+                        unit = "{{" + exp[0] + "^" + exponent + "}}";
+                    else
+                        unit = "{{" + exp[0] + "}}";
+                    formula += "}";
+                } else {
+                    if(function.equals("asin"))
+                        unit = "^{{\\circ}}";
+                    else if(function.equals("sin") || function.equals("cos"))
+                        unit = "";
+                    formula += ")";
+                }
 
-                output.push("");
+
+                steps.add(new String[]{String.valueOf(res), unit, formula});
+
+                output.push(unit);
                 output.push(String.valueOf(res));
             }
         }
@@ -286,9 +307,11 @@ public class ExpressionModified {
     private String convertFunction(String function){
         switch (function){
             case "asin":
-                return "sin^{-1}";
+                return "sin^{-1}(";
+            case "sqrt":
+                return "\\sqrt{";
             default:
-                return function;
+                return function + "(";
         }
     }
 
