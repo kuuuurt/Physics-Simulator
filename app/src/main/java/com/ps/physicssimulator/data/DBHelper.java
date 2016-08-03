@@ -791,7 +791,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
                     {"Average Velocity", "Average Velocity", "$$v_{av} = {x_f - x_i \\over t_f - t_i}$$", "(xf - xi) / (tf - ti)", "vel", "{{m} \\over {s}}"},
                     {"Average Velocity", "Initial Position", "$$x_i = x_f - v_{av}(t_f - t_i)$$", "xf - (vel * (tf - ti))", "xi", "{{m}}"},
-                    {"Average Velocity", "Final Position",  "$$x_f = v_{av}(t_f - t_i) + x_i$$", "(vel * (tf -ti)) + xi", "xf", "{{m}}"},
+                    {"Average Velocity", "Final Position",  "$$x_f = v_{av}(t_f - t_i) + x_i$$", "(vel * (tf - ti)) + xi", "xf", "{{m}}"},
                     {"Average Velocity", "Initial Time","$$t_i = t_f - (x_f - x_i \\over v_{av})$$", "tf - ((xf - xi) / vel)", "ti", "{{s}}"},
                     {"Average Velocity", "Final Time", "$$t_f = (x_f - x_i \\over v_{av}) + t_i$$", "((xf - xi) / vel) + ti", "tf", "{{s}}"},
 
