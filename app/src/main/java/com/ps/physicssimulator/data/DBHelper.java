@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.concurrent.ExecutionException;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -79,7 +81,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.VariableEntry.COLUMN_FORMULA_KEY + " INTEGER NOT NULL, " +
                 DataContract.VariableEntry.COLUMN_CONSTANT_KEY + " INTEGER, " +
                 DataContract.VariableEntry.COLUMN_UNIT + " TEXT, " +
-                DataContract.VariableEntry.COLUMN_SYMBOL + " TEXT, " +
+                DataContract.VariableEntry.COLUMN_SYMBOL_COMPUTE + " TEXT, " +
+                DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY + " TEXT, " +
                 DataContract.VariableEntry.COLUMN_FORMULA_COMPUTE + " TEXT, " +
                 DataContract.VariableEntry.COLUMN_FORMULA_DISPLAY + " TEXT);";
 
@@ -776,18 +779,18 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initVariables(SQLiteDatabase database) {
         if(database.isOpen()) {
             String[][] variables = {
-                    {"Displacement", "Displacement", "$$d = {x_f - x_i}$$", "xf - xi", "d", "{{m}}"},
-                    {"Displacement", "Initial Velocity","$$x_i= {x_f - d}$$", "xf - d", "xi", "{{m}}"},
-                    {"Displacement", "Final Velocity", "$$x_f= {x_i + d}$$", "xi + d", "xf", "{{m}}"},
+                    {"Displacement", "Displacement", "$$d = {x_f - x_i}$$", "xf - xi", "d", "d", "{{m}}"},
+                    {"Displacement", "Initial Velocity","$$x_i= {x_f - d}$$", "xf - d", "xi", "xi", "{{m}}"},
+                    {"Displacement", "Final Velocity", "$$x_f= {x_i + d}$$", "xi + d", "xf", "xf", "{{m}}"},
 
-                    {"Speed", "Speed", "$$s = {d \\over t}$$", "d / t", "s", "{{m} \\over {s}}"},
-                    {"Speed", "Distance", "$$d = {s \\cdot t}$$", "s * t", "d", "{{m}}"},
-                    {"Speed", "Time", "$$t = {d \\over s}$$", "d / s", "t", "{{s}}"},
+                    {"Speed", "Speed", "$$s = {d \\over t}$$", "d / tt", "s", "s" ,"{{m} \\over {s}}"},
+                    {"Speed", "Distance", "$$d = {s \\cdot t}$$", "s * tt", "d", "d", "{{m}}"},
+                    {"Speed", "Time", "$$t = {d \\over s}$$", "d / s", "t", "tt", "{{s}}"},
 
-                    {"Velocity", "Velocity", "$$v = {x_f - x_i \\over t}$$", "(xf - xi) / t", "vel", "{{m} \\over {s}}"},
-                    {"Velocity", "Initial Position", "$$x_i = x_f - vt$$", "xf - (vel * t)", "xi", "{{m}}"},
-                    {"Velocity", "Final Position", "$$x_f = vt + x_i$$", "(vel * t) + xi", "xf", "{{m}}"},
-                    {"Velocity", "Time", "$$t = {x_f - x_i \\over v}$$", "(xf - xi) / vel", "t", "{{s}}"},
+                    {"Velocity", "Velocity", "$$v = {x_f - x_i \\over t}$$", "(xf - xi) / tt", "v", "vel", "{{m} \\over {s}}"},
+                    {"Velocity", "Initial Position", "$$x_i = x_f - v \\cdot t$$", "xf - (vel * tt)", "xi", "xi", "{{m}}"},
+                    {"Velocity", "Final Position", "$$x_f = v \\cdot t + x_i$$", "(vel * tt) + xi", "xf", "xf","{{m}}"},
+                    {"Velocity", "Time", "$$t = {x_f - x_i \\over v}$$", "(xf - xi) / vel", "t", "tt", "{{s}}"},
 
                     {"Average Velocity", "Average Velocity", "$$v_{av} = {x_f - x_i \\over t_f - t_i}$$", "(xf - xi) / (tf - ti)", "vel", "{{m} \\over {s}}"},
                     {"Average Velocity", "Initial Position", "$$x_i = x_f - v_{av}(t_f - t_i)$$", "xf - (vel * (tf - ti))", "xi", "{{m}}"},
@@ -944,23 +947,45 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put(DataContract.VariableEntry.COLUMN_NAME, s[1]);
                 values.put(DataContract.VariableEntry.COLUMN_FORMULA_DISPLAY, s[2]);
                 values.put(DataContract.VariableEntry.COLUMN_FORMULA_COMPUTE, s[3]);
-                values.put(DataContract.VariableEntry.COLUMN_SYMBOL, s[4]);
-                values.put(DataContract.VariableEntry.COLUMN_UNIT, s[5]);
-                try{
-                    c = database.query(
-                            DataContract.ConstantEntry.TABLE_NAME,
-                            new String[]{DataContract.ConstantEntry._ID},
-                            DataContract.ConstantEntry.COLUMN_NAME + " = ?",
-                            new String[]{s[6]},
-                            null,
-                            null,
-                            null
-                    );
-                    c.moveToFirst();
-                    values.put(DataContract.VariableEntry.COLUMN_CONSTANT_KEY,
-                            c.getLong(c.getColumnIndex(DataContract.ConstantEntry._ID)));
+                try {
+                    values.put(DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY, s[4]);
+                    values.put(DataContract.VariableEntry.COLUMN_SYMBOL_COMPUTE, s[5]);
+                    values.put(DataContract.VariableEntry.COLUMN_UNIT, s[6]);
+                    try {
+                        c = database.query(
+                                DataContract.ConstantEntry.TABLE_NAME,
+                                new String[]{DataContract.ConstantEntry._ID},
+                                DataContract.ConstantEntry.COLUMN_NAME + " = ?",
+                                new String[]{s[7]},
+                                null,
+                                null,
+                                null
+                        );
+                        c.moveToFirst();
+                        values.put(DataContract.VariableEntry.COLUMN_CONSTANT_KEY,
+                                c.getLong(c.getColumnIndex(DataContract.ConstantEntry._ID)));
+                    } catch (Exception ex) {
+                        values.put(DataContract.VariableEntry.COLUMN_CONSTANT_KEY, -1);
+                    }
                 } catch (Exception ex){
-                    values.put(DataContract.VariableEntry.COLUMN_CONSTANT_KEY, -1);
+                    values.put(DataContract.VariableEntry.COLUMN_SYMBOL_COMPUTE, s[4]);
+                    values.put(DataContract.VariableEntry.COLUMN_UNIT, s[5]);
+                    try {
+                        c = database.query(
+                                DataContract.ConstantEntry.TABLE_NAME,
+                                new String[]{DataContract.ConstantEntry._ID},
+                                DataContract.ConstantEntry.COLUMN_NAME + " = ?",
+                                new String[]{s[6]},
+                                null,
+                                null,
+                                null
+                        );
+                        c.moveToFirst();
+                        values.put(DataContract.VariableEntry.COLUMN_CONSTANT_KEY,
+                                c.getLong(c.getColumnIndex(DataContract.ConstantEntry._ID)));
+                    } catch (Exception e2x) {
+                        values.put(DataContract.VariableEntry.COLUMN_CONSTANT_KEY, -1);
+                    }
                 }
                 c.close();
                 database.insert(DataContract.VariableEntry.TABLE_NAME, null, values);

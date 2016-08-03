@@ -181,7 +181,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                 txtFormula.setText(formula);
 
                                                 currentFormula = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_FORMULA_COMPUTE));
-                                                variableToSolve = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL));
+                                                variableToSolve = selected.getString(selected.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY));
                                                 expressionBuilder = new ExpressionBuilderModified(currentFormula);
 
 
@@ -205,7 +205,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                 for (int k = 0; k < c.getCount(); k++) {
 
                                                     if (k != i) {
-                                                        String symbol = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL));
+                                                        String symbol = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL_COMPUTE));
                                                         String unit = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_UNIT));
                                                         long const_id = c.getLong(c.getColumnIndex(DataContract.VariableEntry.COLUMN_CONSTANT_KEY));
 
@@ -229,7 +229,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                                     LinearLayout.LayoutParams.WRAP_CONTENT
                                                             ));
                                                             txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)) +
-                                                                    " (" + c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL)) + ")");
+                                                                    " (" + c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY)) + ")");
                                                             txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                                                             txtInput.setEms(10);
                                                             txtInput.addTextChangedListener(createTextWatcher(symbol));
@@ -472,6 +472,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
     public void substituteValues() {
         String formula = currentFormula;
+        formula = formula.replace("*", "\\cdot");
         formula = formula.replace("/", "\\over");
         formula = formula.replace("(", "{").replace(")", "}");
         if (formula.contains("^")) {

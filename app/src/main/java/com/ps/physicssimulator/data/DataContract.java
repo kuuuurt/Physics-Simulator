@@ -181,7 +181,8 @@ public class DataContract   {
         public static final String COLUMN_FORMULA_KEY = "formula_id";
         public static final String COLUMN_FORMULA_DISPLAY = "formula_display";
         public static final String COLUMN_FORMULA_COMPUTE = "formula_compute";
-        public static final String COLUMN_SYMBOL = "symbol";
+        public static final String COLUMN_SYMBOL_DISPLAY = "symbol_display";
+        public static final String COLUMN_SYMBOL_COMPUTE = "symbol_compute";
         public static final String COLUMN_CONSTANT_KEY = "constant_id";
         public static final String COLUMN_UNIT = "unit";
 

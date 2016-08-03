@@ -276,7 +276,7 @@ public class ExpressionModified {
             case "/":
                 return "\\over";
             case "*":
-                return "*";
+                return "\\cdot";
             case "+":
                 return "+";
             case "-":
