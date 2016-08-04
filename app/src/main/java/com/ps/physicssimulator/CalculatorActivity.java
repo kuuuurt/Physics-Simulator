@@ -428,11 +428,11 @@ public class CalculatorActivity extends AppCompatActivity {
             if (formulaDisplay.contains("{" + strForm + "}")) {
                 formulaDisplay = formulaDisplay.replace("{" + strForm + "}", strForm);
             }
-            if (i == steps.length - 1) {
-                formulaDisplay = formulaDisplay.replace(strForm, result[0] + "{" + result[1] + "}");
-            } else {
+//            if (i == steps.length - 1) {
+//                formulaDisplay = formulaDisplay.replace(strForm, result[0] + "{" + result[1] + "}");
+//            } else {
                 formulaDisplay = formulaDisplay.replace(strForm, result[0] + result[1]);
-            }
+//            }
 
             txtStep.setText(formulaDisplay);
             linearLayout.addView(txtStep);

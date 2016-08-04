@@ -810,25 +810,26 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initVariables(SQLiteDatabase database) {
         if(database.isOpen()) {
             String[][] variables = {
+                    //
                     {"Displacement", "Displacement", "$$d = {x_f - x_i}$$", "xf - xi", "d", "d", "{{m}}"},
-                    {"Displacement", "Initial Velocity","$$x_i= {x_f - d}$$", "xf - d", "x_i", "xi", "{{m}}"},
-                    {"Displacement", "Final Velocity", "$$x_f= {x_i + d}$$", "xi + d", "x_f", "xf", "{{m}}"},
-
+                    {"Displacement", "Initial Position","$$x_i= {x_f - d}$$", "xf - d", "x_i", "xi", "{{m}}"},
+                    {"Displacement", "Final Position", "$$x_f= {x_i + d}$$", "xi + d", "x_f", "xf", "{{m}}"},
+                    //
                     {"Speed", "Speed", "$$s = {{d} \\over {t}}$$", "d / tt", "s", "s" ,"{{m} \\over {s}}"},
                     {"Speed", "Distance", "$$d = {s \\cdot {t}}$$", "s * tt", "{d}", "d", "{{m}}"},
                     {"Speed", "Time", "$$t = {{d} \\over s}$$", "d / s", "{t}", "tt", "{{s}}"},
-
+                    //
                     {"Velocity", "Velocity", "$$v = {x_f - x_i \\over {t}}$$", "(xf - xi) / tt", "{v}", "vel", "{{m} \\over {s}}"},
                     {"Velocity", "Initial Position", "$$x_i = {x_f - ({v} \\cdot {t})}$$", "xf - (vel * tt)", "x_i", "xi", "{{m}}"},
                     {"Velocity", "Final Position", "$$x_f = {({v} \\cdot {t}) + x_i}$$", "(vel * tt) + xi", "x_f", "xf","{{m}}"},
                     {"Velocity", "Time", "$$t = {(x_f - x_i) \\over {v}}$$", "(xf - xi) / vel", "{t}", "tt", "{{s}}"},
-
+                    //
                     {"Average Velocity", "Average Velocity", "$$v_{av} = {(x_f - x_i) \\over (t_f - t_i)}$$", "(xf - xi) / (tf - ti)", "v_{av}", "vel", "{{m} \\over {s}}"},
                     {"Average Velocity", "Initial Position", "$$x_i = {x_f - (v_{av} \\cdot (t_f - t_i))}$$", "xf - (vel * (tf - ti))", "x_i", "xi", "{{m}}"},
                     {"Average Velocity", "Final Position",  "$$x_f = {(v_{av} \\cdot (t_f - t_i)) + x_i}$$", "(vel * (tf - ti)) + xi", "x_f", "xf", "{{m}}"},
                     {"Average Velocity", "Initial Time","$$t_i = {t_f - {(x_f - x_i) \\over v_{av}}}$$", "tf - ((xf - xi) / vel)", "t_i","ti", "{{s}}"},
                     {"Average Velocity", "Final Time", "$$t_f = {{(x_f - x_i) \\over v_{av}} + t_i}$$", "((xf - xi) / vel) + ti", "t_f", "tf", "{{s}}"},
-
+                    //
                     {"Acceleration", "Acceleration", "$$a = {(v_f - v_i) \\over {t}}$$", "(vf - vi) / t", "a", "a", "{{m} \\over {s^2}}"},
                     {"Acceleration", "Initial Velocity", "$$v_i = {v_f - (a \\cdot {t})}$$", "vf - (a * t)", "v_i", "vi", "{{m} \\over {s}}"},
                     {"Acceleration", "Final Velocity", "$$v_f = {(a \\cdot {t}) + v_i}$$", "(a * t) + vi", "v_f", "vf", "{{m} \\over {s}}"},
@@ -839,127 +840,133 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Average Acceleration", "Final Velocity", "$$v_f = {(a_{av} \\cdot (t_f - t_i)) + v_i}$$", "(a * (tf - ti)) + vi","v_f", "vf", "{{m} \\over {s}}"},
                     {"Average Acceleration", "Initial Time", "$$t_i = {t_f - {(v_f - v_i) \\over a_{av}}}$$", "tf - ((vf - vi) / a)","t_i","ti", "{{s}}"},
                     {"Average Acceleration", "Final Time", "$$t_f = {{(v_f - v_i) \\over a_{av}} + t_i}$$", "((vf - vi) / a) + ti","t_f", "tf", "{{s}}"},
-
+                    //
                     {"Free-fall Velocity", "Velocity", "$$v_y = {u + (g \\cdot {t})}$$", "u + (g * t)","v_y", "v", "{{m} \\over {s}}"},
                     {"Free-fall Velocity", "Initial Velocity", "$$u = {v_y - (g \\cdot {t})}$$", "v - (g * t)", "u", "u", "{{m} \\over {s}}"},
                     {"Free-fall Velocity", "Acceleration due to Gravity", "$$g = {(v_y - u) \\over {t}}$$", "(v - u) / t", "g","g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
                     {"Free-fall Velocity", "Time", "$$t = {(v_y - u) \\over g}$$", "(v - u) / g", "{t}", "t", "{{s}}"},
-
+                    //
                     {"Free-fall Displacement", "Displacement", "$$y = {({1 \\over 2} \\cdot g) \\cdot {({t})^2}}$$", "((1 / 2) * g) * (t) ^ 2","y", "y", "{{m}}"},
                     {"Free-fall Displacement", "Acceleration due to Gravity", "$$g = {2 \\cdot {y \\over {({t})^2}}}$$", "2 * (y / (t) ^ 2)","g", "g", "{{m} \\over {s^2}}", "Acceleration due to " +
                             "Gravity"},
-                    {"Free-fall Displacement", "Time", "$$t = {\\sqrt{{(2 \\cdot {y \\over g})}}}$$", "sqrt(2 * (y / g))","{t}", "t", "{{s}}"},
+                    {"Free-fall Displacement", "Time", "$$t = {\\sqrt{{(2 \\cdot {y \\over g})}}}$$", "sqrt(2 * (y / g))","{t}", "t", "{{s}}"}, //{\\sqrt{{(2 \\cdot {y \\over g)}}}
 
                     //asdf - shai
-                    {"Horizontal Distance", "Horizontal Distance","$$x = {v_x \\cdot {t}}$$", "v * t", "x", "x", "{{m}}"},
-                    {"Horizontal Distance", "Velocity along the x-axis","$$v_x = {x \\over {t}}$$", "x / t","v_x", "v", "{{m} \\over {s}}"},
-                    {"Horizontal Distance", "Time","$$t = {x \\over v_x}$$", "x / v","{t}", "t", "{{s}}"},
+                    {"Horizontal Distance", "Horizontal Distance","$${x} = {v_x \\cdot {t}}$$", "v * t", "{x}", "x", "{{m}}"},
+                    {"Horizontal Distance", "Velocity along the x-axis","$$v_x = {{x} \\over {t}}$$", "x / t","v_x", "v", "{{m} \\over {s}}"},
+                    {"Horizontal Distance", "Time","$$t = {{x} \\over v_x}$$", "x / v","{t}", "t", "{{s}}"},
 
-
-                    {"Horizontal Velocity", "Velocity along the x-axis", "$$v_x = {v_{xi}}$$", "vi","v_x", "v", "{{m} \\over {s}}"},//zxcvs
-                    {"Horizontal Velocity", "Initial Velocity along the x-axis", "$$$$", "v", "vi", "{{m} \\over {s}}"},//zxcv
-
-                    {"Vertical Distance", "Vertical Distance", "$$y = {v_{yi}t - {1 \\over 2}g \\cdot {t^2}}$$", "","y", "y", "{{m}}"}, //zxcv
-                    {"Vertical Distance", "Initial Velocity along the y-axis", "$$TEXT NA NAKA CAPS$$", "", "vi", "{{m} \\over {s}}"},//zxcv
-                    {"Vertical Distance", "Time","$$PARA MAKITA NATIN$$", "", "t", "{{s}}"},//zxcv
-                    {"Vertical Distance", "Acceleration due to Gravity","$$IF EVER$$", "", "g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},//zxcv
-
+                    //
+                    {"Horizontal Velocity", "Velocity along the x-axis", "$$v_x = {v_{xi}}$$", "vi","v_x", "v", "{{m} \\over {s}}"},
+                    {"Horizontal Velocity", "Initial Velocity along the x-axis", "$$v_{xi} = {v_x}$$", "v", "v_{xi}", "vi", "{{m} \\over {s}}"},
+                    //{Formula, Variable, formula display, formula compute, symbol display, symbol compute, unit, constant name}
+                    //
+                    {"Vertical Distance", "Vertical Distance", "$${y} = {v_{yi}t - {1 \\over 2}g \\cdot {t^2}}$$", "","{y}", "y", "{{m}}"}, //zxcv
+                    {"Vertical Distance", "Initial Velocity along the y-axis", "$$ZXCVZXCV$$", "", "vi", "{{m} \\over {s}}"},//zxcv
+                    {"Vertical Distance", "Time","$$ZXCVZXCV$$", "", "t", "{{s}}"},//zxcv
+                    {"Vertical Distance", "Acceleration due to Gravity","$$ZXCVZXCV$$", "", "g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},//zxcv
+                    //
                     {"Vertical Velocity", "Vertical Velocity","$$v_y = {v_{yi} - (g \\cdot {t})}$$", "vi - (g * t)", "v_y", "v", "{{m} \\over {s}}"},
                     {"Vertical Velocity", "Initial Velocity along the y-axis", "$$v_{yi} = {v_y + (g \\cdot {t})}$$", "v + (g * t)","v_{yi}", "vi", "{{m} \\over {s}}"},
                     {"Vertical Velocity", "Time","$$t = {(v_{yi} - v_y) \\over g}$$", "(vi - v) / g", "{t}", "t", "{{s}}"},
                     {"Vertical Velocity", "Acceleration due to Gravity","$$g = {(v_{yi} - v_y) \\over {t}}$$", "(vi - v) / t", "g", "g", "{{m \\over s^2}}", "Acceleration due to Gravity"},
-
+                    //
                     {"Time of Flight", "Time of Flight","$$t = {((2 \\cdot v_{yi}) \\cdot sin(\\Theta)) \\over g}$$", "((2 * v) * sin(a)) / g", "{t}", "t", "{{s}}"},
                     {"Time of Flight", "Initial Velocity","$$v_{yi} = {({t} \\cdot g) \\over (2 \\cdot sin(\\Theta))}$$", "(t * g) / (2 * sin(a))", "v_{yi}", "v", "{{m} \\over {s}}"},
                     {"Time of Flight", "Angle of Trajectory","$$\\Theta = {sin^{-1}({(g \\cdot {t}) \\over (2 \\cdot v_{yi})})}$$", "asin((g * t) / (2 * v))", "\\Theta","a", "^{{\\circ}}"},
                     {"Time of Flight", "Acceleration due to Gravity","$$g = {((2 \\cdot v_{yi}) \\cdot sin(\\Theta)) \\over {t}}$$", "((2 * v) * sin(a)) / t","g", "g", "{{m} \\over {s^2}}",
                             "Acceleration due to Gravity"},
-
-                    {"Maximum Height Reached", "Maximum Height Reached","$$H = {(v_{1}^2 \\cdot (sin^{\\Theta}^2)) \\over (2 \\cdot g)}$$", "(v^2 * (sin(a)^2)) / (2 * g)", "H", "H", "{{m}}"},
-                    {"Maximum Height Reached", "Initial Velocity",  "$$v_{1} = \\sqrt{2gH \\over sin^2 \\Theta}$$", "sqrt((2 * g *H) / (sin(a) * sin(a)))", "v", "{{m} \\over {s}}"},
-                    {"Maximum Height Reached", "Angle of Trajectory", "$$\\Theta = sin^{2-1}{2gH \\over v_{1}^{2}}$$", "asin(sqrt((2 * g * H) / (v^2)))", "a", "{{\\Theta}}"},
-                    {"Maximum Height Reached", "Acceleration due to Gravity", "$$g = {v_{1}^{2}sin^{2} \\Theta \\over 2H}$$", "(v^2 * sin(a) * sin(a)) / 2 * H", "g", "{{m} \\over {s^2}}",
+                    //
+                    {"Maximum Height Reached", "Maximum Height Reached","$$H = {((v_{1})^2 \\cdot (sin(\\Theta) \\cdot sin(\\Theta))) \\over (2 \\cdot g)}$$", "((v)^2 * (sin(a) * sin(a))) / (2 * g)",
+                            "H",
+                            "H", "{{m}}"},
+                    {"Maximum Height Reached", "Initial Velocity",  "$$v_{1} = \\sqrt{(2 \\cdot g \\cdot H) \\over (sin^2 \\Theta)}$$", "sqrt((2 * g * H) / (sin(a))^2", "v_{1}", "v", "{{m} \\over " +
+                            "{s}}"},
+                    {"Maximum Height Reached", "Angle of Trajectory", "$$\\Theta = sin^{2-1}{\\sqrt{{((2 \\cdot g \\cdot H) \\over (v_{1}^{2}))}}}$$", "asin(sqrt((2 * g * H) / (v^2)))", "\\Theta",
+                            "a", "^{{\\circ}}"},
+                    {"Maximum Height Reached", "Acceleration due to Gravity", "$$g = {v_{1}^{2} \\cdot sin^{2} \\Theta \\over 2 \\cdot H}$$", "(v^2 * (sin(a))^2) / 2 * H", "g", "g", "{{m} \\over {s^2}}",
                             "Acceleration due to Gravity"},
-
-                    {"Horizontal Range", "Horizontal Range","$$R = {v_{1}^{2}sin2 \\Theta \\over g}$$", "(v^2 * sin(2 * a)) / g", "R", "{{m}}"},
-                    {"Horizontal Range", "Initial Velocity","$$v_{1} = \\sqrt{gR \\over sin2 \\Theta}$$", "sqrt((g * R) / (sin(2 * a)))", "v", "{{m \\over s}}"},
-                    {"Horizontal Range", "Time of Flight", "$$\\Theta = sin^{-1}{gR \\over 2v_{1}^{2}}$$", "asin((g * R) / (2 * v))", "a", "{{\\Theta }}"},
-                    {"Horizontal Range", "Acceleration due to Gravity", "$$g = {v_{1}^{2}sin2 \\Theta \\over R$$", "(v^2 * sin(2 * a)) / R", "g", "{{m \\over s^2}}"},
-
-                    {"Friction", "Frictional Force", "$$F_f = \\mu \\cdot F_n$$", "m * N", "F", "{{N}}"},
-                    {"Friction", "Coefficient of Friction", "$$\\mu = {F_f \\over F_n}$$", "F / N", "m", "{1}"},
-                    {"Friction", "Normal Force", "$$F_n = {F_f \\over \\mu}$$", "f / m", "N", "{{N}}"},
-
-                    {"Momentum", "Momentum","$$p = m \\cdot v$$", "m * v", "p", "{{kg}{m} \\over s}}"},
-                    {"Momentum", "Mass", "$$m = {p \\over v}$$", "p / v", "m", "{{kg}}"},
-                    {"Momentum", "Velocity", "$$v = {p \\over m}$$", "p / m", "v", "{{m \\over s}}"},
-
-                    {"Work", "Work", "$$W = \\vec{F} \\cdot \\vec{x}$$", "F * x", "W", "{{J}}"},
-                    {"Work", "Force", "$$\\vec{F} = {W \\over \\vec{x}}$$", "W / x", "F", "{{N}}"},
-                    {"Work", "Distance", "$$\\vec{x} = {W \\over \\vec{F}}$$", "W / F", "x", "{{m}}"},
-
-                    {"Kinetic Energy", "Kinetic Energy", "$$KE = {mv^2 \\over 2}$$", "(m * v^2) / 2", "KE", "{{J}}"},
-                    {"Kinetic Energy", "Mass", "$$m = {2KE \\over m}$$", "(2 * KE) / v^2", "m", "{{kg}}"},
-                    {"Kinetic Energy", "Velocity", "$$v = \\sqrt{2KE \\ over m}$$", "sqrt((2 * KE) / m)", "v", "{{m \\over s}}"},
-
-                    {"Gravitational Potential Energy", "Potential Energy",  "$$PE_g = m \\cdot g \\cdot h$$", "m * (a * h)", "PE", "{{J}}"},
-                    {"Gravitational Potential Energy", "Mass", "$$m = {PE_g \\over g \\cdot h}$$", "PE / (a * h)", "m", "{{kg}}"}, //add to lesson *missing from lesson
-                    {"Gravitational Potential Energy", "Height", "$$h = {PE_g \\over m \\cdot g}$$", "PE / (m * a)", "h", "{{m}}"},
-                    {"Gravitational Potential Energy", "Acceleration due to Gravity", "$$g = {PE_g \\over m \\cdot h}$$", "PE / (m * h)", "a", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
-
-                    {"Spring Potential Energy", "Potential Energy", "$$PE_{sp} = {1 \\over 2}k \\cdot \\Delta x^2$$", "(k / 2) * x^2", "PE", "{{J}}"},
-                    {"Spring Potential Energy", "Spring Constant", "$$k = {2PE \\over \\Delta x^2}$$", "(2 * PE) / x^2", "k", "{{N}}"},
-                    {"Spring Potential Energy", "Spring Displacement", "$$\\Delta x = \\sqrt{2PE \\over k}$$", "sqrt((2 * PE) / k)", "x", "{{m}}"},
-
-                    {"Total Mechanical Energy", "Total Mechanical Energy", "$$TME = KE + PE$$", "KE + PE", "TME", "{{J}}"},
-                    {"Total Mechanical Energy", "Kinetic Energy", "$$KE = TME - PE$$", "TME - PE", "KE", "{{J}}"},
-                    {"Total Mechanical Energy", "Potential Energy", "$$PE = TME - KE$$", "TME - KE", "PE", "{{J}}"},
-
-                    {"Average Power", "Average Power", "$$P_{av} = {\\Delta W \\over \\Delta t}$$", "W / t", "P", "{{W}}"},
-                    {"Average Power", "Amount of Work done", "$$\\Delta W = P_{av} \\cdot \\Delta t$$", "P * t", "W", "{{J}}"},
-                    {"Average Power", "Time", "$$\\Delta t = {\\Delta W \\over P_{av}}$$", "W / P", "t", "{{s}}"},
-
-                    {"Instantaneous Power", "Instantaneous Power",  "$$P = F \\cdot cosa \\cdot v$$", "F * cos(a) * v", "P", "{{W}}"},
-                    {"Instantaneous Power", "Force",  "$$F = {P \\over cosa \\cdot v}$$", "P / (cos(a) * v)", "P", "{{N}}"},
-                    {"Instantaneous Power", "Angle", "$$a = cos^{-1}{p \\over F \\cdot v}$$", "a = acos(P / (F * v))", "a", "{{\\Theta }}"},
-                    {"Instantaneous Power", "Velocity", "$$v = {P \\over F \\cdot cosa}$$", "P / (F * cos(a))", "v", "{{m \\over s}}"},
-
-                    {"Length of Arc", "Length of Arc", "$$\\Delta S = r \\cdot \\Delta \\Theta$$", "r * a", "s", "{{m}}"},
-                    {"Length of Arc", "Radius", "$$r = (\\Delta S \\over \\Delta \\Theta)$$", "s / a", "r", "{{m}}"},
-                    {"Length of Arc", "Angle",  "$$\\Delta \\Theta = (\\Delta S \\over r)$$", "s / r", "a", "{{\\Theta }}"},
-
-                    {"Tangential Velocity", "Tangential Velocity", "$$v = {\\Delta S \\over \\Delta t}$$", "s / t", "v", "{{m \\over s}}"},
-                    {"Tangential Velocity", "Length of Arc","$$\\Delta S = v \\cdot \\Delta t$$", "v * t", "s", "{{\\Theta }}"},
-                    {"Tangential Velocity", "Time",  "$$\\Delta t = {\\Delta S \\over v}$$", "s / v", "t", "{{s}}"},
-
-                    {"Velocity around a Circle", "Velocity around a Circle", "$$v = 2 \\cdot \\pi \\cdot {r \\over t}$$", "", "v", "{{m \\over s}}"},
-                    {"Velocity around a Circle", "Radius", "$$r = {v \\cdot t \\over 2 \\pi}$$", "", "r", "{{m}}"},
-                    {"Velocity around a Circle", "Time", "$$t = 2 \\cdot \\pi \\cdot {r \\over v}$$", "", "t", "{{s}}"},
-
-                    {"Angular Velocity", "Angular Velocity", "$$\\omega = {\\Delta \\Theta \\over \\Delta t}$$", "a / s", "v", "{{\\omega }}"},
-                    {"Angular Velocity", "Angel", "$$\\Delta \\Theta = {\\omega \\cdot \\Delta t}$$", "a * t", "a", "{{\\Theta }}"},
-                    {"Angular Velocity", "Time", "$$\\Delta t = {\\Delta \\Theta \\over \\omega}$$", "a / v", "t", "{{s}}"},
-
-                    {"Centripetal Acceleration", "Centripetal Acceleration", "$$a_c = r \\cdot \\omega ^2$$", "r * w^2", "a", "{{m \\over s^2}}"},
-                    {"Centripetal Acceleration", "Angular Velocity", "$$\\omega = \\sqrt{a_c \\over r}$$", "sqrt(a / r)", "w", "{{\\omega}}"},
-                    {"Centripetal Acceleration", "Angle", "$$r = {a_c \\over \\omega ^2}$$", "a / w^2", "r", "{{\\Theta }}"},
-
-                    {"Centripetal Force", "Centripetal Force", "$$F = {m \\cdot v^2 \\over r}$$", "(m * v^2) / r", "F", "{{N}}"},
-                    {"Centripetal Force", "Mass", "$$m = {F \\cdot r \\over v^2}$$", "(F * r) / v^2", "m", "{{kg}}"},
-                    {"Centripetal Force", "Tangential Velocity", "$$v = \\sqrt{F \\cdot r \\over m}$$", "sqrt((F * r) / m)", "v", "{{m \\over s}}"},
-                    {"Centripetal Force", "Radius","$$r = {m \\cdot v^2 \\over F}$$", "((m * v)^2) / F", "r", "{{m}}"},
-
-                    {"Moment of Inertia", "Moment of Inertia", "$$I = m \\cdot r^2$$", "m * r^2", "I", "{{kg \\cdot m^2}}"},
-                    {"Moment of Inertia", "Mass", "$$m = {I \\over r^2}$$", "I / r^2", "m", "{{kg}}"},
-                    {"Moment of Inertia", "Distance","$$r = \\sqrt{I \\over m}$$", "sqrt(I / m)", "r", "{{m}}"},
-
-                    {"Torque", "Torque", "$$\\tau = r \\cdot F$$", "r * F", "T", "{{N}{m}}"},
-                    {"Torque", "Force", "$$F = {\\tau \\over r}$$", "T / r", "F", "{{N}}"},
-                    {"Torque", "Position",  "$$r = {\\tau \\over F}$$", "T / F", "r", "{{m}}"},
-
-                    {"Angular Momentum", "Angular Momentum", "$$L = I \\cdot \\omega$$", "I * w", "L", "{kg-m^2 \\over s}"},
-                    {"Angular Momentum", "Moment of Inertia", "$$I = {L \\over \\omega}$$", "L / w", "I", "{kg \\cdot m^2}"},
-                    {"Angular Momentum", "Angular Velocity", "$$\\omega = {L \\over I}$$", "L / I", "w", "{\\omega}"}
+                    //
+                    {"Horizontal Range", "Horizontal Range","$$R = {(v_{1}^{2}sin(2 \\cdot \\Theta)) \\over g}$$", "(v^2 * sin(2 * a)) / g", "R", "R", "{{m}}"},
+                    {"Horizontal Range", "Initial Velocity","$$v_{1} = \\sqrt{(g \\cdot R) \\over (sin (2 \\cdot \\Theta))}$$", "sqrt((g * R) / (sin(2 * a)))", "v_{1}", "v", "{{m} \\over {s}}"},
+                    {"Horizontal Range", "Time of Flight", "$$\\Theta = sin^{-1}{(g \\cdot R) \\over (2v_{1}^{2})}$$", "asin((g * R) / (2 * v))", "\\Theta", "a", "{{\\Theta }}"},
+                    {"Horizontal Range", "Acceleration due to Gravity", "$$g = {(v_{1}^{2}sin(2 \\cdot \\Theta)) \\over R}$$", "(v^2 * sin(2 * a)) / R", "g", "g", "{{m} \\over {s^2}}",
+                            "Acceleration due to Gravity"},
+                    //
+                    {"Friction", "Frictional Force", "$$F_f = \\mu \\cdot F_n$$", "m * N", "F_f", "F", "{{N}}"},
+                    {"Friction", "Coefficient of Friction", "$$\\mu = {F_f \\over F_n}$$", "\\mu", "F / N", "m", "{1}"},
+                    {"Friction", "Normal Force", "$$F_n = {F_f \\over \\mu}$$", "f / m", "F_n", "N", "{{N}}"},
+                    //
+                    {"Momentum", "Momentum","$$p = m \\cdot {v}$$", "m * v", "P", "p", "{{kg}{m} \\over s}}"},
+                    {"Momentum", "Mass", "$$m = {p \\over {v}}$$", "p / v", "m", "m", "{{kg}}"},
+                    {"Momentum", "Velocity", "$${v} = {p \\over m}$$", "p / m", "{v}", "v", "{{m \\over s}}"},
+                    //
+                    {"Work", "Work", "$$W = \\vec{F} \\cdot \\vec{x}$$", "F * x", "W", "W", "{{J}}"},
+                    {"Work", "Force", "$$\\vec{F} = {W \\over \\vec{x}}$$", "W / x", "vec{F}", "F", "{{N}}"},
+                    {"Work", "Distance", "$$\\vec{x} = {W \\over \\vec{F}}$$", "W / F", "\\vec{x}", "x", "{{m}}"},
+                    //
+                    {"Kinetic Energy", "Kinetic Energy", "$$KE = {(m \\cdot {v}^2) \\over 2}$$", "(m * v^2) / 2", "KE", "KE", "{{J}}"},
+                    {"Kinetic Energy", "Mass", "$$m = {(2 \\cdot KE) \\over m}$$", "(2 * KE) / {v}^2", "m", "m", "{{kg}}"},
+                    {"Kinetic Energy", "Velocity", "$${v} = \\sqrt{((2 \\cdot KE) \\ over m)}$$", "sqrt((2 * KE) / m)", "v", "v", "{{m} \\over {s}}"},
+                    //
+                    {"Gravitational Potential Energy", "Potential Energy",  "$$PE_g = m \\cdot (g \\cdot h)$$", "PE_g", "m * (a * h)", "PE", "{{J}}"},
+                    {"Gravitational Potential Energy", "Mass", "$$m = {PE_g \\over (g \\cdot h)}$$", "PE / (a * h)", "m", "m", "{{kg}}"}, //add to lesson *missing from lesson
+                    {"Gravitational Potential Energy", "Height", "$$h = {PE_g \\over (m \\cdot g)}$$", "PE / (m * a)", "h", "h", "{{m}}"},
+                    {"Gravitational Potential Energy", "Acceleration due to Gravity", "$$g = {PE_g \\over (m \\cdot h)}$$", "PE / (m * h)", "g", "a", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
+                    //
+                    {"Spring Potential Energy", "Potential Energy", "$$PE_{sp} = {((1 \\over 2)} \\ cdot k) \\cdot \\Delta x^2$$", "PE_{sp}", "((1 / 2)* k) * x^2", "PE", "{{J}}"},
+                    {"Spring Potential Energy", "Spring Constant", "$$k = {(2 \\cdot PE) \\over \\Delta x^2}$$", "(2 * PE) / x^2", "k", "k", "{{N}}"},
+                    {"Spring Potential Energy", "Spring Displacement", "$$\\Delta x = \\sqrt{((2 \\cdot PE) \\over k)}$$", "\\Delta x", "sqrt((2 * PE) / k)", "x", "{{m}}"},
+                    //
+                    {"Total Mechanical Energy", "Total Mechanical Energy", "$$TME = KE + PE$$", "TME", "KE + PE", "TME", "{{J}}"},
+                    {"Total Mechanical Energy", "Kinetic Energy", "$$KE = TME - PE$$", "TME - PE", "KE", "KE", "{{J}}"},
+                    {"Total Mechanical Energy", "Potential Energy", "$$PE = TME - KE$$", "TME - KE", "PE", "PE", "{{J}}"},
+                    //
+                    {"Average Power", "Average Power", "$$P_{av} = {\\Delta W \\over \\Delta t}$$", "W / t", "P_{av}", "P", "{{W}}"},
+                    {"Average Power", "Amount of Work done", "$$\\Delta W = P_{av} \\cdot \\Delta t$$", "P * t", "\\Delta W", "W", "{{J}}"},
+                    {"Average Power", "Time", "$$\\Delta t = {\\Delta W \\over P_{av}}$$", "W / P", "\\Delta t", "t", "{{s}}"},
+                    //
+                    {"Instantaneous Power", "Instantaneous Power", "$$P = F \\cdot cos({a}) \\cdot {v}$$", "F * cos(a) * v", "P", "P", "{{W}}"},
+                    {"Instantaneous Power", "Force",  "$$F = {P \\over (cos({a}) \\cdot {v})}$$", "P / (cos(a) * v)", "F", "F", "{{N}}"},
+                    {"Instantaneous Power", "Angle", "$${a} = cos^{-1}{(p \\over (F \\cdot {v}))}$$", "a = acos(P / (F * v))", "{a}", "a", "{{\\Theta }}"},
+                    {"Instantaneous Power", "Velocity", "$${v} = {P \\over (F \\cdot (cos({a})))}$$", "P / (F * cos(a))", "{v}", "v", "{{m} \\over {s}}"},
+                    //
+                    {"Length of Arc", "Length of Arc", "$$\\Delta S = {r} \\cdot \\Delta \\Theta$$", "r * a", "\\Delta S", "s", "{{m}}"},
+                    {"Length of Arc", "Radius", "$${r} = (\\Delta S \\over \\Delta \\Theta)$$", "s / a", "{r}", "r", "{{m}}"},
+                    {"Length of Arc", "Angle",  "$$\\Delta \\Theta = (\\Delta S \\over {r})$$", "s / r", "\\Delta \\Theta", "a", "{{\\Theta }}"},
+                    //
+                    {"Tangential Velocity", "Tangential Velocity", "$${v} = {\\Delta S \\over \\Delta t}$$", "s / t", "{v}", "v", "{{m} \\over {s}}"},
+                    {"Tangential Velocity", "Length of Arc","$$\\Delta S = {v} \\cdot \\Delta t$$", "v * t", "\\Delta S", "s", "{{\\Theta }}"},
+                    {"Tangential Velocity", "Time",  "$$\\Delta t = {\\Delta S \\over {v}}$$", "s / v", "\\Delta t", "t", "{{s}}"},
+                    //
+                    {"Velocity around a Circle", "Velocity around a Circle", "$${v} = 2 \\cdot \\pi \\cdot {({r} \\over {t})}$$", "2 * pi * (r / t)", "{v}", "v", "{{m} \\over {s}}"},
+                    {"Velocity around a Circle", "Radius", "$${r} = {({v} \\cdot {t}) \\over (2 \\cdot \\pi)}$$", "(v * t) / (2 * pi)", "{r}", "r", "{{m}}"},
+                    {"Velocity around a Circle", "Time", "$${t} = 2 \\cdot \\pi \\cdot {({r} \\over {v})}$$", "2 * pi * (r / v)", "{t}", "t", "{{s}}"},
+                    //
+                    {"Angular Velocity", "Angular Velocity", "$$\\omega = {\\Delta \\Theta \\over \\Delta t}$$", "a / s", "\\omega", "v", "{{\\omega }}"},
+                    {"Angular Velocity", "Angel", "$$\\Delta \\Theta = {\\omega \\cdot \\Delta t}$$", "a * t", "\\Delta \\Theta", "a", "{{\\Theta }}"},
+                    {"Angular Velocity", "Time", "$$\\Delta t = {\\Delta \\Theta \\over \\omega}$$", "a / v", "\\Delta t", "t", "{{s}}"},
+                    //
+                    {"Centripetal Acceleration", "Centripetal Acceleration", "$$a_c = {r} \\cdot \\omega ^2$$", "r * w^2", "a_c", "a", "{{m} \\over {s^2}}"},
+                    {"Centripetal Acceleration", "Angular Velocity", "$$\\omega = \\sqrt{a_c \\over {r}}$$", "sqrt(a / r)", "\\omega", "w", "{{\\omega}}"},
+                    {"Centripetal Acceleration", "Angle", "$${r} = {a_c \\over \\omega ^2}$$", "a / w^2", "{r}", "r", "{{\\Theta }}"},
+                    //
+                    {"Centripetal Force", "Centripetal Force", "$$F = {(m \\cdot {v}^2) \\over {r}}$$", "(m * v^2) / r", "F",  "F", "{{N}}"},
+                    {"Centripetal Force", "Mass", "$$m = {(F \\cdot r) \\over {v}^2}$$", "(F * {r}) / v^2", "m", "m", "{{kg}}"},
+                    {"Centripetal Force", "Tangential Velocity", "$${v} = \\sqrt{((F \\cdot {r}) \\over m)}$$", "sqrt((F * r) / m)", "{v}", "v", "{{m} \\over {s}}"},
+                    {"Centripetal Force", "Radius","$${r} = {(m \\cdot {v}^2) \\over F}$$", "((m * v^2) / F", "{r}", "r", "{{m}}"},
+                    //
+                    {"Moment of Inertia", "Moment of Inertia", "$$I = m \\cdot {r}^2$$", "m * r^2", "I", "I", "{{kg} \\cdot {m^2}}"},
+                    {"Moment of Inertia", "Mass", "$$m = {I \\over {r}^2}$$", "I / r^2", "m", "m", "{{kg}}"},
+                    {"Moment of Inertia", "Distance","$${r} = \\sqrt{(I \\over m)}$$", "sqrt(I / m)", "{r}", "r", "{{m}}"},
+                    //
+                    {"Torque", "Torque", "$$\\tau = {r} \\cdot F$$", "r * F", "\\tau", "T", "{{N}{m}}"},
+                    {"Torque", "Force", "$$F = {\\tau \\over {r}}$$", "T / r", "F", "F", "{{N}}"},
+                    {"Torque", "Position",  "$${r} = {\\tau \\over F}$$", "T / F", "{r}", "r", "{{m}}"},
+                    //
+                    {"Angular Momentum", "Angular Momentum", "$$L = I \\cdot \\omega$$", "I * w", "L", "L", "{{kg}-{m^2} \\over {s}}"},
+                    {"Angular Momentum", "Moment of Inertia", "$$I = {L \\over \\omega}$$", "L / w", "I", "I", "{{kg} \\cdot {m^2}}"},
+                    {"Angular Momentum", "Angular Velocity", "$$\\omega = {L \\over I}$$", "L / I", "\\omega", "w", "{{\\omega}}"}
             };
 
             for(String[] s: variables){
@@ -1026,7 +1033,6 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 }
-
 
 
 

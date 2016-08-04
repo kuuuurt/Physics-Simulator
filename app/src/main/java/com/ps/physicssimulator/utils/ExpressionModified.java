@@ -207,7 +207,6 @@ public class ExpressionModified {
                     }
 
                     if(!rightUnit.equals(rightUnitTemp)){
-
                         String formula = strRightArg + rightUnit;
                         rightUnit = rightUnitTemp;
                         steps.add(new String[]{strRightArg, rightUnit, formula});
@@ -221,6 +220,7 @@ public class ExpressionModified {
                     String unit = getUnit(leftUnit, op.getOperator().getSymbol(), rightUnit, String.valueOf(rightArg));
                     if(unit.equals("{1}"))
                         unit = "";
+
                     steps.add(new String[]{String.valueOf(res), unit, formula} );
                     if(!convertUnit(unit).equals(unit)) {
                         formula = String.valueOf(res) + unit;
