@@ -56,7 +56,7 @@ public class LessonActivityUITest {
 
             for (int k = 0; k < lessons.getCount(); k++) {
                 String lessonTitle = lessons.getString(lessons.getColumnIndex(DataContract.
-                        LessonEntry.COLUMN_TITLE));
+                        LessonEntry.COLUMN_NAME));
                 onData(anything()).inAdapterView(withId(R.id.list_view_lesson)).atPosition(k)
                         .onChildView(withId(R.id.text_title))
                         .check(matches(withText(lessonTitle)));

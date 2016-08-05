@@ -69,9 +69,6 @@ public class CalculatorActivity extends AppCompatActivity {
 
         final Button btnChangeConstants = (Button) findViewById(R.id.button_change_constants);
 
-        MathView txtArrow = (MathView) findViewById(R.id.text_arrow);
-        txtArrow.setText("$$\\Rightarrow$$");
-
         final SimpleCursorAdapter chaptersAdap = setSpinnerAdapter(
                 this.getContentResolver().query(DataContract.ChapterEntry.CONTENT_URI,
                         null, null, null, null),
@@ -115,7 +112,7 @@ public class CalculatorActivity extends AppCompatActivity {
                         CalculatorActivity.this.getContentResolver().query(
                                 DataContract.LessonEntry.buildLessonChapter(chapter),
                                 null, null, null, "HasCalc"),
-                        new String[]{DataContract.LessonEntry.COLUMN_TITLE}
+                        new String[]{DataContract.LessonEntry.COLUMN_NAME}
                 );
 
 
@@ -123,7 +120,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 if(fromConstants)
                     spnLessons.setSelection(b.getInt("currentLesson"));
                 if(fromLesson){
-                    spnLessons.setSelection(getTextIndex(lessonsAdap.getCursor(), DataContract.LessonEntry.COLUMN_TITLE,
+                    spnLessons.setSelection(getTextIndex(lessonsAdap.getCursor(), DataContract.LessonEntry.COLUMN_NAME,
                             mLesson));
                 }
                 spnLessons.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -132,7 +129,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                long l) {
                         Cursor c = (Cursor) lessonsAdap.getItem(i);
                         String lesson = c.getString(c.getColumnIndex(DataContract.LessonEntry
-                                .COLUMN_TITLE));
+                                .COLUMN_NAME));
 
                         final SimpleCursorAdapter formulaAdap = setSpinnerAdapter(
                                 CalculatorActivity.this.getContentResolver().query(
@@ -354,7 +351,6 @@ public class CalculatorActivity extends AppCompatActivity {
                 intent.putExtra("currentLesson", spnLessons.getSelectedItemPosition());
                 intent.putExtra("currentFormula", spnFormula.getSelectedItemPosition());
                 intent.putExtra("currentVariable", spnVar.getSelectedItemPosition());
-                intent.putExtra("currentFormula", currentFormula);
                 intent.putExtra("formulaName", formulaName);
                 int i = 0;
                 intent.putExtra("size", values.length);
@@ -372,6 +368,15 @@ public class CalculatorActivity extends AppCompatActivity {
                 calculate();
             }
         });
+
+        if(fromConstants) {
+            b = intent.getExtras();
+            values = new String[b.getInt("size")][];
+            for (int i = 0; i < values.length; i++) {
+                values[i] = intent.getStringArrayExtra("value" + i);
+            }
+            spnChapters.setSelection(b.getInt("currentChapter"));
+        }
     }
 
     public int getTextIndex(Cursor c, String column, String text){
@@ -421,21 +426,20 @@ public class CalculatorActivity extends AppCompatActivity {
                 strForm = "(" + strForm.substring(0, idx - 1) + ")" + strForm.substring(idx - 1);
             }
 
-            if (formulaDisplay.contains("(" + strForm + ")")) {
-                formulaDisplay = formulaDisplay.replace("(" + strForm + ")", strForm);
-            }
+            if(formulaDisplay.contains(strForm)) {
+                if (formulaDisplay.contains("(" + strForm + ")")) {
+                    formulaDisplay = formulaDisplay.replace("(" + strForm + ")", strForm);
+                }
 
-            if (formulaDisplay.contains("{" + strForm + "}")) {
-                formulaDisplay = formulaDisplay.replace("{" + strForm + "}", strForm);
-            }
-//            if (i == steps.length - 1) {
-//                formulaDisplay = formulaDisplay.replace(strForm, result[0] + "{" + result[1] + "}");
-//            } else {
+                if (formulaDisplay.contains("{" + strForm + "}")) {
+                    formulaDisplay = formulaDisplay.replace("{" + strForm + "}", strForm);
+                }
+
                 formulaDisplay = formulaDisplay.replace(strForm, result[0] + result[1]);
-//            }
 
-            txtStep.setText(formulaDisplay);
-            linearLayout.addView(txtStep);
+                txtStep.setText(formulaDisplay);
+                linearLayout.addView(txtStep);
+            }
         }
     }
 
@@ -468,7 +472,9 @@ public class CalculatorActivity extends AppCompatActivity {
                     else
                         btnCalc.setEnabled(false);
                 } catch (Exception ex) {
-                    values[findVariableIndex(variable)][2] = null;
+                    try {
+                        values[findVariableIndex(variable)][2] = null;
+                    } catch (Exception ex2) {}
                     btnCalc.setEnabled(false);
                 }
                 substituteValues();

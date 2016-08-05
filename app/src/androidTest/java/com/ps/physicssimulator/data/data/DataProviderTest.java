@@ -173,7 +173,7 @@ public class DataProviderTest {
     @Test
     public void testBasicLessonQuery(){
         ContentValues testValues = new ContentValues();
-        testValues.put(LessonEntry.COLUMN_TITLE, "Scalar and Vector Values");
+        testValues.put(LessonEntry.COLUMN_NAME, "Scalar and Vector Values");
         testValues.put(LessonEntry.COLUMN_CHAPTER_KEY, "1");
         testValues.put(LessonEntry.COLUMN_DESCRIPTION, "Definition, Distance and Displacement");
 

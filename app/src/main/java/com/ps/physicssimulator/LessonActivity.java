@@ -49,7 +49,7 @@ public class LessonActivity extends AppCompatActivity implements
                 Cursor data = mLessonAdap.getCursor();
                 Intent intent = new Intent(LessonActivity.this, ContentActivity.class);
                 intent.putExtra("Lesson", data.getString(data.getColumnIndex(
-                        DataContract.LessonEntry.COLUMN_TITLE)));
+                        DataContract.LessonEntry.COLUMN_NAME)));
                 intent.putExtra("Chapter", mChapter);
                 startActivity(intent);
             }

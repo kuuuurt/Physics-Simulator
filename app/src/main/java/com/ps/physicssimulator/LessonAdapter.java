@@ -54,7 +54,7 @@ public class LessonAdapter extends CursorAdapter {
                         .getColumnIndex(DataContract.LessonEntry.COLUMN_LOGO)),
                 "drawable", mContext.getPackageName()));
         viewHolder.titleView.setText(cursor.getString(cursor.getColumnIndex(
-                DataContract.LessonEntry.COLUMN_TITLE)));
+                DataContract.LessonEntry.COLUMN_NAME)));
         viewHolder.descView.setText(cursor.getString(cursor.getColumnIndex(
                 DataContract.LessonEntry.COLUMN_DESCRIPTION)));
 

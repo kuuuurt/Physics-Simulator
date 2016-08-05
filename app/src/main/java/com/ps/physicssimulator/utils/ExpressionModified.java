@@ -10,6 +10,7 @@ import net.objecthunter.exp4j.tokenizer.OperatorToken;
 import net.objecthunter.exp4j.tokenizer.Token;
 import net.objecthunter.exp4j.tokenizer.VariableToken;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -158,6 +159,11 @@ public class ExpressionModified {
         final ArrayStack output = new ArrayStack();
         List steps = new ArrayList<String>();
 
+        DecimalFormat df = new DecimalFormat("#.####");
+        double finalRes = 0;
+        String finalFormula = "";
+        String finalUnit = "";
+
         for (int i = 0; i < tokens.length; i++) {
             Token t = tokens[i];
             if (t.getType() == Token.TOKEN_NUMBER) {
@@ -195,21 +201,23 @@ public class ExpressionModified {
                         strLeftArg = strLeftArg.replace(".0" , "");
                     }
 
-                    String leftUnitTemp = convertUnit(leftUnit);
-                    String rightUnitTemp = convertUnit(rightUnit);
+                    String leftUnitTemp = expandUnit(leftUnit);
+                    String rightUnitTemp = expandUnit(rightUnit);
 
-                    if(!leftUnit.equals(leftUnitTemp)){
+                    if(!leftUnit.equals(rightUnit)) {
+                        if (!leftUnit.equals(leftUnitTemp)) {
 
-                        String formula = strLeftArg + leftUnit;
-                        leftUnit = leftUnitTemp;
-                        steps.add(new String[]{strLeftArg, leftUnit, formula});
+                            String formula = strLeftArg + leftUnit;
+                            leftUnit = leftUnitTemp;
+                            steps.add(new String[]{strLeftArg, leftUnit, formula});
 
-                    }
+                        }
 
-                    if(!rightUnit.equals(rightUnitTemp)){
-                        String formula = strRightArg + rightUnit;
-                        rightUnit = rightUnitTemp;
-                        steps.add(new String[]{strRightArg, rightUnit, formula});
+                        if (!rightUnit.equals(rightUnitTemp)) {
+                            String formula = strRightArg + rightUnit;
+                            rightUnit = rightUnitTemp;
+                            steps.add(new String[]{strRightArg, rightUnit, formula});
+                        }
                     }
 
                     String formula = getFormula(strLeftArg,leftUnit,getFormattedSymbol(op.getOperator().getSymbol()),strRightArg,rightUnit);
@@ -217,21 +225,27 @@ public class ExpressionModified {
                         leftUnit = "{1}";
                     if(rightUnit.equals(""))
                         rightUnit = "{1}";
+                    if(leftUnit.equals("^{{\\circ}}"))
+                        leftUnit = "{{\\circ}}";
+                    if(rightUnit.equals("^{{\\circ}}"))
+                        rightUnit = "{{\\circ}}";
                     String unit = getUnit(leftUnit, op.getOperator().getSymbol(), rightUnit, String.valueOf(rightArg));
-                    if(unit.equals("{1}"))
+                    if(unit.equals("{1}") || unit.equals("{1 \\over 1}"))
                         unit = "";
+                    if(unit.equals("{{\\circ}}"))
+                        unit = "^{{\\circ}}";
 
-                    steps.add(new String[]{String.valueOf(res), unit, formula} );
-                    if(!convertUnit(unit).equals(unit)) {
-                        formula = String.valueOf(res) + unit;
-                        unit = convertUnit(unit);
-                        steps.add(new String[]{String.valueOf(res), unit, formula});
-                    }
 
+                    String strRes = df.format(res);
+                    steps.add(new String[]{strRes, unit, formula} );
+
+                    finalFormula = formula;
+                    finalRes = res;
+                    finalUnit = unit;
 
 
                     output.push(unit);
-                    output.push(String.valueOf(res));
+                    output.push(strRes);
                 } else if (op.getOperator().getNumOperands() == 1) {
                     /* pop the operand and push the result of the operation */
                     double arg = Double.parseDouble(output.pop());
@@ -250,6 +264,7 @@ public class ExpressionModified {
                 String function = func.getFunction().getName();
                 String formula = convertFunction(function);
                 String unit = "";
+
                 double[] args = new double[numArguments];
                 for (int j = numArguments - 1; j >= 0; j--) {
                     args[j] = Double.parseDouble(output.pop());
@@ -259,23 +274,23 @@ public class ExpressionModified {
                     formula += arg;
                     unit = output.pop();
                     formula += unit;
-                    if(function.equals("sin") || function.equals("asin") || function.equals("cos"))
-                        args[j] *= (3.14 / 180);
+                    if(function.equals("sin") || function.equals("cos"))
+                        args[j] = Math.toRadians(args[j]);
+
                 }
                 double res = func.getFunction().apply(args);
+                if(function.equals("asin") || function.equals("acos"))
+                    res = Math.toDegrees(res);
+                String strRes = df.format(res);
+                if(strRes.equals("0"))
+                    strRes = String.valueOf(res);
 
                 if(function.equals("sqrt")) {
-                    String[] exp = unit.substring(2, unit.length()-2).split("\\^");
-                    int expCur = Integer.parseInt(exp[1]);
-                    int expDiv = 2;
-                    int exponent = expCur/ expDiv;
-                    if(exponent > 1)
-                        unit = "{{" + exp[0] + "^" + exponent + "}}";
-                    else
-                        unit = "{{" + exp[0] + "}}";
+                    unit = unit.replace("^2", "");
+
                     formula += "}";
                 } else {
-                    if(function.equals("asin"))
+                    if(function.equals("asin") || function.equals("acos"))
                         unit = "^{{\\circ}}";
                     else if(function.equals("sin") || function.equals("cos"))
                         unit = "";
@@ -283,16 +298,41 @@ public class ExpressionModified {
                 }
 
 
-                steps.add(new String[]{String.valueOf(res), unit, formula});
+                steps.add(new String[]{strRes, unit, formula});
 
                 output.push(unit);
-                output.push(String.valueOf(res));
+                output.push(strRes);
             }
         }
         if (output.size() > 2) {
             throw new IllegalArgumentException("Invalid number of items on the output queue. Might be caused by an invalid number of arguments for a function.");
         }
+        if(!convertUnit(finalUnit).equals(finalUnit)) {
+            if(finalRes % 1 == 0)
+                finalFormula = String.valueOf(finalRes).replace(".0", "") + finalUnit;
+            else
+                finalFormula = String.valueOf(finalRes) + finalUnit;
+            finalUnit = convertUnit(finalUnit);
+
+            steps.add(new String[]{df.format(finalRes), finalUnit, finalFormula});
+        }
         return steps;
+    }
+
+    private String expandUnit(String unit) {
+        switch (unit) {
+            case "{{J}}":
+                return "{{kg}{m^2} \\over {s^2}}";
+            case "{{N}}":
+                return "{{kg}{m} \\over {s^2}}";
+            case "{{N}{s}}":
+                return "{{kg}{m} \\over {s}}";
+            case "{{\\mu}}":
+                return "";
+            default:
+                return unit;
+
+        }
     }
 
     private String getFormula(String leftArg, String leftUnit, String op, String rightArg, String righUnit){
@@ -308,6 +348,8 @@ public class ExpressionModified {
         switch (function){
             case "asin":
                 return "sin^{-1}(";
+            case "acos":
+                return "cos^{-1}(";
             case "sqrt":
                 return "\\sqrt{";
             default:
@@ -317,14 +359,14 @@ public class ExpressionModified {
 
     private String convertUnit(String unit) {
         switch (unit) {
-            case "{{J}}":
-                return "{{kg}{m^2} \\over {s^2}}";
             case "{{kg}{m^2} \\over {s^2}}":
                 return "{{J}}";
-            case "^{{\\circ}}":
-                return "{{\\circ}}";
-            case "{{\\circ}}":
-                return "^{{\\circ}}";
+            case "{{kg}{m} \\over {s^2}}":
+                return "{{N}}";
+            case "{{kg}{m} \\over {s}}":
+                return "{{N}{s}}";
+            case "{{\\mu}}":
+                return "";
             default:
                 return unit;
 
@@ -362,7 +404,7 @@ public class ExpressionModified {
                 int l = Integer.parseInt(rightArg.replace(".0", ""));
                 //left = left.replace("{", "").replace("}", "");
                 for(int i = 0; i < l; i+=2)
-                    left = getUnit(left, "*", left, "0");
+                    left = getUnit("{" + left + "}", "*", "{" + left + "}", "0");
                 return left;
             case "/":
                 if(right.equals("1")){

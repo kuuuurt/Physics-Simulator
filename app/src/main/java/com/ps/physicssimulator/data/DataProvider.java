@@ -91,7 +91,7 @@ public class DataProvider extends ContentProvider{
     }
 
     private static final String lessonWithTitleQuery = DataContract.LessonEntry.TABLE_NAME + "." +
-            DataContract.LessonEntry.COLUMN_TITLE + " = ? ";
+            DataContract.LessonEntry.COLUMN_NAME + " = ? ";
 
     private static final String lessonWithChapterQuery = DataContract.LessonEntry.TABLE_NAME +
             "." + DataContract.LessonEntry.COLUMN_CHAPTER_KEY + " = ? ";
@@ -196,7 +196,7 @@ public class DataProvider extends ContentProvider{
 
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         Cursor c = database.rawQuery("SELECT " + DataContract.LessonEntry._ID +
-                " from lesson WHERE " + DataContract.LessonEntry.COLUMN_TITLE +
+                " from lesson WHERE " + DataContract.LessonEntry.COLUMN_NAME +
                 " = \"" + lesson + "\"", null);
 
         c.moveToFirst();
@@ -258,7 +258,7 @@ public class DataProvider extends ContentProvider{
 
         SQLiteDatabase database = dbHelper.getReadableDatabase();
         Cursor c = database.rawQuery("SELECT " + DataContract.LessonEntry._ID +
-                " from lesson WHERE " + DataContract.LessonEntry.COLUMN_TITLE +
+                " from lesson WHERE " + DataContract.LessonEntry.COLUMN_NAME +
                 " = \"" + lesson + "\"", null);
 
         c.moveToFirst();

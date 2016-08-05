@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_LESSON_TABLE = "CREATE TABLE " +
                 DataContract.LessonEntry.TABLE_NAME + " (" +
                 DataContract.LessonEntry._ID + " INTEGER PRIMARY KEY, " +
-                DataContract.LessonEntry.COLUMN_TITLE + " TEXT UNIQUE NOT NULL, " +
+                DataContract.LessonEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
                 DataContract.LessonEntry.COLUMN_CHAPTER_KEY + " INTEGER NOT NULL," +
                 DataContract.LessonEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
                 DataContract.LessonEntry.COLUMN_HAS_CALCULATOR + " INTEGER NOT NULL," +
@@ -203,7 +203,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 c.moveToFirst();
 
                 ContentValues values = new ContentValues();
-                values.put(DataContract.LessonEntry.COLUMN_TITLE, s[0]);
+                values.put(DataContract.LessonEntry.COLUMN_NAME, s[0]);
                 values.put(DataContract.LessonEntry.COLUMN_CHAPTER_KEY,
                         c.getLong(c.getColumnIndex(DataContract.ChapterEntry._ID)));
                 values.put(DataContract.LessonEntry.COLUMN_DESCRIPTION, s[2]);
@@ -616,7 +616,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 Cursor c = database.query(
                         DataContract.LessonEntry.TABLE_NAME,
                         new String[]{DataContract.LessonEntry._ID},
-                        DataContract.LessonEntry.COLUMN_TITLE + " = ?",
+                        DataContract.LessonEntry.COLUMN_NAME + " = ?",
                         new String[]{s[0]},
                         null,
                         null,
@@ -691,7 +691,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Horizontal Velocity", "Projectile Motion", "$$v_x = v_{xi}$$", ""},
                     {"Vertical Distance",  "Projectile Motion", "$$y = v_{yi}t - {1 \\over 2}g \\cdot t^2$$", ""},
                     {"Vertical Velocity",  "Projectile Motion", "$$v_y = v_{yi} - g \\cdot t$$", ""},
-                    {"Time of Flight", "Projectile Motion", "$$t = {2v_{1}sin \\Theta \\over g}$$", ""},
+                    {"Time of Flight", "Projectile Motion", "$$t = {2v_{yi}sin \\Theta \\over g}$$", ""},
                     {"Maximum Height Reached", "Projectile Motion", "$$H = {v_{1}^{2}sin^{2} \\Theta \\over 2g}$$", ""},
                     {"Horizontal Range", "Projectile Motion", "$$R = {v_{1}^{2}sin2 \\Theta \\over g}$$", ""},
                     {"Friction", "Friction", "$$F_f = \\mu \\cdot F_n$$", ""},
@@ -700,7 +700,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Kinetic Energy", "Energy", "$$KE = {mv^2 \\over 2}$$", ""},
                     {"Gravitational Potential Energy", "Energy", "$$PE_g = m \\cdot g \\cdot h$$", ""},
                     {"Spring Potential Energy", "Energy", "$$PE_{sp} = {1 \\over 2}k \\cdot \\Delta x^2$$", ""},
-                    {"Total Mechanical Energy", "Energy", "$$TME = KE + PE - 0$$", ""},
+                    {"Total Mechanical Energy", "Energy", "$$TME = KE + PE$$", ""},
                     {"Average Power", "Power", "$$P_{av} = {\\Delta W \\over \\Delta t}$$", ""},
                     {"Instantaneous Power","Power", "$$P = F \\cdot cosa \\cdot v$$", ""},
                     {"Length of Arc",  "Uniform Circular Motion", "$$\\Delta S = r \\cdot \\Delta \\Theta$$", ""},
@@ -718,7 +718,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 Cursor c = database.query(
                         DataContract.LessonEntry.TABLE_NAME,
                         new String[]{DataContract.LessonEntry._ID},
-                        DataContract.LessonEntry.COLUMN_TITLE + " = ?",
+                        DataContract.LessonEntry.COLUMN_NAME + " = ?",
                         new String[]{s[1]},
                         null,
                         null,
@@ -849,7 +849,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Free-fall Displacement", "Displacement", "$$y = {({1 \\over 2} \\cdot g) \\cdot {({t})^2}}$$", "((1 / 2) * g) * (t) ^ 2","y", "y", "{{m}}"},
                     {"Free-fall Displacement", "Acceleration due to Gravity", "$$g = {2 \\cdot {y \\over {({t})^2}}}$$", "2 * (y / (t) ^ 2)","g", "g", "{{m} \\over {s^2}}", "Acceleration due to " +
                             "Gravity"},
-                    {"Free-fall Displacement", "Time", "$$t = {\\sqrt{{(2 \\cdot {y \\over g})}}}$$", "sqrt(2 * (y / g))","{t}", "t", "{{s}}"}, //{\\sqrt{{(2 \\cdot {y \\over g)}}}
+                    {"Free-fall Displacement", "Time", "$$t = {\\sqrt{{2 \\cdot {y \\over g}}}}$$", "sqrt(2 * (y / g))","{t}", "t", "{{s}}"}, //{\\sqrt{{(2 \\cdot {y \\over g)}}}
 
                     //asdf - shai
                     {"Horizontal Distance", "Horizontal Distance","$${x} = {v_x \\cdot {t}}$$", "v * t", "{x}", "x", "{{m}}"},
@@ -869,7 +869,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Vertical Velocity", "Vertical Velocity","$$v_y = {v_{yi} - (g \\cdot {t})}$$", "vi - (g * t)", "v_y", "v", "{{m} \\over {s}}"},
                     {"Vertical Velocity", "Initial Velocity along the y-axis", "$$v_{yi} = {v_y + (g \\cdot {t})}$$", "v + (g * t)","v_{yi}", "vi", "{{m} \\over {s}}"},
                     {"Vertical Velocity", "Time","$$t = {(v_{yi} - v_y) \\over g}$$", "(vi - v) / g", "{t}", "t", "{{s}}"},
-                    {"Vertical Velocity", "Acceleration due to Gravity","$$g = {(v_{yi} - v_y) \\over {t}}$$", "(vi - v) / t", "g", "g", "{{m \\over s^2}}", "Acceleration due to Gravity"},
+                    {"Vertical Velocity", "Acceleration due to Gravity","$$g = {(v_{yi} - v_y) \\over {t}}$$", "(vi - v) / t", "g", "g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
                     //
                     {"Time of Flight", "Time of Flight","$$t = {((2 \\cdot v_{yi}) \\cdot sin(\\Theta)) \\over g}$$", "((2 * v) * sin(a)) / g", "{t}", "t", "{{s}}"},
                     {"Time of Flight", "Initial Velocity","$$v_{yi} = {({t} \\cdot g) \\over (2 \\cdot sin(\\Theta))}$$", "(t * g) / (2 * sin(a))", "v_{yi}", "v", "{{m} \\over {s}}"},
@@ -880,55 +880,60 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Maximum Height Reached", "Maximum Height Reached","$$H = {((v_{1})^2 \\cdot (sin(\\Theta) \\cdot sin(\\Theta))) \\over (2 \\cdot g)}$$", "((v)^2 * (sin(a) * sin(a))) / (2 * g)",
                             "H",
                             "H", "{{m}}"},
-                    {"Maximum Height Reached", "Initial Velocity",  "$$v_{1} = \\sqrt{(2 \\cdot g \\cdot H) \\over (sin^2 \\Theta)}$$", "sqrt((2 * g * H) / (sin(a))^2", "v_{1}", "v", "{{m} \\over " +
+                    {"Maximum Height Reached", "Initial Velocity",  "$$v_{1} = {\\sqrt{{(2 \\cdot g \\cdot H) \\over (sin(\\Theta) \\cdot sin(\\Theta))}}}$$", "sqrt((2 * g * H) / (sin(a) * sin(a)))", "v_{1}", "v", "{{m} " +
+                            "\\over " +
                             "{s}}"},
-                    {"Maximum Height Reached", "Angle of Trajectory", "$$\\Theta = sin^{2-1}{\\sqrt{{((2 \\cdot g \\cdot H) \\over (v_{1}^{2}))}}}$$", "asin(sqrt((2 * g * H) / (v^2)))", "\\Theta",
+                    {"Maximum Height Reached", "Angle of Trajectory", "$$\\Theta = {sin^{-1}({\\sqrt{{(2 \\cdot g \\cdot H) \\over (v_{1})^2}}})}$$", "asin(sqrt((2 * g * H) / (v)^2))", "\\Theta",
                             "a", "^{{\\circ}}"},
-                    {"Maximum Height Reached", "Acceleration due to Gravity", "$$g = {v_{1}^{2} \\cdot sin^{2} \\Theta \\over 2 \\cdot H}$$", "(v^2 * (sin(a))^2) / 2 * H", "g", "g", "{{m} \\over {s^2}}",
+                    {"Maximum Height Reached", "Acceleration due to Gravity", "$$g = {((v_{1})^2 \\cdot (sin(\\Theta) \\cdot sin(\\Theta))) \\over (2 \\cdot H)}$$", "((v) ^ 2 * (sin(a) * sin(a))) /" +
+                            " " +
+                            "(2" +
+                            " * H)",
+                            "g", "g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
+                    //
+                    {"Horizontal Range", "Horizontal Range","$$R = {((v_{1})^2 \\cdot sin((2 \\cdot \\Theta))) \\over g}$$", "((v) ^ 2 * sin(2 * a)) / g", "R", "R", "{{m}}"},
+                    {"Horizontal Range", "Initial Velocity","$$v_{1} = \\sqrt{{(g \\cdot R) \\over (sin((2 \\cdot \\Theta)))}}$$", "sqrt((g * R) / (sin(2 * a)))", "v_{1}", "v", "{{m} \\over {s}}"},
+                    {"Horizontal Range", "Angle of Trajectory", "$$\\Theta = {sin^{-1}({(g \\cdot R) \\over (2 * v_{1})})}$$", "asin((g * R) / (2 * v))", "\\Theta", "a", "^{{\\circ}}"},
+                    {"Horizontal Range", "Acceleration due to Gravity", "$$g = {((v_{1})^2 \\cdot sin((2 \\cdot \\Theta))) \\over R}$$", "((v) ^ 2 * sin(2 * a)) / R", "g", "g", "{{m} \\over {s^2}}",
                             "Acceleration due to Gravity"},
                     //
-                    {"Horizontal Range", "Horizontal Range","$$R = {(v_{1}^{2}sin(2 \\cdot \\Theta)) \\over g}$$", "(v^2 * sin(2 * a)) / g", "R", "R", "{{m}}"},
-                    {"Horizontal Range", "Initial Velocity","$$v_{1} = \\sqrt{(g \\cdot R) \\over (sin (2 \\cdot \\Theta))}$$", "sqrt((g * R) / (sin(2 * a)))", "v_{1}", "v", "{{m} \\over {s}}"},
-                    {"Horizontal Range", "Time of Flight", "$$\\Theta = sin^{-1}{(g \\cdot R) \\over (2v_{1}^{2})}$$", "asin((g * R) / (2 * v))", "\\Theta", "a", "{{\\Theta }}"},
-                    {"Horizontal Range", "Acceleration due to Gravity", "$$g = {(v_{1}^{2}sin(2 \\cdot \\Theta)) \\over R}$$", "(v^2 * sin(2 * a)) / R", "g", "g", "{{m} \\over {s^2}}",
-                            "Acceleration due to Gravity"},
+                    {"Friction", "Frictional Force", "$$F_f = {\\mu \\cdot F_n}$$", "m * N", "F_f", "F", "{{N}}"},
+                    {"Friction", "Coefficient of Friction", "$$\\mu = {F_f \\over F_n}$$", "F / N", "\\mu", "m", "{{\\mu}}"},
+                    {"Friction", "Normal Force", "$$F_n = {F_f \\over \\mu}$$", "F / m", "F_n", "N", "{{N}}"},
                     //
-                    {"Friction", "Frictional Force", "$$F_f = \\mu \\cdot F_n$$", "m * N", "F_f", "F", "{{N}}"},
-                    {"Friction", "Coefficient of Friction", "$$\\mu = {F_f \\over F_n}$$", "\\mu", "F / N", "m", "{1}"},
-                    {"Friction", "Normal Force", "$$F_n = {F_f \\over \\mu}$$", "f / m", "F_n", "N", "{{N}}"},
-                    //
-                    {"Momentum", "Momentum","$$p = m \\cdot {v}$$", "m * v", "P", "p", "{{kg}{m} \\over s}}"},
+                    {"Momentum", "Momentum","$$p = {m \\cdot {v}}$$", "m * v", "p", "p", "{{N}{s}}"},
                     {"Momentum", "Mass", "$$m = {p \\over {v}}$$", "p / v", "m", "m", "{{kg}}"},
-                    {"Momentum", "Velocity", "$${v} = {p \\over m}$$", "p / m", "{v}", "v", "{{m \\over s}}"},
+                    {"Momentum", "Velocity", "$${v} = {p \\over m}$$", "p / m", "{v}", "v", "{{m} \\over {s}}"},
                     //
-                    {"Work", "Work", "$$W = \\vec{F} \\cdot \\vec{x}$$", "F * x", "W", "W", "{{J}}"},
-                    {"Work", "Force", "$$\\vec{F} = {W \\over \\vec{x}}$$", "W / x", "vec{F}", "F", "{{N}}"},
+                    {"Work", "Work", "$$W = {\\vec{F} \\cdot \\vec{x}}$$", "F * x", "W", "W", "{{J}}"},
+                    {"Work", "Force", "$$\\vec{F} = {W \\over \\vec{x}}$$", "W / x", "\\vec{F}", "F", "{{N}}"},
                     {"Work", "Distance", "$$\\vec{x} = {W \\over \\vec{F}}$$", "W / F", "\\vec{x}", "x", "{{m}}"},
                     //
-                    {"Kinetic Energy", "Kinetic Energy", "$$KE = {(m \\cdot {v}^2) \\over 2}$$", "(m * v^2) / 2", "KE", "KE", "{{J}}"},
-                    {"Kinetic Energy", "Mass", "$$m = {(2 \\cdot KE) \\over m}$$", "(2 * KE) / {v}^2", "m", "m", "{{kg}}"},
-                    {"Kinetic Energy", "Velocity", "$${v} = \\sqrt{((2 \\cdot KE) \\ over m)}$$", "sqrt((2 * KE) / m)", "v", "v", "{{m} \\over {s}}"},
+                    {"Kinetic Energy", "Kinetic Energy", "$$KE = {(m \\cdot ({v})^2) \\over 2}$$", "(m * (v) ^ 2) / 2", "KE", "KE", "{{J}}"},
+                    {"Kinetic Energy", "Mass", "$$m = {(2 \\cdot KE) \\over ({v})^2}$$", "(2 * KE) / (v)^2", "m", "m", "{{kg}}"},
+                    {"Kinetic Energy", "Velocity", "$${v} = {\\sqrt{{(2 \\cdot KE) \\over m}}}$$", "sqrt((2 * KE) / m)", "{v}", "v", "{{m} \\over {s}}"},
                     //
-                    {"Gravitational Potential Energy", "Potential Energy",  "$$PE_g = m \\cdot (g \\cdot h)$$", "PE_g", "m * (a * h)", "PE", "{{J}}"},
-                    {"Gravitational Potential Energy", "Mass", "$$m = {PE_g \\over (g \\cdot h)}$$", "PE / (a * h)", "m", "m", "{{kg}}"}, //add to lesson *missing from lesson
-                    {"Gravitational Potential Energy", "Height", "$$h = {PE_g \\over (m \\cdot g)}$$", "PE / (m * a)", "h", "h", "{{m}}"},
-                    {"Gravitational Potential Energy", "Acceleration due to Gravity", "$$g = {PE_g \\over (m \\cdot h)}$$", "PE / (m * h)", "g", "a", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
+                    {"Gravitational Potential Energy", "Potential Energy",  "$$PE_g = {m \\cdot ({g} \\cdot h)}$$", "m * (g * h)","PE_g", "PE", "{{J}}"},
+                    {"Gravitational Potential Energy", "Mass", "$$m = {PE_g \\over ({g} \\cdot h)}$$", "PE / (g * h)", "m", "m", "{{kg}}"}, //add to lesson *missing from lesson
+                    {"Gravitational Potential Energy", "Height", "$$h = {PE_g \\over (m \\cdot {g})}$$", "PE / (m * g)", "h", "h", "{{m}}"},
+                    {"Gravitational Potential Energy", "Acceleration due to Gravity", "$$g = {PE_g \\over (m \\cdot h)}$$", "PE / (m * h)", "{g}", "g", "{{m} \\over {s^2}}", "Acceleration due to " +
+                            "Gravity"},
                     //
-                    {"Spring Potential Energy", "Potential Energy", "$$PE_{sp} = {((1 \\over 2)} \\ cdot k) \\cdot \\Delta x^2$$", "PE_{sp}", "((1 / 2)* k) * x^2", "PE", "{{J}}"},
-                    {"Spring Potential Energy", "Spring Constant", "$$k = {(2 \\cdot PE) \\over \\Delta x^2}$$", "(2 * PE) / x^2", "k", "k", "{{N}}"},
-                    {"Spring Potential Energy", "Spring Displacement", "$$\\Delta x = \\sqrt{((2 \\cdot PE) \\over k)}$$", "\\Delta x", "sqrt((2 * PE) / k)", "x", "{{m}}"},
+                    {"Spring Potential Energy", "Potential Energy", "$$PE_{sp} = {({1 \\over 2} \\cdot k) \\cdot (\\Delta x)^2}$$","((1 / 2)* k) * (x) ^ 2", "PE_{sp}",  "PE", "{{J}}"},
+                    {"Spring Potential Energy", "Spring Constant", "$$k = {(2 \\cdot PE_{sp}) \\over (\\Delta x)^2}$$", "(2 * PE) / (x) ^ 2", "k", "k", "{{kg} \\over {s^2}}"},
+                    {"Spring Potential Energy", "Spring Displacement", "$$\\Delta x = {\\sqrt{{(2 \\cdot PE_{sp}) \\over k}}}$$",  "sqrt((2 * PE) / k)","\\Delta x", "x", "{{m}}"},
                     //
-                    {"Total Mechanical Energy", "Total Mechanical Energy", "$$TME = KE + PE$$", "TME", "KE + PE", "TME", "{{J}}"},
-                    {"Total Mechanical Energy", "Kinetic Energy", "$$KE = TME - PE$$", "TME - PE", "KE", "KE", "{{J}}"},
-                    {"Total Mechanical Energy", "Potential Energy", "$$PE = TME - KE$$", "TME - KE", "PE", "PE", "{{J}}"},
+                    {"Total Mechanical Energy", "Total Mechanical Energy", "$$TME = {KE + PE}$$",  "KE + PE","TME", "TME", "{{J}}"},
+                    {"Total Mechanical Energy", "Kinetic Energy", "$$KE = {TME - PE}$$", "TME - PE", "KE", "KE", "{{J}}"},
+                    {"Total Mechanical Energy", "Potential Energy", "$$PE = {TME - KE}$$", "TME - KE", "PE", "PE", "{{J}}"},
                     //
                     {"Average Power", "Average Power", "$$P_{av} = {\\Delta W \\over \\Delta t}$$", "W / t", "P_{av}", "P", "{{W}}"},
-                    {"Average Power", "Amount of Work done", "$$\\Delta W = P_{av} \\cdot \\Delta t$$", "P * t", "\\Delta W", "W", "{{J}}"},
+                    {"Average Power", "Amount of Work done", "$$\\Delta W = {P_{av} \\cdot \\Delta t}$$", "P * t", "\\Delta W", "W", "{{J}}"},
                     {"Average Power", "Time", "$$\\Delta t = {\\Delta W \\over P_{av}}$$", "W / P", "\\Delta t", "t", "{{s}}"},
                     //
-                    {"Instantaneous Power", "Instantaneous Power", "$$P = F \\cdot cos({a}) \\cdot {v}$$", "F * cos(a) * v", "P", "P", "{{W}}"},
+                    {"Instantaneous Power", "Instantaneous Power", "$$P = {F \\cdot cos({a}) \\cdot {v}}$$", "F * cos(a) * v", "P", "P", "{{W}}"},
                     {"Instantaneous Power", "Force",  "$$F = {P \\over (cos({a}) \\cdot {v})}$$", "P / (cos(a) * v)", "F", "F", "{{N}}"},
-                    {"Instantaneous Power", "Angle", "$${a} = cos^{-1}{(p \\over (F \\cdot {v}))}$$", "a = acos(P / (F * v))", "{a}", "a", "{{\\Theta }}"},
+                    {"Instantaneous Power", "Angle", "$${a} = {cos^{-1}{(p \\over (F \\cdot {v}))}}$$", "a = acos(P / (F * v))", "{a}", "a", "{{\\Theta }}"},
                     {"Instantaneous Power", "Velocity", "$${v} = {P \\over (F \\cdot (cos({a})))}$$", "P / (F * cos(a))", "{v}", "v", "{{m} \\over {s}}"},
                     //
                     {"Length of Arc", "Length of Arc", "$$\\Delta S = {r} \\cdot \\Delta \\Theta$$", "r * a", "\\Delta S", "s", "{{m}}"},

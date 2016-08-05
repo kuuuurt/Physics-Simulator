@@ -46,35 +46,33 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1">
+            android:padding="16dp"
+            style="?android:horizontalDivider"
+            android:text="Main Formula"/>
 
-            <io.github.kexanie.library.MathView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.45"
-                auto:engine="KaTeX"
-                android:id="@+id/text_main_formula"/>
+        <io.github.kexanie.library.MathView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:engine="KaTeX"
+            android:id="@+id/text_main_formula"/>
 
-            <io.github.kexanie.library.MathView
-                android:id="@+id/text_arrow"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                auto:engine="KaTeX"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            style="?android:horizontalDivider"
+            android:text="Transposed Formula"/>
 
 
-            <io.github.kexanie.library.MathView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.45"
-                auto:engine="KaTeX"
-                android:id="@+id/text_formula"/>
+        <io.github.kexanie.library.MathView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:engine="KaTeX"
+            android:id="@+id/text_formula"/>
 
-        </LinearLayout>
 
         <TextView
             android:layout_width="700px"
