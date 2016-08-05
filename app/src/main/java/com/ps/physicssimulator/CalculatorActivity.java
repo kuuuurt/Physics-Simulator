@@ -235,7 +235,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                                             .replace("{", "")
                                                                             .replace("}", "")
                                                                     + ")");
-                                                            txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                                                            txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
                                                             txtInput.setEms(10);
                                                             txtInput.addTextChangedListener(createTextWatcher(symbolC));
                                                             if(fromConstants)
