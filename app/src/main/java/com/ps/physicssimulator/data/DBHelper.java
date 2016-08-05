@@ -157,12 +157,14 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Projectile Motion", "Two-dimensional Motion", "Definition, " +
                             "Projectile Motion",
                             "ic_lesson_projectile_motion", "1", "1"},
+                    {"Newton's Laws of Motion", "Isaac Newton's Laws of Motion", "Newton's Laws of Motion",
+                            "ic_lesson_friction", "0", "0"},
                     {"Friction", "Isaac Newton's Laws of Motion", "Definition, Two types of " +
                             "Friction",
                             "ic_lesson_friction", "1", "1"},
                     {"Free-body Diagrams", "Isaac Newton's Laws of Motion", "Definition, Free " +
                             "Body Diagrams",
-                            "ic_lesson_free_body_diagrams", "1", "1"},
+                            "ic_lesson_free_body_diagrams", "0", "0"},
                     {"Momentum and Impulse", "Momentum and Impulse", "Definition, Momentum, " +
                             "Impulse",
                             "ic_lesson_momentum_impulse", "1", "1"},
@@ -294,6 +296,17 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Acceleration", "Instantaneous Acceleration",
                             "<h2><b>Instantaneous Acceleration</b></h2><br/>" +
                                     "Instantaneous acceleration is the change of velocity at infinitesimal (very small) time interval.<br/></p>"},
+                    {"Newton's Laws of Motion", "Newton's Laws of Motion",
+                            "<p><h2><b>Newton's Laws of Motion</b></h2><br/>" +
+                                    "There are three laws of motion. These laws are the physical laws that laid the foundation for classical" +
+                                    "mechanics. It describes the relationship between an object and the forces that acts upon it, and its" +
+                                    "motion in response to those forces.<br><br>" +
+                                    "Newton’s Laws of Motion have been expressed in several various ways, and can be summarized as the" +
+                                    "following:<br><br>" +
+                                    "\t•\t<b>First Law</b>: An object in motion tends to stay in motion and an object at rest tends to stay at rest" +
+                                    "unless acted upon by an external force.<br><br>" +
+                                    "\t•\t<b>Second Law</b>: Force is equal to mass times acceleration.<br><br>" +
+                                    "\t•\t<b>Third Law</b>: For every action there is an equal and opposite reaction."},
                     {"Free-fall", "Free-fall Definition",
                             "<p><h2><b>Definition</b></h2><br/>" +
                                     "Free fall:<br/>" +
@@ -480,12 +493,19 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\\(v\\) = velocity of the object<br/>"},
                     {"Energy", "Potential Energy",
                             "<h2><b>Potential Energy</b></h2><br/>" +
-                                    "Potential energy is an energy that is possessed by means of its position relative to others.<br/>" +
+                                    "Potential energy is an energy that is possessed by means of its position relative to others.<br/><br/>" +
+                                    "Gravitational Potential Energy is the energy that is stored in an object as the result of the object’s" +
+                                    "vertical position. The gravitational potential energy is stored as the result of the gravitational attraction" +
+                                    "of the Earth to for the object. The gravitational potential energy of an object is dependent on two" +
+                                    "variables - the mass of the object and the height to which it is raised.<br><br/>" +
                                     "Gravitational potential energy can be calculated using this formula:<br/>" +
                                     "$$PE_g = m \\cdot g \\cdot h$$" +
                                     "Where:<br/>" +
                                     "\\(h\\) = height of the object above the ground<br/>" +
-                                    "\\(g\\) = acceleration due to gravity<br/>" +
+                                    "\\(g\\) = acceleration due to gravity<br/><br/>" +
+                                    "Spring / Elastic Potential Energy is the energy that is stored in an elastic material, such as a spring, as result of" +
+                                    "their stretching or compressing. The amount of elastic potential energy stored is in an elastic material is" +
+                                    "related to the amount of stretch of that material – the greater the stretch, the greater the energy.<br><br/>" +
                                     "Spring potential energy can be calculated using this formula:<br/>" +
                                     "$$PE_{sp} = {1 \\over 2}k \\cdot \\Delta x^2$$" +
                                     "Where:<br/>" +
