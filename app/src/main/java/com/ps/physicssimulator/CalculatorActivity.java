@@ -27,6 +27,7 @@ import com.ps.physicssimulator.data.DataContract;
 import com.ps.physicssimulator.utils.ExpressionBuilderModified;
 import com.ps.physicssimulator.utils.ExpressionModified;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -499,6 +500,7 @@ public class CalculatorActivity extends AppCompatActivity {
         String formula = currentFormula;
         formula = formula.replace("*", "\\cdot");
         formula = formula.replace("/", "\\over");
+        formula = formula.replace("\\pi", String.valueOf(new DecimalFormat("#.####").format(Math.PI)));
         //formula = formula.replace("(", "{").replace(")", "}");
 //        if (formula.contains("^")) {
 //            int i = formula.indexOf("^");
