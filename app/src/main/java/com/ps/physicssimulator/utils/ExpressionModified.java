@@ -500,11 +500,12 @@ public class ExpressionModified {
                         right += "{" + s + "}";
 
                 if(right.equals("")){
-                    return "{" + left + "}";
+                    right = "1";
                 }
                 if(left.equals("")){
-                    return "{1 \\over " + right + "}";
+                    left = "1";
                 }
+
 
                 return "{" + left + " \\over " + right + "}";
             case "*":

@@ -700,38 +700,37 @@ public class DBHelper extends SQLiteOpenHelper {
         if(database.isOpen()) {
             String[][] formulas = {
                     {"Displacement", "Scalar and Vector Values", "$$d = {x_f - x_i}$$"},
-                    {"Speed", "Velocity", "$$s = {d \\over t}$$", ""},
-                    {"Velocity", "Velocity", "$$v = {x_f - x_i \\over t}$$", ""},
-                    {"Average Velocity", "Velocity", "$$v_{av} = {x_f - x_i \\over t_f - t_i}$$", ""},
-                    {"Acceleration", "Acceleration", "$$a = {v_f - v_i \\over t}$$", ""},
-                    {"Average Acceleration","Acceleration", "$$a_{av} = {v_f - v_i \\over t_f - t_i}$$", ""},
-                    {"Free-fall Velocity","Free-fall", "$$v_y = u + g \\cdot t$$", ""},
-                    {"Free-fall Displacement", "Free-fall", "$$y = {1 \\over 2}g  \\cdot t^2$$", ""},
-                    {"Horizontal Distance", "Projectile Motion", "$$x = v_{x}t$$", ""},
-                    {"Horizontal Velocity", "Projectile Motion", "$$v_x = v_{xi}$$", ""},
-                    {"Vertical Distance",  "Projectile Motion", "$$y = v_{yi}t - {1 \\over 2}g \\cdot t^2$$", ""},
-                    {"Vertical Velocity",  "Projectile Motion", "$$v_y = v_{yi} - g \\cdot t$$", ""},
-                    {"Time of Flight", "Projectile Motion", "$$t = {2v_{yi}sin \\Theta \\over g}$$", ""},
-                    {"Maximum Height Reached", "Projectile Motion", "$$H = {v_{1}^{2}sin^{2} \\Theta \\over 2g}$$", ""},
-                    {"Horizontal Range", "Projectile Motion", "$$R = {v_{1}^{2}sin2 \\Theta \\over g}$$", ""},
-                    {"Friction", "Friction", "$$F_f = \\mu \\cdot F_n$$", ""},
-                    {"Momentum", "Momentum and Impulse", "$$p = m \\cdot v$$", ""},
-                    {"Work", "Work", "$$W = \\vec{F} \\cdot \\vec{x}$$", ""},
-                    {"Kinetic Energy", "Energy", "$$KE = {mv^2 \\over 2}$$", ""},
-                    {"Gravitational Potential Energy", "Energy", "$$PE_g = m \\cdot g \\cdot h$$", ""},
-                    {"Spring Potential Energy", "Energy", "$$PE_{sp} = {1 \\over 2}k \\cdot \\Delta x^2$$", ""},
-                    {"Total Mechanical Energy", "Energy", "$$TME = KE + PE$$", ""},
-                    {"Average Power", "Power", "$$P_{av} = {\\Delta W \\over \\Delta t}$$", ""},
-                    {"Instantaneous Power","Power", "$$P = F \\cdot cos(a) \\cdot v$$", ""},
-                    {"Length of Arc",  "Uniform Circular Motion", "$$\\Delta S = r \\cdot \\Delta \\Theta$$", ""},
-                    {"Tangential Velocity", "Uniform Circular Motion", "$$v = {\\Delta S \\over \\Delta t}$$", ""},
-                    {"Velocity around a Circle", "Uniform Circular Motion", "$$v = 2 \\cdot \\pi \\cdot {r \\over t}$$", ""},
-                    {"Angular Velocity", "Uniform Circular Motion", "$$\\omega = {\\Delta \\Theta \\over \\Delta t}$$", ""},
-                    {"Centripetal Acceleration", "Uniform Circular Motion", "$$a_c = r \\cdot \\omega ^2$$", ""},
-                    {"Centripetal Force","Centripetal and Centrifugal Forces", "$$F = {m \\cdot v^2 \\over r} $$", ""},
-                    {"Moment of Inertia", "Rotational Motion", "$$I = m \\cdot r^2$$", ""},
-                    {"Torque","Rotational Motion", "$$\\tau = r \\cdot F$$", ""},
-                    {"Angular Momentum", "Rotational Motion", "$$L = I \\cdot \\omega$$", ""}
+                    {"Speed", "Velocity", "$$s = {d \\over t}$$"},
+                    {"Velocity", "Velocity", "$$v = {x_f - x_i \\over t}$$"},
+                    {"Average Velocity", "Velocity", "$$v_{av} = {x_f - x_i \\over t_f - t_i}$$"},
+                    {"Acceleration", "Acceleration", "$$a = {v_f - v_i \\over t}$$"},
+                    {"Average Acceleration","Acceleration", "$$a_{av} = {v_f - v_i \\over t_f - t_i}$$"},
+                    {"Free-fall Velocity","Free-fall", "$$v_y = u + g \\cdot t$$"},
+                    {"Free-fall Displacement", "Free-fall", "$$y = {1 \\over 2}g  \\cdot t^2$$"},
+                    {"Horizontal Components", "Projectile Motion", "$$x = v_{x}t$$"},
+                    {"Vertical Components",  "Projectile Motion", "$$y = v_{yi}t - {1 \\over 2}g \\cdot t^2$$"},
+                    {"Vertical Velocity at a Certain Time",  "Projectile Motion", "$$v_y = v_{yi} - g \\cdot t$$"},
+                    {"Time of Flight", "Projectile Motion", "$$t = {2v_{yi}sin \\Theta \\over g}$$"},
+                    {"Maximum Height Reached", "Projectile Motion", "$$H = {v_{1}^{2}sin^{2} \\Theta \\over 2g}$$"},
+                    {"Horizontal Range", "Projectile Motion", "$$R = {v_{1}^{2}sin2 \\Theta \\over g}$$"},
+                    {"Friction", "Friction", "$$F_f = \\mu \\cdot F_n$$"},
+                    {"Momentum", "Momentum and Impulse", "$$p = m \\cdot v$$"},
+                    {"Work", "Work", "$$W = \\vec{F} \\cdot \\vec{x}$$"},
+                    {"Kinetic Energy", "Energy", "$$KE = {mv^2 \\over 2}$$"},
+                    {"Gravitational Potential Energy", "Energy", "$$PE_g = m \\cdot g \\cdot h$$"},
+                    {"Spring Potential Energy", "Energy", "$$PE_{sp} = {1 \\over 2}k \\cdot \\Delta x^2$$"},
+                    {"Total Mechanical Energy", "Energy", "$$TME = KE + PE$$"},
+                    {"Average Power", "Power", "$$P_{av} = {\\Delta W \\over \\Delta t}$$"},
+                    {"Instantaneous Power","Power", "$$P = F \\cdot cos(a) \\cdot v$$"},
+                    {"Length of Arc",  "Uniform Circular Motion", "$$\\Delta S = r \\cdot \\Delta \\Theta$$"},
+                    {"Tangential Velocity", "Uniform Circular Motion", "$$v = {\\Delta S \\over \\Delta t}$$"},
+                    {"Velocity around a Circle", "Uniform Circular Motion", "$$v = 2 \\cdot \\pi \\cdot {r \\over t}$$"},
+                    {"Angular Velocity", "Uniform Circular Motion", "$$\\omega = {\\Delta \\Theta \\over \\Delta t}$$"},
+                    {"Centripetal Acceleration", "Uniform Circular Motion", "$$a_c = r \\cdot \\omega ^2$$"},
+                    {"Centripetal Force","Centripetal and Centrifugal Forces", "$$F = {m \\cdot v^2 \\over r} $$"},
+                    {"Moment of Inertia", "Rotational Motion", "$$I = m \\cdot r^2$$"},
+                    {"Torque","Rotational Motion", "$$\\tau = r \\cdot F$$"},
+                    {"Angular Momentum", "Rotational Motion", "$$L = I \\cdot \\omega$$"}
             };
 
             for(String[] s: formulas){
@@ -784,8 +783,8 @@ public class DBHelper extends SQLiteOpenHelper {
             String[][] formula_constants = {
                     {"Acceleration due to Gravity", "Free-fall Velocity"},
                     {"Acceleration due to Gravity", "Free-fall Displacement"},
-                    {"Acceleration due to Gravity", "Vertical Distance"},
-                    {"Acceleration due to Gravity", "Vertical Velocity"},
+                    {"Acceleration due to Gravity", "Vertical Components"},
+                    {"Acceleration due to Gravity", "Vertical Velocity at a Certain Time"},
                     {"Acceleration due to Gravity", "Time of Flight"},
                     {"Acceleration due to Gravity", "Maximum Height Reached"},
                     {"Acceleration due to Gravity", "Horizontal Range"},
@@ -872,30 +871,26 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Free-fall Displacement", "Time", "$$t = {\\sqrt{{2 \\cdot {y \\over g}}}}$$", "sqrt(2 * (y / g))","{t}", "t", "{{s}}"}, //{\\sqrt{{(2 \\cdot {y \\over g)}}}
 
                     //asdf - shai
-                    {"Horizontal Distance", "Horizontal Distance","$${x} = {v_x \\cdot {t}}$$", "v * t", "{x}", "x", "{{m}}"},
-                    {"Horizontal Distance", "Velocity along the x-axis","$$v_x = {{x} \\over {t}}$$", "x / t","v_x", "v", "{{m} \\over {s}}"},
-                    {"Horizontal Distance", "Time","$$t = {{x} \\over v_x}$$", "x / v","{t}", "t", "{{s}}"},
+                    {"Horizontal Components", "Horizontal Distance","$${x} = {v_x \\cdot {t}}$$", "v * t", "{x}", "x", "{{m}}"},
+                    {"Horizontal Components", "Velocity along the x-axis","$$v_x = {{x} \\over {t}}$$", "x / t","v_x", "v", "{{m} \\over {s}}"},
+                    {"Horizontal Components", "Time","$$t = {{x} \\over v_x}$$", "x / v","{t}", "t", "{{s}}"},
 
                     //
-                    {"Horizontal Velocity", "Velocity along the x-axis", "$$v_x = {v_{xi}}$$", "vi","v_x", "v", "{{m} \\over {s}}"},
-                    {"Horizontal Velocity", "Initial Velocity along the x-axis", "$$v_{xi} = {v_x}$$", "v", "v_{xi}", "vi", "{{m} \\over {s}}"},
-                    //{Formula, Variable, formula display, formula compute, symbol display, symbol compute, unit, constant name}
-                    //
-                    {"Vertical Distance", "Vertical Distance", "$${y} = {(v_{yi} \\cdot {t}) + ({1 \\over 2} \\cdot g \\cdot ({t})^2)}$$", "(vi * t) + ((1 / 2) * g * (t)^2)","{y}", "y", "{{m}}"},
+                    {"Vertical Components", "Vertical Distance", "$${y} = {(v_{yi} \\cdot {t}) + ({1 \\over 2} \\cdot g \\cdot ({t})^2)}$$", "(vi * t) + ((1 / 2) * g * (t)^2)","{y}", "y", "{{m}}"},
                     //zxcv
-                    {"Vertical Distance", "Initial Velocity along the y-axis", "$$v_{yi} = {({y} - {1 \\over 2} \\cdot g \\cdot ({t})^2) \\over {t}}$$","(y - (1 / 2) * g * (t)^2) / t", "v_{yi}",
+                    {"Vertical Components", "Initial Velocity along the y-axis", "$$v_{yi} = {({y} - {1 \\over 2} \\cdot g \\cdot ({t})^2) \\over {t}}$$","(y - (1 / 2) * g * (t)^2) / t", "v_{yi}",
                             "vi", "{{m} " +
                             "\\over" +
                             " {s}}"},//zxcv
-                    {"Vertical Distance", "Time","$${t} = {\\sqrt{{(2 \\cdot {y}) \\over g}}}$$","sqrt((2 * y) / g)", "{t}", "t", "{{s}}"},//zxcv
-                    {"Vertical Distance", "Acceleration due to Gravity","$$g = {2 \\cdot ({y} - (v_{yi} \\cdot {t})) \\over ({t})^2}$$", "(2 * (y - (vi * t))) / (t)^2","g", "g", "{{m} \\over {s^2}}",
+                    {"Vertical Components", "Time","$${t} = {\\sqrt{{(2 \\cdot {y}) \\over g}}}$$","sqrt((2 * y) / g)", "{t}", "t", "{{s}}"},//zxcv
+                    {"Vertical Components", "Acceleration due to Gravity","$$g = {2 \\cdot ({y} - (v_{yi} \\cdot {t})) \\over ({t})^2}$$", "(2 * (y - (vi * t))) / (t)^2","g", "g", "{{m} \\over {s^2}}",
                             "Acceleration due to Gravity"},
                     //zxcv
                     //
-                    {"Vertical Velocity", "Vertical Velocity","$$v_y = {v_{yi} - (g \\cdot {t})}$$", "vi - (g * t)", "v_y", "v", "{{m} \\over {s}}"},
-                    {"Vertical Velocity", "Initial Velocity along the y-axis", "$$v_{yi} = {v_y + (g \\cdot {t})}$$", "v + (g * t)","v_{yi}", "vi", "{{m} \\over {s}}"},
-                    {"Vertical Velocity", "Time","$$t = {(v_{yi} - v_y) \\over g}$$", "(vi - v) / g", "{t}", "t", "{{s}}"},
-                    {"Vertical Velocity", "Acceleration due to Gravity","$$g = {(v_{yi} - v_y) \\over {t}}$$", "(vi - v) / t", "g", "g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
+                    {"Vertical Velocity at a Certain Time", "Vertical Velocity","$$v_y = {v_{yi} - (g \\cdot {t})}$$", "vi - (g * t)", "v_y", "v", "{{m} \\over {s}}"},
+                    {"Vertical Velocity at a Certain Time", "Initial Velocity along the y-axis", "$$v_{yi} = {v_y + (g \\cdot {t})}$$", "v + (g * t)","v_{yi}", "vi", "{{m} \\over {s}}"},
+                    {"Vertical Velocity at a Certain Time", "Time","$$t = {(v_{yi} - v_y) \\over g}$$", "(vi - v) / g", "{t}", "t", "{{s}}"},
+                    {"Vertical Velocity at a Certain Time", "Acceleration due to Gravity","$$g = {(v_{yi} - v_y) \\over {t}}$$", "(vi - v) / t", "g", "g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
                     //
                     {"Time of Flight", "Time of Flight","$$t = {((2 \\cdot v_{yi}) \\cdot sin(\\Theta)) \\over g}$$", "((2 * v) * sin(a)) / g", "{t}", "t", "{{s}}"},
                     {"Time of Flight", "Initial Velocity","$$v_{yi} = {({t} \\cdot g) \\over (2 \\cdot sin(\\Theta))}$$", "(t * g) / (2 * sin(a))", "v_{yi}", "v", "{{m} \\over {s}}"},
