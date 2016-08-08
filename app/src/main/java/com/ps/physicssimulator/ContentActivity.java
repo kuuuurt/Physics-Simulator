@@ -182,6 +182,16 @@ public class ContentActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT
             ));
             btnSimulate.setText("Simulate");
+            btnSimulate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ContentActivity.this, UnityPlayerActivity.class);
+                    intent.putExtra("Lesson", mLesson);
+                    intent.putExtra("Chapter", mChapter);
+
+                    startActivity(intent);
+                }
+            });
             mContentContainer.addView(btnSimulate);
         }
     }
