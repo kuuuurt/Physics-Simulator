@@ -499,11 +499,14 @@ public class ExpressionModified {
                     if(!s.equals(""))
                         right += "{" + s + "}";
 
-                if(right.equals("")){
-                    right = "1";
+                if(right.equals("") && left.equals("")){
+                    return "{1 \\over 1}";
                 }
                 if(left.equals("")){
-                    left = "1";
+                    return "{1 \\over " + right + "}";
+                }
+                if(right.equals("")){
+                    return "{" + left + "}";
                 }
 
 

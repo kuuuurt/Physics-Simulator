@@ -355,9 +355,9 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\\(t\\) = time duration<br/>" +
                                     "Formulas related to trajectory motion is given by the following:<br/>" +
                                     "Time of flight (\\(s\\)):<br/>" +
-                                    "$$t = {2v_{1}sin \\Theta \\over g}$$" +
+                                    "$$t = {2v_{1}sin \\theta \\over g}$$" +
                                     "Maximum height reached (\\(m\\)):<br/>" +
-                                    "$$H = {v_{1}^{2}sin^{2} \\Theta \\over 2g}$$" +
+                                    "$$H = {v_{1}^{2}sin^{2} \\theta \\over 2g}$$" +
                                     "Horizontal range (\\(m\\)):<br/>" +
                                     "$$R = {v_{1}^{2}sin2 \\Theta \\over g}$$" +
                                     "Where:<br/>" +
@@ -954,12 +954,12 @@ public class DBHelper extends SQLiteOpenHelper {
                     //
                     {"Instantaneous Power", "Instantaneous Power", "$$P = {F \\cdot cos({a}) \\cdot {v}}$$", "F * cos(a) * v", "P", "P", "{{W}}"},
                     {"Instantaneous Power", "Force",  "$$F = {P \\over (cos({a}) \\cdot {v})}$$", "P / (cos(a) * v)", "F", "F", "{{N}}"},
-                    {"Instantaneous Power", "Angle", "$${a} = {cos^{-1}{{P \\over (F \\cdot {v})}}$$", "acos(P / (F * v))", "{a}", "a", "^{{\\circ}}"},
+                    {"Instantaneous Power", "Angle", "$${a} = {cos^{-1}({P \\over (F \\cdot {v})})}$$", "acos(P / (F * v))", "{a}", "a", "^{{\\circ}}"},
                     {"Instantaneous Power", "Velocity", "$${v} = {P \\over (F \\cdot (cos({a})))}$$", "P / (F * cos(a))", "{v}", "v", "{{m} \\over {s}}"},
                     //
                     {"Length of Arc", "Length of Arc", "$$\\Delta S = {{r} \\cdot \\Delta \\Theta}$$", "r * a", "\\Delta S", "s", "{{{m}}}"},
                     {"Length of Arc", "Radius", "$${r} = {\\Delta S \\over \\Delta \\Theta}$$", "s / a", "{r}", "r", "{{m}}"},
-                    {"Length of Arc", "Angle",  "$$\\Delta \\Theta = {\\Delta S \\over {r}}$$", "s / r", "\\Delta \\Theta", "a", "{{{rad}}}"},//
+                    {"Length of Arc", "Angle",  "$$\\Delta \\theta = {\\Delta S \\over {r}}$$", "s / r", "\\Delta \\Theta", "a", "{{{rad}}}"},//
                     //
                     {"Tangential Velocity", "Tangential Velocity", "$${v} = {\\Delta S \\over \\Delta t}$$", "s / t", "{v}", "v", "{{m} \\over {s}}"},
                     {"Tangential Velocity", "Length of Arc","$$\\Delta S = {{v} \\cdot \\Delta t}$$", "v * t", "\\Delta S", "s", "{{m}}"},

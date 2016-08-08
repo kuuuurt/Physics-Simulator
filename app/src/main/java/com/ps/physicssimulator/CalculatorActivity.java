@@ -467,6 +467,8 @@ public class CalculatorActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
+                    if(charSequence.toString().charAt(0) == '.')
+                        charSequence = "0" + charSequence;
                     values[findVariableIndex(variable)][2] = charSequence.toString();
                     if(checkValues())
                         btnCalc.setEnabled(true);
