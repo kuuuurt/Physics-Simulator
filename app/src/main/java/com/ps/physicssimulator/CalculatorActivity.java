@@ -532,4 +532,5 @@ public class CalculatorActivity extends AppCompatActivity {
         LinearLayout stepsContainer = (LinearLayout) findViewById(R.id.steps_container);
         stepsContainer.removeAllViews();
     }
+
 }

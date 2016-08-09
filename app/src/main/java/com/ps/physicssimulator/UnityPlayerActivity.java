@@ -23,6 +23,7 @@ public class UnityPlayerActivity extends Activity
 		intent.putExtra("Lesson", mLesson);
 		intent.putExtra("Chapter", mChapter);
 		startActivity(intent);
+		finish();
 
 	}
 
@@ -45,7 +46,7 @@ public class UnityPlayerActivity extends Activity
 
 		mUnityPlayer = new UnityPlayer(this);
 
-		mUnityPlayer.UnitySendMessage("GameObject", "LoadScene", mLesson);
+		mUnityPlayer.UnitySendMessage("Application", "LoadScene", mLesson);
 		setContentView(mUnityPlayer);
 		mUnityPlayer.requestFocus();
 	}

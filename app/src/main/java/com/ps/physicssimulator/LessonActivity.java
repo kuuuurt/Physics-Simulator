@@ -23,8 +23,6 @@ public class LessonActivity extends AppCompatActivity implements
     private LessonAdapter mLessonAdap;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
