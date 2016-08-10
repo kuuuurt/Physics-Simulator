@@ -8,6 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -16,33 +19,103 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <Spinner
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner_chapters"/>
+                android:orientation="vertical"
+                android:weightSum="1">
 
-            <Spinner
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.05"
+                    android:text="Chapter"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textSize="12dp"/>
+
+                <Spinner
+                    android:layout_weight="0.95"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:id="@+id/spinner_chapters"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner_lessons"/>
+                android:orientation="vertical"
+                android:weightSum="1">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.05"
+                    android:text="Lesson"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textSize="12dp"/>
+
+                <Spinner
+                    android:layout_weight="0.95"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:id="@+id/spinner_lessons"/>
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <Spinner
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner_formula" />
+                android:orientation="vertical"
+                android:weightSum="1">
 
-            <Spinner
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.05"
+                    android:text="Formula"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textSize="12dp"/>
+
+                <Spinner
+                    android:layout_weight="0.95"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:id="@+id/spinner_formula" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner_variable" />
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.05"
+                    android:text="Variable"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textSize="12dp"/>
+
+                <Spinner
+                    android:layout_weight="0.95"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:id="@+id/spinner_variable" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
