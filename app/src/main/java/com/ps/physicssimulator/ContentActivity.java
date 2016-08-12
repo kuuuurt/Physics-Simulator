@@ -16,7 +16,6 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,14 +26,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.ps.physicssimulator.data.DataContract;
 
 import java.lang.reflect.Method;
 
 import io.github.kexanie.library.MathView;
 
-public class ContentActivity extends AppCompatActivity {
+public class ContentActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener{
 
     boolean isAudioPlaying;
     String mLesson;
@@ -42,6 +45,10 @@ public class ContentActivity extends AppCompatActivity {
     LinearLayout mContentContainer;
     int hasCalc;
 
+    private final String youTubeAPIKey = "AIzaSyC5kxF8pAU4jQqc2XUoa-58CH08C8BOvCY";
+    private static final int RQS_ErrorDialog = 1;
+    private YouTubePlayer mPlayer;
+    private String video;
 
     @Override
     public Intent getSupportParentActivityIntent() {
@@ -86,9 +93,7 @@ public class ContentActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean autoplay = prefs.getBoolean(getString(R.string.pref_autoplay_key), Boolean.parseBoolean(getString(R.string.pref_autoplay_default)));
 
-        if(autoplay){
-            //play audio
-        }
+
 
         Intent intent = getIntent();
         mLesson = intent.getStringExtra("Lesson");
@@ -126,7 +131,7 @@ public class ContentActivity extends AppCompatActivity {
                     .split("\\|");
 
             for (String content : contentText) {
-                SpannableString text = new SpannableString(content);
+                //SpannableString text = new SpannableString(content);
 
                 final MathView txtContent = new MathView(this, null);
                 txtContent.setLayoutParams(new LinearLayout.LayoutParams(
@@ -134,7 +139,8 @@ public class ContentActivity extends AppCompatActivity {
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 ));
                 txtContent.setEngine(MathView.Engine.KATEX);
-                txtContent.setText(text.toString());
+                txtContent.setText(content);
+                //txtContent.setText(text.toString());
                 txtContent.setTag("content" + k++);
                 sectionContainer.addView(txtContent);
                 if (imageExists) {
@@ -174,6 +180,7 @@ public class ContentActivity extends AppCompatActivity {
 
 
         lesson.moveToFirst();
+        video = lesson.getString(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_VIDEO_ID));
         hasCalc = lesson.getInt(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_HAS_CALCULATOR));
         if (lesson.getInt(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_HAS_SIMULATION)) == 1) {
             Button btnSimulate = new Button(this);
@@ -194,6 +201,16 @@ public class ContentActivity extends AppCompatActivity {
             });
             mContentContainer.addView(btnSimulate);
         }
+
+        if(autoplay){
+            //play audio
+        }
+
+
+
+        YouTubePlayerFragment youtubePlayer = (YouTubePlayerFragment)getFragmentManager()
+                .findFragmentById(R.id.youtube_fragment);
+        youtubePlayer.initialize(youTubeAPIKey, this);
     }
 
     public LinearLayout addImage(String imageName, String caption) {
@@ -305,4 +322,23 @@ public class ContentActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+        //mPlayer = youTubePlayer;
+        if (!b) {
+            youTubePlayer.cueVideo(video);
+        }
+
+    }
+
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult result) {
+        if (result.isUserRecoverableError()) {
+            result.getErrorDialog(this, RQS_ErrorDialog).show();
+        } else {
+            Toast.makeText(this,
+                    "YouTubePlayer.onInitializationFailure(): " + result.toString(),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
 }

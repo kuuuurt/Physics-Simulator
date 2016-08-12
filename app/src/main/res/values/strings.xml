@@ -25,5 +25,8 @@
     <string name="pref_autoplay_key">pref_autoplay</string>
     <string name="pref_autoplay_default">false</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

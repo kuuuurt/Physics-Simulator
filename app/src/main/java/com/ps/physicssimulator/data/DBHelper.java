@@ -33,6 +33,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.LessonEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
                 DataContract.LessonEntry.COLUMN_HAS_CALCULATOR + " INTEGER NOT NULL," +
                 DataContract.LessonEntry.COLUMN_HAS_SIMULATION + " INTEGER NOT NULL," +
+                DataContract.LessonEntry.COLUMN_VIDEO_ID + " TEXT NOT NULL," +
+                DataContract.LessonEntry.COLUMN_AUDIO + " TEXT," +
                 DataContract.LessonEntry.COLUMN_LOGO + " TEXT NOT NULL" +");";
 
         final String SQL_CREATE_SECTION_TABLE = "CREATE TABLE " +
@@ -144,52 +146,52 @@ public class DBHelper extends SQLiteOpenHelper {
             String[][] lessons = {
                     {"Scalar and Vector Values", "One-dimensional Motion",
                             "Definition, Distance and Displacement",
-                            "ic_lesson_scalar_and_vector_quantities", "1", "0"},
+                            "ic_lesson_scalar_and_vector_quantities", "1", "0", "ihNZlp7iUHE", "asdf"},
                     {"Velocity", "One-dimensional Motion",
                             "Definition, Speed and Velocity, Average Velocity, Instantaneous " +
                                     "Velocity",
-                            "ic_lesson_velocity", "1", "1"},
+                            "ic_lesson_velocity", "1", "1", "oRKxmXwLvUU", "asdf"},
                     {"Acceleration", "One-dimensional Motion", "Definition, Acceleration, Average " +
                             "Acceleration, Instantaneous Acceleration",
-                            "ic_lesson_acceleration", "1", "1"},
+                            "ic_lesson_acceleration", "1", "1", "FOkQszg1-j8", "asdf"},
                     {"Free-fall", "One-dimensional Motion", "Definition, Free fall",
-                            "ic_lesson_free_fall", "1", "1"},
+                            "ic_lesson_free_fall", "1", "1", "6wEEa8-RSqU", "asdf"},
                     {"Projectile Motion", "Two-dimensional Motion", "Definition, " +
                             "Projectile Motion",
-                            "ic_lesson_projectile_motion", "1", "1"},
+                            "ic_lesson_projectile_motion", "1", "1","rMVBc8cE5GU", "asdf"},
                     {"Newton's Laws of Motion", "Isaac Newton's Laws of Motion", "Newton's Laws of Motion",
-                            "ic_lesson_friction", "0", "0"},
+                            "ic_lesson_friction", "0", "0", "fmXFWi", "asdf"}, //asdf
                     {"Friction", "Isaac Newton's Laws of Motion", "Definition, Two types of " +
                             "Friction",
-                            "ic_lesson_friction", "1", "1"},
+                            "ic_lesson_friction", "1", "1", "fo_pmp5rtzo", "asdf"},
                     {"Free-body Diagrams", "Isaac Newton's Laws of Motion", "Definition, Free " +
                             "Body Diagrams",
-                            "ic_lesson_free_body_diagrams", "0", "0"},
+                            "ic_lesson_free_body_diagrams", "0", "0", "nDis6HbXxjg", "asdf"},
                     {"Momentum and Impulse", "Momentum and Impulse", "Definition, Momentum, " +
                             "Impulse",
-                            "ic_lesson_momentum_impulse", "1", "1"},
+                            "ic_lesson_momentum_impulse", "1", "1", "XFhntPxow0U","asdf"},
                     {"Law of Conservation of Energy", "Momentum and Impulse", "Definition, " +
                             "Conservation of Energy",
-                            "ic_lesson_laws_of_conservation_of_energy", "0", "0"},
+                            "ic_lesson_laws_of_conservation_of_energy", "0", "0", "PplaBASQ_3M", "asdf"},
                     {"Work", "Work, Energy, and Power", "Definition, Work",
-                            "ic_lesson_work", "1", "1"},
+                            "ic_lesson_work", "1", "1", "fmXFWi", "asdf"}, //asdf
                     {"Energy", "Work, Energy, and Power", "Definition, Kinetic Energy, " +
                             "Potential Energy, Total Mechanical Energy",
-                            "ic_lesson_energy", "1", "1"},
+                            "ic_lesson_energy", "1", "1", "fmXFWi", "asdf"}, //asdf
                     {"Power", "Work, Energy, and Power", "Definition, Average Power, " +
                             "Instantaneous Power",
-                            "ic_lesson_power", "1", "1"},
+                            "ic_lesson_power", "1", "1", "fmXFWi", "asdf"}, //asdf
                     {"Uniform Circular Motion", "Uniform Circular Motion", "Definition, " +
                             "Measurements of a Circle, Frequency, Angular Displacement, " +
                             "Length of Arc, Tangential Velocity, Angular Velocity, " +
                             "Centripetal Acceleration",
-                            "ic_lesson_uniform_circular_motion", "1", "1"},
+                            "ic_lesson_uniform_circular_motion", "1", "1", "bpFK2VCRHUs", "asdf"},
                     {"Centripetal and Centrifugal Forces", "Uniform Circular Motion",
                             "Definition, Centripetal and Centrifugal Forces",
-                            "ic_lesson_centripetal_and_centrifugal_force", "1", "0"},
+                            "ic_lesson_centripetal_and_centrifugal_force", "1", "0", "9s1IRJbL2Co", "asdf"},
                     {"Rotational Motion", "Uniform Circular Motion", "Definition, Moment of " +
                             "Inertia, Torque, Angular Momentum",
-                            "ic_lesson_rotational_motion", "1", "0"}
+                            "ic_lesson_rotational_motion", "1", "0", "fmXFWi", "asdf"}
             };
 
             for(String[] s : lessons){
@@ -212,10 +214,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put(DataContract.LessonEntry.COLUMN_LOGO, s[3]);
                 values.put(DataContract.LessonEntry.COLUMN_HAS_CALCULATOR, s[4]);
                 values.put(DataContract.LessonEntry.COLUMN_HAS_SIMULATION, s[5]);
+                values.put(DataContract.LessonEntry.COLUMN_VIDEO_ID, s[6]);
+                values.put(DataContract.LessonEntry.COLUMN_AUDIO, s[7]);
 
                 c.close();
 
-                database.insert(DataContract.LessonEntry.TABLE_NAME, null, values);
+                long test = database.insert(DataContract.LessonEntry.TABLE_NAME, null, values);
+                String asfd = "";
             }
         }
     }

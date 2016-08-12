@@ -61,6 +61,8 @@ public class DataContract   {
         public static final String COLUMN_LOGO = "logo";
         public static final String COLUMN_HAS_SIMULATION = "has_simulation";
         public static final String COLUMN_HAS_CALCULATOR = "has_calculator";
+        public static final String COLUMN_VIDEO_ID = "video";
+        public static final String COLUMN_AUDIO = "audio";
 
 
         public static final String CONTENT_TYPE =
