@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ps.physicssimulator.ContentActivity"
-    tools:showIn="@layout/activity_content">
+    tools:showIn="@layout/activity_content"
+    android:visibility="gone"
+    android:id="@+id/scroll_content">
 
     <LinearLayout
         android:layout_height="wrap_content"
@@ -25,6 +26,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/content_container"
             android:gravity="center_horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp"
             android:orientation="vertical">
         </LinearLayout>
 
@@ -32,7 +35,17 @@
             android:id="@+id/youtube_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             android:name="com.google.android.youtube.player.YouTubePlayerFragment"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="Simulate"
+            android:id="@+id/button_simulate"/>
 
     </LinearLayout>
 </ScrollView>

@@ -2,6 +2,7 @@ package com.ps.physicssimulator;
 
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -16,15 +17,18 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,6 +103,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         mLesson = intent.getStringExtra("Lesson");
         mChapter = intent.getStringExtra("Chapter");
 
+
         setTitle(mLesson);
 
         mContentContainer = (LinearLayout) findViewById(R.id.content_container);
@@ -130,8 +135,13 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                     sections.getColumnIndex(DataContract.SectionEntry.COLUMN_CONTENT))
                     .split("\\|");
 
-            for (String content : contentText) {
-                //SpannableString text = new SpannableString(content);
+
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.show();
+
+            for (int l = 0; l < contentText.length; l++) {
+                SpannableString text = new SpannableString(contentText[l]);
 
                 final MathView txtContent = new MathView(this, null);
                 txtContent.setLayoutParams(new LinearLayout.LayoutParams(
@@ -139,10 +149,23 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 ));
                 txtContent.setEngine(MathView.Engine.KATEX);
-                txtContent.setText(content);
-                //txtContent.setText(text.toString());
+                //txtContent.setText(content);
+                txtContent.setText(text.toString());
                 txtContent.setTag("content" + k++);
+                txtContent.getSettings().setJavaScriptEnabled(true);
+                txtContent.getSettings().setDomStorageEnabled(true);
+                txtContent.getSettings().setAppCacheEnabled(true);
+                if(l == contentText.length-1)
+                    txtContent.setWebViewClient(new WebViewClient(){
+                        @Override
+                        public void onPageFinished(WebView view, String url) {
+                            progressDialog.dismiss();
+                            ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_content);
+                            scrollView.setVisibility(View.VISIBLE);
+                        }
+                    });
                 sectionContainer.addView(txtContent);
+
                 if (imageExists) {
                     sectionContainer.addView(
                             addImage(
@@ -154,6 +177,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                     );
                     imageExists = images.moveToNext();
                 }
+
             }
 
             while (imageExists) {
@@ -173,6 +197,9 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
             sections.moveToNext();
         }
 
+
+
+
         Cursor lesson = this.getContentResolver().query(
                 DataContract.LessonEntry.buildLessonTitle(mLesson),
                 null, null, null, null
@@ -182,13 +209,8 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         lesson.moveToFirst();
         video = lesson.getString(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_VIDEO_ID));
         hasCalc = lesson.getInt(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_HAS_CALCULATOR));
+        Button btnSimulate = (Button)findViewById(R.id.button_simulate);
         if (lesson.getInt(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_HAS_SIMULATION)) == 1) {
-            Button btnSimulate = new Button(this);
-            btnSimulate.setLayoutParams(new LinearLayoutCompat.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-            ));
-            btnSimulate.setText("Simulate");
             btnSimulate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -199,7 +221,8 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                     startActivity(intent);
                 }
             });
-            mContentContainer.addView(btnSimulate);
+        } else {
+            btnSimulate.setVisibility(View.GONE);
         }
 
         if(autoplay){
