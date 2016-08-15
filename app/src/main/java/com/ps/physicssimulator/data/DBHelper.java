@@ -188,7 +188,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "ic_lesson_uniform_circular_motion", "1", "1", "bpFK2VCRHUs", "asdf"},
                     {"Centripetal and Centrifugal Forces", "Uniform Circular Motion",
                             "Definition, Centripetal and Centrifugal Forces",
-                            "ic_lesson_centripetal_and_centrifugal_force", "1", "0", "9s1IRJbL2Co", "asdf"},
+                            "ic_lesson_centripetal_and_centrifugal_force", "1", "1", "9s1IRJbL2Co", "asdf"},
                     {"Rotational Motion", "Uniform Circular Motion", "Definition, Moment of " +
                             "Inertia, Torque, Angular Momentum",
                             "ic_lesson_rotational_motion", "1", "0", "fmXFWi", "asdf"}
