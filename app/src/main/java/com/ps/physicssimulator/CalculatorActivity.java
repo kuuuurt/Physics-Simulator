@@ -1,5 +1,6 @@
 package com.ps.physicssimulator;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -454,7 +456,8 @@ public class CalculatorActivity extends AppCompatActivity {
     private void removeEditTextFocus() {
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.input_container);
         try {
-            linearLayout.getFocusedChild().clearFocus();
+            ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                    linearLayout.getFocusedChild().getWindowToken(),0);
         } catch (Exception ex) {}
     }
 
@@ -481,7 +484,12 @@ public class CalculatorActivity extends AppCompatActivity {
                         } else {
                             text = "";
                         }
+                    else if(text.charAt(0) == '-')
+                        if(text.length() == 1)
+                            text = "";
 
+                    if(text.charAt(text.length()-1) == '.')
+                        text = text + "0";
                     values[findVariableIndex(variable)][2] = text;
                     if(checkValues())
                         btnCalc.setEnabled(true);
@@ -524,8 +532,6 @@ public class CalculatorActivity extends AppCompatActivity {
 //        }
         //Substitute values
         for (String[] s : values) {
-            if(s[2].equals("0."))
-                s[2] = "0";
             formula = formula.replace(s[3], s[2] + s[1]);
         }
 
