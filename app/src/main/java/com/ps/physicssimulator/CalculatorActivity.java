@@ -416,31 +416,38 @@ public class CalculatorActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT
             ));
             txtStep.setEngine(MathView.Engine.KATEX);
-            String result[] = (String[]) steps[i];
-            if (Double.parseDouble(result[0].toString()) % 1 == 0) {
-                result[0] = result[0].replace(".0", "");
-            }
-
-            String strForm = result[2].toString();
-            if (strForm.contains(" ^ ")) {
-                int idx = strForm.indexOf("^");
-                strForm = "(" + strForm.substring(0, idx - 1) + ")" + strForm.substring(idx - 1);
-            }
-
-            if(formulaDisplay.contains(strForm)) {
-                if (formulaDisplay.contains("(" + strForm + ")")) {
-                    formulaDisplay = formulaDisplay.replace("(" + strForm + ")", strForm);
+            try {
+                String result[] = (String[]) steps[i];
+                if (Double.parseDouble(result[0].toString()) % 1 == 0) {
+                    result[0] = result[0].replace(".0", "");
                 }
 
-                if (formulaDisplay.contains("{" + strForm + "}")) {
-                    formulaDisplay = formulaDisplay.replace("{" + strForm + "}", strForm);
+                String strForm = result[2].toString();
+                if (strForm.contains(" ^ ")) {
+                    int idx = strForm.indexOf("^");
+                    strForm = "(" + strForm.substring(0, idx - 1) + ")" + strForm.substring(idx - 1);
                 }
 
-                formulaDisplay = formulaDisplay.replace(strForm, result[0] + result[1]);
+                if (formulaDisplay.contains(strForm)) {
+                    if (formulaDisplay.contains("(" + strForm + ")")) {
+                        formulaDisplay = formulaDisplay.replace("(" + strForm + ")", strForm);
+                    }
 
-                txtStep.setText(formulaDisplay);
+                    if (formulaDisplay.contains("{" + strForm + "}")) {
+                        formulaDisplay = formulaDisplay.replace("{" + strForm + "}", strForm);
+                    }
+
+                    formulaDisplay = formulaDisplay.replace(strForm, result[0] + result[1]);
+
+                    txtStep.setText(formulaDisplay);
+                    linearLayout.addView(txtStep);
+                }
+            } catch (Exception ex){
+                txtStep.setText("$$Error! Division  by Zero!$$");
                 linearLayout.addView(txtStep);
+                break;
             }
+
         }
     }
 
@@ -468,7 +475,12 @@ public class CalculatorActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
                     if(charSequence.toString().charAt(0) == '.')
-                        charSequence = "0" + charSequence;
+                        if(charSequence.length() != 1) {
+                            charSequence = "0" + charSequence;
+                        } else {
+                            charSequence = "";
+                        }
+
                     values[findVariableIndex(variable)][2] = charSequence.toString();
                     if(checkValues())
                         btnCalc.setEnabled(true);
@@ -476,7 +488,7 @@ public class CalculatorActivity extends AppCompatActivity {
                         btnCalc.setEnabled(false);
                 } catch (Exception ex) {
                     try {
-                        values[findVariableIndex(variable)][2] = null;
+                        values[findVariableIndex(variable)][2] = "";
                     } catch (Exception ex2) {}
                     btnCalc.setEnabled(false);
                 }
@@ -492,7 +504,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
     private boolean checkValues() {
         for (String[] s : values) {
-            if (s[2].equals(""))
+            if (s[2].equals("") || s[2].equals("."))
                 return false;
         }
         return true;
@@ -511,6 +523,8 @@ public class CalculatorActivity extends AppCompatActivity {
 //        }
         //Substitute values
         for (String[] s : values) {
+            if(s[2].equals("0."))
+                s[2] = "0";
             formula = formula.replace(s[3], s[2] + s[1]);
         }
 

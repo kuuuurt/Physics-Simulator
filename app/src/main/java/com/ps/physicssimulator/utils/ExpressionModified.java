@@ -194,7 +194,13 @@ public class ExpressionModified {
                     String rightUnit = output.pop();
                     double leftArg = Double.parseDouble(output.pop());
                     String leftUnit = output.pop();
-                    double res = op.getOperator().apply(leftArg, rightArg);
+                    double res = 0;
+                    try {
+                        res = op.getOperator().apply(leftArg, rightArg);
+                    } catch(Exception ex){
+                        steps.add("Error");
+                        return steps;
+                    }
                     String strRightArg = String.valueOf(rightArg);
                     if(rightArg % 1 == 0){
                         strRightArg = strRightArg.replace(".0" , "");
