@@ -23,7 +23,6 @@ public class UnityPlayerActivity extends Activity
 		intent.putExtra("Lesson", mLesson);
 		intent.putExtra("Chapter", mChapter);
 		startActivity(intent);
-		finish();
 
 	}
 

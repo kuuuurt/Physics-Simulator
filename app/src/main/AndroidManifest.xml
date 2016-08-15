@@ -74,7 +74,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ps.physicssimulator.ChapterActivity"/>
         </activity>
-        <activity android:label="@string/app_name" android:screenOrientation="fullSensor" android:launchMode="singleTask" android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale" android:name="com.ps.physicssimulator.UnityPlayerActivity">
+        <activity
+            android:label="@string/app_name"
+            android:screenOrientation="fullSensor"
+            android:launchMode="singleTask" android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale"
+            android:name="com.ps.physicssimulator.UnityPlayerActivity"
+            android:process="com.ps.physicssimulator.simulations">
+
             <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
         </activity>
     </application>
