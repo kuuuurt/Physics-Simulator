@@ -125,8 +125,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"One-dimensional Motion","Scalar and Vector Values, Velocity, Acceleration, Free fall","ic_chapter_one_dimensional_motion"},
                     {"Two-dimensional Motion","Projectile Motion","ic_chapter_two_dimensional_motion"},
                     {"Isaac Newton's Laws of Motion","Friction, Free Body Diagrams","ic_chapter_newtons_laws"},
-                    {"Momentum and Impulse","Momentum and Impulse","ic_chapter_momentum_impulse"},
                     {"Work, Energy, and Power","Work, Energy, Power","ic_chapter_work_energy_power"},
+                    {"Momentum and Impulse","Momentum and Impulse","ic_chapter_momentum_impulse"},
                     {"Uniform Circular Motion","Uniform Circular Motion, Centripetal and Centrifugal Forces, Rotational Motion","ic_chapter_uniform_circular_motion"}
             };
             for(String[] s : chapters){
@@ -219,8 +219,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 c.close();
 
-                long test = database.insert(DataContract.LessonEntry.TABLE_NAME, null, values);
-                String asfd = "";
+                database.insert(DataContract.LessonEntry.TABLE_NAME, null, values);
             }
         }
     }
@@ -229,43 +228,43 @@ public class DBHelper extends SQLiteOpenHelper {
         if(database.isOpen()){
             String[][] sections = {
                     {"Scalar and Vector Values","Scalar and Vector Values Definition","" +
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                             "Scalar quantity:<br />" +
                             "\t•\thas a magnitude<br />" +
-                            "\t•\tis one dimensional<br/>" +
+                            "\t•\tis one dimensional<br/><br/>" +
                             "Vector quantity:<br/>" +
                             "\t•\thas a magnitude and a direction<br/>" +
-                            "\t•\tis two dimensional<br/></p>"},
+                            "\t•\tis two dimensional"},
                     {"Scalar and Vector Values","Distance and Displacement",
-                            "<h2><b>Distance and Displacement</b></h2><br/>" +
+                            "<h2><b>Distance and Displacement</b></h2>" +
                                     "Distance:<br/>" +
                                     "\t•\tis a scalar quantity<br/>" +
-                                    "\t•\tmeasures the interval between two points that is measured along the actual path that was made that connects them<br/>" +
+                                    "\t•\tmeasures the interval between two points that is measured along the actual path that was made that connects them<br/><br/>" +
                                     "Displacement:<br/>" +
                                     "\t•\tis a vector quantity<br/>" +
                                     "\t•\tmeasures the interval between two points along the shortest path that connects them <br/>"},
                     {"Scalar and Vector Values","Scalar and Vector Values Formula",
-                            "The SI unit used for distance and displacement is meters (\\(m\\)).<br/>" +
+                            "The SI unit used for distance and displacement is meters (\\(m\\)).<br/><br/>" +
                                     "Displacement can be calculated using this formula:<br/>" +
                                     "$$d = {x_f - x_i}$$" +
                                     "Where:<br/>" +
                                     "\\(x_i\\) = initial position of the object<br/>" +
-                                    "\\(x_f\\) = final position of the object<br/></p>"},
+                                    "\\(x_f\\) = final position of the object<br/>"},
                     {"Velocity", "Velocity Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Speed:<br/>" +
-                                    "\t•\tshows the rate at which an object is able to move<br/>" +
+                                    "\t•\tshows the rate at which an object is able to move<br/><br/>" +
                                     "Velocity:<br/>" +
-                                    "\t•\tshows the rate at which an object is able to move in a given direction<br/>" +
+                                    "\t•\tshows the rate at which an object is able to move in a given direction<br/><br/>" +
                                     "The SI unit used for speed and velocity is meter per second (\\({m \\over s}\\)).<br/>"},
                     {"Velocity", "Speed and Velocity",
-                            "<h2><b>Speed and Velocity</b></h2><br/>" +
+                            "<h2><b>Speed and Velocity</b></h2>" +
                                     "Speed can be calculated by dividing distance over time:<br/>" +
                                     "$$s = {d \\over t}$$" +
                                     "Velocity can be calculated by dividing displacement over time:<br/>" +
                                     "$$v = {x_f - x_i \\over t}$$"},
                     {"Velocity", "Average Velocity",
-                            "<h2><b>Average Velocity</b></h2><br/>" +
+                            "<h2><b>Average Velocity</b></h2>" +
                                     "Average velocity is the ratio of total displacement (\\(\\Delta x\\)) taken over time interval (\\(\\Delta t\\))<br/>|" +
                                     "The average velocity from when the object starts to move up to the time when the object stops can be described as:<br/>" +
                                     "$$v_{av} = {x_f - x_i \\over t_f - t_i}$$" +
@@ -277,20 +276,20 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\\(t_i\\) = time when the object was at position \\(x_i\\)<br/>" +
                                     "\\(t_f\\) = time when the object was at position \\(x_f\\)<br/>"},
                     {"Velocity", "Instantaneous Velocity",
-                            "<h2><b>Instantaneous Velocity</b></h2><br/>" +
-                                    "Instantaneous velocity is the measure of the velocity of an object at a particular moment.<br/></p>"},
+                            "<h2><b>Instantaneous Velocity</b></h2>" +
+                                    "Instantaneous velocity is the measure of the velocity of an object at a particular moment.<br/>"},
                     {"Acceleration", "Acceleration Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Acceleration:<br/>" +
                                     "\t•\tis the rate of change of velocity with respect to time<br/>" +
-                                    "\t•\tcan be positive (speeding up) or negative (slowing down)<br/>" +
+                                    "\t•\tcan be positive (speeding up) or negative (slowing down)<br/><br/>" +
                                     "The SI unit used for acceleration is meter per second squared (\\({m \\over s^2}\\)).<br/>"},
                     {"Acceleration", "Acceleration",
-                            "<h2><b>Acceleration</b></h2><br/>" +
+                            "<h2><b>Acceleration</b></h2>" +
                                     "Acceleration is the ratio of total velocity change (\\(\\Delta v\\)) taken over time interval (\\(\\Delta t\\)).<br/>" +
                                     "$$a = {v_f - v_i \\over t}$$"},
                     {"Acceleration", "Average Acceleration",
-                            "<h2><b>Average Acceleration</b></h2><br/>" +
+                            "<h2><b>Average Acceleration</b></h2>" +
                                     "Average acceleration can be calculated using this formula:<br/>" +
                                     "$$a_{av} = {v_f - v_i \\over t_f - t_i}$$" +
                                     "Where:<br/>" +
@@ -299,10 +298,10 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\\(t_i\\) = time when the object had velocity \\(v_i\\)<br/>" +
                                     "\\(t_f\\) = time when the object had velocity \\(v_f\\)<br/>"},
                     {"Acceleration", "Instantaneous Acceleration",
-                            "<h2><b>Instantaneous Acceleration</b></h2><br/>" +
-                                    "Instantaneous acceleration is the change of velocity at infinitesimal (very small) time interval.<br/></p>"},
+                            "<h2><b>Instantaneous Acceleration</b></h2>" +
+                                    "Instantaneous acceleration is the change of velocity at infinitesimal (very small) time interval.<br/>"},
                     {"Newton's Laws of Motion", "Newton's Laws of Motion",
-                            "<p><h2><b>Newton's Laws of Motion</b></h2><br/>" +
+                            "<h2><b>Newton's Laws of Motion</b></h2>" +
                                     "There are three laws of motion. These laws are the physical laws that laid the foundation for classical" +
                                     "mechanics. It describes the relationship between an object and the forces that acts upon it, and its" +
                                     "motion in response to those forces.<br><br>" +
@@ -313,36 +312,46 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\t•\t<b>Second Law</b>: Force is equal to mass times acceleration.<br><br>" +
                                     "\t•\t<b>Third Law</b>: For every action there is an equal and opposite reaction."},
                     {"Free-fall", "Free-fall Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Free fall:<br/>" +
                                     "\t•\trefers to the motion of an object where its motion is affected only by gravity<br/>" +
-                                    "\t•\tacts only along the y-axis<br/>" +
+                                    "\t•\tacts only along the y-axis<br/><br/>" +
                                     "Acceleration due to gravity:\t<br/>" +
                                     "\t•\tis equal to 9.8 \\({m \\over s^2}\\)<br/>" +
                                     "\t•\tis constant regardless of the object’s mass<br/>"},
                     {"Free-fall", "Free-fall",
-                            "<h2><b>Free fall</b></h2><br/>|" +
-                                    "An object is thrown with an initial velocity u along the y-axis. The position and speed of an object in free fall motion can be calculated from the motion equations.<br/>" +
+                            "<h2><b>Free fall</b></h2>|" +
+                                    "An object is thrown with an initial velocity (\\(v_i\\)) along the y-axis. The position and speed of an object in free fall motion can be calculated from the " +
+                                    "motion " +
+                                    "equations.<br/><br/>" +
                                     "Velocity along the y-axis at any instant t:<br/>" +
-                                    "$$v_y = u + g \\cdot t$$" +
+                                    "$$v_f = v_i + g \\cdot t$$" +
                                     "The displacement along y-axis at any instant t:<br/>" +
-                                    "$$y = {1 \\over 2}g  \\cdot t^2$$"},
+                                    "$$d = {1 \\over 2}g  \\cdot t^2$$" +
+                                    "In the case where an object is initially thrown upwards, the following formula can be used:<br/>" +
+                                    "$$v_f^2 = v_i^2 + 2 \\cdot g \\cdot d$$" +
+                                    "Where:<br/>" +
+                                    "\\(v_i\\) = initial velocity<br/>" +
+                                    "\\(v_f\\) = final velocity<br/>" +
+                                    "\\(d\\) = vertical distance<br/>" +
+                                    "\\(g\\) = acceleration due to gravity<br/>" +
+                                    "\\(t\\) = time duration"},
                     {"Projectile Motion", "Projectile Motion Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Projectile:<br/>" +
                                     "\t•\tis an object thrown with an initial velocity in a vertical plane<br/>" +
                                     "\t•\tmoves in two dimensions<br/>" +
-                                    "\t•\tacts under the action of gravity alone without being propelled<br/>" +
+                                    "\t•\tacts under the action of gravity alone without being propelled<br/><br/>" +
                                     "Projectile Motion:<br/>" +
-                                    "\t•\tis the motion done by the projectile<br/>" +
+                                    "\t•\tis the motion done by the projectile<br/><br/>" +
                                     "Trajectory:<br/>" +
                                     "\t•\tIs the path passed by the projectile<br/>"},
                     {"Projectile Motion", "Projectile Motion",
-                            "<h2><b>Projectile Motion</b></h2><br/>" +
-                                    "Projectile motion is a two dimensional motion. Any two dimensional motion case can be split up into two cases of one dimensional motion.<br/>" +
+                            "<h2><b>Projectile Motion</b></h2>" +
+                                    "Projectile motion is a two dimensional motion. Any two dimensional motion case can be split up into two cases of one dimensional motion.<br/><br/>" +
                                     "An important reminder is that the motion along the x-axis does not affect the motion along the y-axis. It also applies in vice versa. Each motion along each axis is independent of each other.<br/>" +
                                     "|" +
-                                    "Projectile motion formula is given by the following:<br/>" +
+                                    "Projectile motion formula is given by the following:<br/><br/>" +
                                     "Horizontal distance (\\(m\\)):<br/>" +
                                     "$$x = v_{x}t$$" +
                                     "Horizontal velocity (\\(m \\over s\\)):<br/>" +
@@ -350,36 +359,36 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Vertical distance (\\(m\\)):<br/>" +
                                     "$$y = v_{yi}t - {1 \\over 2}g \\cdot t^2$$" +
                                     "Vertical velocity (\\(m \\over s\\)):<br/>" +
-                                    "$$v_y = v_{yi} - g \\cdot t$$" +
+                                    "$$v_y =  g \\cdot t + v_{yi}$$" +
                                     "Where:<br/>" +
                                     "\\(v_x\\) = velocity of the object along x-axis<br/>" +
                                     "\\(v_{xi}\\) = initial velocity of the object along x-axis<br/>" +
                                     "\\(v_t\\) = velocity of the object along y-axis<br/>" +
                                     "\\(v_{yi}\\) = initial velocity of the object along y-axis<br/>" +
                                     "\\(g\\) = acceleration due to gravity <br/>" +
-                                    "\\(t\\) = time duration<br/>" +
+                                    "\\(t\\) = time duration<br/><br/>" +
                                     "Formulas related to trajectory motion is given by the following:<br/>" +
                                     "Time of flight (\\(s\\)):<br/>" +
                                     "$$t = {2v_{1}sin \\theta \\over g}$$" +
                                     "Maximum height reached (\\(m\\)):<br/>" +
                                     "$$H = {v_{1}^{2}sin^{2} \\theta \\over 2g}$$" +
                                     "Horizontal range (\\(m\\)):<br/>" +
-                                    "$$R = {v_{1}^{2}sin2 \\Theta \\over g}$$" +
+                                    "$$R = {v_{1}^{2}sin2 \\theta \\over g}$$" +
                                     "Where:<br/>" +
                                     "\\(v_1\\) = initial velocity of the object<br/>" +
-                                    "\\(sin \\Theta\\) = component along y-axis<br/>" +
-                                    "\\(cos \\Theta\\) = component along x-axis<br/></p>"},
+                                    "\\(sin \\theta\\) = component along y-axis<br/>" +
+                                    "\\(cos \\theta\\) = component along x-axis<br/>"},
                     {"Friction", "Friction Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Friction Force:<br/>" +
                                     "\t•\tis the force that is exerted by a surface as an object moves across it<br/>" +
                                     "|" +
-                                    "When an object is being pushed across a surface, the surface offers resistance to the movement of the object.<br/>" +
+                                    "When an object is being pushed across a surface, the surface offers resistance to the movement of the object.<br/><br/>" +
                                     "The friction force is opposite to the direction of the motion of the object.<br/>"},
                     {"Friction", "Friction",
-                            "<h2><b>Two types of Friction</b></h2><br/>" +
+                            "<h2><b>Two types of Friction</b></h2>" +
                                     "1. Static Friction:<br/>" +
-                                    "\t•\tis the friction between multiple solid objects that are not moving relative to each other<br/>" +
+                                    "\t•\tis the friction between multiple solid objects that are not moving relative to each other<br/><br/>" +
                                     "2. Kinetic Friction:<br/>" +
                                     "\t•\tis the friction between multiple solid objects that are moving relative to each other<br/>" +
                                     "The friction force is dependent on two factors:<br/>" +
@@ -390,17 +399,17 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Where:<br/>" +
                                     "\\(F_f\\) = frictional force <br/>" +
                                     "\\(\\mu\\) = coefficient of friction<br/>" +
-                                    "\\(F_n\\) = normal force<br/></p>"},
+                                    "\\(F_n\\) = normal force<br/>"},
                     {"Free-body Diagrams", "Free Body Diagrams Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Free Body Diagrams:<br/>" +
                                     "\t•\talso known as “Force Diagram”<br/>" +
                                     "\t•\ta graphical illustration used to visualize the applied forces, movements and resulting reaction on a body in a steady state condition<br/>" +
                                     "\t•\tshows all the forces acting on an object or a “body” that is singled out from or “freed” from a group of objects<br/>"},
                     {"Free-body Diagrams", "Free Body Diagrams",
-                            "<h2><b>Free Body Diagrams</b></h2><br/>" +
+                            "<h2><b>Free Body Diagrams</b></h2>" +
                                     "There are four types of forces typically used in free body diagrams. These are the forces used.<br/>" +
-                                    "1. Gravity (G) - its force is directed towards the ground (downwards).<br/>" +
+                                    "1. Weight (W) - gravitational force that is directed towards the ground (downwards).<br/>" +
                                     "2. Normal (N) - its force is directed perpendicular to the object’s surface.<br/>" +
                                     "3. Tension (T) - its force is directed along a string, rope, chain or anything an object is attached to.<br/>" +
                                     "4. Friction (fr) - its force’s direction opposes the relative motion of the object.<br/>" +
@@ -416,20 +425,20 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "|" +
                                     "<br/>" +
                                     "Here are a few hints when working with free body diagrams: <br/>" +
-                                    "\t•\tThe force of gravity always points straight down. <br/>" +
+                                    "\t•\tThe force of gravity or weight always points straight down. <br/>" +
                                     "\t•\tThe normal force will always push straight up from a surface.<br/>" +
                                     "\t•\tIf an object is moving in one direction, friction is acting in the opposite direction.<br/>" +
-                                    "\t•\tThink about whether the forces on opposite sides are balanced or not. If they are, the two arrows should be about the same length. <br/></p>"},
+                                    "\t•\tThink about whether the forces on opposite sides are balanced or not. If they are, the two arrows should be about the same length. <br/>"},
                     {"Momentum and Impulse", "Impulse and Momentum Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Momentum:<br/>" +
                                     "\t•\tis defined as “mass in motion”<br/>" +
                                     "\t•\tdepends upon the variables mass and velocity<br/>" +
                                     "\t•\tis a vector quantity<br/>"},
                     {"Momentum and Impulse", "Momentum",
-                            "<h2><b>Momentum</b></h2><br/>" +
-                                    "In terms of an equation, the momentum of an object is equal to the mass of the object times the velocity of the object. <br/>" +
-                                    "<center><i>Momentum = mass * velocity</i></center>" +
+                            "<h2><b>Momentum</b></h2>" +
+                                    "In terms of an equation, the momentum of an object is equal to the mass of the object times the velocity of the object. <br/><br/>" +
+                                    "<center><i>Momentum = mass * velocity</i></center><br/>" +
                                     "In physics, the symbol for the quantity momentum is the lower case p. Thus, the above equation can be rewritten as:<br/>" +
                                     "$$p = m \\cdot v$$" +
                                     "where:<br/>" +
@@ -440,64 +449,66 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\t•\tdirectly proportional to the object's velocity<br/>" +
                                     "Momentum is also a vector quantity. The momentum of an object then is fully described by both magnitude and direction.<br/>"},
                     {"Momentum and Impulse", "Impulse",
-                            "<h2><b>Impulse</b></h2><br/>" +
-                                    "Impulse is known as quantity force multiplied by time. <br/>" +
+                            "<h2><b>Impulse</b></h2>" +
+                                    "Impulse is known as quantity force multiplied by time. <br/><br/>" +
                                     "And since the quantity \\(m \\cdot \\Delta v\\) is the change in momentum. The equation really says that the Impulse is equal to Change in Momentum.<br/>" +
                                     "The physics of collisions are governed by the laws of momentum. The first law is the equation known as the impulse-momentum change equation. The law can be expressed this way:<br/>" +
                                     "$$F \\cdot t = m \\cdot \\Delta v$$" +
                                     "In a collision:<br/>" +
                                     "\t•\tobjects experience an impulse<br/>" +
-                                    "\t•\tthe impulse causes and is equal to the change in momentum<br/></p>"},
+                                    "\t•\tthe impulse causes and is equal to the change in momentum<br/>"},
                     {"Law of Conservation of Energy", "Law of Conservation of Energy Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Law of Conservation of Energy<br/>" +
                                     "\t•\tstates that the total energy of an isolated system remains constant<br/>" +
                                     "\t•\tIt implies that energy can neither be created nor destroyed, but can be change from one form to another<br/>" +
                                     "\t•\tthe change in energy of an object due to a transformation is equal to the work done on the object or by the object for that transformation<br/>"},
                     {"Law of Conservation of Energy", "Law of Conservation of Energy",
-                            "<h2><b>Conservation of Energy</b></h2><br/>" +
-                                    "The different types of energy are the potential energy, kinetic energy, and the total mechanical energy. These types of energy will further be discussed in a different part (Energy) of this application.<br/>" +
+                            "<h2><b>Conservation of Energy</b></h2>" +
+                                    "The different types of energy are the potential energy, kinetic energy, and the total mechanical energy. These types of energy will further be discussed in a different part (Energy) of this application.<br/><br/>" +
                                     "The basic formula for the conservation of energy is:<br/>" +
                                     "<br><center><i>Energy spent = Energy gained</i></center><br>" +
                                     "The formula can be more explicitly written as Conservation of Energy Equation depending on the context. <br/>" +
-                                    "\t•\tAn object when dropped from a height transforms its potential energy into kinetic energy.<br/>" +
+                                    "\t•\tAn object when dropped from a height transforms its potential energy into kinetic energy.<br/><br/>" +
                                     "Mathematically it can be expressed as a Conservation of Energy Equation as follows:<br/>" +
                                     "$$mgh = {1 \\over 2}mv^2$$" +
                                     "Where:<br/>" +
                                     "\\(m\\) = mass of the object<br/>" +
                                     "\\(v\\) = final velocity after falling from a height of <b>h</b><br/>" +
                                     "\\(g\\) = acceleration due to gravity<br/>" +
-                                    "<br/></p>"},
+                                    "<br/>"},
                     {"Work", "Work Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Work:<br/>" +
                                     "\t•\tis the measure of energy being transferred occurring when an object is moved over a distance<br/>" +
                                     "|" +
                                     "The SI unit used for work is Joule (\\(J\\)). Joule’s base units is \\(kg \\cdot {m^2 \\over s^2}\\)<br/>"},
                     {"Work", "Work",
-                            "<h2><b>Work</b></h2><br/>" +
-                                    "A force is doing work when it acts on an object which displaces it from the point of application.<br/>" +
+                            "<h2><b>Work</b></h2>" +
+                                    "A force is doing work when it acts on an object which displaces it from the point of application. The force vector and the position vector in a work is " +
+                                    "parallel to each other<br/>" +
                                     "Constant work can be calculated using this formula:<br/>" +
-                                    "$$W = \\vec{F} \\cdot \\vec{x}$$" +
+                                    "$$W = \\vec{F} \\cdot \\vec{x} \\cdot cos \\theta$$" +
                                     "Where:<br/>" +
                                     "\\(\\vec{F}\\) = force vector<br/>" +
-                                    "\\(\\vec{x}\\) = position vector<br/></p>"},
+                                    "\\(\\vec{x}\\) = position vector<br/>" +
+                                    "\\(cos \\theta\\) = component along x-axis<br/>"},
                     {"Energy", "Energy Definition",
-                            "<h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Energy:<br/>" +
                                     "\t•\tis the capacity of performing work<br/>" +
                                     "\t•\tmay exist in various forms (potential, kinetic, electric, chemical etc.)<br/>" +
                                     "The SI unit for energy is the same with work, Joule (\\(J\\)).<br/>"},
                     {"Energy", "Kinetic Energy",
-                            "<h2><b>Kinetic Energy</b></h2><br/>" +
-                                    "Kinetic energy is an energy that is possessed by means of its motion.<br/>" +
+                            "<h2><b>Kinetic Energy</b></h2>" +
+                                    "Kinetic energy is an energy that is possessed by means of its motion.<br/><br/>" +
                                     "Kinetic energy can be calculated using this formula:<br/>" +
                                     "$$KE = {mv^2 \\over 2}$$" +
                                     "Where:<br/>" +
                                     "\\(m\\) = mass of the object<br/>" +
                                     "\\(v\\) = velocity of the object<br/>"},
                     {"Energy", "Potential Energy",
-                            "<h2><b>Potential Energy</b></h2><br/>" +
+                            "<h2><b>Potential Energy</b></h2>" +
                                     "Potential energy is an energy that is possessed by means of its position relative to others.<br/><br/>" +
                                     "Gravitational Potential Energy is the energy that is stored in an object as the result of the object’s" +
                                     "vertical position. The gravitational potential energy is stored as the result of the gravitational attraction" +
@@ -506,38 +517,31 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Gravitational potential energy can be calculated using this formula:<br/>" +
                                     "$$PE_g = m \\cdot g \\cdot h$$" +
                                     "Where:<br/>" +
+                                    "\\(m\\) = mass of the object<br/>" +
                                     "\\(h\\) = height of the object above the ground<br/>" +
-                                    "\\(g\\) = acceleration due to gravity<br/><br/>" +
-                                    "Spring / Elastic Potential Energy is the energy that is stored in an elastic material, such as a spring, as result of" +
-                                    "their stretching or compressing. The amount of elastic potential energy stored is in an elastic material is" +
-                                    "related to the amount of stretch of that material – the greater the stretch, the greater the energy.<br><br/>" +
-                                    "Spring potential energy can be calculated using this formula:<br/>" +
-                                    "$$PE_{sp} = {1 \\over 2}k \\cdot \\Delta x^2$$" +
-                                    "Where:<br/>" +
-                                    "\\(k\\) = spring constant measured in Newton per meter<br/>" +
-                                    "\\(x\\) = amount spring is displaced from initial point<br/>"},
+                                    "\\(g\\) = acceleration due to gravity<br/><br/>"},
                     {"Energy", "Total Mechanical Energy",
-                            "<h2><b>Total Mechanical Energy</b></h2><br/>" +
+                            "<h2><b>Total Mechanical Energy</b></h2>" +
                                     "Total mechanical energy is the sum of the kinetic and potential energy of a conservative system:<br/>" +
                                     "$$TME = KE + PE - 0$$"},
                     {"Power", "Power Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Power:<br/>" +
                                     "\t•\tis the rate of doing work<br/>" +
                                     "\t•\thas no direction<br/>" +
                                     "\t•\tis a scalar quantity<br/>" +
                                     "The SI unit for power is Watt (\\(W\\)), or Joule per second (\\(J \\over s\\)).<br/>"},
                     {"Power", "Average Power",
-                            "<h2><b>Average Power</b></h2><br/>" +
-                                    "Average power, or simple “power”, is the average amount of work done converted per unit of time.<br/>" +
+                            "<h2><b>Average Power</b></h2>" +
+                                    "Average power, or simple “power”, is the average amount of work done converted per unit of time.<br/><br/>" +
                                     "Average power can be calculated by using this formula:<br/>" +
                                     "$$P_{av} = {\\Delta W \\over \\Delta t}$$" +
                                     "Where:<br/>" +
                                     "\\(\\Delta W\\) = amount of work performed<br/>" +
                                     "\\(\\Delta t\\) = time duration<br/>"},
                     {"Power", "Instantaneous Power",
-                            "<h2><b>Instantaneous Power</b></h2><br/>" +
-                                    "Instantaneous power is the limiting value of the average power as the time interval approaches to zero.<br/>" +
+                            "<h2><b>Instantaneous Power</b></h2>" +
+                                    "Instantaneous power is the limiting value of the average power as the time interval approaches to zero.<br/><br/>" +
                                     "Average power can be calculated by using this formula:<br/>" +
                                     "$$P = F \\cdot cosa \\cdot v$$" +
                                     "Where:<br/>" +
@@ -546,67 +550,67 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\\(F\\) = force applied on the object<br/>" +
                                     "\\(x\\) = path made by the object<br/>" +
                                     "\\(a\\) = angle between the force and the position vectors<br/>" +
-                                    "\\(v\\) = velocity of the object<br/></p>"},
+                                    "\\(v\\) = velocity of the object<br/>"},
                     {"Uniform Circular Motion", "Uniform Circular Motion Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<h2><b>Definition</b></h2>" +
                                     "Uniform Circular Motion:<br/>" +
                                     "\t•\tis the motion of an object traveling at a constant speed on a path that is circular<br/>"},
                     {"Uniform Circular Motion", "Measurements of a Circle",
-                            "<h2><b>Measurements of a Circle</b></h2><br/>" +
-                                    "The arc of a circle is a portion of the circumference.<br/>" +
-                                    "The length of an arc is the length of its portion of the circumference.<br/>" +
+                            "<h2><b>Measurements of a Circle</b></h2>" +
+                                    "The arc of a circle is a portion of the circumference.<br/><br/>" +
+                                    "The length of an arc is the length of its portion of the circumference.<br/><br/>" +
                                     "The radian is the standard unit of angular measure. When it is drawn as a central angle, it subtends an arc whose length is equal to the length of the radius of the circle.<br/>" +
                                     "|" +
                                     "The relationship between the degrees and radians is:<br/>" +
                                     "<center><i>radians = degrees * \\(\\pi \\over 180\\)</i></center>"},
                     {"Uniform Circular Motion", "Frequency",
-                            "<h2><b>Frequency</b></h2><br/>" +
-                                    "The frequency (\\(f\\)) is the number of revolutions completed per time unit.<br/>" +
-                                    "The SI unit used for frequency is hertz (\\(Hz\\)). Hertz’ base units is (\\(1 \\over s\\)).<br/>" +
-                                    "Another unit of measure for frequency is revolutions per minute (RPM). 60 RPM is equal to 1 hertz.<br/>" +
+                            "<h2><b>Frequency</b></h2>" +
+                                    "The frequency (\\(f\\)) is the number of revolutions completed per time unit.<br/><br/>" +
+                                    "The SI unit used for frequency is hertz (\\(Hz\\)). Hertz’ base units is (\\(1 \\over s\\)).<br/><br/>" +
+                                    "Another unit of measure for frequency is cycles per second (\\(cycles \\over seconds\\)). 60 RPM is equal to 1 hertz.<br/><br/>" +
                                     "Period (\\(T\\)):<br/>" +
                                     "\t•\tis the time an object takes to travel one revolution around the circle.<br/>" +
                                     "The SI unit used for period is second \\(s\\). This is based on the reciprocal value of frequency where (\\(T = {1 \\over f}\\)).<br/>"},
                     {"Uniform Circular Motion", "Angular Displacement",
-                            "<h2><b>Angular Displacement</b></h2><br/>" +
+                            "<h2><b>Angular Displacement</b></h2>" +
                                     "|" +
                                     "The angular displacement (Δθ) is the angle traveled by the object while moving from point B to C around the circular path.<br/>"},
                     {"Uniform Circular Motion", "Length of Arc",
-                            "<h2><b>Length of Arc</b></h2><br/>" +
-                                    "The length of arc (\\(\\Delta S\\)) is directly proportional to the angular displacement subtended traced at the center of circle by the ends of the arc.<br/>" +
+                            "<h2><b>Length of Arc</b></h2>" +
+                                    "The length of arc (\\(\\Delta S\\)) is directly proportional to the angular displacement subtended traced at the center of circle by the ends of the arc.<br/><br/>" +
                                     "Length of arc can be calculated using this formula:<br/>" +
-                                    "$$\\Delta S = r \\cdot \\Delta \\Theta$$"},
+                                    "$$\\Delta S = r \\cdot \\Delta \\theta$$"},
                     {"Uniform Circular Motion", "Tangential Velocity",
-                            "<h2><b>Tangential Velocity</b></h2><br/>" +
+                            "<h2><b>Tangential Velocity</b></h2>" +
                                     "The tangential velocity (\\(v\\) is the velocity measured at any tangential point in a circle.<br/>" +
                                     "Tangential velocity can be calculated using this formula:<br/>" +
                                     "$$v = {\\Delta S \\over \\Delta t}$$" +
                                     "The velocity around the circle can be calculated using this formula:<br/>" +
                                     "$$v = 2 \\cdot \\pi \\cdot {r \\over t}$$"},
                     {"Uniform Circular Motion", "Angular Velocity",
-                            "<h2><b>Angular Velocity</b></h2><br/>" +
-                                    "The angular velocity (ω) is rate of change of angular position of a body that is rotating.<br/>" +
-                                    "The SI unit used for angular velocity is radian per second (rad/s).<br/>" +
+                            "<h2><b>Angular Velocity</b></h2>" +
+                                    "The angular velocity (ω) is rate of change of angular position of a body that is rotating.<br/><br/>" +
+                                    "The SI unit used for angular velocity is radian per second (rad/s).<br/><br/>" +
                                     "Angular velocity can be calculated using this formula:<br/>" +
-                                    "$$\\omega = {\\Delta \\Theta \\over \\Delta t}$$" +
-                                    "Since angular velocity is a vector quantity, it is defined as positive when the motion in the circle is in counter-clockwise, and is defined as negative when the motion in the circle is in clockwise.<br/>" +
+                                    "$$\\omega = {\\Delta \\theta \\over \\Delta t}$$" +
+                                    "Since angular velocity is a vector quantity, it is defined as positive when the motion in the circle is in counter-clockwise, and is defined as negative when the motion in the circle is in clockwise.<br/><br/>" +
                                     "The relationship between the linear velocity and angular velocity is:<br/>" +
-                                    "$$v = {\\Delta S \\over \\Delta t} = r \\cdot {\\Delta \\Theta \\over \\Delta t} = r \\cdot \\omega$$"},
+                                    "$$v = {\\Delta S \\over \\Delta t} = r \\cdot {\\Delta \\theta \\over \\Delta t} = r \\cdot \\omega$$"},
                     {"Uniform Circular Motion", "Centripetal Acceleration",
-                            "<h2><b>Centripetal Acceleration</b></h2><br/>" +
-                                    "The centripetal acceleration is the rate of change of tangential velocity.<br/>" +
+                            "<h2><b>Centripetal Acceleration</b></h2>" +
+                                    "The centripetal acceleration is the rate of change of tangential velocity.<br/><br/>" +
                                     "The centripetal acceleration is always pointing towards the center of the circle in motion.<br/>" +
                                     "Centripetal acceleration can be calculated using this formula:<br/>" +
                                     "$$a_c = r \\cdot \\omega ^2$$"},
                     {"Centripetal and Centrifugal Forces", "Centripetal and Centrifugal Forces Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<p><h2><b>Definition</b></h2>" +
                                     "Centripetal Force:<br/>" +
-                                    "\t•\tis a force that acts on an object that is moving in a circular path and is directed towards the center where the object is moving<br/>" +
+                                    "\t•\tis a force that acts on an object that is moving in a circular path and is directed towards the center where the object is moving<br/><br/>" +
                                     "Centrifugal Force:<br/>" +
                                     "\t•\tis the opposing reaction force of the centripetal force<br/>" +
                                     "\t•\tis a force acting outwards of an object that is moving in a circular path<br/>"},
                     {"Centripetal and Centrifugal Forces", "Centripetal and Centrifugal Forces",
-                            "<h2><b>Centripetal and Centrifugal Forces</b></h2><br/>" +
+                            "<h2><b>Centripetal and Centrifugal Forces</b></h2>" +
                                     "According the Newton’s second law motion, where there is an acceleration (centripetal acceleration), there is a force (centripetal force).<br/>" +
                                     "|" +
                                     "Magnitude of the centripetal force can be calculated using this formula:<br/>" +
@@ -614,25 +618,26 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Where:<br/>" +
                                     "\\(m\\) = mass of the object<br/>" +
                                     "\\(v\\) = tangential velocity of the object<br/>" +
-                                    "\\(r\\) = radius of curvature cause by the force<br/>" +
+                                    "\\(r\\) = radius of curvature cause by the force<br/><br/>" +
                                     "Newton’s third law of motion states that every action has an equal and opposite reaction. Therefore, in this case, there must be an equal and opposite reaction force to the centripetal force which is called the centrifugal force.<br/></p>"},
                     {"Rotational Motion", "Rotational Motion Definition",
-                            "<p><h2><b>Definition</b></h2><br/>" +
+                            "<p><h2><b>Definition</b></h2>" +
                                     "Rotational Motion:<br/>" +
                                     "\t•\tis a motion of an object in a circular path around a center (or point) of rotation<br/>"},
                     {"Rotational Motion", "Moment of Inertia",
-                            "<h2><b>Moment of Inertia</b></h2><br/>" +
-                                    "The moment of inertia \\(I\\) is the measure of the object’s resistance to the change to its rotation. It is dependent to the object’s mass \\(m\\) and distance \\(r\\) of the mass further from the center of the rotational motion.<br/>" +
+                            "<h2><b>Moment of Inertia</b></h2>" +
+                                    "The moment of inertia \\(I\\) is the measure of the object’s resistance to the change to its rotation. It is dependent to the object’s mass \\(m\\) and distance \\(r\\) of the mass further from the center of the rotational motion.<br/><br/>" +
                                     "Moment of inertia can be calculated using this formula:<br/>" +
                                     "$$I = m \\cdot r^2$$"},
                     {"Rotational Motion", "Torque",
-                            "<h2><b>Torque</b></h2><br/>" +
-                                    "The torque \\(\\tau \\) is the twisting force \\(F\\) that tends to cause the rotation of an object which is at position \\(r\\) from its axis of rotation. <br/>" +
+                            "<h2><b>Torque</b></h2>" +
+                                    "The torque \\(\\tau \\) is the twisting force \\(F\\) that tends to cause the rotation of an object which is at position \\(r\\) from its axis of rotation. " +
+                                    "The position is perpendicular to the force.<br/><br/>" +
                                     "Torque can be calculated using this formula:<br/>" +
                                     "$$\\tau = r \\cdot F$$"},
                     {"Rotational Motion", "Angular Momentum",
-                            "<h2><b>Angular Momentum</b></h2><br/>" +
-                                    "The angular momentum \\(L\\) is the quantity of rotation of a body. It is dependent on the moment of inertia \\(I\\) of the object and its angular velocity vector \\(\\omega \\).<br/>" +
+                            "<h2><b>Angular Momentum</b></h2>" +
+                                    "The angular momentum \\(L\\) is the quantity of rotation of a body. It is dependent on the moment of inertia \\(I\\) of the object and its angular velocity vector \\(\\omega \\).<br/><br/>" +
                                     "Angular momentum can be calculated using this formula:<br/>" +
                                     "$$L = I \\cdot \\omega$$"}
             };
@@ -712,25 +717,25 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Average Acceleration","Acceleration", "$$a_{av} = {v_f - v_i \\over t_f - t_i}$$"},
                     {"Free-fall Velocity","Free-fall", "$$v_y = u + g \\cdot t$$"},
                     {"Free-fall Displacement", "Free-fall", "$$y = {1 \\over 2}g  \\cdot t^2$$"},
+                    {"Free-fall Upward Motion", "Free-fall", "$$v_f^2 = v_i^2 + 2 \\cdot g \\cdot d$$"},
                     {"Horizontal Components", "Projectile Motion", "$$x = v_{x}t$$"},
                     {"Vertical Components",  "Projectile Motion", "$$y = v_{yi}t - {1 \\over 2}g \\cdot t^2$$"},
-                    {"Vertical Velocity at a Certain Time",  "Projectile Motion", "$$v_y = v_{yi} - g \\cdot t$$"},
-                    {"Time of Flight", "Projectile Motion", "$$t = {2v_{yi}sin \\Theta \\over g}$$"},
-                    {"Maximum Height Reached", "Projectile Motion", "$$H = {v_{1}^{2}sin^{2} \\Theta \\over 2g}$$"},
-                    {"Horizontal Range", "Projectile Motion", "$$R = {v_{1}^{2}sin2 \\Theta \\over g}$$"},
+                    {"Vertical Velocity at a Certain Time",  "Projectile Motion", "$$v_y = g \\cdot t + v_{yi}$$"},
+                    {"Time of Flight", "Projectile Motion", "$$t = {2v_{yi}sin \\theta \\over g}$$"},
+                    {"Maximum Height Reached", "Projectile Motion", "$$H = {v_{1}^{2}sin^{2} \\theta \\over 2g}$$"},
+                    {"Horizontal Range", "Projectile Motion", "$$R = {v_{1}^{2}sin2 \\theta \\over g}$$"},
                     {"Friction", "Friction", "$$F_f = \\mu \\cdot F_n$$"},
                     {"Momentum", "Momentum and Impulse", "$$p = m \\cdot v$$"},
-                    {"Work", "Work", "$$W = \\vec{F} \\cdot \\vec{x}$$"},
+                    {"Work", "Work", "$$W = \\vec{F} \\cdot \\vec{x} \\cdot cos \\theta$$"},
                     {"Kinetic Energy", "Energy", "$$KE = {mv^2 \\over 2}$$"},
                     {"Gravitational Potential Energy", "Energy", "$$PE_g = m \\cdot g \\cdot h$$"},
-                    {"Spring Potential Energy", "Energy", "$$PE_{sp} = {1 \\over 2}k \\cdot \\Delta x^2$$"},
                     {"Total Mechanical Energy", "Energy", "$$TME = KE + PE$$"},
                     {"Average Power", "Power", "$$P_{av} = {\\Delta W \\over \\Delta t}$$"},
                     {"Instantaneous Power","Power", "$$P = F \\cdot cos(a) \\cdot v$$"},
-                    {"Length of Arc",  "Uniform Circular Motion", "$$\\Delta S = r \\cdot \\Delta \\Theta$$"},
+                    {"Length of Arc",  "Uniform Circular Motion", "$$\\Delta S = r \\cdot \\Delta \\theta$$"},
                     {"Tangential Velocity", "Uniform Circular Motion", "$$v = {\\Delta S \\over \\Delta t}$$"},
                     {"Velocity around a Circle", "Uniform Circular Motion", "$$v = 2 \\cdot \\pi \\cdot {r \\over t}$$"},
-                    {"Angular Velocity", "Uniform Circular Motion", "$$\\omega = {\\Delta \\Theta \\over \\Delta t}$$"},
+                    {"Angular Velocity", "Uniform Circular Motion", "$$\\omega = {\\Delta \\theta \\over \\Delta t}$$"},
                     {"Centripetal Acceleration", "Uniform Circular Motion", "$$a_c = r \\cdot \\omega ^2$$"},
                     {"Centripetal Force","Centripetal and Centrifugal Forces", "$$F = {m \\cdot v^2 \\over r} $$"},
                     {"Moment of Inertia", "Rotational Motion", "$$I = m \\cdot r^2$$"},
@@ -788,6 +793,7 @@ public class DBHelper extends SQLiteOpenHelper {
             String[][] formula_constants = {
                     {"Acceleration due to Gravity", "Free-fall Velocity"},
                     {"Acceleration due to Gravity", "Free-fall Displacement"},
+                    {"Acceleration due to Gravity", "Free-fall Upward Motion"},
                     {"Acceleration due to Gravity", "Vertical Components"},
                     {"Acceleration due to Gravity", "Vertical Velocity at a Certain Time"},
                     {"Acceleration due to Gravity", "Time of Flight"},
@@ -874,7 +880,12 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Free-fall Displacement", "Acceleration due to Gravity", "$$g = {2 \\cdot {y \\over {({t})^2}}}$$", "2 * (y / (t) ^ 2)","g", "g", "{{m} \\over {s^2}}", "Acceleration due to " +
                             "Gravity"},
                     {"Free-fall Displacement", "Time", "$$t = {\\sqrt{{2 \\cdot {y \\over g}}}}$$", "sqrt(2 * (y / g))","{t}", "t", "{{s}}"}, //{\\sqrt{{(2 \\cdot {y \\over g)}}}
-
+                    //
+                    {"Free-fall Upward Motion", "Final Velocity", "$$v_f= {\\sqrt{{((v_i)^2) + ((2 \\cdot g) \\cdot {d})}}}$$", "sqrt((vi)^2 + (2 * g * d))","v_f", "vf", "{{m} \\over {s}}"},
+                    {"Free-fall Upward Motion", "Initial Velocity", "$$v_i = {\\sqrt{{((v_f)^2) - ((2 \\cdot g) \\cdot {d})}}}$$", "sqrt((vf)^2 - (2 * g * d))","v_i", "vi", "{{m} \\over {s}}"},
+                    {"Free-fall Upward Motion", "Acceleration due to Gravity", "$$g = {{((v_f)^2 - (v_i)^2) \\over (2 \\cdot {d})}}$$", "((vf)^2 - (vi)^2) / (2 * d)","g", "g", "{{m} \\over " +
+                            "{s^2}}", "Acceleration due to Gravity"},
+                    {"Free-fall Upward Motion", "Distance", "$${d} = {{((v_f)^2 - (v_i)^2) \\over (2 \\cdot g)}}$$", "((vf)^2 - (vi)^2) / (2 * g)","{d}", "d", "{{m}}"},
                     //asdf - shai
                     {"Horizontal Components", "Horizontal Distance","$${x} = {v_x \\cdot {t}}$$", "v * t", "{x}", "x", "{{m}}"},
                     {"Horizontal Components", "Velocity along the x-axis","$$v_x = {{x} \\over {t}}$$", "x / t","v_x", "v", "{{m} \\over {s}}"},
@@ -892,35 +903,36 @@ public class DBHelper extends SQLiteOpenHelper {
                             "Acceleration due to Gravity"},
                     //zxcv
                     //
-                    {"Vertical Velocity at a Certain Time", "Vertical Velocity","$$v_y = {v_{yi} - (g \\cdot {t})}$$", "vi - (g * t)", "v_y", "v", "{{m} \\over {s}}"},
-                    {"Vertical Velocity at a Certain Time", "Initial Velocity along the y-axis", "$$v_{yi} = {v_y + (g \\cdot {t})}$$", "v + (g * t)","v_{yi}", "vi", "{{m} \\over {s}}"},
-                    {"Vertical Velocity at a Certain Time", "Time","$$t = {(v_{yi} - v_y) \\over g}$$", "(vi - v) / g", "{t}", "t", "{{s}}"},
-                    {"Vertical Velocity at a Certain Time", "Acceleration due to Gravity","$$g = {(v_{yi} - v_y) \\over {t}}$$", "(vi - v) / t", "g", "g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
+                    {"Vertical Velocity at a Certain Time", "Vertical Velocity","$$v_y = {(g \\cdot t) + v_{yi}}$$", "vi + (g * t)", "v_y", "v", "{{m} \\over {s}}"},
+                    {"Vertical Velocity at a Certain Time", "Initial Velocity along the y-axis", "$$v_{yi} = {v_y - (g \\cdot {t})}$$", "v - (g * t)","v_{yi}", "vi", "{{m} \\over {s}}"},
+                    {"Vertical Velocity at a Certain Time", "Time","$$t = {(v_y - v_{yi}) \\over g}$$", "(v - vi) / g", "{t}", "t", "{{s}}"},
+                    {"Vertical Velocity at a Certain Time", "Acceleration due to Gravity","$$g = {(v_y - v_{yi}) \\over {t}}$$", "(v - vi) / t", "g", "g", "{{m} \\over {s^2}}", "Acceleration due to" +
+                            " Gravity"},
                     //
-                    {"Time of Flight", "Time of Flight","$$t = {((2 \\cdot v_{yi}) \\cdot sin(\\Theta)) \\over g}$$", "((2 * v) * sin(a)) / g", "{t}", "t", "{{s}}"},
-                    {"Time of Flight", "Initial Velocity","$$v_{yi} = {({t} \\cdot g) \\over (2 \\cdot sin(\\Theta))}$$", "(t * g) / (2 * sin(a))", "v_{yi}", "v", "{{m} \\over {s}}"},
-                    {"Time of Flight", "Angle of Trajectory","$$\\Theta = {sin^{-1}({(g \\cdot {t}) \\over (2 \\cdot v_{yi})})}$$", "asin((g * t) / (2 * v))", "\\Theta","a", "^{{\\circ}}"},
-                    {"Time of Flight", "Acceleration due to Gravity","$$g = {((2 \\cdot v_{yi}) \\cdot sin(\\Theta)) \\over {t}}$$", "((2 * v) * sin(a)) / t","g", "g", "{{m} \\over {s^2}}",
+                    {"Time of Flight", "Time of Flight","$$t = {((2 \\cdot v_{yi}) \\cdot sin(\\theta)) \\over g}$$", "((2 * v) * sin(a)) / g", "{t}", "t", "{{s}}"},
+                    {"Time of Flight", "Initial Velocity","$$v_{yi} = {({t} \\cdot g) \\over (2 \\cdot sin(\\theta))}$$", "(t * g) / (2 * sin(a))", "v_{yi}", "v", "{{m} \\over {s}}"},
+                    {"Time of Flight", "Angle of Trajectory","$$\\theta = {sin^{-1}({(g \\cdot {t}) \\over (2 \\cdot v_{yi})})}$$", "asin((g * t) / (2 * v))", "\\theta","a", "^{{\\circ}}"},
+                    {"Time of Flight", "Acceleration due to Gravity","$$g = {((2 \\cdot v_{yi}) \\cdot sin(\\theta)) \\over {t}}$$", "((2 * v) * sin(a)) / t","g", "g", "{{m} \\over {s^2}}",
                             "Acceleration due to Gravity"},
                     //
-                    {"Maximum Height Reached", "Maximum Height Reached","$$H = {((v_{1})^2 \\cdot (sin(\\Theta) \\cdot sin(\\Theta))) \\over (2 \\cdot g)}$$", "((v)^2 * (sin(a) * sin(a))) / (2 * g)",
+                    {"Maximum Height Reached", "Maximum Height Reached","$$H = {((v_{1})^2 \\cdot (sin(\\theta) \\cdot sin(\\theta))) \\over (2 \\cdot g)}$$", "((v)^2 * (sin(a) * sin(a))) / (2 * g)",
                             "H",
                             "H", "{{m}}"},
-                    {"Maximum Height Reached", "Initial Velocity",  "$$v_{1} = {\\sqrt{{(2 \\cdot g \\cdot H) \\over (sin(\\Theta) \\cdot sin(\\Theta))}}}$$", "sqrt((2 * g * H) / (sin(a) * sin(a)))", "v_{1}", "v", "{{m} " +
+                    {"Maximum Height Reached", "Initial Velocity",  "$$v_{1} = {\\sqrt{{(2 \\cdot g \\cdot H) \\over (sin(\\theta) \\cdot sin(\\theta))}}}$$", "sqrt((2 * g * H) / (sin(a) * sin(a)))", "v_{1}", "v", "{{m} " +
                             "\\over " +
                             "{s}}"},
-                    {"Maximum Height Reached", "Angle of Trajectory", "$$\\Theta = {sin^{-1}({\\sqrt{{(2 \\cdot g \\cdot H) \\over (v_{1})^2}}})}$$", "asin(sqrt((2 * g * H) / (v)^2))", "\\Theta",
+                    {"Maximum Height Reached", "Angle of Trajectory", "$$\\theta = {sin^{-1}({\\sqrt{{(2 \\cdot g \\cdot H) \\over (v_{1})^2}}})}$$", "asin(sqrt((2 * g * H) / (v)^2))", "\\theta",
                             "a", "^{{\\circ}}"},
-                    {"Maximum Height Reached", "Acceleration due to Gravity", "$$g = {((v_{1})^2 \\cdot (sin(\\Theta) \\cdot sin(\\Theta))) \\over (2 \\cdot H)}$$", "((v) ^ 2 * (sin(a) * sin(a))) /" +
+                    {"Maximum Height Reached", "Acceleration due to Gravity", "$$g = {((v_{1})^2 \\cdot (sin(\\theta) \\cdot sin(\\theta))) \\over (2 \\cdot H)}$$", "((v) ^ 2 * (sin(a) * sin(a))) /" +
                             " " +
                             "(2" +
                             " * H)",
                             "g", "g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
                     //
-                    {"Horizontal Range", "Horizontal Range","$$R = {((v_{1})^2 \\cdot sin((2 \\cdot \\Theta))) \\over g}$$", "((v) ^ 2 * sin(2 * a)) / g", "R", "R", "{{m}}"},
-                    {"Horizontal Range", "Initial Velocity","$$v_{1} = \\sqrt{{(g \\cdot R) \\over (sin((2 \\cdot \\Theta)))}}$$", "sqrt((g * R) / (sin(2 * a)))", "v_{1}", "v", "{{m} \\over {s}}"},
-                    {"Horizontal Range", "Angle of Trajectory", "$$\\Theta = {sin^{-1}({(g \\cdot R) \\over (2 * v_{1})})}$$", "asin((g * R) / (2 * v))", "\\Theta", "a", "^{{\\circ}}"},
-                    {"Horizontal Range", "Acceleration due to Gravity", "$$g = {((v_{1})^2 \\cdot sin((2 \\cdot \\Theta))) \\over R}$$", "((v) ^ 2 * sin(2 * a)) / R", "g", "g", "{{m} \\over {s^2}}",
+                    {"Horizontal Range", "Horizontal Range","$$R = {((v_{1})^2 \\cdot sin((2 \\cdot \\theta))) \\over g}$$", "((v) ^ 2 * sin(2 * a)) / g", "R", "R", "{{m}}"},
+                    {"Horizontal Range", "Initial Velocity","$$v_{1} = \\sqrt{{(g \\cdot R) \\over (sin((2 \\cdot \\theta)))}}$$", "sqrt((g * R) / (sin(2 * a)))", "v_{1}", "v", "{{m} \\over {s}}"},
+                    {"Horizontal Range", "Angle of Trajectory", "$$\\theta = {sin^{-1}({(g \\cdot R) \\over (2 * v_{1})})}$$", "asin((g * R) / (2 * v))", "\\theta", "a", "^{{\\circ}}"},
+                    {"Horizontal Range", "Acceleration due to Gravity", "$$g = {((v_{1})^2 \\cdot sin((2 \\cdot \\theta))) \\over R}$$", "((v) ^ 2 * sin(2 * a)) / R", "g", "g", "{{m} \\over {s^2}}",
                             "Acceleration due to Gravity"},
                     //
                     {"Friction", "Frictional Force", "$$F_f = {\\mu \\cdot F_n}$$", "m * N", "F_f", "F", "{{{N}}}"},
@@ -931,9 +943,10 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Momentum", "Mass", "$$m = {p \\over {v}}$$", "p / v", "m", "m", "{{kg}}"},
                     {"Momentum", "Velocity", "$${v} = {p \\over m}$$", "p / m", "{v}", "v", "{{m} \\over {s}}"},
                     //
-                    {"Work", "Work", "$$W = {\\vec{F} \\cdot \\vec{x}}$$", "F * x", "W", "W", "{{J}}"},
-                    {"Work", "Force", "$$\\vec{F} = {W \\over \\vec{x}}$$", "W / x", "\\vec{F}", "F", "{{N}}"},
-                    {"Work", "Distance", "$$\\vec{x} = {W \\over \\vec{F}}$$", "W / F", "\\vec{x}", "x", "{{m}}"},
+                    {"Work", "Work", "$$W = {\\vec{F} \\cdot \\vec{x} \\cdot cos(\\theta)}$$", "F * x * cos(a)", "W", "W", "{{J}}"},
+                    {"Work", "Force", "$$\\vec{F} = {W \\over {\\vec{x} \\cdot cos(\\theta)}}$$", "W / (x * cos(a))", "\\vec{F}", "F", "{{N}}"},
+                    {"Work", "Distance", "$$\\vec{x} = {W \\over {\\vec{F} \\cdot cos(\\theta)}}$$", "W / (F cos(a))", "\\vec{x}", "x", "{{m}}"},
+                    {"Work", "Angle", "$$\\theta = {cos^{-1}({W \\over {\\vec{F} \\cdot \\vec{x}}})}$$", "acos(W / (F * x))", "\\theta", "a", "^{{\\circ}}"},
                     //
                     {"Kinetic Energy", "Kinetic Energy", "$$KE = {(m \\cdot ({v})^2) \\over 2}$$", "(m * (v) ^ 2) / 2", "KE", "KE", "{{J}}"},
                     {"Kinetic Energy", "Mass", "$$m = {(2 \\cdot KE) \\over ({v})^2}$$", "(2 * KE) / (v)^2", "m", "m", "{{kg}}"},
@@ -944,10 +957,6 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Gravitational Potential Energy", "Height", "$$h = {PE_g \\over (m \\cdot {g})}$$", "PE / (m * g)", "h", "h", "{{m}}"},
                     {"Gravitational Potential Energy", "Acceleration due to Gravity", "$$g = {PE_g \\over (m \\cdot h)}$$", "PE / (m * h)", "{g}", "g", "{{m} \\over {s^2}}", "Acceleration due to " +
                             "Gravity"},
-                    //
-                    {"Spring Potential Energy", "Potential Energy", "$$PE_{sp} = {({1 \\over 2} \\cdot k) \\cdot (\\Delta x)^2}$$","((1 / 2)* k) * (x) ^ 2", "PE_{sp}",  "PE", "{{J}}"},
-                    {"Spring Potential Energy", "Spring Constant", "$$k = {(2 \\cdot PE_{sp}) \\over (\\Delta x)^2}$$", "(2 * PE) / (x) ^ 2", "k", "k", "{{kg} \\over {s^2}}"},
-                    {"Spring Potential Energy", "Spring Displacement", "$$\\Delta x = {\\sqrt{{(2 \\cdot PE_{sp}) \\over k}}}$$",  "sqrt((2 * PE) / k)","\\Delta x", "x", "{{m}}"},
                     //
                     {"Total Mechanical Energy", "Total Mechanical Energy", "$$TME = {KE + PE}$$",  "KE + PE","TME", "TME", "{{{J}}}"},
                     {"Total Mechanical Energy", "Kinetic Energy", "$$KE = {TME - PE}$$", "TME - PE", "KE", "KE", "{{{J}}}"},
@@ -962,9 +971,9 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Instantaneous Power", "Angle", "$${a} = {cos^{-1}({P \\over (F \\cdot {v})})}$$", "acos(P / (F * v))", "{a}", "a", "^{{\\circ}}"},
                     {"Instantaneous Power", "Velocity", "$${v} = {P \\over (F \\cdot (cos({a})))}$$", "P / (F * cos(a))", "{v}", "v", "{{m} \\over {s}}"},
                     //
-                    {"Length of Arc", "Length of Arc", "$$\\Delta S = {{r} \\cdot \\Delta \\Theta}$$", "r * a", "\\Delta S", "s", "{{{m}}}"},
-                    {"Length of Arc", "Radius", "$${r} = {\\Delta S \\over \\Delta \\Theta}$$", "s / a", "{r}", "r", "{{m}}"},
-                    {"Length of Arc", "Angle",  "$$\\Delta \\theta = {\\Delta S \\over {r}}$$", "s / r", "\\Delta \\Theta", "a", "{{{rad}}}"},//
+                    {"Length of Arc", "Length of Arc", "$$\\Delta S = {{r} \\cdot \\Delta \\theta}$$", "r * a", "\\Delta S", "s", "{{{m}}}"},
+                    {"Length of Arc", "Radius", "$${r} = {\\Delta S \\over \\Delta \\theta}$$", "s / a", "{r}", "r", "{{m}}"},
+                    {"Length of Arc", "Angle",  "$$\\Delta \\theta = {\\Delta S \\over {r}}$$", "s / r", "\\Delta \\theta", "a", "{{{rad}}}"},//
                     //
                     {"Tangential Velocity", "Tangential Velocity", "$${v} = {\\Delta S \\over \\Delta t}$$", "s / t", "{v}", "v", "{{m} \\over {s}}"},
                     {"Tangential Velocity", "Length of Arc","$$\\Delta S = {{v} \\cdot \\Delta t}$$", "v * t", "\\Delta S", "s", "{{m}}"},
@@ -974,9 +983,9 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Velocity around a Circle", "Radius", "$${r} = {({v} \\cdot {t}) \\over (2 \\cdot \\pi)}$$", "(v * t) / (2 * pi)", "{r}", "r", "{{m}}"},
                     {"Velocity around a Circle", "Time", "$${t} = {(2 \\cdot \\pi) \\cdot {{r} \\over {v}}}$$", "(2 * pi) * (r / v)", "{t}", "t", "{{s}}"},
                     //
-                    {"Angular Velocity", "Angular Velocity", "$$\\omega = {\\Delta \\Theta \\over \\Delta t}$$", "a / t", "\\omega", "v", "{{rad} \\over {s}}"},
-                    {"Angular Velocity", "Angle", "$$\\Delta \\Theta = {\\omega \\cdot \\Delta t}$$", "v * t", "\\Delta \\Theta", "a", "{{rad}}"},
-                    {"Angular Velocity", "Time", "$$\\Delta t = {\\Delta \\Theta \\over \\omega}$$", "a / v", "\\Delta t", "t", "{{s}}"},
+                    {"Angular Velocity", "Angular Velocity", "$$\\omega = {\\Delta \\theta \\over \\Delta t}$$", "a / t", "\\omega", "v", "{{rad} \\over {s}}"},
+                    {"Angular Velocity", "Angle", "$$\\Delta \\theta = {\\omega \\cdot \\Delta t}$$", "v * t", "\\Delta \\theta", "a", "{{rad}}"},
+                    {"Angular Velocity", "Time", "$$\\Delta t = {\\Delta \\theta \\over \\omega}$$", "a / v", "\\Delta t", "t", "{{s}}"},
                     //
                     {"Centripetal Acceleration", "Centripetal Acceleration", "$$a_c = {{r} \\cdot (\\omega)^2}$$", "r * (w)^2", "a_c", "a", "{{m} \\over {s^2}}"},
                     {"Centripetal Acceleration", "Angular Velocity", "$$\\omega = {\\sqrt{{a_c \\over {r}}}}$$", "sqrt(a / r)", "\\omega", "w", "{{rad} \\over {s}}"},

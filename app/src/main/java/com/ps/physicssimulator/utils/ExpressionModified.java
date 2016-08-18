@@ -420,9 +420,10 @@ public class ExpressionModified {
         switch (op) {
             case "^":
                 int l = Integer.parseInt(rightArg.replace(".0", ""));
+                String leftUnit = left;
                 //left = left.replace("{", "").replace("}", "");
                 for(int i = 0; i < l; i+=2)
-                    left = getUnit("{" + left + "}", "*", "{" + left + "}", "0");
+                    left = getUnit("{" + left + "}", "*", "{" + leftUnit + "}", "0");
                 return left;
             case "/":
                 if(right.equals("1")){
