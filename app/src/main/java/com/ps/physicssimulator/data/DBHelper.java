@@ -146,7 +146,7 @@ public class DBHelper extends SQLiteOpenHelper {
             String[][] lessons = {
                     {"Scalar and Vector Values", "One-dimensional Motion",
                             "Definition, Distance and Displacement",
-                            "ic_lesson_scalar_and_vector_quantities", "1", "0", "ihNZlp7iUHE", "asdf"},
+                            "ic_lesson_scalar_and_vector_quantities", "1", "0", "ihNZlp7iUHE", "audio_lesson_velocity"},
                     {"Velocity", "One-dimensional Motion",
                             "Definition, Speed and Velocity, Average Velocity, Instantaneous " +
                                     "Velocity",

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,11 +44,12 @@ import io.github.kexanie.library.MathView;
 
 public class ContentActivity extends AppCompatActivity implements YouTubePlayer.OnInitializedListener{
 
-    boolean isAudioPlaying;
+
     String mLesson;
     String mChapter;
     LinearLayout mContentContainer;
     int hasCalc;
+    MediaPlayer audioPlayer;
 
     private final String youTubeAPIKey = "AIzaSyC5kxF8pAU4jQqc2XUoa-58CH08C8BOvCY";
     private static final int RQS_ErrorDialog = 1;
@@ -67,24 +69,25 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         setContentView(R.layout.activity_content);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        isAudioPlaying = false;
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isAudioPlaying){
-                    isAudioPlaying = false;
+                if(audioPlayer.isPlaying()){
                     fab.setImageResource(R.drawable.ic_play);
+                    audioPlayer.pause();
                     Snackbar.make(view, "Audio lesson paused", Snackbar.LENGTH_LONG)
                             .setAction("Stop", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-
+                                    audioPlayer.seekTo(0);
+                                    audioPlayer.pause();
+                                    Toast.makeText(ContentActivity.this, "The audio has been stopped.", Toast.LENGTH_SHORT).show();
                                 }
                             }).setActionTextColor(Color.WHITE).show();
                 } else {
-                    isAudioPlaying = true;
+                    audioPlayer.start();
                     fab.setImageResource(R.drawable.ic_pause);
                 }
 
@@ -225,8 +228,22 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
             btnSimulate.setVisibility(View.GONE);
         }
 
+        audioPlayer = MediaPlayer.create(this, getResources().getIdentifier(
+                lesson.getString(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_AUDIO)),
+                "raw", this.getPackageName()));
+
+        audioPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mediaPlayer.seekTo(0);
+                Toast.makeText(ContentActivity.this, "The audio lesson has finished playing.", Toast.LENGTH_SHORT).show();
+                fab.setImageResource(R.drawable.ic_play);
+            }
+        });
+
         if(autoplay){
-            //play audio
+            audioPlayer.start();
+            fab.setImageResource(R.drawable.ic_pause);
         }
 
 
@@ -234,6 +251,8 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         YouTubePlayerFragment youtubePlayer = (YouTubePlayerFragment)getFragmentManager()
                 .findFragmentById(R.id.youtube_fragment);
         youtubePlayer.initialize(youTubeAPIKey, this);
+
+
     }
 
     public LinearLayout addImage(String imageName, String caption) {
