@@ -38,6 +38,8 @@ dependencies {
 
     compile files('libs/unity-classes.jar')
     compile files('libs/YouTubeAndroidPlayerApi.jar')
+    compile files('libs/unit-ri-0.9.jar')
+    compile 'javax.measure:unit-api:1.0'
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.android.support:design:24.1.1'
     compile 'com.android.support:support-v4:24.1.1'
