@@ -63,6 +63,20 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        audioPlayer.pause();
+        audioPlayer.seekTo(0);
+        return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        audioPlayer.pause();
+        audioPlayer.seekTo(0);
+        super.onBackPressed();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -217,10 +231,12 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
             btnSimulate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    audioPlayer.pause();
+                    audioPlayer.seekTo(0);
+                    fab.setImageResource(R.drawable.ic_play);
                     Intent intent = new Intent(ContentActivity.this, UnityPlayerActivity.class);
                     intent.putExtra("Lesson", mLesson);
                     intent.putExtra("Chapter", mChapter);
-
                     startActivity(intent);
                 }
             });
@@ -236,7 +252,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 mediaPlayer.seekTo(0);
-                Toast.makeText(ContentActivity.this, "The audio lesson has finished playing.", Toast.LENGTH_SHORT).show();
+                ///Toast.makeText(ContentActivity.this, "The audio lesson has finished playing.", Toast.LENGTH_SHORT).show();
                 fab.setImageResource(R.drawable.ic_play);
             }
         });

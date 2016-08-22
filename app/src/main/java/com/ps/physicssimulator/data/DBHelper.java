@@ -150,48 +150,48 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Velocity", "One-dimensional Motion",
                             "Definition, Speed and Velocity, Average Velocity, Instantaneous " +
                                     "Velocity",
-                            "ic_lesson_velocity", "1", "1", "oRKxmXwLvUU", "asdf"},
+                            "ic_lesson_velocity", "1", "1", "oRKxmXwLvUU", "audio_lesson_velocity"},
                     {"Acceleration", "One-dimensional Motion", "Definition, Acceleration, Average " +
                             "Acceleration, Instantaneous Acceleration",
-                            "ic_lesson_acceleration", "1", "1", "FOkQszg1-j8", "asdf"},
+                            "ic_lesson_acceleration", "1", "1", "FOkQszg1-j8", "audio_lesson_velocity"},
                     {"Free-fall", "One-dimensional Motion", "Definition, Free fall",
-                            "ic_lesson_free_fall", "1", "1", "6wEEa8-RSqU", "asdf"},
+                            "ic_lesson_free_fall", "1", "1", "6wEEa8-RSqU", "audio_lesson_velocity"},
                     {"Projectile Motion", "Two-dimensional Motion", "Definition, " +
                             "Projectile Motion",
-                            "ic_lesson_projectile_motion", "1", "1","rMVBc8cE5GU", "asdf"},
+                            "ic_lesson_projectile_motion", "1", "1","rMVBc8cE5GU", "audio_lesson_velocity"},
                     {"Newton's Laws of Motion", "Isaac Newton's Laws of Motion", "Newton's Laws of Motion",
-                            "ic_lesson_friction", "0", "0", "fmXFWi", "asdf"}, //asdf
+                            "ic_lesson_friction", "0", "0", "fmXFWi", "audio_lesson_velocity"}, //asdf
                     {"Friction", "Isaac Newton's Laws of Motion", "Definition, Two types of " +
                             "Friction",
-                            "ic_lesson_friction", "1", "1", "fo_pmp5rtzo", "asdf"},
+                            "ic_lesson_friction", "1", "1", "fo_pmp5rtzo", "audio_lesson_velocity"},
                     {"Free-body Diagrams", "Isaac Newton's Laws of Motion", "Definition, Free " +
                             "Body Diagrams",
-                            "ic_lesson_free_body_diagrams", "0", "0", "nDis6HbXxjg", "asdf"},
+                            "ic_lesson_free_body_diagrams", "0", "0", "nDis6HbXxjg", "audio_lesson_velocity"},
                     {"Momentum and Impulse", "Momentum and Impulse", "Definition, Momentum, " +
                             "Impulse",
-                            "ic_lesson_momentum_impulse", "1", "1", "XFhntPxow0U","asdf"},
+                            "ic_lesson_momentum_impulse", "1", "1", "XFhntPxow0U","audio_lesson_velocity"},
                     {"Law of Conservation of Energy", "Momentum and Impulse", "Definition, " +
                             "Conservation of Energy",
-                            "ic_lesson_laws_of_conservation_of_energy", "0", "0", "PplaBASQ_3M", "asdf"},
+                            "ic_lesson_laws_of_conservation_of_energy", "0", "0", "PplaBASQ_3M", "audio_lesson_velocity"},
                     {"Work", "Work, Energy, and Power", "Definition, Work",
-                            "ic_lesson_work", "1", "1", "fmXFWi", "asdf"}, //asdf
+                            "ic_lesson_work", "1", "1", "fmXFWi", "audio_lesson_velocity"}, //asdf
                     {"Energy", "Work, Energy, and Power", "Definition, Kinetic Energy, " +
                             "Potential Energy, Total Mechanical Energy",
-                            "ic_lesson_energy", "1", "1", "fmXFWi", "asdf"}, //asdf
+                            "ic_lesson_energy", "1", "1", "fmXFWi", "audio_lesson_velocity"}, //asdf
                     {"Power", "Work, Energy, and Power", "Definition, Average Power, " +
                             "Instantaneous Power",
-                            "ic_lesson_power", "1", "1", "fmXFWi", "asdf"}, //asdf
+                            "ic_lesson_power", "1", "1", "fmXFWi", "audio_lesson_velocity"}, //asdf
                     {"Uniform Circular Motion", "Uniform Circular Motion", "Definition, " +
                             "Measurements of a Circle, Frequency, Angular Displacement, " +
                             "Length of Arc, Tangential Velocity, Angular Velocity, " +
                             "Centripetal Acceleration",
-                            "ic_lesson_uniform_circular_motion", "1", "1", "bpFK2VCRHUs", "asdf"},
+                            "ic_lesson_uniform_circular_motion", "1", "1", "bpFK2VCRHUs", "audio_lesson_velocity"},
                     {"Centripetal and Centrifugal Forces", "Uniform Circular Motion",
                             "Definition, Centripetal and Centrifugal Forces",
-                            "ic_lesson_centripetal_and_centrifugal_force", "1", "1", "9s1IRJbL2Co", "asdf"},
+                            "ic_lesson_centripetal_and_centrifugal_force", "1", "1", "9s1IRJbL2Co", "audio_lesson_velocity"},
                     {"Rotational Motion", "Uniform Circular Motion", "Definition, Moment of " +
                             "Inertia, Torque, Angular Momentum",
-                            "ic_lesson_rotational_motion", "1", "0", "fmXFWi", "asdf"}
+                            "ic_lesson_rotational_motion", "1", "0", "fmXFWi", "audio_lesson_velocity"}
             };
 
             for(String[] s : lessons){
