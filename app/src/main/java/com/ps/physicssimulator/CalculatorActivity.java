@@ -12,9 +12,12 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -47,6 +50,7 @@ public class CalculatorActivity extends AppCompatActivity {
     static Button btnCalc;
     static Bundle b;
     static boolean fromConstants, fromLesson;
+    Spinner spnChapters, spnLessons, spnFormula, spnVar;
 
     @Nullable
     @Override
@@ -78,10 +82,10 @@ public class CalculatorActivity extends AppCompatActivity {
                 new String[]{DataContract.ChapterEntry.COLUMN_NAME}
         );
 
-        final Spinner spnChapters = (Spinner) findViewById(R.id.spinner_chapters);
-        final Spinner spnLessons = (Spinner) findViewById(R.id.spinner_lessons);
-        final Spinner spnFormula = (Spinner) findViewById(R.id.spinner_formula);
-        final Spinner spnVar = (Spinner) findViewById(R.id.spinner_variable);
+        spnChapters = (Spinner) findViewById(R.id.spinner_chapters);
+        spnLessons = (Spinner) findViewById(R.id.spinner_lessons);
+        spnFormula = (Spinner) findViewById(R.id.spinner_formula);
+        spnVar = (Spinner) findViewById(R.id.spinner_variable);
 
         final Intent intent = getIntent();
         fromConstants = intent != null && intent.hasExtra("currentChapter");
@@ -236,8 +240,10 @@ public class CalculatorActivity extends AppCompatActivity {
                                                                             .replace("_", "")
                                                                             .replace("{", "")
                                                                             .replace("}", "")
+                                                                            .replace("\\", "")
                                                                     + ")");
                                                             txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                                                            txtInput.setFilters(new InputFilter[] {new InputFilter.LengthFilter(15)});
                                                             txtInput.setEms(10);
                                                             txtInput.addTextChangedListener(createTextWatcher(symbolC));
                                                             if(fromConstants)
@@ -382,6 +388,7 @@ public class CalculatorActivity extends AppCompatActivity {
         }
     }
 
+
     public int getTextIndex(Cursor c, String column, String text){
         int i = 0;
         c.moveToFirst();
@@ -461,6 +468,19 @@ public class CalculatorActivity extends AppCompatActivity {
         } catch (Exception ex) {}
     }
 
+    public TextInputEditText getFocusedEditText() {
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.input_container);
+        for(int i = 0; i < linearLayout.getChildCount(); i++) {
+            LinearLayout inputContainer = (LinearLayout)linearLayout.getChildAt(i);
+            for(int l = 0; l < inputContainer.getChildCount(); l++) {
+                TextInputEditText editText = (TextInputEditText)(((TextInputLayout)inputContainer.getChildAt(l)).getChildAt(0));
+                if(editText.hasFocus())
+                    return editText;
+            }
+        }
+        return null;
+    }
+
 
     public SimpleCursorAdapter setSpinnerAdapter(Cursor c, String[] projection) {
         int[] views = new int[]{android.R.id.text1};
@@ -478,18 +498,45 @@ public class CalculatorActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 try {
                     String text = charSequence.toString();
-                    if(text.charAt(0) == '.')
-                        if(text.length() != 1) {
-                            text = "0" + text;
-                        } else {
-                            text = "";
-                        }
-                    else if(text.charAt(0) == '-')
+//                    if(text.charAt(0) == '.')
+//                        if(text.length() != 1) {
+//                            text = "0" + text;
+//                        } else {
+//                            text = "";
+//                        }
+//                    if(text.contains(".")){
+//                        int idx = text.indexOf(".");
+//                        TextInputEditText focusedText = getFocusedEditText();
+//                        focusedText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(idx+5)});
+//                    } else {
+//                        TextInputEditText focusedText = getFocusedEditText();
+//                        focusedText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(15)});
+//                    }
+                    if(text.charAt(0) == '-')
                         if(text.length() == 1)
                             text = "";
 
                     if(text.charAt(text.length()-1) == '.')
                         text = text + "0";
+
+                    int idx = text.indexOf(".");
+                    String zeroTemp = "";
+                    if(idx != -1 && idx < text.length()) {
+                        for (int z = idx; z < text.length() - 1; z++)
+                            zeroTemp += 0;
+                        if(text.substring(idx+1).equals(zeroTemp)) {
+                            text = text.substring(0, idx);
+                            if(Double.parseDouble(text.substring(0, idx)) == 0)
+                                text = "0";
+                        } else {
+                            if (zeroTemp.length() > 4)
+                                text = new DecimalFormat("#.####E0").format(Double.parseDouble(text));
+                        }
+                    }
+
+                    Double textValue = Double.parseDouble(text);
+                    if(textValue > Math.pow(10, 7) || (textValue > 0) && (textValue < Math.pow(10, -3)))
+                        text= new DecimalFormat("#.####E0").format(textValue);
                     values[findVariableIndex(variable)][2] = text;
                     if(checkValues())
                         btnCalc.setEnabled(true);
@@ -524,12 +571,7 @@ public class CalculatorActivity extends AppCompatActivity {
         formula = formula.replace("*", "\\cdot");
         formula = formula.replace("/", "\\over");
         formula = formula.replace("\\pi", String.valueOf(new DecimalFormat("#.####").format(Math.PI)));
-        //formula = formula.replace("(", "{").replace(")", "}");
-//        if (formula.contains("^")) {
-//            int i = formula.indexOf("^");
-//            //if(formula.charAt(i-2) == ' ' || formula.charAt(i+1) == ' ')
-//                formula = formula.substring(0, i) + "(" + formula.charAt(i) + ")" + formula.substring(i + 1);
-//        }
+
         //Substitute values
         for (String[] s : values) {
             formula = formula.replace(s[3], s[2] + s[1]);
@@ -539,6 +581,35 @@ public class CalculatorActivity extends AppCompatActivity {
         MathView txtSub = (MathView) findViewById(R.id.text_substitute);
         txtSub.setText(formula);
         //txtSub.setText("$$" + variableToSolve + " = {" + formula + "}$$");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_converter) {
+            Intent intent = new Intent(this, ConverterActivity.class);
+            intent.putExtra("currentChapter", spnChapters.getSelectedItemPosition());
+            intent.putExtra("currentLesson", spnLessons.getSelectedItemPosition());
+            intent.putExtra("currentFormula", spnFormula.getSelectedItemPosition());
+            intent.putExtra("currentVariable", spnVar.getSelectedItemPosition());
+            intent.putExtra("formulaName", formulaName);
+            int i = 0;
+            intent.putExtra("size", values.length);
+            for (String[] value : values) {
+                intent.putExtra("value"+ i++, value);
+            }
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_converter, menu);
+        return true;
     }
 
     public int findVariableIndex(String variable) {

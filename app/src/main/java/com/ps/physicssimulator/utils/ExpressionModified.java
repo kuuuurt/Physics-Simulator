@@ -202,11 +202,23 @@ public class ExpressionModified {
                         return steps;
                     }
                     String strRightArg = String.valueOf(rightArg);
-                    if(rightArg % 1 == 0){
+                    boolean exp = false;
+                    for(int z = -4; z > -25; z--){
+                        exp = rightArg == Math.pow(10, z);
+                        if(exp)
+                            break;
+                    }
+
+                    if(rightArg % 1 == 0  || exp){
                         strRightArg = strRightArg.replace(".0" , "");
                     }
                     String strLeftArg = String.valueOf(leftArg);
-                    if(leftArg % 1 == 0){
+                    for(int z = -3; z > -25; z--){
+                        exp = leftArg == Math.pow(10, z);
+                        if(exp)
+                            break;
+                    }
+                    if(leftArg % 1 == 0 || exp){
                         strLeftArg = strLeftArg.replace(".0" , "");
                     }
 
@@ -244,8 +256,21 @@ public class ExpressionModified {
                     if(unit.equals("{{\\circ}}"))
                         unit = "^{{\\circ}}";
 
+                    int power = (int)(Math.log(res)/Math.log(10));
 
                     String strRes = df.format(res);
+                    if((Math.abs(res) > 0) && (Math.abs(res) < Math.pow(10,-3)) || power > 6) {
+                        strRes = new DecimalFormat("#.####E0").format(res);
+                        boolean test = false;
+                        for(int z = -3; z > -25; z--){
+                            exp = rightArg == Math.pow(10, z);
+                            if(exp)
+                                break;
+                        }
+                        if(test)
+                            strRes = strRes.replace(".0", "");
+                    }
+
                     steps.add(new String[]{strRes, unit, formula} );
 
                     finalFormula = formula;

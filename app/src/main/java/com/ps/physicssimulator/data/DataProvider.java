@@ -29,6 +29,7 @@ public class DataProvider extends ContentProvider{
     static final int IMAGE = 800;
     static final int IMAGE_WITH_SECTION = 801;
 
+
     static UriMatcher uriMatcher(){
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = DataContract.CONTENT_AUTHORITY;
@@ -51,6 +52,7 @@ public class DataProvider extends ContentProvider{
         matcher.addURI(authority, DataContract.PATH_IMAGE, IMAGE);
         matcher.addURI(authority, DataContract.PATH_IMAGE + "/*", IMAGE_WITH_SECTION);
 
+
         return matcher;
     }
 
@@ -63,6 +65,7 @@ public class DataProvider extends ContentProvider{
     private static final SQLiteQueryBuilder formulaConstantQueryBuilder;
     private static final SQLiteQueryBuilder sectionQueryBuilder;
     private static final SQLiteQueryBuilder imageQueryBuilder;
+
 
     static{
         lessonQueryBuilder = new SQLiteQueryBuilder();
@@ -88,7 +91,9 @@ public class DataProvider extends ContentProvider{
 
         imageQueryBuilder = new SQLiteQueryBuilder();
         imageQueryBuilder.setTables(DataContract.ImageEntry.TABLE_NAME);
+
     }
+
 
     private static final String lessonWithTitleQuery = DataContract.LessonEntry.TABLE_NAME + "." +
             DataContract.LessonEntry.COLUMN_NAME + " = ? ";
@@ -120,6 +125,7 @@ public class DataProvider extends ContentProvider{
 
     private static final String imageSectionQuery = DataContract.ImageEntry.TABLE_NAME + "."
             + DataContract.ImageEntry.COLUMN_SECTION_KEY + " = ? ";
+
 
 
 
@@ -292,6 +298,8 @@ public class DataProvider extends ContentProvider{
                 sortOrder
         );
     }
+
+
 
     @Override
     public boolean onCreate() {

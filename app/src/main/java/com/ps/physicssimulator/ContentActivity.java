@@ -362,13 +362,9 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+    public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_calc) {
             Intent intent = new Intent(this, CalculatorActivity.class);
             intent.putExtra("Lesson", mLesson);
@@ -382,7 +378,6 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-        //mPlayer = youTubePlayer;
         if (!b) {
             youTubePlayer.cueVideo(video);
         }

@@ -85,6 +85,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.VariableEntry.COLUMN_FORMULA_COMPUTE + " TEXT, " +
                 DataContract.VariableEntry.COLUMN_FORMULA_DISPLAY + " TEXT);";
 
+
         sqLiteDatabase.execSQL(SQL_CREATE_CHAPTER_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_LESSON_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_SECTION_TABLE);
@@ -1072,6 +1073,8 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
     }
+
+
 }
 
 
