@@ -53,7 +53,7 @@
                 android:id="@+id/text_unit_source"
                 android:maxLength="15"
                 android:hint="Original Value"
-                android:inputType="number|numberDecimal"/>
+                android:inputType="number|numberDecimal|numberSigned"/>
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
@@ -71,9 +71,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:layout_gravity="center_horizontal"
-                android:weightSum="1"
-                android:gravity="center">
+                android:weightSum="1">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -153,3 +154,4 @@
 
 
 </ScrollView>
+

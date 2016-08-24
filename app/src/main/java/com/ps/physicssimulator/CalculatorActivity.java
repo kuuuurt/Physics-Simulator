@@ -1,12 +1,14 @@
 package com.ps.physicssimulator;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.OrientationHelper;
@@ -16,6 +18,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +34,9 @@ import android.widget.TextView;
 import com.ps.physicssimulator.data.DataContract;
 import com.ps.physicssimulator.utils.ExpressionBuilderModified;
 import com.ps.physicssimulator.utils.ExpressionModified;
+
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -234,18 +240,110 @@ public class CalculatorActivity extends AppCompatActivity {
                                                                     LinearLayout.LayoutParams.MATCH_PARENT,
                                                                     LinearLayout.LayoutParams.WRAP_CONTENT
                                                             ));
-                                                            txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)) +
-                                                                    " (" +
-                                                                    c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY))
-                                                                            .replace("_", "")
-                                                                            .replace("{", "")
-                                                                            .replace("}", "")
-                                                                            .replace("\\", "")
-                                                                    + ")");
+                                                            try {
+                                                                txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)) +
+                                                                        " (" +
+                                                                        c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY))
+                                                                                .replace("_", "")
+                                                                                .replace("{", "")
+                                                                                .replace("}", "")
+                                                                                .replace("\\", "")
+                                                                        + ") in " +
+                                                                        c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_UNIT_DESC)));
+                                                            } catch(Exception ex){
+                                                                txtInput.setHint(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_NAME)) +
+                                                                        " (" +
+                                                                        c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY))
+                                                                                .replace("_", "")
+                                                                                .replace("{", "")
+                                                                                .replace("}", "")
+                                                                                .replace("\\", "")
+                                                                        + ")");
+                                                            }
                                                             txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
                                                             txtInput.setFilters(new InputFilter[] {new InputFilter.LengthFilter(15)});
                                                             txtInput.setEms(10);
                                                             txtInput.addTextChangedListener(createTextWatcher(symbolC));
+                                                            txtInput.setOnLongClickListener(new View.OnLongClickListener() {
+                                                                @Override
+                                                                public boolean onLongClick(View view) {
+                                                                    final TextInputEditText input = (TextInputEditText)view;
+                                                                    String value = input.getText().toString();
+                                                                    final String[] conversion = {""};
+                                                                    if(value.length() > 0) {
+                                                                        AlertDialog.Builder builder = new AlertDialog.Builder(CalculatorActivity.this);
+                                                                        LayoutInflater inflater = CalculatorActivity.this.getLayoutInflater();
+                                                                        final View dialogView = inflater.inflate(R.layout.dialog_unit_conversion, null);
+
+
+                                                                        TextView txtValue = (TextView) dialogView.findViewById(R.id.text_value);
+                                                                        txtValue.setText(value);
+
+                                                                        Spinner spnUnit = (Spinner) dialogView.findViewById(R.id.spinner_value_unit);
+                                                                        ConverterActivity.populateListsSI(CalculatorActivity.this, ConverterActivity.baseUnits[0], ConverterActivity.keywords[0], spnUnit);
+                                                                        spnUnit.setSelection(ConverterActivity.defaultUnit);
+                                                                        ExpressionBuilder expressionBuilder2 = new ExpressionBuilder("x * (y / z)")
+                                                                                .variable("x")
+                                                                                .variable("y")
+                                                                                .variable("z");
+                                                                        final Expression expression2 = expressionBuilder2.build();
+                                                                        expression2.setVariable("x", Double.parseDouble(value));
+
+                                                                        final TextView txtConversion = (TextView) dialogView.findViewById(R.id.text_conversion);
+                                                                        spnUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                                            @Override
+                                                                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                                                                double num = 1, den = 1;
+                                                                                if (i < 10) {
+                                                                                    den = Math.pow(10, ConverterActivity.unitPow.get(i));
+
+                                                                                } else {
+                                                                                    num = Math.pow(10, ConverterActivity.unitPow.get(i));
+                                                                                }
+                                                                                expression2.setVariable("y", num);
+                                                                                expression2.setVariable("z", den);
+                                                                                conversion[0] = String.valueOf(expression2.evaluate());
+                                                                                txtConversion.setText(conversion[0]);
+                                                                            }
+
+                                                                            @Override
+                                                                            public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                                                            }
+                                                                        });
+
+
+
+                                                                        builder.setView(dialogView);
+                                                                        builder.setTitle("Convert Units")
+                                                                                .setPositiveButton("Convert", new DialogInterface.OnClickListener() {
+                                                                                    @Override
+                                                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                                                        input.setText(conversion[0]);
+                                                                                    }
+                                                                                })
+                                                                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                                                    @Override
+                                                                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                                                    }
+                                                                                }).create().show();
+                                                                    } else {
+                                                                        AlertDialog.Builder dialog = new AlertDialog.Builder(CalculatorActivity.this);
+                                                                        dialog.setTitle("Convert Units")
+                                                                                .setMessage("There is no value to be converted")
+                                                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                                                    @Override
+                                                                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                                                    }
+                                                                                })
+                                                                                .create().show();
+
+                                                                    }
+                                                                    return true;
+                                                                }
+                                                            });
                                                             if(fromConstants)
                                                                 txtInput.setText(values[varCtr][2]);
 
@@ -407,7 +505,7 @@ public class CalculatorActivity extends AppCompatActivity {
         removeEditTextFocus();
         resetSteps();
         for (String[] s : values) {
-            expression.setVariable(s[0], Double.parseDouble(s[2]), s[1]);
+            expression.setVariable(s[0], Double.parseDouble(s[2].replace("(", "").replace(")", "")), s[1]);
         }
         List<String> results = expression.evaluate();
         Object[] steps = results.toArray();
@@ -427,7 +525,7 @@ public class CalculatorActivity extends AppCompatActivity {
             txtStep.setEngine(MathView.Engine.KATEX);
             try {
                 String result[] = (String[]) steps[i];
-                if (Double.parseDouble(result[0].toString()) % 1 == 0) {
+                if (Double.parseDouble(result[0].toString().replace("(", "").replace(")", "")) % 1 == 0) {
                     result[0] = result[0].replace(".0", "");
                 }
 
@@ -512,6 +610,27 @@ public class CalculatorActivity extends AppCompatActivity {
 //                        TextInputEditText focusedText = getFocusedEditText();
 //                        focusedText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(15)});
 //                    }
+                    if(!text.contains(".")){
+                        for(int x = 0; x < text.length(); x++){
+                            if(text.charAt(x) != '0'){
+                                text = text.substring(x);
+                                break;
+                            }
+                            if(x == text.length()-1){
+                                text = "0";
+                            }
+                        }
+                    } else {
+                        for(int x = 0; x < text.indexOf("."); x++){
+                            if(text.charAt(x) != '0'){
+                                text = text.substring(x);
+                                break;
+                            }
+                            if(x == text.indexOf(".")-1){
+                                text = "0" + text.substring(text.indexOf("."));
+                            }
+                        }
+                    }
                     if(text.charAt(0) == '-')
                         if(text.length() == 1)
                             text = "";
@@ -528,15 +647,12 @@ public class CalculatorActivity extends AppCompatActivity {
                             text = text.substring(0, idx);
                             if(Double.parseDouble(text.substring(0, idx)) == 0)
                                 text = "0";
-                        } else {
-                            if (zeroTemp.length() > 4)
-                                text = new DecimalFormat("#.####E0").format(Double.parseDouble(text));
                         }
                     }
 
                     Double textValue = Double.parseDouble(text);
-                    if(textValue > Math.pow(10, 7) || (textValue > 0) && (textValue < Math.pow(10, -3)))
-                        text= new DecimalFormat("#.####E0").format(textValue);
+                    if(textValue > Math.pow(10, 7) || ((textValue > 0) && (textValue < Math.pow(10, -3))))
+                        text = "(" + new DecimalFormat("#.####E0").format(textValue) + ")";
                     values[findVariableIndex(variable)][2] = text;
                     if(checkValues())
                         btnCalc.setEnabled(true);

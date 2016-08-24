@@ -172,6 +172,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                 txtContent.getSettings().setJavaScriptEnabled(true);
                 txtContent.getSettings().setDomStorageEnabled(true);
                 txtContent.getSettings().setAppCacheEnabled(true);
+                //txtContent.getSettings().setMinimumFontSize(32);
                 if(l == contentText.length-1)
                     txtContent.setWebViewClient(new WebViewClient(){
                         @Override

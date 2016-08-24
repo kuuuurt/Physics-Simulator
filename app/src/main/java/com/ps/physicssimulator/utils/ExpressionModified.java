@@ -240,6 +240,18 @@ public class ExpressionModified {
                             steps.add(new String[]{strRightArg, rightUnit, formula});
                         }
 
+                    int pow = (int)(Math.log(leftArg)/Math.log(10));
+
+                    if((Math.abs(leftArg) > 0) && (Math.abs(leftArg) < Math.pow(10,-3)) || pow > 6) {
+                        strLeftArg = "(" + new DecimalFormat("#.####E0").format(leftArg) + ")";
+                    }
+
+                    pow = (int)(Math.log(rightArg)/Math.log(10));
+
+                    if((Math.abs(rightArg) > 0) && (Math.abs(rightArg) < Math.pow(10,-3)) || pow > 6) {
+                        strRightArg = "(" + new DecimalFormat("#.####E0").format(rightArg) + ")";
+                    }
+
 
                     String formula = getFormula(strLeftArg,leftUnit,getFormattedSymbol(op.getOperator().getSymbol()),strRightArg,rightUnit);
                     if(leftUnit.equals(""))
@@ -260,15 +272,13 @@ public class ExpressionModified {
 
                     String strRes = df.format(res);
                     if((Math.abs(res) > 0) && (Math.abs(res) < Math.pow(10,-3)) || power > 6) {
-                        strRes = new DecimalFormat("#.####E0").format(res);
+                        strRes = "(" + new DecimalFormat("#.####E0").format(res) + ")";
                         boolean test = false;
                         for(int z = -3; z > -25; z--){
                             exp = rightArg == Math.pow(10, z);
                             if(exp)
                                 break;
                         }
-                        if(test)
-                            strRes = strRes.replace(".0", "");
                     }
 
                     steps.add(new String[]{strRes, unit, formula} );
@@ -343,6 +353,10 @@ public class ExpressionModified {
         }
         if(!convertUnit(finalUnit).equals(finalUnit)) {
             String strRes = df.format(finalRes);
+            int power = (int)(Math.log(finalRes)/Math.log(10));
+            if((Math.abs(finalRes) > 0) && (Math.abs(finalRes) < Math.pow(10,-3)) || power > 6) {
+                strRes = "(" + new DecimalFormat("#.####E0").format(finalRes) + ")";
+            }
             if(finalRes % 1 == 0)
                 finalFormula = String.valueOf(finalRes).replace(".0", "") + finalUnit;
             else

@@ -1,5 +1,6 @@
 package com.ps.physicssimulator;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -38,14 +39,19 @@ import static javax.measure.unit.SI.FEMTO;
 import static javax.measure.unit.SI.GIGA;
 import static javax.measure.unit.SI.GRAM;
 import static javax.measure.unit.SI.HECTO;
+import static javax.measure.unit.SI.JOULE;
 import static javax.measure.unit.SI.KILO;
 import static javax.measure.unit.SI.MEGA;
+import static javax.measure.unit.SI.METERS_PER_SECOND;
+import static javax.measure.unit.SI.METERS_PER_SQUARE_SECOND;
 import static javax.measure.unit.SI.METRE;
 import static javax.measure.unit.SI.MICRO;
 import static javax.measure.unit.SI.MILLI;
 import static javax.measure.unit.SI.NANO;
+import static javax.measure.unit.SI.NEWTON;
 import static javax.measure.unit.SI.PETA;
 import static javax.measure.unit.SI.PICO;
+import static javax.measure.unit.SI.SECOND;
 import static javax.measure.unit.SI.TERA;
 import static javax.measure.unit.SI.YOCTO;
 import static javax.measure.unit.SI.YOTTA;
@@ -56,17 +62,23 @@ import static javax.measure.unit.SI.ZETTA;
 
 public class ConverterActivity extends AppCompatActivity {
 
+    public static String types[] = {"Mass", "Length", "Time", "Speed", "Acceleration", "Force", "Energy", "Power"};
+    public static Unit<?> baseUnits[] = {GRAM, METRE, SECOND, METERS_PER_SECOND, METERS_PER_SQUARE_SECOND, NEWTON, JOULE, JOULE};
+    public static String keywords[] = {"grams", "meters", "seconds", "meters per seconds", "meters per seconds squared", "newtons", "joules", "joules"};
+    public static int defaultUnit;
+    public static List<Integer> unitPow = new ArrayList<>();
+    public static List<String> units = new ArrayList<>();
+    public static List<Unit<?>> unitsCompute = new ArrayList<>();
+
     String value;
     String type;
     int startUnit;
     int finalUnit;
-    int defaultUnit;
+
     double num = 0,
             den = 0;
     Button btnConvert;
-    List<Integer> unitPow = new ArrayList<>();
-    List<String> units = new ArrayList<>();
-    List<Unit<?>> unitsCompute = new ArrayList<>();
+
     String formula;
     String formulaSubbed;
     ExpressionBuilderModified expressionBuilder;
@@ -98,7 +110,7 @@ public class ConverterActivity extends AppCompatActivity {
         formula = "$${c} = {{c} \\cdot {{t} \\over {f}}}$$";
         formulaSubbed = "";
 
-        String types[] = {"Mass", "Length", "Time", "Speed", "Acceleration", "Force", "Energy", "Power"};
+
 
         Spinner spnType = (Spinner)findViewById(R.id.spinner_unit_type);
         spnType.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, types));
@@ -107,16 +119,9 @@ public class ConverterActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 type = adapterView.getItemAtPosition(i).toString();
 
-                if(type.equals("Mass")){
-                    populateListsSI(GRAM, "gram");
-                } else if(type.equals("Length")){
-                    populateListsSI(METRE, "meter");
-                } else if(type.equals("Time")){
-                    //populateLists(METRE, "meter");
-                }
-
                 Spinner spnUnit = (Spinner)findViewById(R.id.spinner_unit_origin);
-                spnUnit.setAdapter(new ArrayAdapter<String>(ConverterActivity.this, android.R.layout.simple_spinner_dropdown_item, units));
+                //spnUnit.setAdapter(new ArrayAdapter<String>(ConverterActivity.this, android.R.layout.simple_spinner_dropdown_item, units));
+                populateListsSI(ConverterActivity.this, baseUnits[i], keywords[i],spnUnit);
                 spnUnit.setSelection(defaultUnit);
                 spnUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -131,7 +136,8 @@ public class ConverterActivity extends AppCompatActivity {
                 });
 
                 Spinner spnFinal = (Spinner)findViewById(R.id.spinner_unit_final);
-                spnFinal.setAdapter(new ArrayAdapter<String>(ConverterActivity.this, android.R.layout.simple_spinner_dropdown_item, units));
+                //spnFinal.setAdapter(new ArrayAdapter<String>(ConverterActivity.this, android.R.layout.simple_spinner_dropdown_item, units));
+                populateListsSI(ConverterActivity.this, baseUnits[i], keywords[i],spnFinal);
                 spnFinal.setSelection(defaultUnit);
                 spnFinal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -179,6 +185,27 @@ public class ConverterActivity extends AppCompatActivity {
 //                    } else {
 //                        txtInput.setFilters(new InputFilter[] {new InputFilter.LengthFilter(15)});
 //                    }
+                    if(!text.contains(".")){
+                        for(int x = 0; x < text.length(); x++){
+                            if(text.charAt(x) != '0'){
+                                text = text.substring(x);
+                                break;
+                            }
+                            if(x == text.length()-1){
+                                text = "0";
+                            }
+                        }
+                    } else {
+                        for(int x = 0; x < text.indexOf("."); x++){
+                            if(text.charAt(x) != '0'){
+                                text = text.substring(x);
+                                break;
+                            }
+                            if(x == text.indexOf(".")-1){
+                                text = "0" + text.substring(text.indexOf("."));
+                            }
+                        }
+                    }
                     if(text.charAt(0) == '-')
                         if(text.length() == 1)
                             text = "";
@@ -195,15 +222,13 @@ public class ConverterActivity extends AppCompatActivity {
                             text = text.substring(0, idx);
                             if(Double.parseDouble(text.substring(0, idx)) == 0)
                                 text = "0";
-                        } else {
-                            if (zeroTemp.length() > 4)
-                                text = new DecimalFormat("#.####E0").format(Double.parseDouble(text));
                         }
                     }
 
+
                     Double textValue = Double.parseDouble(text);
-                    if(textValue > Math.pow(10, 7) || (textValue > 0) && (textValue < Math.pow(10, -3)))
-                        text = new DecimalFormat("#.####E0").format(textValue);
+                    if(textValue > Math.pow(10, 7) || ((textValue > 0) && (textValue < Math.pow(10, -3))))
+                        text = "(" + new DecimalFormat("#.####E0").format(textValue) + ")";
                     value = text;
                     btnConvert.setEnabled(true);
                     substituteValues();
@@ -340,7 +365,7 @@ public class ConverterActivity extends AppCompatActivity {
         stepsContainer.removeAllViews();
     }
 
-    public void populateListsSI(Unit<?> unit, String stringUnit){
+    public static void populateListsSI(Context context, Unit<?> unit, String stringUnit, Spinner spn){
         unitsCompute.clear();
         units.clear();
         unitsCompute.add(YOCTO(unit)); unitPow.add(24);
@@ -386,5 +411,6 @@ public class ConverterActivity extends AppCompatActivity {
         units.add("Zetta" + stringUnit + " (" + ZETTA(unit) + ")");
         units.add("Yotta" + stringUnit + " (" + YOTTA(unit) + ")");
         defaultUnit = 10;
+        spn.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, units));
     }
 }

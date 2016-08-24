@@ -186,6 +186,7 @@ public class DataContract   {
         public static final String COLUMN_SYMBOL_COMPUTE = "symbol_compute";
         public static final String COLUMN_CONSTANT_KEY = "constant_id";
         public static final String COLUMN_UNIT = "unit";
+        public static final String COLUMN_UNIT_DESC = "unit_desc";
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" +
