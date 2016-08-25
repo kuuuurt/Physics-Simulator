@@ -73,7 +73,7 @@
                 android:orientation="vertical"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 android:weightSum="1">
 
                 <TextView
@@ -88,7 +88,8 @@
                     android:layout_weight="0.95"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:id="@+id/spinner_unit_origin" />
+                    android:id="@+id/spinner_unit_origin"
+                    android:layout_gravity="center_horizontal"/>
             </LinearLayout>
 
             <TextView
@@ -104,8 +105,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
                 android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:layout_gravity="center">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -145,8 +146,6 @@
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:id="@+id/steps_container">
-
-
 
         </LinearLayout>
 

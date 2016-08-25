@@ -80,7 +80,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.VariableEntry.COLUMN_FORMULA_KEY + " INTEGER NOT NULL, " +
                 DataContract.VariableEntry.COLUMN_CONSTANT_KEY + " INTEGER, " +
                 DataContract.VariableEntry.COLUMN_UNIT + " TEXT, " +
-                DataContract.VariableEntry.COLUMN_UNIT_DESC + " TEXT, " +
+                DataContract.VariableEntry.COLUMN_UNIT_TYPE + " TEXT, " +
                 DataContract.VariableEntry.COLUMN_SYMBOL_COMPUTE + " TEXT, " +
                 DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY + " TEXT, " +
                 DataContract.VariableEntry.COLUMN_FORMULA_COMPUTE + " TEXT, " +
@@ -843,59 +843,59 @@ public class DBHelper extends SQLiteOpenHelper {
         if(database.isOpen()) {
             String[][] variables = {
                     //
-                    {"Displacement", "Displacement", "$$d = {x_f - x_i}$$", "xf - xi", "d", "d", "{{m}}", "meters"},
-                    {"Displacement", "Initial Position","$$x_i= {x_f - d}$$", "xf - d", "x_i", "xi", "{{m}}", "meters"},
-                    {"Displacement", "Final Position", "$$x_f= {x_i + d}$$", "xi + d", "x_f", "xf", "{{m}}", "meters"},
+                    {"Displacement", "Displacement", "$$d = {x_f - x_i}$$", "xf - xi", "d", "d", "{{m}}", "Length"},
+                    {"Displacement", "Initial Position","$$x_i= {x_f - d}$$", "xf - d", "x_i", "xi", "{{m}}", "Length"},
+                    {"Displacement", "Final Position", "$$x_f= {x_i + d}$$", "xi + d", "x_f", "xf", "{{m}}","Length"},
                     //
-                    {"Speed", "Speed", "$$s = {{d} \\over {t}}$$", "d / tt", "s", "s" ,"{{m} \\over {s}}", "meters over seconds"},
-                    {"Speed", "Distance", "$$d = {s \\cdot {t}}$$", "s * tt", "{d}", "d", "{{m}}", "meters"},
-                    {"Speed", "Time", "$$t = {{d} \\over s}$$", "d / s", "{t}", "tt", "{{s}}", "seconds"},
+                    {"Speed", "Speed", "$$s = {{d} \\over {t}}$$", "d / tt", "s", "s" ,"{{m} \\over {s}}", "Speed"},
+                    {"Speed", "Distance", "$$d = {s \\cdot {t}}$$", "s * tt", "{d}", "d", "{{m}}", "Length"},
+                    {"Speed", "Time", "$$t = {{d} \\over s}$$", "d / s", "{t}", "tt", "{{s}}", "Duration"},
                     //
-                    {"Velocity", "Velocity", "$$v = {x_f - x_i \\over {t}}$$", "(xf - xi) / tt", "{v}", "vel", "{{m} \\over {s}}", "meters over seconds"},
-                    {"Velocity", "Initial Position", "$$x_i = {x_f - ({v} \\cdot {t})}$$", "xf - (vel * tt)", "x_i", "xi", "{{m}}", "meters"},
-                    {"Velocity", "Final Position", "$$x_f = {({v} \\cdot {t}) + x_i}$$", "(vel * tt) + xi", "x_f", "xf","{{m}}", "meters"},
-                    {"Velocity", "Time", "$$t = {(x_f - x_i) \\over {v}}$$", "(xf - xi) / vel", "{t}", "tt", "{{s}}", "seconds"},
+                    {"Velocity", "Velocity", "$$v = {x_f - x_i \\over {t}}$$", "(xf - xi) / tt", "{v}", "vel", "{{m} \\over {s}}", "Speed"},
+                    {"Velocity", "Initial Position", "$$x_i = {x_f - ({v} \\cdot {t})}$$", "xf - (vel * tt)", "x_i", "xi", "{{m}}","Length"},
+                    {"Velocity", "Final Position", "$$x_f = {({v} \\cdot {t}) + x_i}$$", "(vel * tt) + xi", "x_f", "xf","{{m}}", "Length"},
+                    {"Velocity", "Time", "$$t = {(x_f - x_i) \\over {v}}$$", "(xf - xi) / vel", "{t}", "tt", "{{s}}", "Duration"},
                     //
-                    {"Average Velocity", "Average Velocity", "$$v_{av} = {(x_f - x_i) \\over (t_f - t_i)}$$", "(xf - xi) / (tf - ti)", "v_{av}", "vel", "{{m} \\over {s}}"},
-                    {"Average Velocity", "Initial Position", "$$x_i = {x_f - (v_{av} \\cdot (t_f - t_i))}$$", "xf - (vel * (tf - ti))", "x_i", "xi", "{{m}}"},
-                    {"Average Velocity", "Final Position",  "$$x_f = {(v_{av} \\cdot (t_f - t_i)) + x_i}$$", "(vel * (tf - ti)) + xi", "x_f", "xf", "{{m}}"},
-                    {"Average Velocity", "Initial Time","$$t_i = {t_f - {(x_f - x_i) \\over v_{av}}}$$", "tf - ((xf - xi) / vel)", "t_i","ti", "{{s}}"},
-                    {"Average Velocity", "Final Time", "$$t_f = {{(x_f - x_i) \\over v_{av}} + t_i}$$", "((xf - xi) / vel) + ti", "t_f", "tf", "{{s}}"},
+                    {"Average Velocity", "Average Velocity", "$$v_{av} = {(x_f - x_i) \\over (t_f - t_i)}$$", "(xf - xi) / (tf - ti)", "v_{av}", "vel", "{{m} \\over {s}}", "Speed"},
+                    {"Average Velocity", "Initial Position", "$$x_i = {x_f - (v_{av} \\cdot (t_f - t_i))}$$", "xf - (vel * (tf - ti))", "x_i", "xi", "{{m}}", "Length"},
+                    {"Average Velocity", "Final Position",  "$$x_f = {(v_{av} \\cdot (t_f - t_i)) + x_i}$$", "(vel * (tf - ti)) + xi", "x_f", "xf", "{{m}}", "Length"},
+                    {"Average Velocity", "Initial Time","$$t_i = {t_f - {(x_f - x_i) \\over v_{av}}}$$", "tf - ((xf - xi) / vel)", "t_i","ti", "{{s}}", "Duration"},
+                    {"Average Velocity", "Final Time", "$$t_f = {{(x_f - x_i) \\over v_{av}} + t_i}$$", "((xf - xi) / vel) + ti", "t_f", "tf", "{{s}}", "Duration"},
                     //
-                    {"Acceleration", "Acceleration", "$$a = {(v_f - v_i) \\over {t}}$$", "(vf - vi) / t", "a", "a", "{{m} \\over {s^2}}"},
-                    {"Acceleration", "Initial Velocity", "$$v_i = {v_f - (a \\cdot {t})}$$", "vf - (a * t)", "v_i", "vi", "{{m} \\over {s}}"},
-                    {"Acceleration", "Final Velocity", "$$v_f = {(a \\cdot {t}) + v_i}$$", "(a * t) + vi", "v_f", "vf", "{{m} \\over {s}}"},
-                    {"Acceleration", "Time Interval", "$$t = {(v_f - v_i) \\over a}$$", "(vf - vi) / a", "{t}", "t", "{{s}}"},
+                    {"Acceleration", "Acceleration", "$$a = {(v_f - v_i) \\over {t}}$$", "(vf - vi) / t", "a", "a", "{{m} \\over {s^2}}", "Acceleration"},
+                    {"Acceleration", "Initial Velocity", "$$v_i = {v_f - (a \\cdot {t})}$$", "vf - (a * t)", "v_i", "vi", "{{m} \\over {s}}", "Speed"},
+                    {"Acceleration", "Final Velocity", "$$v_f = {(a \\cdot {t}) + v_i}$$", "(a * t) + vi", "v_f", "vf", "{{m} \\over {s}}", "Speed"},
+                    {"Acceleration", "Time Interval", "$$t = {(v_f - v_i) \\over a}$$", "(vf - vi) / a", "{t}", "t", "{{s}}", "Duration"},
                     //asdf - Kurt
-                    {"Average Acceleration", "Average Acceleration", "$$a_{av} = {(v_f - v_i) \\over (t_f - t_i)}$$", "(vf - vi) / (tf - ti)","a_{av}", "a", "{{m} \\over {s^2}}"},
-                    {"Average Acceleration", "Initial Velocity", "$$v_i = {v_f - (a_{av} \\cdot (t_f - t_i))}$$", "vf - (a * (tf - ti))","v_i", "vi", "{{m} \\over {s}}"},
-                    {"Average Acceleration", "Final Velocity", "$$v_f = {(a_{av} \\cdot (t_f - t_i)) + v_i}$$", "(a * (tf - ti)) + vi","v_f", "vf", "{{m} \\over {s}}"},
-                    {"Average Acceleration", "Initial Time", "$$t_i = {t_f - {(v_f - v_i) \\over a_{av}}}$$", "tf - ((vf - vi) / a)","t_i","ti", "{{s}}"},
-                    {"Average Acceleration", "Final Time", "$$t_f = {{(v_f - v_i) \\over a_{av}} + t_i}$$", "((vf - vi) / a) + ti","t_f", "tf", "{{s}}"},
+                    {"Average Acceleration", "Average Acceleration", "$$a_{av} = {(v_f - v_i) \\over (t_f - t_i)}$$", "(vf - vi) / (tf - ti)","a_{av}", "a", "{{m} \\over {s^2}}", "Acceleration"},
+                    {"Average Acceleration", "Initial Velocity", "$$v_i = {v_f - (a_{av} \\cdot (t_f - t_i))}$$", "vf - (a * (tf - ti))","v_i", "vi", "{{m} \\over {s}}", "Speed"},
+                    {"Average Acceleration", "Final Velocity", "$$v_f = {(a_{av} \\cdot (t_f - t_i)) + v_i}$$", "(a * (tf - ti)) + vi","v_f", "vf", "{{m} \\over {s}}", "Speed"},
+                    {"Average Acceleration", "Initial Time", "$$t_i = {t_f - {(v_f - v_i) \\over a_{av}}}$$", "tf - ((vf - vi) / a)","t_i","ti", "{{s}}", "Duration"},
+                    {"Average Acceleration", "Final Time", "$$t_f = {{(v_f - v_i) \\over a_{av}} + t_i}$$", "((vf - vi) / a) + ti","t_f", "tf", "{{s}}", "Duration"},
                     //
-                    {"Free-fall Velocity", "Velocity", "$$v_y = {u + (g \\cdot {t})}$$", "u + (g * t)","v_y", "v", "{{m} \\over {s}}"},
-                    {"Free-fall Velocity", "Initial Velocity", "$$u = {v_y - (g \\cdot {t})}$$", "v - (g * t)", "u", "u", "{{m} \\over {s}}"},
-                    {"Free-fall Velocity", "Acceleration due to Gravity", "$$g = {(v_y - u) \\over {t}}$$", "(v - u) / t", "g","g", "{{m} \\over {s^2}}", "Acceleration due to Gravity"},
-                    {"Free-fall Velocity", "Time", "$$t = {(v_y - u) \\over g}$$", "(v - u) / g", "{t}", "t", "{{s}}"},
-                    //
-                    {"Free-fall Displacement", "Displacement", "$$y = {({1 \\over 2} \\cdot g) \\cdot {({t})^2}}$$", "((1 / 2) * g) * (t) ^ 2","y", "y", "{{m}}"},
-                    {"Free-fall Displacement", "Acceleration due to Gravity", "$$g = {2 \\cdot {y \\over {({t})^2}}}$$", "2 * (y / (t) ^ 2)","g", "g", "{{m} \\over {s^2}}", "Acceleration due to " +
+                    {"Free-fall Velocity", "Velocity", "$$v_y = {u + (g \\cdot {t})}$$", "u + (g * t)","v_y", "v", "{{m} \\over {s}}", "Speed"},
+                    {"Free-fall Velocity", "Initial Velocity", "$$u = {v_y - (g \\cdot {t})}$$", "v - (g * t)", "u", "u", "{{m} \\over {s}}", "Speed"},
+                    {"Free-fall Velocity", "Acceleration due to Gravity", "$$g = {(v_y - u) \\over {t}}$$", "(v - u) / t", "g","g", "{{m} \\over {s^2}}", "Acceleration", "Acceleration due to " +
                             "Gravity"},
-                    {"Free-fall Displacement", "Time", "$$t = {\\sqrt{{2 \\cdot {y \\over g}}}}$$", "sqrt(2 * (y / g))","{t}", "t", "{{s}}"}, //{\\sqrt{{(2 \\cdot {y \\over g)}}}
+                    {"Free-fall Velocity", "Time", "$$t = {(v_y - u) \\over g}$$", "(v - u) / g", "{t}", "t", "{{s}}", "Duration"},
                     //
-                    {"Free-fall Upward Motion", "Final Velocity", "$$v_f= {\\sqrt{{((v_i)^2) + ((2 \\cdot g) \\cdot {d})}}}$$", "sqrt((vi)^2 + (2 * g * d))","v_f", "vf", "{{m} \\over {s}}"},
-                    {"Free-fall Upward Motion", "Initial Velocity", "$$v_i = {\\sqrt{{((v_f)^2) - ((2 \\cdot g) \\cdot {d})}}}$$", "sqrt((vf)^2 - (2 * g * d))","v_i", "vi", "{{m} \\over {s}}"},
+                    {"Free-fall Displacement", "Displacement", "$$y = {({1 \\over 2} \\cdot g) \\cdot {({t})^2}}$$", "((1 / 2) * g) * (t) ^ 2","y", "y", "{{m}}", "Length"},
+                    {"Free-fall Displacement", "Acceleration due to Gravity", "$$g = {2 \\cdot {y \\over {({t})^2}}}$$", "2 * (y / (t) ^ 2)","g", "g", "{{m} \\over {s^2}}",
+                            "Acceleration", "Acceleration due to Gravity"},
+                    {"Free-fall Displacement", "Time", "$$t = {\\sqrt{{2 \\cdot {y \\over g}}}}$$", "sqrt(2 * (y / g))","{t}", "t", "{{s}}", "Duration"}, //{\\sqrt{{(2 \\cdot {y \\over g)}}}
+                    //
+                    {"Free-fall Upward Motion", "Final Velocity", "$$v_f= {\\sqrt{{((v_i)^2) + ((2 \\cdot g) \\cdot {d})}}}$$", "sqrt((vi)^2 + (2 * g * d))","v_f", "vf", "{{m} \\over {s}}", "Speed"},
+                    {"Free-fall Upward Motion", "Initial Velocity", "$$v_i = {\\sqrt{{((v_f)^2) - ((2 \\cdot g) \\cdot {d})}}}$$", "sqrt((vf)^2 - (2 * g * d))","v_i", "vi", "{{m} \\over {s}}", "Speed"},
                     {"Free-fall Upward Motion", "Acceleration due to Gravity", "$$g = {{((v_f)^2 - (v_i)^2) \\over (2 \\cdot {d})}}$$", "((vf)^2 - (vi)^2) / (2 * d)","g", "g", "{{m} \\over " +
-                            "{s^2}}", "Acceleration due to Gravity"},
-                    {"Free-fall Upward Motion", "Distance", "$${d} = {{((v_f)^2 - (v_i)^2) \\over (2 \\cdot g)}}$$", "((vf)^2 - (vi)^2) / (2 * g)","{d}", "d", "{{m}}"},
-                    //asdf - shai
-                    {"Horizontal Components", "Horizontal Distance","$${x} = {v_x \\cdot {t}}$$", "v * t", "{x}", "x", "{{m}}"},
-                    {"Horizontal Components", "Velocity along the x-axis","$$v_x = {{x} \\over {t}}$$", "x / t","v_x", "v", "{{m} \\over {s}}"},
-                    {"Horizontal Components", "Time","$$t = {{x} \\over v_x}$$", "x / v","{t}", "t", "{{s}}"},
-
+                            "{s^2}}", "Acceleration", "Acceleration due to Gravity"},
+                    {"Free-fall Upward Motion", "Distance", "$${d} = {{((v_f)^2 - (v_i)^2) \\over (2 \\cdot g)}}$$", "((vf)^2 - (vi)^2) / (2 * g)","{d}", "d", "{{m}}", "Length"},
                     //
-                    {"Vertical Components", "Vertical Distance", "$${y} = {(v_{yi} \\cdot {t}) + ({1 \\over 2} \\cdot g \\cdot ({t})^2)}$$", "(vi * t) + ((1 / 2) * g * (t)^2)","{y}", "y", "{{m}}"},
-                    //zxcv
+                    {"Horizontal Components", "Horizontal Distance","$${x} = {v_x \\cdot {t}}$$", "v * t", "{x}", "x", "{{m}}", "Length"},
+                    {"Horizontal Components", "Velocity along the x-axis","$$v_x = {{x} \\over {t}}$$", "x / t","v_x", "v", "{{m} \\over {s}}", "Speed"},
+                    {"Horizontal Components", "Time","$$t = {{x} \\over v_x}$$", "x / v","{t}", "t", "{{s}}", "Duration"},
+                    //
+                    {"Vertical Components", "Vertical Distance", "$${y} = {(v_{yi} \\cdot {t}) + ({1 \\over 2} \\cdot g \\cdot ({t})^2)}$$", "(vi * t) + ((1 / 2) * g * (t)^2)","{y}", "y", "{{m}}",
+                            "Length"},
                     {"Vertical Components", "Initial Velocity along the y-axis", "$$v_{yi} = {({y} - {1 \\over 2} \\cdot g \\cdot ({t})^2) \\over {t}}$$","(y - (1 / 2) * g * (t)^2) / t", "v_{yi}",
                             "vi", "{{m} " +
                             "\\over" +
@@ -1034,7 +1034,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put(DataContract.VariableEntry.COLUMN_SYMBOL_COMPUTE, s[5]);
                 values.put(DataContract.VariableEntry.COLUMN_UNIT, s[6]);
                 try {
-                    values.put(DataContract.VariableEntry.COLUMN_UNIT_DESC, s[7]);
                     c = database.query(
                             DataContract.ConstantEntry.TABLE_NAME,
                             new String[]{DataContract.ConstantEntry._ID},
@@ -1050,9 +1049,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 } catch (Exception ex) {
                     values.put(DataContract.VariableEntry.COLUMN_CONSTANT_KEY, -1);
                 }
+                try {;
+                    values.put(DataContract.VariableEntry.COLUMN_UNIT_TYPE, s[7]);
+                }catch (Exception ex){
+
+                }
 
                 c.close();
-                database.insert(DataContract.VariableEntry.TABLE_NAME, null, values);
+                long asdf = database.insert(DataContract.VariableEntry.TABLE_NAME, null, values);
+                String test = "";
             }
         }
     }

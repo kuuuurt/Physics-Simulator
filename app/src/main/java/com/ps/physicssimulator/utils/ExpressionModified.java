@@ -190,9 +190,9 @@ public class ExpressionModified {
                 }
                 if (op.getOperator().getNumOperands() == 2) {
                     /* pop the operands and push the result of the operation */
-                    double rightArg = Double.parseDouble(output.pop());
+                    double rightArg = Double.parseDouble(output.pop().replace("(", "").replace(")",""));
                     String rightUnit = output.pop();
-                    double leftArg = Double.parseDouble(output.pop());
+                    double leftArg = Double.parseDouble(output.pop().replace("(", "").replace(")",""));
                     String leftUnit = output.pop();
                     double res = 0;
                     try {
@@ -201,7 +201,8 @@ public class ExpressionModified {
                         steps.add("Error");
                         return steps;
                     }
-                    String strRightArg = String.valueOf(rightArg);
+//                    String strRightArg = String.valueOf(rightArg);
+                    String strRightArg = df.format(rightArg);
                     boolean exp = false;
                     for(int z = -4; z > -25; z--){
                         exp = rightArg == Math.pow(10, z);
@@ -212,7 +213,8 @@ public class ExpressionModified {
                     if(rightArg % 1 == 0  || exp){
                         strRightArg = strRightArg.replace(".0" , "");
                     }
-                    String strLeftArg = String.valueOf(leftArg);
+                    //String strLeftArg = String.valueOf(leftArg);
+                    String strLeftArg = df.format(leftArg);
                     for(int z = -3; z > -25; z--){
                         exp = leftArg == Math.pow(10, z);
                         if(exp)
@@ -241,7 +243,6 @@ public class ExpressionModified {
                         }
 
                     int pow = (int)(Math.log(leftArg)/Math.log(10));
-
                     if((Math.abs(leftArg) > 0) && (Math.abs(leftArg) < Math.pow(10,-3)) || pow > 6) {
                         strLeftArg = "(" + new DecimalFormat("#.####E0").format(leftArg) + ")";
                     }

@@ -163,6 +163,40 @@
             android:gravity="center_horizontal"
             android:id="@+id/input_container"/>
 
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/table_input">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.33"
+                    android:layout_height="wrap_content"
+                    android:text="Input Fields"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.33"
+                    android:layout_height="wrap_content"
+                    android:text="Units"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="0.33"
+                    android:layout_height="wrap_content"
+                    android:text="Converted Value"
+                    android:gravity="center"/>
+            </TableRow>
+
+        </TableLayout>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
