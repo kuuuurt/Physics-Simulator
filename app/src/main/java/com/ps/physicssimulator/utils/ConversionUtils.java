@@ -3,8 +3,6 @@ package com.ps.physicssimulator.utils;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +10,7 @@ import java.util.List;
 import javax.measure.unit.Unit;
 
 import static javax.measure.unit.NonSI.DAY;
+import static javax.measure.unit.NonSI.DEGREE_ANGLE;
 import static javax.measure.unit.NonSI.HOUR;
 import static javax.measure.unit.NonSI.MINUTE;
 import static javax.measure.unit.NonSI.MONTH;
@@ -29,8 +28,6 @@ import static javax.measure.unit.SI.HECTO;
 import static javax.measure.unit.SI.JOULE;
 import static javax.measure.unit.SI.KILO;
 import static javax.measure.unit.SI.MEGA;
-import static javax.measure.unit.SI.METERS_PER_SECOND;
-import static javax.measure.unit.SI.METERS_PER_SQUARE_SECOND;
 import static javax.measure.unit.SI.METRE;
 import static javax.measure.unit.SI.MICRO;
 import static javax.measure.unit.SI.MILLI;
@@ -38,6 +35,7 @@ import static javax.measure.unit.SI.NANO;
 import static javax.measure.unit.SI.NEWTON;
 import static javax.measure.unit.SI.PETA;
 import static javax.measure.unit.SI.PICO;
+import static javax.measure.unit.SI.RADIAN;
 import static javax.measure.unit.SI.SECOND;
 import static javax.measure.unit.SI.TERA;
 import static javax.measure.unit.SI.YOCTO;
@@ -48,9 +46,12 @@ import static javax.measure.unit.SI.ZETTA;
  * Created by qwerasdf on 8/24/16.
  */
 public class ConversionUtils {
-    public static String types[] = {"Mass", "Length", "Duration", "Speed", "Acceleration", "Force", "Energy", "Power", "Angle"};
-    public static Unit<?> baseUnits[] = {GRAM, METRE, SECOND, METERS_PER_SECOND, METERS_PER_SQUARE_SECOND, NEWTON, JOULE, JOULE};
-    public static String keywords[] = {"grams", "meters", "seconds", "meters per seconds", "meters per seconds squared", "newtons", "joules", "joules"};
+    public static String types[] = {"Mass", "Length", "Duration", "Speed", "Acceleration", "Force", "Work", "Energy", "Power", "Angle Degrees", "Angle Radians", "Momentum", "Moment of Inertia",
+            "Torque",
+            "Angular " +
+            "Momentum"};
+    public static Unit<?> baseUnits[] = {GRAM, METRE, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null};
+    public static String keywords[] = {"grams", "meters", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null};
     public int defaultUnit;
     public List<Double> unitFactor = new ArrayList<>();
     public List<String> units = new ArrayList<>();
@@ -130,7 +131,7 @@ public class ConversionUtils {
             lengthTemp.populateLists("Length", METRE, "meters");
             ConversionUtils timeTemp = new ConversionUtils();
             timeTemp.populateLists("Duration", null, null);
-            for(int i = 0; i < lengthTemp.unitSymbol.size(); i++) {
+            for (int i = 0; i < lengthTemp.unitSymbol.size(); i++) {
                 for (int k = 0; k < timeTemp.unitSymbol.size(); k++) {
                     String lengthSymbol = lengthTemp.unitSymbol.get(i);
                     String timeSymbol = timeTemp.unitSymbol.get(k);
@@ -138,33 +139,99 @@ public class ConversionUtils {
 
                     String lengthUnit = lengthTemp.units.get(i);
                     String timeUnit = timeTemp.units.get(k);
-                    units.add(lengthUnit.substring(0, lengthUnit.indexOf("(")-1)
-                            + " per " + timeUnit.substring(0, timeUnit.indexOf("(")-1) + " ("
+                    units.add(lengthUnit.substring(0, lengthUnit.indexOf("(") - 1)
+                            + " per " + timeUnit.substring(0, timeUnit.indexOf("(") - 1) + " ("
                             + lengthSymbol.replace("{", "").replace("}", "") + " / "
                             + timeSymbol.replace("{", "").replace("}", "")
                             + ")");
 
                     double lengthFactor = 1, timeFactor = 1;
 
-                    if(k < timeTemp.defaultUnit)
+                    if (k < timeTemp.defaultUnit)
                         timeFactor = 1 / timeTemp.unitFactor.get(k).doubleValue();
                     else
                         timeFactor = timeTemp.unitFactor.get(k).doubleValue();
 
-                    if(i < lengthTemp.defaultUnit)
+                    if (i < lengthTemp.defaultUnit)
                         lengthFactor = 1 / lengthTemp.unitFactor.get(i).doubleValue();
                     else
                         lengthFactor = lengthTemp.unitFactor.get(i).doubleValue();
 
-                    unitFactor.add(lengthFactor /  timeFactor);
+                    unitFactor.add(lengthFactor / timeFactor);
                 }
             }
-
-
-//            units.add(METERS_PER_SECOND.toString());
-//            units.add(KILOMETRES_PER_HOUR.toString());
-
             defaultUnit = 92;
+        } else if (type.equals("Acceleration")) {
+            ConversionUtils lengthTemp = new ConversionUtils();
+            lengthTemp.populateLists("Length", METRE, "meters");
+            ConversionUtils timeTemp = new ConversionUtils();
+            timeTemp.populateLists("Duration", null, null);
+            for (int i = 0; i < lengthTemp.unitSymbol.size(); i++) {
+                for (int k = 0; k < timeTemp.unitSymbol.size(); k++) {
+                    String lengthSymbol = lengthTemp.unitSymbol.get(i);
+                    String timeSymbol = timeTemp.unitSymbol.get(k);
+                    unitSymbol.add(lengthSymbol + " \\over " + timeSymbol + "^2");
+
+                    String lengthUnit = lengthTemp.units.get(i);
+                    String timeUnit = timeTemp.units.get(k);
+                    units.add(lengthUnit.substring(0, lengthUnit.indexOf("(") - 1)
+                            + " per " + timeUnit.substring(0, timeUnit.indexOf("(") - 1) + "Squared ("
+                            + lengthSymbol.replace("{", "").replace("}", "") + " / "
+                            + timeSymbol.replace("{", "").replace("}", "")
+                            + ")");
+
+                    double lengthFactor = 1, timeFactor = 1;
+
+                    if (k < timeTemp.defaultUnit)
+                        timeFactor = 1 / Math.pow(timeTemp.unitFactor.get(k).doubleValue(), 2);
+                    else
+                        timeFactor = Math.pow(timeTemp.unitFactor.get(k).doubleValue(), 2);
+
+                    if (i < lengthTemp.defaultUnit)
+                        lengthFactor = 1 / lengthTemp.unitFactor.get(i).doubleValue();
+                    else
+                        lengthFactor = lengthTemp.unitFactor.get(i).doubleValue();
+
+                    unitFactor.add(lengthFactor / timeFactor);
+                }
+            }
+            defaultUnit = 92;
+        } else if (type.equals("Force")) {
+            unitSymbol.add("{" + NEWTON.toString() + "}"); unitFactor.add(1.0);
+            units.add("Newtons (" + NEWTON + ")");
+            defaultUnit = 0;
+        } else if (type.equals("Energy") || type.equals("Power") || type.equals("Work")) {
+            unitSymbol.add("{" + JOULE.toString() + "}"); unitFactor.add(1.0);
+            units.add("Joules (" + JOULE + ")");
+            defaultUnit = 0;
+        } else if (type.equals("Angle Degrees")) {
+            unitSymbol.add("{\\circ}"); unitFactor.add(1.0);
+            unitSymbol.add("{" + RADIAN.toString() + "}"); unitFactor.add(Math.PI / 180);
+            units.add("Degrees (" + DEGREE_ANGLE + ")");
+            units.add("Radians (" + RADIAN + ")");
+            defaultUnit = 0;
+        } else if (type.equals("Angle Radians")) {
+            unitSymbol.add("{" + RADIAN.toString() + "}"); unitFactor.add(1.0);
+            unitSymbol.add("{\\circ}"); unitFactor.add(180 / Math.PI);
+            units.add("Radians (" + RADIAN + ")");
+            units.add("Degrees (" + DEGREE_ANGLE + ")");
+            defaultUnit = 0;
+        } else if (type.equals("Momentum")) {
+            unitSymbol.add("{{N}{s}}"); unitFactor.add(1.0);
+            units.add("Newton Seconds ({{N}{s}})");
+            defaultUnit = 0;
+        } else if (type.equals("Moment of Inertia")) {
+            unitSymbol.add("{{kg}{m^2}}"); unitFactor.add(1.0);
+            units.add("Kilogram Meters Squared ({{kg}{m^2}})");
+            defaultUnit = 0;
+        } else if (type.equals("Torque")) {
+            unitSymbol.add("{{N}}{m}}"); unitFactor.add(1.0);
+            units.add("Newton Meters ({{N}}{m}})");
+            defaultUnit = 0;
+        } else if (type.equals("Angular Momentum")) {
+            unitSymbol.add("{{kg}{m^3} \\over {s}}"); unitFactor.add(1.0);
+            units.add("Kilogram Meters Cubed over Seconds ({{kg}{m^3} \\over {s}})");
+            defaultUnit = 0;
         }
         return units;
     }
@@ -220,11 +287,4 @@ public class ConversionUtils {
         return expression2.evaluate();
     }
 
-    public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
-        BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, RoundingMode.HALF_UP);
-        return bd.doubleValue();
-    }
 }

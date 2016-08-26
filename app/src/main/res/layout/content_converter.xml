@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="0.05"
-                    android:text="Unit"
+                    android:text="Final Unit"
                     android:textAppearance="?android:textAppearanceSmall"
                     android:textSize="12dp"/>
 
@@ -98,7 +98,8 @@
                 android:text="To"
                 android:layout_weight="0.2"
                 android:gravity="center_vertical|center_horizontal"
-                android:textAppearance="?android:textAppearanceMedium"/>
+                android:textAppearance="?android:textAppearanceMedium"
+                android:layout_gravity="center"/>
 
             <LinearLayout
                 android:layout_width="0dp"

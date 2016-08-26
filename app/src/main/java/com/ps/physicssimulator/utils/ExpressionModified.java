@@ -358,11 +358,9 @@ public class ExpressionModified {
             if((Math.abs(finalRes) > 0) && (Math.abs(finalRes) < Math.pow(10,-3)) || power > 6) {
                 strRes = "(" + new DecimalFormat("#.####E0").format(finalRes) + ")";
             }
-            if(finalRes % 1 == 0)
-                finalFormula = String.valueOf(finalRes).replace(".0", "") + finalUnit;
-            else
-                finalFormula = strRes + finalUnit;
+            finalFormula = strRes +finalUnit;
             finalUnit = convertUnit(finalUnit);
+
 
             steps.add(new String[]{strRes, finalUnit, finalFormula});
         }

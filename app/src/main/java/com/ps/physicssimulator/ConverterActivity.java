@@ -214,49 +214,28 @@ public class ConverterActivity extends AppCompatActivity {
         if(finalUnit < startUnit) {
             if(finalUnit < conversionHelper.defaultUnit && startUnit > conversionHelper.defaultUnit){
                 num = conversionHelper.unitFactor.get(finalUnit) * conversionHelper.unitFactor.get(startUnit);
-                String strNum = String.valueOf(num);
-                strNum = ConversionUtils.convertExponentialNotation(num);
-//                if(num % 1 == 0)
-//                    strNum = strNum.replace(".0
-// ", "");
-//                if(num > Math.pow(10, 6))
-//                    strNum = "(" + strNum + ")";
+                String strNum = ConversionUtils.convertExponentialNotation(num);
                 formulaSubbed = formulaSubbed.replace("{t}", strNum + "{" + conversionHelper.unitSymbol.get(finalUnit).toString() + "}");
             } else {
                 if(finalUnit > conversionHelper.defaultUnit-1)
                     num = conversionHelper.unitFactor.get(startUnit) / conversionHelper.unitFactor.get(finalUnit);
                 else
                     num = conversionHelper.unitFactor.get(finalUnit) / conversionHelper.unitFactor.get(startUnit);
-                String strNum = String.valueOf(num);
-                strNum = ConversionUtils.convertExponentialNotation(num);
-//                if(num % 1 == 0)
-//                    strNum = strNum.replace(".0", "");
-//                if(num > Math.pow(10, 6))
-//                    strNum = "(" + strNum + ")";
+                String strNum = ConversionUtils.convertExponentialNotation(num);
                 formulaSubbed = formulaSubbed.replace("{t}", strNum + "{" + conversionHelper.unitSymbol.get(finalUnit).toString() + "}");
             }
             formulaSubbed = formulaSubbed.replace("{f}", "1{" + conversionHelper.unitSymbol.get(startUnit).toString() + "}");
         } else {
             if(finalUnit > conversionHelper.defaultUnit && startUnit < conversionHelper.defaultUnit){
                 den = conversionHelper.unitFactor.get(finalUnit) * conversionHelper.unitFactor.get(startUnit);
-                String strDen = String.valueOf(den);
-                strDen = ConversionUtils.convertExponentialNotation(den);
-//                if(den % 1 == 0)
-//                    strDen = strDen.replace(".0", "");
-//                if(den > Math.pow(10, 6))
-//                    strDen = "(" + strDen + ")";
+                String strDen = ConversionUtils.convertExponentialNotation(den);
                 formulaSubbed = formulaSubbed.replace("{f}", strDen + "{" + conversionHelper.unitSymbol.get(startUnit).toString() + "}");
             } else {
                 if(finalUnit < conversionHelper.defaultUnit+1)
                     den = conversionHelper.unitFactor.get(startUnit) / conversionHelper.unitFactor.get(finalUnit);
                 else
                     den = conversionHelper.unitFactor.get(finalUnit) / conversionHelper.unitFactor.get(startUnit);
-                String strDen = String.valueOf(den);
-                strDen = ConversionUtils.convertExponentialNotation(den);
-//                if(den % 1 == 0)
-//                    strDen = strDen.replace(".0", "");
-//                if(den > Math.pow(10, 6))
-//                    strDen = "(" + strDen + ")";
+                String strDen = ConversionUtils.convertExponentialNotation(den);
                 formulaSubbed = formulaSubbed.replace("{f}", strDen + "{" + conversionHelper.unitSymbol.get(startUnit).toString() + "}");
             }
             formulaSubbed = formulaSubbed.replace("{t}", "1{" + conversionHelper.unitSymbol.get(finalUnit).toString() + "}");
@@ -264,6 +243,8 @@ public class ConverterActivity extends AppCompatActivity {
         expression.setVariable("y", num, "{" + conversionHelper.unitSymbol.get(finalUnit).toString() + "}");
         expression.setVariable("z", den, "{" + conversionHelper.unitSymbol.get(startUnit).toString() + "}");
         formulaSubbed = formulaSubbed.replace("µ", "\\mu ");
+        if(!value.equals(""))
+            formulaSubbed = formulaSubbed.replace("µ", "\\mu ").replace("{{\\circ}}","^{{\\circ}}");
         MathView txtSub = (MathView) findViewById(R.id.text_substitute);
         txtSub.setText(formulaSubbed);
     }
@@ -300,7 +281,7 @@ public class ConverterActivity extends AppCompatActivity {
                     strForm = "(" + strForm.substring(0, idx - 1) + ")" + strForm.substring(idx - 1);
                 }
 
-                strForm = strForm.replace("µ", "\\mu ");
+                strForm = strForm.replace("µ", "\\mu ").replace("{{\\circ}}","^{{\\circ}}");
 
                 if (formulaDisplay.contains(strForm)) {
                     if (formulaDisplay.contains("(" + strForm + ")")) {
