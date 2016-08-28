@@ -110,7 +110,7 @@ public class ExampleActivity extends AppCompatActivity {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ExampleActivity.this);
                     textSize = i+16;
                     prefs.edit().remove(getString(R.string.pref_lesson_text_size)).apply();
-                    prefs.edit().putInt(getString(R.string.pref_lesson_text_size), textSize).apply();
+                    prefs.edit().putInt(getString(R.string.pref_lesson_text_size), i).apply();
                     txtContent.getSettings().setMinimumFontSize(textSize);
                 }
 

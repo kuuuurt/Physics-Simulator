@@ -475,9 +475,10 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                 public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ContentActivity.this);
                     textSize = i+16;
-                    prefs.edit().remove(getString(R.string.pref_lesson_text_size)).apply();
-                    prefs.edit().putInt(getString(R.string.pref_lesson_text_size), textSize).apply();
                     changeFontSize();
+                    prefs.edit().remove(getString(R.string.pref_lesson_text_size)).apply();
+                    prefs.edit().putInt(getString(R.string.pref_lesson_text_size), i).apply();
+
                 }
 
                 @Override
