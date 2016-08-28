@@ -201,7 +201,49 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                         }
                     });
                 contents.add(txtContent);
+                Cursor examples = this.getContentResolver().query(
+                        DataContract.ExampleEntry.buildExampleSection(sections.getString(
+                                sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))),
+                        null, null, null, null
+                );
+                examples.moveToFirst();
                 sectionContainer.addView(txtContent);
+                for(int o = 0; o < examples.getCount(); o++){
+                    LinearLayout exampleButtons = new LinearLayout(ContentActivity.this);
+                    exampleButtons.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            1.0f
+                    ));
+                    exampleButtons.setOrientation(OrientationHelper.HORIZONTAL);
+                    exampleButtons.setGravity(Gravity.CENTER_HORIZONTAL);
+                    exampleButtons.setPadding(16, 16, 16, 16);
+                    try {
+                        exampleButtons.addView(createExampleButton(
+                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_NAME)),
+                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_CONTENT)),
+                                sections.getString(sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))
+                        ));
+                        examples.moveToNext();
+                        o++;
+                        exampleButtons.addView(createExampleButton(
+                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_NAME)),
+                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_CONTENT)),
+                                sections.getString(sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))
+                        ));
+                        examples.moveToNext();
+                        o++;
+                        exampleButtons.addView(createExampleButton(
+                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_NAME)),
+                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_CONTENT)),
+                                sections.getString(sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))
+                        ));
+                        examples.moveToNext();
+                        o++;
+                    } catch(Exception ex) {}
+                    sectionContainer.addView(exampleButtons);
+                }
+
 
                 if (imageExists) {
                     sectionContainer.addView(
@@ -289,6 +331,30 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         YouTubePlayerFragment youtubePlayer = (YouTubePlayerFragment)getFragmentManager()
                 .findFragmentById(R.id.youtube_fragment);
         youtubePlayer.initialize(youTubeAPIKey, this);
+
+    }
+
+    public Button createExampleButton(final String name, final String content, final String section){
+        Button button = new Button(this);
+        button.setLayoutParams(new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.33f
+        ));
+        button.setText(name);
+        button.setVisibility(View.VISIBLE);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ContentActivity.this, ExampleActivity.class);
+                intent.putExtra("name", name + " - " + section);
+                intent.putExtra("content", content);
+                intent.putExtra("Lesson", mLesson);
+                intent.putExtra("Chapter", mChapter);
+                startActivity(intent);
+            }
+        });
+        return button;
 
     }
 
@@ -411,7 +477,6 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                     textSize = i+16;
                     prefs.edit().remove(getString(R.string.pref_lesson_text_size)).apply();
                     prefs.edit().putInt(getString(R.string.pref_lesson_text_size), textSize).apply();
-
                     changeFontSize();
                 }
 

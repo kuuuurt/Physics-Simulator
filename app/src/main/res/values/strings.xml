@@ -13,7 +13,7 @@
     <string name="search"> Search Word </string>
     <string name="title_activity_settings">Settings</string>
 
-    <string name="pref_header_general">General</string>
+    <string name="pref_header_general">General</string>ps
 
     <string name="pref_title_autoplay">Enable Autoplay Audio on Lessons</string>
     <string name="pref_description_autoplay_true">Audio lessons will be automatically played</string>
@@ -23,11 +23,8 @@
 
     <string name="pref_lesson_text_size">pref_lesson_text_size</string>
     <string name="pref_description_lesson_text_size">Text Size for Lessons</string>
-    <string name="pref_lesson_text_size_default">16</string>
-
-
+    <string name="pref_lesson_text_size_default">0</string>
 
     <string name="title_activity_converter">Unit Converter</string>
-
-
+    <string name="title_activity_example">ExampleActivity</string>
 </resources>

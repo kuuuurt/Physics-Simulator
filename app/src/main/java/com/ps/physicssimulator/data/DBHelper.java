@@ -40,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_SECTION_TABLE = "CREATE TABLE " +
                 DataContract.SectionEntry.TABLE_NAME + " (" +
                 DataContract.SectionEntry._ID + " INTEGER PRIMARY KEY, " +
-                DataContract.SectionEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                DataContract.SectionEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
                 DataContract.SectionEntry.COLUMN_CONTENT + " TEXT, " +
                 DataContract.SectionEntry.COLUMN_LESSON_KEY + " INTEGER NOT NULL" + ");";
 
@@ -86,6 +86,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.VariableEntry.COLUMN_FORMULA_COMPUTE + " TEXT, " +
                 DataContract.VariableEntry.COLUMN_FORMULA_DISPLAY + " TEXT);";
 
+        final String SQL_CREATE_EXAMPLE_TABLE = "CREATE TABLE " +
+                DataContract.ExampleEntry.TABLE_NAME + " (" +
+                DataContract.ExampleEntry._ID + " INTEGER PRIMARY KEY, " +
+                DataContract.ExampleEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                DataContract.ExampleEntry.COLUMN_SECTION_KEY + " INTEGER NOT NULL, " +
+                DataContract.ExampleEntry.COLUMN_CONTENT + " INTEGER" + " );";
+
 
         sqLiteDatabase.execSQL(SQL_CREATE_CHAPTER_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_LESSON_TABLE);
@@ -95,6 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_FORMULA_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_FORMULA_CONSTANT_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_VARIABLE_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_EXAMPLE_TABLE);
         initChapters(sqLiteDatabase);
         initLessons(sqLiteDatabase);
         initSections(sqLiteDatabase);
@@ -103,8 +111,38 @@ public class DBHelper extends SQLiteOpenHelper {
         initConstants(sqLiteDatabase);
         initFormulaConstants(sqLiteDatabase);
         initVariables(sqLiteDatabase);
+        initExamples(sqLiteDatabase);
     }
 
+    private void initExamples(SQLiteDatabase database) {
+        if(database.isOpen()){
+            String[][] examples = {
+                    {"Distance","Scalar and Vector Values, Velocity, Acceleration, Free fall","Speed and Velocity"},
+                    {"Speed","Projectile Motion","Speed and Velocity"},
+                    {"Time","Friction, Free Body Diagrams","Speed and Velocity"}
+            };
+            for(String[] s : examples){
+                Cursor c = database.query(
+                        DataContract.SectionEntry.TABLE_NAME,
+                        new String[]{DataContract.SectionEntry._ID},
+                        DataContract.SectionEntry.COLUMN_NAME + " = ?",
+                        new String[]{s[2]},
+                        null,
+                        null,
+                        null
+                );
+                c.moveToFirst();
+
+                ContentValues values = new ContentValues();
+                values.put(DataContract.ExampleEntry.COLUMN_NAME, s[0]);
+                values.put(DataContract.ExampleEntry.COLUMN_CONTENT, s[1]);
+                values.put(DataContract.ExampleEntry.COLUMN_SECTION_KEY, c.getLong(c.getColumnIndex(DataContract.SectionEntry._ID)));
+
+                database.insert(DataContract.ExampleEntry.TABLE_NAME, null, values);
+            }
+
+        }
+    }
 
 
     @Override
@@ -893,7 +931,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Horizontal Components", "Velocity along the x-axis","$$v_x = {{x} \\over {t}}$$", "x / t","v_x", "v", "{{m} \\over {s}}", "Speed"},
                     {"Horizontal Components", "Time","$$t = {{x} \\over v_x}$$", "x / v","{t}", "t", "{{s}}", "Duration"},
                     //
-                    {"Vertical Components", "Vertical Distance", "$${y} = {(dv_{yi} \\cdot {t}) + ({1 \\over 2} \\cdot g \\cdot ({t})^2)}$$", "(vi * t) + ((1 / 2) * g * (t)^2)","{y}", "y", "{{m}}",
+                    {"Vertical Components", "Vertical Distance", "$${y} = {(v_{yi} \\cdot {t}) + ({1 \\over 2} \\cdot g \\cdot ({t})^2)}$$", "(vi * t) + ((1 / 2) * g * (t)^2)","{y}", "y", "{{m}}",
                             "Length"},
                     {"Vertical Components", "Initial Velocity along the y-axis", "$$v_{yi} = {({y} - {1 \\over 2} \\cdot g \\cdot ({t})^2) \\over {t}}$$","(y - (1 / 2) * g * (t)^2) / t", "v_{yi}",
                             "vi", "{{m} " +

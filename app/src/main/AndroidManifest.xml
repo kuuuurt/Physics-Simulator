@@ -114,6 +114,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ps.physicssimulator.CalculatorActivity"/>
         </activity>
+        <activity
+            android:name=".ExampleActivity"
+            android:label="@string/title_activity_example"
+            android:parentActivityName=".ContentActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.ps.physicssimulator.ContentActivity"/>
+        </activity>
     </application>
 
 </manifest>

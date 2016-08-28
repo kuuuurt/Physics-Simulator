@@ -19,6 +19,7 @@ public class DataContract   {
     public static final String PATH_VARIABLE = "variable";
     public static final String PATH_SECTION = "section";
     public static final String PATH_IMAGE = "image";
+    public static final String PATH_EXAMPLE = "example";
 
     public static final class ChapterEntry implements BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
@@ -250,6 +251,39 @@ public class DataContract   {
         }
 
         public static String getIDFromUri(Uri uri){
+            return uri.getLastPathSegment();
+        }
+    }
+
+    public static final class ExampleEntry implements BaseColumns {
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_EXAMPLE).build();
+
+        public static final String TABLE_NAME = "example";
+        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_CONTENT = "content";
+        public static final String COLUMN_SECTION_KEY = "section_key";
+
+
+
+        public static final String CONTENT_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EXAMPLE;
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EXAMPLE;
+
+        public static Uri buildConstantUri(long id){
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static String getIDFromUri(Uri uri){
+            return uri.getLastPathSegment();
+        }
+
+        public static Uri buildExampleSection(String section){
+            return CONTENT_URI.buildUpon().appendPath(section).build();
+        }
+
+        public static String getSectionFromUri(Uri uri){
             return uri.getLastPathSegment();
         }
     }

@@ -28,6 +28,8 @@ public class DataProvider extends ContentProvider{
     static final int SECTION_WITH_LESSON = 701;
     static final int IMAGE = 800;
     static final int IMAGE_WITH_SECTION = 801;
+    static final int EXAMPLE = 900;
+    static final int EXAMPLE_WITH_SECTION = 901;
 
 
     static UriMatcher uriMatcher(){
@@ -51,8 +53,8 @@ public class DataProvider extends ContentProvider{
         matcher.addURI(authority, DataContract.PATH_SECTION + "/*", SECTION_WITH_LESSON);
         matcher.addURI(authority, DataContract.PATH_IMAGE, IMAGE);
         matcher.addURI(authority, DataContract.PATH_IMAGE + "/*", IMAGE_WITH_SECTION);
-
-
+        matcher.addURI(authority, DataContract.PATH_EXAMPLE, EXAMPLE);
+        matcher.addURI(authority, DataContract.PATH_EXAMPLE + "/*", EXAMPLE_WITH_SECTION);
         return matcher;
     }
 
@@ -65,6 +67,7 @@ public class DataProvider extends ContentProvider{
     private static final SQLiteQueryBuilder formulaConstantQueryBuilder;
     private static final SQLiteQueryBuilder sectionQueryBuilder;
     private static final SQLiteQueryBuilder imageQueryBuilder;
+    private static final SQLiteQueryBuilder exampleQueryBuilder;
 
 
     static{
@@ -91,6 +94,9 @@ public class DataProvider extends ContentProvider{
 
         imageQueryBuilder = new SQLiteQueryBuilder();
         imageQueryBuilder.setTables(DataContract.ImageEntry.TABLE_NAME);
+
+        exampleQueryBuilder = new SQLiteQueryBuilder();
+        exampleQueryBuilder.setTables(DataContract.ExampleEntry.TABLE_NAME);
 
     }
 
@@ -125,6 +131,9 @@ public class DataProvider extends ContentProvider{
 
     private static final String imageSectionQuery = DataContract.ImageEntry.TABLE_NAME + "."
             + DataContract.ImageEntry.COLUMN_SECTION_KEY + " = ? ";
+
+    private static final String exampleSectionQuery = DataContract.ExampleEntry.TABLE_NAME + "."
+            + DataContract.ExampleEntry.COLUMN_SECTION_KEY + " = ? ";
 
 
 
@@ -299,7 +308,25 @@ public class DataProvider extends ContentProvider{
         );
     }
 
+    public Cursor getExamplesBySection(Uri uri, String[] projection, String sortOrder){
+        String section = DataContract.ExampleEntry.getSectionFromUri(uri);
 
+        SQLiteDatabase database = dbHelper.getReadableDatabase();
+        Cursor c = database.rawQuery("SELECT " + DataContract.SectionEntry._ID +
+                " from section WHERE " + DataContract.SectionEntry.COLUMN_NAME +
+                " = \"" + section + "\"", null);
+
+        c.moveToFirst();
+
+        return exampleQueryBuilder.query(database,
+                projection,
+                exampleSectionQuery,
+                new String[]{c.getString(c.getColumnIndex(DataContract.SectionEntry._ID))},
+                null,
+                null,
+                sortOrder
+        );
+    }
 
     @Override
     public boolean onCreate() {
@@ -428,6 +455,20 @@ public class DataProvider extends ContentProvider{
             case IMAGE_WITH_SECTION:
                 data = getImagesBySection(uri, projection, sortOrder);
                 break;
+            case EXAMPLE:
+                data = dbHelper.getReadableDatabase().query(
+                        DataContract.ExampleEntry.TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            case EXAMPLE_WITH_SECTION:
+                data = getExamplesBySection(uri, projection, sortOrder);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -477,6 +518,10 @@ public class DataProvider extends ContentProvider{
                 return DataContract.ImageEntry.CONTENT_TYPE;
             case IMAGE_WITH_SECTION:
                 return DataContract.ImageEntry.CONTENT_TYPE;
+            case EXAMPLE:
+                return DataContract.ExampleEntry.CONTENT_TYPE;
+            case EXAMPLE_WITH_SECTION:
+                return DataContract.ExampleEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
