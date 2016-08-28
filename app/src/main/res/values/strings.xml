@@ -5,14 +5,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_lesson">LessonActivity</string>
-    <string name="title_activity_calc">CalcActivity</string>
-    <string name="title_activity_values">ValuesActivity</string>
-    <string name="title_activity_velocity">VelocityActivity</string>
+    <string name="title_activity_lesson">Lessons</string>
     <string name="title_activity_calculator">Calculator</string>
-    <string name="title_activity_sub_lessons">SubLessonsActivity</string>
-    <string name="title_activity_content">ContentActivity</string>
-    <string name="title_activity_constant">ConstantActivity</string>
+    <string name="title_activity_content">Content</string>
+    <string name="title_activity_constant">Constants</string>
 
     <string name="search"> Search Word </string>
     <string name="title_activity_settings">Settings</string>
@@ -25,8 +21,12 @@
     <string name="pref_autoplay_key">pref_autoplay</string>
     <string name="pref_autoplay_default">false</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pref_lesson_text_size">pref_lesson_text_size</string>
+    <string name="pref_description_lesson_text_size">Text Size for Lessons</string>
+    <string name="pref_lesson_text_size_default">16</string>
+
+
+
     <string name="title_activity_converter">Unit Converter</string>
 
 

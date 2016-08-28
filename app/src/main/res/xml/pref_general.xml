@@ -1,10 +1,24 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreference
-        android:defaultValue="@string/pref_autoplay_default"
-        android:key="@string/pref_autoplay_key"
-        android:summary="@string/pref_description_autoplay_false"
-        android:title="@string/pref_title_autoplay"/>
+    <PreferenceCategory android:title="Lessons" >
+        <SwitchPreference
+            android:defaultValue="@string/pref_autoplay_default"
+            android:key="@string/pref_autoplay_key"
+            android:summary="@string/pref_description_autoplay_false"
+            android:title="@string/pref_title_autoplay"/>
+
+        <SeekBarPreference
+            android:key="@string/pref_lesson_text_size"
+            android:title="Text Size"
+            android:summary="Text Size for Lessons"
+            android:dialogMessage="Text Size for Lessons"
+            android:defaultValue="0"
+            android:text="Text Size"
+            android:max="16"
+            app:min="0"/>
+    </PreferenceCategory>
+
 
 
 </PreferenceScreen>

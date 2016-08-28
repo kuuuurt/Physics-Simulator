@@ -25,6 +25,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Pre
         setupActionBar();
         addPreferencesFromResource(R.xml.pref_general);
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_autoplay_key)));
+
     }
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
@@ -47,11 +48,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity implements Pre
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object o) {
-        String stringValue = o.toString();
-        if(Boolean.parseBoolean(stringValue))
-            preference.setSummary(getString(R.string.pref_description_autoplay_true));
-        else
-            preference.setSummary(getString(R.string.pref_description_autoplay_false));
+        if(preference.getKey().equals(getString(R.string.pref_autoplay_key))) {
+            String stringValue = o.toString();
+            if (Boolean.parseBoolean(stringValue))
+                preference.setSummary(getString(R.string.pref_description_autoplay_true));
+            else
+                preference.setSummary(getString(R.string.pref_description_autoplay_false));
+        }
 
         return true;
     }

@@ -3,6 +3,7 @@ package com.ps.physicssimulator;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.OrientationHelper;
@@ -20,6 +22,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +33,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +43,8 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.ps.physicssimulator.data.DataContract;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.github.kexanie.library.MathView;
 
@@ -49,7 +55,11 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
     String mChapter;
     LinearLayout mContentContainer;
     int hasCalc;
+    boolean autoplay;
     MediaPlayer audioPlayer;
+    FloatingActionButton fab;
+    int textSize;
+    List<MathView> contents;
 
     private final String youTubeAPIKey = "AIzaSyC5kxF8pAU4jQqc2XUoa-58CH08C8BOvCY";
     private static final int RQS_ErrorDialog = 1;
@@ -83,8 +93,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         setContentView(R.layout.activity_content);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,7 +121,8 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
 
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean autoplay = prefs.getBoolean(getString(R.string.pref_autoplay_key), Boolean.parseBoolean(getString(R.string.pref_autoplay_default)));
+        autoplay = prefs.getBoolean(getString(R.string.pref_autoplay_key), Boolean.parseBoolean(getString(R.string.pref_autoplay_default)));
+        textSize = prefs.getInt(getString(R.string.pref_lesson_text_size), Integer.parseInt(getString(R.string.pref_lesson_text_size_default))) + 16;
 
 
 
@@ -123,7 +133,15 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
 
         setTitle(mLesson);
 
+        renderLesson();
+
+
+    }
+
+    public void renderLesson(){
         mContentContainer = (LinearLayout) findViewById(R.id.content_container);
+
+        contents = new ArrayList<>();
 
         Cursor sections = this.getContentResolver().query(
                 DataContract.SectionEntry.buildSectionLesson(mLesson),
@@ -172,7 +190,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                 txtContent.getSettings().setJavaScriptEnabled(true);
                 txtContent.getSettings().setDomStorageEnabled(true);
                 txtContent.getSettings().setAppCacheEnabled(true);
-                //txtContent.getSettings().setMinimumFontSize(32);
+
                 if(l == contentText.length-1)
                     txtContent.setWebViewClient(new WebViewClient(){
                         @Override
@@ -182,6 +200,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                             scrollView.setVisibility(View.VISIBLE);
                         }
                     });
+                contents.add(txtContent);
                 sectionContainer.addView(txtContent);
 
                 if (imageExists) {
@@ -214,6 +233,8 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
 
             sections.moveToNext();
         }
+        changeFontSize();
+
 
 
 
@@ -269,7 +290,12 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                 .findFragmentById(R.id.youtube_fragment);
         youtubePlayer.initialize(youTubeAPIKey, this);
 
+    }
 
+    public void changeFontSize(){
+        for(MathView m : contents){
+            m.getSettings().setMinimumFontSize(textSize);
+        }
     }
 
     public LinearLayout addImage(String imageName, String caption) {
@@ -372,6 +398,43 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
             intent.putExtra("Chapter", mChapter);
             startActivity(intent);
             return true;
+        } else if(id == R.id.action_font_size){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            LayoutInflater inflater = this.getLayoutInflater();
+            final View dialogView = inflater.inflate(R.layout.dialog_font_size, null);
+            SeekBar seekBar = (SeekBar)dialogView.findViewById(R.id.seekbar_font_size);
+            seekBar.setProgress(textSize-16);
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ContentActivity.this);
+                    textSize = i+16;
+                    prefs.edit().remove(getString(R.string.pref_lesson_text_size)).apply();
+                    prefs.edit().putInt(getString(R.string.pref_lesson_text_size), textSize).apply();
+
+                    changeFontSize();
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                }
+            });
+            builder.setTitle("Set Font Size")
+                .setView(dialogView)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                .create().show();
+
         }
 
         return super.onOptionsItemSelected(item);
