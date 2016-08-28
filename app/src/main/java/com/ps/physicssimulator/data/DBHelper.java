@@ -778,7 +778,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Centripetal Acceleration", "Uniform Circular Motion", "$$a_c = r \\cdot \\omega ^2$$"},
                     {"Centripetal Force","Centripetal and Centrifugal Forces", "$$F = {m \\cdot v^2 \\over r} $$"},
                     {"Moment of Inertia", "Rotational Motion", "$$I = m \\cdot r^2$$"},
-                    {"Torque","Rotational Motion", "$$\\tau = r \\cdot F$$"},
+                    {"Torque","Rotational Motion", "$$\\tau = F \\cdot r$$"},
                     {"Angular Momentum", "Rotational Motion", "$$L = I \\cdot \\omega$$"}
             };
 
@@ -942,7 +942,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "Acceleration", "Acceleration due to Gravity"},
                     //zxcv
                     //
-                    {"Vertical Velocity at a Certain Time", "Vertical Velocity","$$v_y = {(g \\cdot t) + v_{yi}}$$", "vi + (g * t)", "v_y", "v", "{{m} \\over {s}}", "Speed"},
+                    {"Vertical Velocity at a Certain Time", "Vertical Velocity","$$v_y = {(g \\cdot {t}) + v_{yi}}$$", "vi + (g * t)", "v_y", "v", "{{m} \\over {s}}", "Speed"},
                     {"Vertical Velocity at a Certain Time", "Initial Velocity along the y-axis", "$$v_{yi} = {v_y - (g \\cdot {t})}$$", "v - (g * t)","v_{yi}", "vi", "{{m} \\over {s}}", "Speed"},
                     {"Vertical Velocity at a Certain Time", "Time","$$t = {(v_y - v_{yi}) \\over g}$$", "(v - vi) / g", "{t}", "t", "{{s}}", "Duration"},
                     {"Vertical Velocity at a Certain Time", "Acceleration due to Gravity","$$g = {(v_y - v_{yi}) \\over {t}}$$", "(v - vi) / t", "g", "g", "{{m} \\over {s^2}}", "Acceleration",
@@ -987,7 +987,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Work", "Work", "$$W = {\\vec{F} \\cdot \\vec{x} \\cdot cos(\\theta)}$$", "F * x * cos(a)", "W", "W", "{{J}}", "Work"},
                     {"Work", "Force", "$$\\vec{F} = {W \\over {\\vec{x} \\cdot cos(\\theta)}}$$", "W / (x * cos(a))", "\\vec{F}", "F", "{{N}}", "Force"},
                     {"Work", "Distance", "$$\\vec{x} = {W \\over {\\vec{F} \\cdot cos(\\theta)}}$$", "W / (F cos(a))", "\\vec{x}", "x", "{{m}}", "Length"},
-                    {"Work", "Angle", "$$\\theta = {cos^{-1}({W \\over {\\vec{F} \\cdot \\vec{x}}})}$$", "acos(W / (F * x))", "\\theta", "a", "^{{\\circ}}", "Angle"},
+                    {"Work", "Angle", "$$\\theta = {cos^{-1}({W \\over {\\vec{F} \\cdot \\vec{x}}})}$$", "acos(W / (F * x))", "\\theta", "a", "^{{\\circ}}", "Angle Degrees"},
                     //
                     {"Kinetic Energy", "Kinetic Energy", "$$KE = {(m \\cdot ({v})^2) \\over 2}$$", "(m * (v) ^ 2) / 2", "KE", "KE", "{{J}}", "Energy"},
                     {"Kinetic Energy", "Mass", "$$m = {(2 \\cdot KE) \\over ({v})^2}$$", "(2 * KE) / (v)^2", "m", "m", "{{kg}}", "Mass"},
@@ -1041,7 +1041,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Moment of Inertia", "Mass", "$$m = {I \\over ({r})^2}$$", "I / (r)^2", "{m}", "m", "{{kg}}", "Mass"},
                     {"Moment of Inertia", "Distance","$${r} = {\\sqrt{{I \\over {m}}}}$$", "sqrt(I / m)", "{r}", "r", "{{m}}", "Length"},
                     //
-                    {"Torque", "Torque", "$$\\tau = {F \\cdot {r}}$$", "r * F", "\\tau", "T", "{{N}}{m}}", "Torque"},
+                    {"Torque", "Torque", "$$\\tau = {F \\cdot {r}}$$", "F * r", "\\tau", "T", "{{N}{m}}", "Torque"},
                     {"Torque", "Force", "$$F = {\\tau \\over {r}}$$", "T / r", "F", "F", "{{N}}", "Force"},
                     {"Torque", "Position",  "$${r} = {\\tau \\over F}$$", "T / F", "{r}", "r", "{{m}}", "Length"},
                     //

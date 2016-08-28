@@ -375,6 +375,8 @@ public class ExpressionModified {
                 return "{{kg}{m} \\over {s^2}}";
             case "{{N}{s}}":
                 return "{{kg}{m} \\over {s}}";
+            case "{{N}{m}}":
+                return "{{kg}{m^2} \\over {s^2}}";
             case "{{\\mu}}":
                 return "";
             case "{{{rad}}}":

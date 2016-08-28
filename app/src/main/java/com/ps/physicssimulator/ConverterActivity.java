@@ -65,13 +65,13 @@ public class ConverterActivity extends AppCompatActivity {
                 convert();
             }
         });
-        formula = "$${c} = {{c} \\cdot {{t} \\over {f}}}$$";
+        formula = "{{c} \\cdot {{t} \\over {f}}}";
         formulaSubbed = "";
 
 
 
         Spinner spnType = (Spinner)findViewById(R.id.spinner_unit_type);
-        spnType.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ConversionUtils.types));
+        spnType.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ConversionUtils.typesConverter));
         spnType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -246,7 +246,7 @@ public class ConverterActivity extends AppCompatActivity {
         if(!value.equals(""))
             formulaSubbed = formulaSubbed.replace("µ", "\\mu ").replace("{{\\circ}}","^{{\\circ}}");
         MathView txtSub = (MathView) findViewById(R.id.text_substitute);
-        txtSub.setText(formulaSubbed);
+        txtSub.setText("$$" + value + "{" + conversionHelper.unitSymbol.get(startUnit).toString()+ "} = " + formulaSubbed + "$$");
     }
 
     private void convert() {
@@ -258,8 +258,8 @@ public class ConverterActivity extends AppCompatActivity {
         expression.setVariable("x", Double.parseDouble(value.replace("(", "").replace(")","")), "{" + conversionHelper.unitSymbol.get(startUnit).toString() + "}");
         List<String> results = expression.evaluate();
         Object[] steps = results.toArray();
-        MathView txtSub = (MathView) findViewById(R.id.text_substitute);
-        String formulaDisplay = txtSub.getText();
+
+        String formulaDisplay = formulaSubbed;
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.steps_container);
 
         for (int i = 0; i < steps.length; i++) {
@@ -294,7 +294,7 @@ public class ConverterActivity extends AppCompatActivity {
 
                     formulaDisplay = formulaDisplay.replace(strForm, result[0] + result[1].replace("µ", "\\mu "));
 
-                    txtStep.setText(formulaDisplay);
+                    txtStep.setText("$$" + value + "{" + conversionHelper.unitSymbol.get(startUnit).toString()+ "} = " + formulaDisplay + "$$");
                     linearLayout.addView(txtStep);
                 }
             } catch (Exception ex){

@@ -50,6 +50,11 @@ public class ConversionUtils {
             "Torque",
             "Angular " +
             "Momentum"};
+    public static String typesConverter[] = {"Mass", "Length", "Duration", "Speed", "Acceleration", "Force", "Work", "Energy", "Power", "Angle", "Momentum", "Moment of " +
+            "Inertia",
+            "Torque",
+            "Angular " +
+                    "Momentum"};
     public static Unit<?> baseUnits[] = {GRAM, METRE, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null};
     public static String keywords[] = {"grams", "meters", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null};
     public int defaultUnit;
@@ -175,7 +180,7 @@ public class ConversionUtils {
                     String lengthUnit = lengthTemp.units.get(i);
                     String timeUnit = timeTemp.units.get(k);
                     units.add(lengthUnit.substring(0, lengthUnit.indexOf("(") - 1)
-                            + " per " + timeUnit.substring(0, timeUnit.indexOf("(") - 1) + "Squared ("
+                            + " per " + timeUnit.substring(0, timeUnit.indexOf("(") - 1) + " Squared ("
                             + lengthSymbol.replace("{", "").replace("}", "") + " / "
                             + timeSymbol.replace("{", "").replace("}", "")
                             + ")");
@@ -204,7 +209,7 @@ public class ConversionUtils {
             unitSymbol.add("{" + JOULE.toString() + "}"); unitFactor.add(1.0);
             units.add("Joules (" + JOULE + ")");
             defaultUnit = 0;
-        } else if (type.equals("Angle Degrees")) {
+        } else if (type.equals("Angle Degrees") || type.equals("Angle")) {
             unitSymbol.add("{\\circ}"); unitFactor.add(1.0);
             unitSymbol.add("{" + RADIAN.toString() + "}"); unitFactor.add(Math.PI / 180);
             units.add("Degrees (" + DEGREE_ANGLE + ")");
@@ -217,20 +222,20 @@ public class ConversionUtils {
             units.add("Degrees (" + DEGREE_ANGLE + ")");
             defaultUnit = 0;
         } else if (type.equals("Momentum")) {
-            unitSymbol.add("{{N}{s}}"); unitFactor.add(1.0);
-            units.add("Newton Seconds ({{N}{s}})");
+            unitSymbol.add("{N}{s}"); unitFactor.add(1.0);
+            units.add("Newton Seconds (Ns)");
             defaultUnit = 0;
         } else if (type.equals("Moment of Inertia")) {
-            unitSymbol.add("{{kg}{m^2}}"); unitFactor.add(1.0);
-            units.add("Kilogram Meters Squared ({{kg}{m^2}})");
+            unitSymbol.add("{kg}{m^2}"); unitFactor.add(1.0);
+            units.add("Kilogram Meters Squared (kgm^2)");
             defaultUnit = 0;
         } else if (type.equals("Torque")) {
-            unitSymbol.add("{{N}}{m}}"); unitFactor.add(1.0);
-            units.add("Newton Meters ({{N}}{m}})");
+            unitSymbol.add("{N}{m}"); unitFactor.add(1.0);
+            units.add("Newton Meters (Nm)");
             defaultUnit = 0;
         } else if (type.equals("Angular Momentum")) {
-            unitSymbol.add("{{kg}{m^3} \\over {s}}"); unitFactor.add(1.0);
-            units.add("Kilogram Meters Cubed over Seconds ({{kg}{m^3} \\over {s}})");
+            unitSymbol.add("{kg}{m^3} \\over {s}"); unitFactor.add(1.0);
+            units.add("Kilogram Meters Cubed over Seconds (kgm^3 over s)");
             defaultUnit = 0;
         }
         return units;

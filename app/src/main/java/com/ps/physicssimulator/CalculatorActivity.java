@@ -104,6 +104,14 @@ public class CalculatorActivity extends AppCompatActivity {
         fromConstants = intent != null && intent.hasExtra("currentChapter");
         fromLesson = intent != null && intent.hasExtra("Lesson");
 
+        btnCalc = (Button) findViewById(R.id.button_calculate);
+        btnCalc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calculate();
+            }
+        });
+
         spnChapters.setAdapter(chaptersAdap);
         if(fromConstants) {
             b = intent.getExtras();
@@ -263,10 +271,9 @@ public class CalculatorActivity extends AppCompatActivity {
                                                             txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
                                                             txtInput.setFilters(new InputFilter[] {new InputFilter.LengthFilter(15)});
                                                             txtInput.setEms(10);
-                                                            txtInput.addTextChangedListener(createTextWatcher(symbolC));
+                                                            txtInput.addTextChangedListener(createTextWatcher(symbolC, varCtr));
 
-                                                            if(fromConstants)
-                                                                txtInput.setText(values[varCtr][2]);
+
                                                             txtLayout.addView(txtInput);
                                                             inputFields.add(txtLayout);
                                                             //End of Edit Text for Values
@@ -331,6 +338,8 @@ public class CalculatorActivity extends AppCompatActivity {
 
                                                             inputSpinners.add(spnInpUnit);
                                                             conversionHelpers.add(conversionHelper);
+                                                            if(fromConstants)
+                                                                txtInput.setText(values[varCtr][2]);
                                                             //End of Spinners for Units
 
 
@@ -347,32 +356,42 @@ public class CalculatorActivity extends AppCompatActivity {
 
                                                             String value = a.getString(a.getColumnIndex(DataContract.ConstantEntry.COLUMN_SYMBOL)) + " = " + val + unit;
                                                             constValues.add(value);
+                                                            inputFields.add(null);
+                                                            inputSpinners.add(null);
+                                                            inputConversion.add(null);
+                                                            conversionHelpers.add(null);
                                                             values[varCtr][2] = val;
                                                         }
                                                         if(!fromConstants)
                                                             values[varCtr][2] = val;
                                                         varCtr++;
+
                                                     } else {
                                                         finalUnit = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY));
                                                         finalType = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_UNIT_TYPE));
                                                         Spinner spnFinal = (Spinner)findViewById(R.id.spinner_unit_final);
                                                         finalConversionHelper = new ConversionUtils();
                                                         int typeIndex = ConversionUtils.findTypeIndex(finalType);
-                                                        List<String> units = finalConversionHelper.populateLists(finalType, finalConversionHelper.baseUnits[typeIndex],
-                                                                finalConversionHelper.keywords[typeIndex]);
-                                                        spnFinal.setAdapter(new ArrayAdapter<String>(CalculatorActivity.this, android.R.layout.simple_spinner_dropdown_item, units));
-                                                        spnFinal.setSelection(finalConversionHelper.defaultUnit);
-                                                        spnFinal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                                            @Override
-                                                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                                                                finalUnitIndex = i;
-                                                            }
+                                                        if(typeIndex > 0) {
+                                                            List<String> units = finalConversionHelper.populateLists(finalType, finalConversionHelper.baseUnits[typeIndex],
+                                                                    finalConversionHelper.keywords[typeIndex]);
+                                                            spnFinal.setAdapter(new ArrayAdapter<String>(CalculatorActivity.this, android.R.layout.simple_spinner_dropdown_item, units));
+                                                            spnFinal.setSelection(finalConversionHelper.defaultUnit);
+                                                            spnFinal.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                                @Override
+                                                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                                                    finalUnitIndex = i;
+                                                                }
 
-                                                            @Override
-                                                            public void onNothingSelected(AdapterView<?> adapterView) {
+                                                                @Override
+                                                                public void onNothingSelected(AdapterView<?> adapterView) {
 
-                                                            }
-                                                        });
+                                                                }
+                                                            });
+                                                        } else {
+                                                            spnFinal.setVisibility(View.GONE);
+                                                        }
+
                                                     }
                                                     c.moveToNext();
                                                 }
@@ -386,15 +405,18 @@ public class CalculatorActivity extends AppCompatActivity {
                                                     ));
                                                     layoutInput.setWeightSum(1.0f);
                                                     layoutInput.setGravity(Gravity.CENTER);
-                                                    try {
+                                                    try{
                                                         layoutInput.addView(inputFields.get(j));
                                                         layoutInput.addView(inputSpinners.get(j));
                                                         layoutInput.addView(inputConversion.get(j));
-                                                    } catch (Exception ex) {
+                                                        inputContainer.addView(layoutInput);
+                                                    } catch(Exception ex) {}
 
-                                                    }
-                                                    inputContainer.addView(layoutInput);
                                                 }
+                                                if (checkValues())
+                                                    btnCalc.setEnabled(true);
+                                                else
+                                                    btnCalc.setEnabled(false);
                                                 TextView txt = (TextView) findViewById(R.id.text_constants_label);
 
                                                 if (constValues.size() > 0) {
@@ -429,6 +451,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                 expression = expressionBuilder.build();
                                                 fromConstants = false;
                                                 fromLesson = false;
+
                                             }
 
                                             @Override
@@ -473,13 +496,7 @@ public class CalculatorActivity extends AppCompatActivity {
             }
         });
 
-        btnCalc = (Button) findViewById(R.id.button_calculate);
-        btnCalc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculate();
-            }
-        });
+
 
         if(fromConstants) {
             b = intent.getExtras();
@@ -551,8 +568,8 @@ public class CalculatorActivity extends AppCompatActivity {
                     txtStep.setText(formulaDisplay);
                     linearLayout.addView(txtStep);
 
-                    if(i == steps.length-1){ //Display Conversion Steps
-                        String formula = "$${c} = {{c} \\cdot {{t} \\over {f}}}$$";
+                    if(i == steps.length-1 && !finalType.equals("None") && (finalUnitIndex != finalConversionHelper.defaultUnit)){ //Display Conversion Steps
+                        String formula = "{{c} \\cdot {{t} \\over {f}}}";
 
                         TextView conversionHeader = (TextView)findViewById(R.id.text_conversion_divider);
                         conversionHeader.setVisibility(View.VISIBLE);
@@ -589,7 +606,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                 ViewGroup.LayoutParams.WRAP_CONTENT
                         ));
                         txtSubs.setEngine(MathView.Engine.KATEX);
-                        txtSubs.setText(formulaDisplay);
+                        txtSubs.setText("$$" + result[0] + result[1] + " = " + formulaDisplay + "$$");
                         linearLayoutCon.addView(txtSubs);
 
                         for (int k = 0; k < steps.length; k++) {
@@ -622,9 +639,12 @@ public class CalculatorActivity extends AppCompatActivity {
                                         formulaDisplay = formulaDisplay.replace("{" + strForm2 + "}", strForm2);
                                     }
 
-                                    formulaDisplay = formulaDisplay.replace(strForm2, resultCon[0] + resultCon[1].replace("µ", "\\mu ").replace(NonSI.DEGREE_ANGLE.toString(),"^{{\\circ}}"));
+                                    formulaDisplay = formulaDisplay.replace(strForm2, resultCon[0] + resultCon[1].replace("µ", "\\mu ").replace(NonSI
+                                            .DEGREE_ANGLE
+                                            .toString(),
+                                            "^{{\\circ}}"));
 
-                                    txtConversion.setText(formulaDisplay);
+                                    txtConversion.setText("$$" + result[0] + result[1] + " = " + formulaDisplay + "$$");
                                     linearLayoutCon.addView(txtConversion);
                                 }
                             } catch (Exception ex){
@@ -633,6 +653,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                 break;
                             }
                         }
+                        break;
                     }
                 }
             } catch (Exception ex){
@@ -672,7 +693,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_dropdown_item, c, projection, views, 1);
     }
 
-    public TextWatcher createTextWatcher(final String variable) {
+    public TextWatcher createTextWatcher(final String variable, final int index) {
         return new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -680,7 +701,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                int index =  findVariableIndex(variable);
+
                 try {
                     String text = charSequence.toString();
                     if (!text.contains(".")) {
@@ -758,7 +779,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
     private boolean checkValues() {
         for (String[] s : values) {
-            if (s[2].equals("") || s[2].equals("."))
+            if (s[2].equals("") || s[2].equals(".") || s[2].equals("-"))
                 return false;
         }
         return true;
