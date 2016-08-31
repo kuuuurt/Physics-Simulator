@@ -183,7 +183,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
                 ));
-                txtContent.setEngine(MathView.Engine.KATEX);
+                txtContent.setEngine(MathView.Engine.MATHJAX);
                 //txtContent.setText(content);
                 txtContent.setText(text.toString());
                 txtContent.setTag("content" + k++);

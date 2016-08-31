@@ -162,6 +162,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initChapters(SQLiteDatabase database){
         if(database.isOpen()){
             String[][] chapters = {
+                    {"Introduction to Physics","Physics, Conversion of Units","ic_chapter_one_dimensional_motion"},
                     {"One-dimensional Motion","Scalar and Vector Values, Velocity, Acceleration, Free fall","ic_chapter_one_dimensional_motion"},
                     {"Two-dimensional Motion","Projectile Motion","ic_chapter_two_dimensional_motion"},
                     {"Isaac Newton's Laws of Motion","Friction, Free Body Diagrams","ic_chapter_newtons_laws"},
@@ -184,9 +185,15 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initLessons(SQLiteDatabase database){
         if(database.isOpen()){
             String[][] lessons = {
+                    {"Physics", "Introduction to Physics",
+                            "Definition, Physics",
+                            "ic_lesson_scalar_and_vector_quantities", "0", "0", "ihNZlp7iUHE", "audio_lesson_velocity"},
+                    {"Conversion of Units", "Introduction to Physics",
+                            "Definition, Conversion of Units, Metric System, Units of Time, Units of Angles",
+                            "ic_lesson_scalar_and_vector_quantities", "0", "0", "ihNZlp7iUHE", "audio_lesson_velocity"},
                     {"Scalar and Vector Values", "One-dimensional Motion",
                             "Definition, Distance and Displacement",
-                            "ic_lesson_scalar_and_vector_quantities", "1", "0", "ihNZlp7iUHE", "audio_lesson_velocity"},
+                            "ic_lesson_scalar_and_vector_quantities", "0", "0", "ihNZlp7iUHE", "audio_lesson_velocity"},
                     {"Velocity", "One-dimensional Motion",
                             "Definition, Speed and Velocity, Average Velocity, Instantaneous " +
                                     "Velocity",
@@ -229,7 +236,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "Definition, Centripetal and Centrifugal Forces",
                             "ic_lesson_centripetal_and_centrifugal_force", "1", "1", "9s1IRJbL2Co", "audio_lesson_velocity"},
                     {"Rotational Motion", "Uniform Circular Motion", "Definition, Moment of " +
-                            "Inertia, Torque, Angular Momentum",
+                            "Torque",
                             "ic_lesson_rotational_motion", "1", "0", "fmXFWi", "audio_lesson_velocity"}
             };
 
@@ -266,14 +273,75 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initSections(SQLiteDatabase database){
         if(database.isOpen()){
             String[][] sections = {
-                    {"Scalar and Vector Values","Scalar and Vector Values Definition","" +
+                    {"Physics","Physics Definition",
                             "<h2><b>Definition</b></h2>" +
-                            "Scalar quantity:<br />" +
-                            "\t•\thas a magnitude<br />" +
-                            "\t•\tis one dimensional<br/><br/>" +
-                            "Vector quantity:<br/>" +
-                            "\t•\thas a magnitude and a direction<br/>" +
-                            "\t•\tis two dimensional"},
+                                    "Physics: <br/>" +
+                                    "\t •\tis the natural science that involves the study of matter and its motion through space and time<br/>"},
+                    {"Physics","Physics",
+                            "<h2><b>Physics</b></h2>" +
+                                    "Before studying the basics of Physics, the person must be knowledgeable of the following subjects: Algebra, Geometry and Trigonometry. <br/><br/>" +
+                                    "There are a lot of topics under Physics, but not all will be discussed in this application. The following topics are the only ones that are included in this " +
+                                    "application: Conversion of Units, Scalar and Vector Quantities, Speed and Velocity, Acceleration, Free-fall, Projectile Motion, Newton’s Laws, Friction, " +
+                                    "Free-body Diagrams, Work, Energy, Power, Momentum and Impulse, Law of Conservation of Energy, Uniform Circular Motion, Centripetal and Centrifugal Forces, and " +
+                                    "Rotational Motion. <br/><br/>" +
+                                    "Other topics under Physics includes: Oscillation and Mechanical Waves, Fluids, Thermodynamics, Circuits, Magnetic Forces, Electromagnetic Waves, and others."},
+                    {"Conversion of Units","Conversion of Units Definition",
+                            "<h2><b>Definition</b></h2>" +
+                                    "Units: <br/>" +
+                                    "\t •\tare standards for measurement of physical quantities that need clear definitions to be useful<br/>" +
+                                    "Conversion: <br/>" +
+                                    "\t •\tthe act or an instance of converting or the process of being converted<br/>" +
+                                    "Unit Conversion: <br/>" +
+                                    "\t •\tis a multi-step process that involves multiplication or division by a numerical factor<br/>"},
+                    {"Conversion of Units","Conversion of Units",
+                            "<h2><b>Conversion of Units</b></h2>" +
+                                    "The best way in unit conversion is by multiplying the given unit by a conversion factor which cancels out the unwanted units and replaces it with the desired " +
+                                    "unit. <br/><br/>" +
+                                    "For example, to convert 4 hours to seconds you first convert it to minutes, and then convert the minutes into seconds. <br/><br/>\n" +
+                                    "There are 60 minutes in one hour, hence: " +
+                                    "$$\\require{cancel} 4 \\cancel{hr} \\cdot {{60 min} \\over {1 \\cancel{hr}}} = 240 min$$ " +
+                                    "And, 60 seconds in one minute, hence:\n" +
+                                    "$$240 \\cancel{min} \\cdot {{60 sec} \\over {1 \\cancel{min}}} = 14400 sec$$" +
+                                    "In converting hours to minutes, you see that \\(hr\\) is both in the numerator and denominator, so the \\(hr\\) cancels out, leaving you with \\(min\\). Same goes with converting minutes to seconds where \\(min\\) cancels out and \\(sec\\) remains. <br><br>" +
+                                    "When converting two units a time, you use two conversion factors. For example, to convert 50 kilometers per hour \\(km \\over hr\\) to meters per second " +
+                                    "\\(m \\over s\\) you convert kilometers \\(km\\) to meters \\(m\\) and hours \\(hr\\) to seconds \\(s\\):<br/><br/>" +
+                                    "<i>Note: There are 1000 meters in 1 kilometer</i><br/><br/>" +
+                                    "$$50 {{\\cancel{km}} \\over {1 \\cancel{hr}}} \\cdot {{1000 m} \\over {1 \\cancel{km}}} \\cdot {{1 \\cancel{hr}} \\over {60 \\cancel{min}}} \\cdot {{1 " +
+                                    "\\cancel{min}} \\over {60 sec}} = 13.8888{m \\over s}$$<br/>"},
+                    {"Conversion of Units","Metric System and Conversion",
+                            "<h2><b>Metric System and Conversion</b></h2>" +
+                                    "The following is the Metric System along with its multiplier for conversion:<br/>" +
+                                    "\t•\t exa \\(E = 10^{18}\\) or \\(1,000,000,000,000,000,000\\)<br/>" +
+                                    "\t•\t peta \\(P = 10^{15}\\) or \\(1,000,000,000,000,000\\)<br/>" +
+                                    "\t•\t tera \\(T = 10^{12}\\) or \\(1,000,000,000,000\\)<br/>" +
+                                    "\t•\t giga \\(G = 10^{9}\\) or \\(1,000,000,000\\)<br/>" +
+                                    "\t•\t mega \\(M = 10^{6}\\) or \\(1,000,000\\)<br/>" +
+                                    "\t•\t kilo \\(k = 10^{3}\\) or \\(1, 000\\)<br/>" +
+                                    "\t•\t hecto \\(h = 10^{2}\\) or \\(100\\)<br/>" +
+                                    "\t•\t deca \\(da = 10^{1}\\) or \\(10\\)<br/>" +
+                                    "\t•\t deci \\(d = 10^{-1}\\) or \\(0.1\\)<br/>" +
+                                    "\t•\t centi \\(c = 10^{-2}\\) or \\(0.01\\)<br/>" +
+                                    "\t•\t milli \\(m = 10^{-3}\\) or \\(0.001\\)<br/>" +
+                                    "\t•\t micro \\(\\mu = 10^{-6}\\) or \\(0.000001\\)<br/>" +
+                                    "\t•\t nano \\(n = 10^{-9}\\) or \\(0.000000001\\)<br/>" +
+                                    "\t•\t pico \\(p = 10^{-12}\\) or \\(0.000000000001\\)<br/>" +
+                                    "\t•\t femto \\(f = 10^{-15}\\) or \\(0.000000000000001\\)<br/>" +
+                                    "\t•\t atto \\(a = 10^{-18}\\) or \\(0.000000000000000001\\)<br/>"},
+                    {"Conversion of Units","Units of Time and Conversion",
+                            "<h2><b>Units of Time and Conversion</b></h2>" +
+                                    "The following are the units of time along with its conversion to other units of time: <br/>\n" +
+                                    "\t•\t \\(1 minute = 60 seconds\\)<br/>" +
+                                    "\t•\t \\(1 hour = 60 minutes\\)<br/>" +
+                                    "\t•\t \\(1 day = 24hours\\)<br/>" +
+                                    "\t•\t \\(1 week = 7 days\\)<br/>" +
+                                    "\t•\t \\(1 year = 52 weeks\\)<br/>" +
+                                    "\t•\t \\(1 year = 12 months\\)<br/>" +
+                                    "\t•\t \\(1 year = 365 days\\)<br/>"},
+                    {"Conversion of Units","Units of Angles and Conversion",
+                            "<h2><b>Units of Angles and Conversion</b></h2>" +
+                                    "There are two units for angles namely, degrees and radians. The following are the conversion of degrees to radians and radians to degree: <br/>" +
+                                    "To convert degrees to radians, just multiply the degrees by \\(\\pi \\over 180\\).<br/>" +
+                                    "To convert radians to degrees, just multiply the radians by \\(180 \\over \\pi\\). "},
                     {"Scalar and Vector Values","Distance and Displacement",
                             "<h2><b>Distance and Displacement</b></h2>" +
                                     "Distance:<br/>" +
@@ -640,7 +708,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "The centripetal acceleration is the rate of change of tangential velocity.<br/><br/>" +
                                     "The centripetal acceleration is always pointing towards the center of the circle in motion.<br/>" +
                                     "Centripetal acceleration can be calculated using this formula:<br/>" +
-                                    "$$a_c = r \\cdot \\omega ^2$$"},
+                                    "$$a_c = {{\\omega ^2} \\over {r}}$$"},
                     {"Centripetal and Centrifugal Forces", "Centripetal and Centrifugal Forces Definition",
                             "<p><h2><b>Definition</b></h2>" +
                                     "Centripetal Force:<br/>" +
@@ -663,22 +731,22 @@ public class DBHelper extends SQLiteOpenHelper {
                             "<p><h2><b>Definition</b></h2>" +
                                     "Rotational Motion:<br/>" +
                                     "\t•\tis a motion of an object in a circular path around a center (or point) of rotation<br/>"},
-                    {"Rotational Motion", "Moment of Inertia",
-                            "<h2><b>Moment of Inertia</b></h2>" +
-                                    "The moment of inertia \\(I\\) is the measure of the object’s resistance to the change to its rotation. It is dependent to the object’s mass \\(m\\) and distance \\(r\\) of the mass further from the center of the rotational motion.<br/><br/>" +
-                                    "Moment of inertia can be calculated using this formula:<br/>" +
-                                    "$$I = m \\cdot r^2$$"},
+//                    {"Rotational Motion", "Moment of Inertia",
+//                            "<h2><b>Moment of Inertia</b></h2>" +
+//                                    "The moment of inertia \\(I\\) is the measure of the object’s resistance to the change to its rotation. It is dependent to the object’s mass \\(m\\) and distance \\(r\\) of the mass further from the center of the rotational motion.<br/><br/>" +
+//                                    "Moment of inertia can be calculated using this formula:<br/>" +
+//                                    "$$I = m \\cdot r^2$$"},
                     {"Rotational Motion", "Torque",
                             "<h2><b>Torque</b></h2>" +
                                     "The torque \\(\\tau \\) is the twisting force \\(F\\) that tends to cause the rotation of an object which is at position \\(r\\) from its axis of rotation. " +
                                     "The position is perpendicular to the force.<br/><br/>" +
                                     "Torque can be calculated using this formula:<br/>" +
                                     "$$\\tau = r \\cdot F$$"},
-                    {"Rotational Motion", "Angular Momentum",
-                            "<h2><b>Angular Momentum</b></h2>" +
-                                    "The angular momentum \\(L\\) is the quantity of rotation of a body. It is dependent on the moment of inertia \\(I\\) of the object and its angular velocity vector \\(\\omega \\).<br/><br/>" +
-                                    "Angular momentum can be calculated using this formula:<br/>" +
-                                    "$$L = I \\cdot \\omega$$"}
+//                    {"Rotational Motion", "Angular Momentum",
+//                            "<h2><b>Angular Momentum</b></h2>" +
+//                                    "The angular momentum \\(L\\) is the quantity of rotation of a body. It is dependent on the moment of inertia \\(I\\) of the object and its angular velocity vector \\(\\omega \\).<br/><br/>" +
+//                                    "Angular momentum can be calculated using this formula:<br/>" +
+//                                    "$$L = I \\cdot \\omega$$"}
             };
 
             for(String[] s: sections){
@@ -775,11 +843,11 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Tangential Velocity", "Uniform Circular Motion", "$$v = {\\Delta S \\over \\Delta t}$$"},
                     {"Velocity around a Circle", "Uniform Circular Motion", "$$v = 2 \\cdot \\pi \\cdot {r \\over t}$$"},
                     {"Angular Velocity", "Uniform Circular Motion", "$$\\omega = {\\Delta \\theta \\over \\Delta t}$$"},
-                    {"Centripetal Acceleration", "Uniform Circular Motion", "$$a_c = r \\cdot \\omega ^2$$"},
+                    {"Centripetal Acceleration", "Uniform Circular Motion", "$$a_c = {{\\omega ^2} \\over {r}}$$"},
                     {"Centripetal Force","Centripetal and Centrifugal Forces", "$$F = {m \\cdot v^2 \\over r} $$"},
-                    {"Moment of Inertia", "Rotational Motion", "$$I = m \\cdot r^2$$"},
+//                    {"Moment of Inertia", "Rotational Motion", "$$I = m \\cdot r^2$$"},
                     {"Torque","Rotational Motion", "$$\\tau = F \\cdot r$$"},
-                    {"Angular Momentum", "Rotational Motion", "$$L = I \\cdot \\omega$$"}
+//                    {"Angular Momentum", "Rotational Motion", "$$L = I \\cdot \\omega$$"}
             };
 
             for(String[] s: formulas){
@@ -1028,26 +1096,26 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Angular Velocity", "Angle", "$$\\Delta \\theta = {\\omega \\cdot \\Delta t}$$", "v * t", "\\Delta \\theta", "a", "{{rad}}", "Angle Radians"},
                     {"Angular Velocity", "Time", "$$\\Delta t = {\\Delta \\theta \\over \\omega}$$", "a / v", "\\Delta t", "t", "{{s}}", "Duration"},
                     //
-                    {"Centripetal Acceleration", "Centripetal Acceleration", "$$a_c = {{r} \\cdot (\\omega)^2}$$", "r * (w)^2", "a_c", "a", "{{m} \\over {s^2}}", "Acceleration"},
-                    {"Centripetal Acceleration", "Angular Velocity", "$$\\omega = {\\sqrt{{a_c \\over {r}}}}$$", "sqrt(a / r)", "\\omega", "w", "{{rad} \\over {s}}", "Speed"},
-                    {"Centripetal Acceleration", "Radius", "$${r} = {a_c \\over (\\omega)^2}$$", "a / (w)^2", "{r}", "r", "{{m}}", "Length"},
+                    {"Centripetal Acceleration", "Centripetal Acceleration", "$$a_c = {(\\omega)^2 \\over {r}}$$", "((w)^2) / r", "a_c", "a", "{{m} \\over {s^2}}", "Acceleration"},
+                    {"Centripetal Acceleration", "Angular Velocity", "$$\\omega = {\\sqrt{{a_c \\cdot {r}}}}$$", "sqrt(a * r)", "\\omega", "w", "{{rad} \\over {s}}", "Speed"},
+                    {"Centripetal Acceleration", "Radius", "$${r} = {(\\omega)^2 \\over a_c}$$", "((w)^2) / a", "{r}", "r", "{{m}}", "Length"},
                     //
                     {"Centripetal Force", "Centripetal Force", "$$F = {(m \\cdot ({v})^2) \\over {r}}$$", "(m * (v)^2) / r", "F",  "F", "{{N}}", "Force"},
                     {"Centripetal Force", "Mass", "$$m = {(F \\cdot {r}) \\over ({v})^2}$$", "(F * r) / (v)^2", "m", "m", "{{kg}}", "Mass"},
                     {"Centripetal Force", "Tangential Velocity", "$${v} = {\\sqrt{{(F \\cdot {r}) \\over m}}}$$", "sqrt((F * r) / m)", "{v}", "v", "{{m} \\over {s}}", "Speed"},
                     {"Centripetal Force", "Radius", "$${r} = {(m \\cdot ({v})^2) \\over F}$$", "(m * (v)^2) / F", "{r}", "r", "{{m}}", "Length"},
                     //
-                    {"Moment of Inertia", "Moment of Inertia", "$$I = {{m} \\cdot ({r})^2}$$", "m * (r)^2", "I", "I", "{{kg}{m^2}}", "Moment of Inertia"},
-                    {"Moment of Inertia", "Mass", "$$m = {I \\over ({r})^2}$$", "I / (r)^2", "{m}", "m", "{{kg}}", "Mass"},
-                    {"Moment of Inertia", "Distance","$${r} = {\\sqrt{{I \\over {m}}}}$$", "sqrt(I / m)", "{r}", "r", "{{m}}", "Length"},
+//                    {"Moment of Inertia", "Moment of Inertia", "$$I = {{m} \\cdot ({r})^2}$$", "m * (r)^2", "I", "I", "{{kg}{m^2}}", "Moment of Inertia"},
+//                    {"Moment of Inertia", "Mass", "$$m = {I \\over ({r})^2}$$", "I / (r)^2", "{m}", "m", "{{kg}}", "Mass"},
+//                    {"Moment of Inertia", "Distance","$${r} = {\\sqrt{{I \\over {m}}}}$$", "sqrt(I / m)", "{r}", "r", "{{m}}", "Length"},
                     //
                     {"Torque", "Torque", "$$\\tau = {F \\cdot {r}}$$", "F * r", "\\tau", "T", "{{N}{m}}", "Torque"},
                     {"Torque", "Force", "$$F = {\\tau \\over {r}}$$", "T / r", "F", "F", "{{N}}", "Force"},
                     {"Torque", "Position",  "$${r} = {\\tau \\over F}$$", "T / F", "{r}", "r", "{{m}}", "Length"},
                     //
-                    {"Angular Momentum", "Angular Momentum", "$$L = {I \\cdot \\omega}$$", "I * w", "L", "L", "{{kg}{m^3} \\over {s}}", "Angular Momentum"},
-                    {"Angular Momentum", "Moment of Inertia", "$$I = {L \\over \\omega}$$", "L / w", "I", "I", "{{kg}{m^2}}", "Moment of Inertia"},
-                    {"Angular Momentum", "Angular Velocity", "$$\\omega = {L \\over I}$$", "L / I", "\\omega", "w", "{{m} \\over {s}}", "Speed"}
+//                    {"Angular Momentum", "Angular Momentum", "$$L = {I \\cdot \\omega}$$", "I * w", "L", "L", "{{kg}{m^3} \\over {s}}", "Angular Momentum"},
+//                    {"Angular Momentum", "Moment of Inertia", "$$I = {L \\over \\omega}$$", "L / w", "I", "I", "{{kg}{m^2}}", "Moment of Inertia"},
+//                    {"Angular Momentum", "Angular Velocity", "$$\\omega = {L \\over I}$$", "L / I", "\\omega", "w", "{{m} \\over {s}}", "Speed"}
             };
 
             for(String[] s: variables){
@@ -1103,7 +1171,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
 }
-
 
 
 
