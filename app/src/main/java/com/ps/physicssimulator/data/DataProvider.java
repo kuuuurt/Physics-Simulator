@@ -328,6 +328,8 @@ public class DataProvider extends ContentProvider{
         );
     }
 
+
+
     @Override
     public boolean onCreate() {
         dbHelper = new DBHelper(getContext());
@@ -372,7 +374,18 @@ public class DataProvider extends ContentProvider{
                 data = getConstantById(uri, projection, sortOrder);
                 break;
             case CHAPTER:
-                data = dbHelper.getReadableDatabase().query(
+                if (sortOrder != null && sortOrder.equals("HasCalc"))
+                    data = dbHelper.getReadableDatabase().query(
+                        DataContract.ChapterEntry.TABLE_NAME,
+                        projection,
+                        DataContract.ChapterEntry.COLUMN_HAS_CALCULATOR + " = ?",
+                        new String[]{"1"},
+                        null,
+                        null,
+                        null
+                    );
+                else
+                    data = dbHelper.getReadableDatabase().query(
                         DataContract.ChapterEntry.TABLE_NAME,
                         projection,
                         selection,
@@ -380,7 +393,7 @@ public class DataProvider extends ContentProvider{
                         null,
                         null,
                         sortOrder
-                );
+                    );
                 break;
             case CHAPTER_WITH_NAME:
                 data = getChapterByName(uri, projection, sortOrder);

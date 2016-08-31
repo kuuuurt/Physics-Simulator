@@ -224,8 +224,9 @@ public class ExpressionModified {
                         strLeftArg = strLeftArg.replace(".0" , "");
                     }
 
-                    String leftUnitTemp = expandUnit(leftUnit);
-                    String rightUnitTemp = expandUnit(rightUnit);
+                    if(!leftUnit.equals(rightUnit) && !(rightUnit.equals("") || leftUnit.equals("")) ) {
+                        String leftUnitTemp = expandUnit(leftUnit);
+                        String rightUnitTemp = expandUnit(rightUnit);
 
 
                         if (!leftUnit.equals(leftUnitTemp)) {
@@ -241,7 +242,7 @@ public class ExpressionModified {
                             rightUnit = rightUnitTemp;
                             steps.add(new String[]{strRightArg, rightUnit, formula});
                         }
-
+                    }
                     int pow = (int)(Math.log(leftArg)/Math.log(10));
                     if((Math.abs(leftArg) > 0) && (Math.abs(leftArg) < Math.pow(10,-3)) || pow > 6) {
                         strLeftArg = "(" + new DecimalFormat("#.####E0").format(leftArg) + ")";
@@ -292,7 +293,7 @@ public class ExpressionModified {
                     output.push(unit);
                     output.push(strRes);
                 } else if (op.getOperator().getNumOperands() == 1) {
-                    /* pop the operand and push the result of the operation */
+                    /* pop the operan, null, nulld and push the result of the operation */
                     double arg = Double.parseDouble(output.pop());
                     double res = op.getOperator().apply(arg);
                     output.push(String.valueOf(res));

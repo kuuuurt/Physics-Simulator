@@ -22,7 +22,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 DataContract.ChapterEntry.TABLE_NAME + " (" +
                 DataContract.ChapterEntry._ID + " INTEGER PRIMARY KEY, " +
                 DataContract.ChapterEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
-                DataContract.ChapterEntry.COLUMN_DESCRIPTION + " TEXT," +
+                DataContract.ChapterEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
+                DataContract.ChapterEntry.COLUMN_HAS_CALCULATOR + " INTEGER NOT NULL, " +
                 DataContract.ChapterEntry.COLUMN_LOGO + " TEXT" + ");";
 
         final String SQL_CREATE_LESSON_TABLE = "CREATE TABLE " +
@@ -114,35 +115,7 @@ public class DBHelper extends SQLiteOpenHelper {
         initExamples(sqLiteDatabase);
     }
 
-    private void initExamples(SQLiteDatabase database) {
-        if(database.isOpen()){
-            String[][] examples = {
-                    {"Distance","Scalar and Vector Values, Velocity, Acceleration, Free fall","Speed and Velocity"},
-                    {"Speed","Projectile Motion","Speed and Velocity"},
-                    {"Time","Friction, Free Body Diagrams","Speed and Velocity"}
-            };
-            for(String[] s : examples){
-                Cursor c = database.query(
-                        DataContract.SectionEntry.TABLE_NAME,
-                        new String[]{DataContract.SectionEntry._ID},
-                        DataContract.SectionEntry.COLUMN_NAME + " = ?",
-                        new String[]{s[2]},
-                        null,
-                        null,
-                        null
-                );
-                c.moveToFirst();
 
-                ContentValues values = new ContentValues();
-                values.put(DataContract.ExampleEntry.COLUMN_NAME, s[0]);
-                values.put(DataContract.ExampleEntry.COLUMN_CONTENT, s[1]);
-                values.put(DataContract.ExampleEntry.COLUMN_SECTION_KEY, c.getLong(c.getColumnIndex(DataContract.SectionEntry._ID)));
-
-                database.insert(DataContract.ExampleEntry.TABLE_NAME, null, values);
-            }
-
-        }
-    }
 
 
     @Override
@@ -162,19 +135,20 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initChapters(SQLiteDatabase database){
         if(database.isOpen()){
             String[][] chapters = {
-                    {"Introduction to Physics","Physics, Conversion of Units","ic_chapter_one_dimensional_motion"},
-                    {"One-dimensional Motion","Scalar and Vector Values, Velocity, Acceleration, Free fall","ic_chapter_one_dimensional_motion"},
-                    {"Two-dimensional Motion","Projectile Motion","ic_chapter_two_dimensional_motion"},
-                    {"Isaac Newton's Laws of Motion","Friction, Free Body Diagrams","ic_chapter_newtons_laws"},
-                    {"Work, Energy, and Power","Work, Energy, Power","ic_chapter_work_energy_power"},
-                    {"Momentum and Impulse","Momentum and Impulse","ic_chapter_momentum_impulse"},
-                    {"Uniform Circular Motion","Uniform Circular Motion, Centripetal and Centrifugal Forces, Rotational Motion","ic_chapter_uniform_circular_motion"}
+                    {"Introduction to Physics","Physics, Conversion of Units","ic_chapter_one_dimensional_motion", "0"},
+                    {"One-dimensional Motion","Scalar and Vector Values, Velocity, Acceleration, Free fall","ic_chapter_one_dimensional_motion", "1"},
+                    {"Two-dimensional Motion","Projectile Motion","ic_chapter_two_dimensional_motion", "1"},
+                    {"Isaac Newton's Laws of Motion","Friction, Free Body Diagrams","ic_chapter_newtons_laws", "1"},
+                    {"Work, Energy, and Power","Work, Energy, Power","ic_chapter_work_energy_power", "1"},
+                    {"Momentum and Impulse","Momentum and Impulse","ic_chapter_momentum_impulse", "1"},
+                    {"Uniform Circular Motion","Uniform Circular Motion, Centripetal and Centrifugal Forces, Rotational Motion","ic_chapter_uniform_circular_motion", "1"}
             };
             for(String[] s : chapters){
                 ContentValues values = new ContentValues();
                 values.put(DataContract.ChapterEntry.COLUMN_NAME, s[0]);
                 values.put(DataContract.ChapterEntry.COLUMN_DESCRIPTION, s[1]);
                 values.put(DataContract.ChapterEntry.COLUMN_LOGO, s[2]);
+                values.put(DataContract.ChapterEntry.COLUMN_HAS_CALCULATOR, s[3]);
 
                 database.insert(DataContract.ChapterEntry.TABLE_NAME, null, values);
             }
@@ -193,7 +167,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "ic_lesson_scalar_and_vector_quantities", "0", "0", "ihNZlp7iUHE", "audio_lesson_velocity"},
                     {"Scalar and Vector Values", "One-dimensional Motion",
                             "Definition, Distance and Displacement",
-                            "ic_lesson_scalar_and_vector_quantities", "0", "0", "ihNZlp7iUHE", "audio_lesson_velocity"},
+                            "ic_lesson_scalar_and_vector_quantities", "1", "0", "ihNZlp7iUHE", "audio_lesson_velocity"},
                     {"Velocity", "One-dimensional Motion",
                             "Definition, Speed and Velocity, Average Velocity, Instantaneous " +
                                     "Velocity",
@@ -207,7 +181,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "Projectile Motion",
                             "ic_lesson_projectile_motion", "1", "1","rMVBc8cE5GU", "audio_lesson_velocity"},
                     {"Newton's Laws of Motion", "Isaac Newton's Laws of Motion", "Newton's Laws of Motion",
-                            "ic_lesson_friction", "0", "0", "fmXFWi", "audio_lesson_velocity"}, //asdf
+                            "ic_lesson_newtons_laws", "0", "0", "fmXFWi", "audio_lesson_velocity"}, //asdf
                     {"Friction", "Isaac Newton's Laws of Motion", "Definition, Two types of " +
                             "Friction",
                             "ic_lesson_friction", "1", "1", "fo_pmp5rtzo", "audio_lesson_velocity"},
@@ -810,6 +784,38 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 database.insert(DataContract.ImageEntry.TABLE_NAME, null, values);
             }
+        }
+    }
+
+    private void initExamples(SQLiteDatabase database) {
+        if(database.isOpen()){
+            String[][] examples = {
+                    //Format
+                    //{"Variable Name", "Content", "Section Name(Look at 2nd Column in Sections DB)"
+                    {"Distance","Scalar and Vector Values, Velocity, Acceleration, Free fall", "Speed and Velocity"},
+                    {"Speed","Projectile Motion","Speed and Velocity"},
+                    {"Time","Friction, Free Body Diagrams","Speed and Velocity"}
+            };
+            for(String[] s : examples){
+                Cursor c = database.query(
+                        DataContract.SectionEntry.TABLE_NAME,
+                        new String[]{DataContract.SectionEntry._ID},
+                        DataContract.SectionEntry.COLUMN_NAME + " = ?",
+                        new String[]{s[2]},
+                        null,
+                        null,
+                        null
+                );
+                c.moveToFirst();
+
+                ContentValues values = new ContentValues();
+                values.put(DataContract.ExampleEntry.COLUMN_NAME, s[0]);
+                values.put(DataContract.ExampleEntry.COLUMN_CONTENT, s[1]);
+                values.put(DataContract.ExampleEntry.COLUMN_SECTION_KEY, c.getLong(c.getColumnIndex(DataContract.SectionEntry._ID)));
+
+                database.insert(DataContract.ExampleEntry.TABLE_NAME, null, values);
+            }
+
         }
     }
 

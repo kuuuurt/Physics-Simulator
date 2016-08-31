@@ -46,17 +46,10 @@ import static javax.measure.unit.SI.ZETTA;
  * Created by qwerasdf on 8/24/16.
  */
 public class ConversionUtils {
-    public static String types[] = {"Mass", "Length", "Duration", "Speed", "Acceleration", "Force", "Work", "Energy", "Power", "Angle Degrees", "Angle Radians", "Momentum", "Moment of Inertia",
-            "Torque",
-            "Angular " +
-            "Momentum"};
-    public static String typesConverter[] = {"Mass", "Length", "Duration", "Speed", "Acceleration", "Force", "Work", "Energy", "Power", "Angle", "Momentum", "Moment of " +
-            "Inertia",
-            "Torque",
-            "Angular " +
-                    "Momentum"};
-    public static Unit<?> baseUnits[] = {GRAM, METRE, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null};
-    public static String keywords[] = {"grams", "meters", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null};
+    public static String types[] = {"Mass", "Length", "Duration", "Speed", "Acceleration", "Force", "Work", "Energy", "Power", "Angle Degrees", "Angle Radians", "Momentum", "Torque"};
+    public static String typesConverter[] = {"Mass", "Length", "Duration", "Speed", "Acceleration", "Force", "Work", "Energy", "Power", "Angle", "Momentum", "Torque"};
+    public static Unit<?> baseUnits[] = {GRAM, METRE, null, null, null, null, null, null, null, null, null, null, null, null, null};
+    public static String keywords[] = {"grams", "meters", null, null, null, null, null, null, null, null, null, null, null, null, null};
     public int defaultUnit;
     public List<Double> unitFactor = new ArrayList<>();
     public List<String> units = new ArrayList<>();

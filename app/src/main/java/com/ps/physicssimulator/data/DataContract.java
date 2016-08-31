@@ -30,6 +30,7 @@ public class DataContract   {
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_DESCRIPTION = "desc";
         public static final String COLUMN_LOGO = "logo";
+        public static final String COLUMN_HAS_CALCULATOR = "has_calculator";
 
 
         public static final String CONTENT_TYPE =

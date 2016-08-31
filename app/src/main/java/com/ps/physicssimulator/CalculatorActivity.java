@@ -91,7 +91,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
         final SimpleCursorAdapter chaptersAdap = setSpinnerAdapter(
                 this.getContentResolver().query(DataContract.ChapterEntry.CONTENT_URI,
-                        null, null, null, null),
+                        null, null, null, "HasCalc"),
                 new String[]{DataContract.ChapterEntry.COLUMN_NAME}
         );
 
@@ -367,7 +367,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                         varCtr++;
 
                                                     } else {
-                                                        finalUnit = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_SYMBOL_DISPLAY));
+                                                        finalUnit = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_UNIT));
                                                         finalType = c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_UNIT_TYPE));
                                                         Spinner spnFinal = (Spinner)findViewById(R.id.spinner_unit_final);
                                                         finalConversionHelper = new ConversionUtils();
@@ -562,9 +562,10 @@ public class CalculatorActivity extends AppCompatActivity {
                     if (formulaDisplay.contains("{" + strForm + "}")) {
                         formulaDisplay = formulaDisplay.replace("{" + strForm + "}", strForm);
                     }
-
-                    formulaDisplay = formulaDisplay.replace(strForm, result[0] + result[1]);
-
+                    if(i == steps.length-1)
+                        formulaDisplay = formulaDisplay.replace(strForm, result[0] + finalUnit);
+                    else
+                        formulaDisplay = formulaDisplay.replace(strForm, result[0] + result[1]);
                     txtStep.setText(formulaDisplay);
                     linearLayout.addView(txtStep);
 
@@ -831,13 +832,6 @@ public class CalculatorActivity extends AppCompatActivity {
         return true;
     }
 
-    public int findVariableIndex(String variable) {
-        for (int i = 0; i < values.length; i++) {
-            if (values[i][0].equals(variable))
-                return i;
-        }
-        return -1;
-    }
 
     public void resetSteps() {
         LinearLayout stepsContainer = (LinearLayout) findViewById(R.id.steps_container);
