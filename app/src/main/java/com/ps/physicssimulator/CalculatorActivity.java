@@ -534,6 +534,11 @@ public class CalculatorActivity extends AppCompatActivity {
         MathView txtSub = (MathView) findViewById(R.id.text_substitute);
         String formulaDisplay = txtSub.getText();
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.steps_container);
+        LinearLayout linearLayoutCon = (LinearLayout) findViewById(R.id.steps_container_conversion);
+        linearLayoutCon.setVisibility(View.GONE);
+
+        TextView conversionHeader = (TextView)findViewById(R.id.text_conversion_divider);
+        conversionHeader.setVisibility(View.GONE);
 
         for (int i = 0; i < steps.length; i++) {
             MathView txtStep = new MathView(CalculatorActivity.this, null);
@@ -572,7 +577,6 @@ public class CalculatorActivity extends AppCompatActivity {
                     if(i == steps.length-1 && !finalType.equals("None") && (finalUnitIndex != finalConversionHelper.defaultUnit)){ //Display Conversion Steps
                         String formula = "{{c} \\cdot {{t} \\over {f}}}";
 
-                        TextView conversionHeader = (TextView)findViewById(R.id.text_conversion_divider);
                         conversionHeader.setVisibility(View.VISIBLE);
 
                         formulaDisplay = formula;
@@ -590,7 +594,7 @@ public class CalculatorActivity extends AppCompatActivity {
                         formulaDisplay = formulaDisplay.replace("{t}", strNum + "{" + finalConversionHelper.unitSymbol.get(finalUnitIndex) + "}");
                         formulaDisplay = formulaDisplay.replace("{f}", strDen + result[1]);
 
-                        LinearLayout linearLayoutCon = (LinearLayout) findViewById(R.id.steps_container_conversion);
+                        linearLayoutCon.setVisibility(View.VISIBLE);
                         linearLayoutCon.removeAllViews();
 
                         ExpressionModified expressionCon = new ExpressionBuilderModified("x * (y / z)").variable("x").variable("y").variable("z").build();

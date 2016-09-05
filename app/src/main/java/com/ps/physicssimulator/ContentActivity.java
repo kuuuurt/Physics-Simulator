@@ -76,6 +76,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
     public boolean onSupportNavigateUp() {
         audioPlayer.pause();
         audioPlayer.seekTo(0);
+        audioPlayer.release();
         return super.onSupportNavigateUp();
     }
 
@@ -83,6 +84,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
     public void onBackPressed() {
         audioPlayer.pause();
         audioPlayer.seekTo(0);
+        audioPlayer.release();
         super.onBackPressed();
     }
 
@@ -190,59 +192,62 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                 txtContent.getSettings().setJavaScriptEnabled(true);
                 txtContent.getSettings().setDomStorageEnabled(true);
                 txtContent.getSettings().setAppCacheEnabled(true);
+                sectionContainer.addView(txtContent);
 
-                if(l == contentText.length-1)
-                    txtContent.setWebViewClient(new WebViewClient(){
+                if(l == contentText.length-1) {
+                    txtContent.setWebViewClient(new WebViewClient() {
                         @Override
                         public void onPageFinished(WebView view, String url) {
                             progressDialog.dismiss();
-                            ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_content);
+                            ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_content);
                             scrollView.setVisibility(View.VISIBLE);
                         }
                     });
-                contents.add(txtContent);
-                Cursor examples = this.getContentResolver().query(
-                        DataContract.ExampleEntry.buildExampleSection(sections.getString(
-                                sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))),
-                        null, null, null, null
-                );
-                examples.moveToFirst();
-                sectionContainer.addView(txtContent);
-                for(int o = 0; o < examples.getCount(); o++){
-                    LinearLayout exampleButtons = new LinearLayout(ContentActivity.this);
-                    exampleButtons.setLayoutParams(new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            1.0f
-                    ));
-                    exampleButtons.setOrientation(OrientationHelper.HORIZONTAL);
-                    exampleButtons.setGravity(Gravity.CENTER_HORIZONTAL);
-                    exampleButtons.setPadding(16, 16, 16, 16);
-                    try {
-                        exampleButtons.addView(createExampleButton(
-                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_NAME)),
-                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_CONTENT)),
-                                sections.getString(sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))
+                    Cursor examples = this.getContentResolver().query(
+                            DataContract.ExampleEntry.buildExampleSection(sections.getString(
+                                    sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))),
+                            null, null, null, null
+                    );
+                    examples.moveToFirst();
+                    for(int o = 0; o < examples.getCount(); o++){
+                        LinearLayout exampleButtons = new LinearLayout(ContentActivity.this);
+                        exampleButtons.setLayoutParams(new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                1.0f
                         ));
-                        examples.moveToNext();
-                        o++;
-                        exampleButtons.addView(createExampleButton(
-                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_NAME)),
-                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_CONTENT)),
-                                sections.getString(sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))
-                        ));
-                        examples.moveToNext();
-                        o++;
-                        exampleButtons.addView(createExampleButton(
-                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_NAME)),
-                                examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_CONTENT)),
-                                sections.getString(sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))
-                        ));
-                        examples.moveToNext();
-                        o++;
-                    } catch(Exception ex) {}
-                    sectionContainer.addView(exampleButtons);
+                        exampleButtons.setOrientation(OrientationHelper.HORIZONTAL);
+                        exampleButtons.setGravity(Gravity.CENTER_HORIZONTAL);
+                        exampleButtons.setPadding(16, 16, 16, 16);
+                        try {
+                            exampleButtons.addView(createExampleButton(
+                                    examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_NAME)),
+                                    examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_CONTENT)),
+                                    sections.getString(sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))
+                            ));
+                            examples.moveToNext();
+                            o++;
+                            exampleButtons.addView(createExampleButton(
+                                    examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_NAME)),
+                                    examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_CONTENT)),
+                                    sections.getString(sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))
+                            ));
+                            examples.moveToNext();
+                            o++;
+                            exampleButtons.addView(createExampleButton(
+                                    examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_NAME)),
+                                    examples.getString(examples.getColumnIndex(DataContract.ExampleEntry.COLUMN_CONTENT)),
+                                    sections.getString(sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))
+                            ));
+                            examples.moveToNext();
+                            o++;
+                        } catch(Exception ex) {}
+                        sectionContainer.addView(exampleButtons);
+                    }
+                    examples.close();
                 }
+                contents.add(txtContent);
+
 
 
                 if (imageExists) {
@@ -338,7 +343,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         Button button = new Button(this);
         button.setLayoutParams(new LinearLayout.LayoutParams(
                 0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.MATCH_PARENT,
                 0.33f
         ));
         button.setText(name);
