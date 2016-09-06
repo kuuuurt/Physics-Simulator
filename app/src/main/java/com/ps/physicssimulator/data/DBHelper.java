@@ -161,57 +161,57 @@ public class DBHelper extends SQLiteOpenHelper {
             String[][] lessons = {
                     {"Physics", "Introduction to Physics",
                             "Definition, Physics",
-                            "ic_lesson_introduction_to_physics", "0", "0", "ihNZlp7iUHE", "audio_lesson_velocity"},
+                            "ic_lesson_introduction_to_physics", "0", "0", "uIojjqSm0m4", "audio_lesson_introduction_to_physics"},
                     {"Conversion of Units", "Introduction to Physics",
                             "Definition, Conversion of Units, Metric System, Units of Time, Units of Angles",
-                            "ic_lesson_conversion_of_units", "0", "0", "ihNZlp7iUHE", "audio_lesson_velocity"},
+                            "ic_lesson_conversion_of_units", "0", "0", "7lnsGINMK7I", "audio_lesson_unit_conversion"},
                     {"Scalar and Vector Values", "One-dimensional Motion",
                             "Definition, Distance and Displacement",
-                            "ic_lesson_scalar_and_vector_quantities", "1", "0", "ihNZlp7iUHE", "audio_lesson_velocity"},
+                            "ic_lesson_scalar_and_vector_quantities", "1", "0", "ihNZlp7iUHE", "audio_lesson_scalar_and_vector_values"},
                     {"Velocity", "One-dimensional Motion",
                             "Definition, Speed and Velocity, Average Velocity, Instantaneous " +
                                     "Velocity",
-                            "ic_lesson_velocity", "1", "1", "oRKxmXwLvUU", "audio_lesson_velocity"},
+                            "ic_lesson_velocity", "1", "1", "oRKxmXwLvUU", "audio_lesson_speed_and_velocity"},
                     {"Acceleration", "One-dimensional Motion", "Definition, Acceleration, Average " +
                             "Acceleration, Instantaneous Acceleration",
-                            "ic_lesson_acceleration", "1", "1", "FOkQszg1-j8", "audio_lesson_velocity"},
+                            "ic_lesson_acceleration", "1", "1", "FOkQszg1-j8", "audio_lesson_acceleration"},
                     {"Free-fall", "One-dimensional Motion", "Definition, Free fall",
-                            "ic_lesson_free_fall", "1", "1", "6wEEa8-RSqU", "audio_lesson_velocity"},
+                            "ic_lesson_free_fall", "1", "1", "6wEEa8-RSqU", "audio_lesson_free_fall"},
                     {"Projectile Motion", "Two-dimensional Motion", "Definition, " +
                             "Projectile Motion",
-                            "ic_lesson_projectile_motion", "1", "1","rMVBc8cE5GU", "audio_lesson_velocity"},
+                            "ic_lesson_projectile_motion", "1", "1","rMVBc8cE5GU", "audio_lesson_projectile_motion"},
                     {"Newton's Laws of Motion", "Isaac Newton's Laws of Motion", "Newton's Laws of Motion",
-                            "ic_lesson_newtons_laws", "0", "0", "fmXFWi", "audio_lesson_velocity"}, //asdf
+                            "ic_lesson_newtons_laws", "0", "0", "kgLeZuQkyuo", "audio_lesson_newtons_laws"}, //asdf
                     {"Friction", "Isaac Newton's Laws of Motion", "Definition, Two types of " +
                             "Friction",
-                            "ic_lesson_friction", "1", "1", "fo_pmp5rtzo", "audio_lesson_velocity"},
+                            "ic_lesson_friction", "1", "1", "fo_pmp5rtzo", "audio_lesson_friction"},
                     {"Free-body Diagrams", "Isaac Newton's Laws of Motion", "Definition, Free " +
                             "Body Diagrams",
-                            "ic_lesson_free_body_diagrams", "0", "0", "nDis6HbXxjg", "audio_lesson_velocity"},
+                            "ic_lesson_free_body_diagrams", "0", "0", "nDis6HbXxjg", "audio_lesson_free_body_diagrams"},
                     {"Momentum and Impulse", "Momentum and Impulse", "Definition, Momentum, " +
                             "Impulse",
-                            "ic_lesson_momentum_impulse", "1", "1", "XFhntPxow0U","audio_lesson_velocity"},
+                            "ic_lesson_momentum_impulse", "1", "1", "XFhntPxow0U","audio_lesson_momentum_and_impulse"},
                     {"Law of Conservation of Energy", "Momentum and Impulse", "Definition, " +
                             "Conservation of Energy",
-                            "ic_lesson_laws_of_conservation_of_energy", "0", "0", "PplaBASQ_3M", "audio_lesson_velocity"},
+                            "ic_lesson_laws_of_conservation_of_energy", "0", "0", "PplaBASQ_3M", "audio_lesson_laws_of_conservation_of_energy"},
                     {"Work", "Work, Energy, and Power", "Definition, Work",
-                            "ic_lesson_work", "1", "1", "fmXFWi", "audio_lesson_velocity"}, //asdf
+                            "ic_lesson_work", "1", "1", "w4QFJb9a8vo", "audio_lesson_work"}, //asdf
                     {"Energy", "Work, Energy, and Power", "Definition, Kinetic Energy, " +
                             "Potential Energy, Total Mechanical Energy",
-                            "ic_lesson_energy", "1", "1", "fmXFWi", "audio_lesson_velocity"}, //asdf
+                            "ic_lesson_energy", "1", "1", "w4QFJb9a8vo", "audio_lesson_energy"}, //asdf
                     {"Power", "Work, Energy, and Power", "Definition, Average Power",
-                            "ic_lesson_power", "1", "1", "fmXFWi", "audio_lesson_velocity"}, //asdf
+                            "ic_lesson_power", "1", "1", "w4QFJb9a8vo", "audio_lesson_power"}, //asdf
                     {"Uniform Circular Motion", "Uniform Circular Motion", "Definition, " +
                             "Measurements of a Circle, Frequency, Angular Displacement, " +
                             "Length of Arc, Tangential Velocity, Angular Velocity, " +
                             "Centripetal Acceleration",
-                            "ic_lesson_uniform_circular_motion", "1", "1", "bpFK2VCRHUs", "audio_lesson_velocity"},
+                            "ic_lesson_uniform_circular_motion", "1", "1", "bpFK2VCRHUs", "audio_lesson_uniform_circular_motion"},
                     {"Centripetal and Centrifugal Forces", "Uniform Circular Motion",
                             "Definition, Centripetal and Centrifugal Forces",
-                            "ic_lesson_centripetal_and_centrifugal_force", "1", "1", "9s1IRJbL2Co", "audio_lesson_velocity"},
+                            "ic_lesson_centripetal_and_centrifugal_force", "1", "1", "9s1IRJbL2Co", "audio_lesson_centripetal_and_centrifugal_forces"},
                     {"Rotational Motion", "Uniform Circular Motion", "Definition, Moment of " +
                             "Torque",
-                            "ic_lesson_rotational_motion", "1", "0", "fmXFWi", "audio_lesson_velocity"}
+                            "ic_lesson_rotational_motion", "1", "0", "fmXFWi", "audio_lesson_rotational_motion"}
             };
 
             for(String[] s : lessons){
@@ -818,16 +818,16 @@ public class DBHelper extends SQLiteOpenHelper {
     private void initImages(SQLiteDatabase database){
         if(database.isOpen()){
             String[][] images = {
-                    {"Distance and Displacement", "img_lesson_vector_and_scalar_quantities", "Figure 1: Vector and Scalar Quantities"},
-                    {"Average Velocity", "img_lesson_velocity", "Figure 2: Velocity"},
-                    {"Free-fall Velocity", "img_lesson_free_fall", "Figure 3: Free fall"},
-                    {"Projectile Motion", "img_lesson_projectile_motion", "Figure 4: Projectile Motion"},
-                    {"Friction Definition", "img_lesson_friction", "Figure 5: Friction"},
-                    {"Free Body Diagrams", "img_lesson_free_body_diagram", "Figure 6: Free Body Diagrams"},
-                    {"Work Definition", "img_lesson_work", "Figure 7: Work"},
-                    {"Measurements of a Circle", "img_lesson_uniform_circular_motion_1", "Figure 8: Uniform Circular Motion"},
-                    {"Angular Displacement", "img_lesson_uniform_circular_motion_2", "Figure 9: Angular Displacement, Length of Arc, and Tangential Velocity"},
-                    {"Centripetal and Centrifugal Forces", "img_lesson_centripetal_and_centrifugal_forces", "Figure 10: Centripetal and Centrifugal Forces"}
+                    {"Distance and Displacement", "img_lesson_vector_and_scalar_quantities", "A graph showing displacement."},
+                    {"Average Velocity", "img_lesson_velocity", "A graph showing the relationship between displacement and time."},
+                    {"Free-fall Velocity", "img_lesson_free_fall", "A graph showing the forces acting on a free-falling body."},
+                    {"Projectile Motion", "img_lesson_projectile_motion", "A graph showing the horizontal and vertical velocities of a trajectory."},
+                    {"Friction Definition", "img_lesson_friction", "A graph showing the frictional force of a body."},
+                    {"Free Body Diagrams", "img_lesson_free_body_diagram", "A graph showing the forces acting upon a body."},
+                    {"Work Definition", "img_lesson_work", "A graph showing the forces while doing work."},
+                    {"Measurements of a Circle", "img_lesson_uniform_circular_motion_1", "A graph showing how radians work in a circle."},
+                    {"Angular Displacement", "img_lesson_uniform_circular_motion_2", "A graph showing the length of arc and tangential velocity in a circle."},
+                    {"Centripetal and Centrifugal Forces", "img_lesson_centripetal_and_centrifugal_forces", "A graph showing the centripetal and centrifugal forces acting on a body in a circle."}
 
 //                    {"scalar and vector values definition", "ic_chapter_momentum_impulse", "figure 1: asdfasdf"},
 //                    {"scalar and vector values definition", "ic_chapter_two_dimensional_motion", "figure 2: qwerqwer"}
@@ -876,7 +876,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "Distance is 200 meters since he swam 100 meters going to the finish line, and then another 100 meters going back to the starting line. <br>\n" +
                             "Displacement: <br>\n" +
                             "$$0m$$\n" +
-                            "Displacement is 0 meters since Michael Phelps finished where he started. \n", "Distance and Displacement"},
+                            "Displacement is 0 meters since Michael Phelps finished where he started. \n", "Scalar and Vector Values Formula"},
                     {"Velocity","QUESTION: <br>\n" +
                             "Usain Bolt jogged 2000 meters. He took 250 seconds to reach his destination. What was his average velocity? <br><br>\n" +
                             "GIVEN: <br>\n" +
@@ -890,7 +890,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$v = {{2000m - 0m} \\over 250s}$$\n" +
                             "$$v = {2000m \\over 250s}$$\n" +
                             "$$v = {8{m \\over s}}$$\n" +
-                            "ANSWER: <br>\n" +
+                            "ANSWER: <br />\n" +
                             "$$8{m \\over s}$$ \n","Speed and Velocity"},
                     {"Initial Position","QUESTION: <br>\n" +
                             "Usain Bolt jogged with a speed of 8 meters per second. He ran for 250 seconds and reached 2000 meters. What was his initial distance before he started jogging? <br><br>\n" +
@@ -902,7 +902,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "Since \\(x_i\\) is missing, we use this formula:\n" +
                             "$$x_i = x_f - v \\cdot t$$\n" +
                             "SOLUTION: <br>\n" +
-                            "$$x_i = {2000m – 8{m \\over s} \\cdot 250s}$$\n" +
+                            "$$x_i = 2000m - 8{m \\over s} \\cdot 250s$$" +
                             "$$x_i = 2000m - 2000m$$\n" +
                             "$$x_i = 0m$$\n" +
                             "ANSWER: <br>\n" +
@@ -949,7 +949,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "Since \\(v_{av}\\) is missing, we use this formula:\n" +
                             "$$v_{av} = {{x_f - x_i} \\over {t_f - t_i}}$$\n" +
                             "SOLUTION: <br>\n" +
-                            "$$v_{av} = {{9000m – 0m} \\over {190s – 100s}}$$\n" +
+                            "$$v_{av} = {{9000m - 0m} \\over {190s - 100s}}$$\n" +
                             "$$v_{av} = {9000m \\over 90s}$$\n" +
                             "$$v_{av} = 100 {m \\over s}$$\n" +
                             "ANSWER: <br>\n" +
@@ -963,11 +963,11 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$t_i = 100s$$\n" +
                             "$$t_f = 190s$$\n" +
                             "Since \\(x_i\\) is missing, we use this formula:\n" +
-                            "$$x_i = x_f - v_{av} \\cdot (t_f – t_i)$$\n" +
+                            "$$x_i = x_f - v_{av} \\cdot (t_f - t_i)$$\n" +
                             "SOLUTION: <br>\n" +
-                            "$$x_i = 9000m – 100{m \\over s} \\cdot (190s – 100s)$$\n" +
-                            "$$x_i = 9000m – 100{m \\over s} \\cdot 90s$$\n" +
-                            "$$x_i = 9000m – 9000m$$\n" +
+                            "$$x_i = 9000m - 100{m \\over s} \\cdot (190s - 100s)$$\n" +
+                            "$$x_i = 9000m - 100{m \\over s} \\cdot 90s$$\n" +
+                            "$$x_i = 9000m - 9000m$$\n" +
                             "$$x_i = 0m$$\n" +
                             "ANSWER: <br>\n" +
                             "$$0m$$\n","Average Velocity"},
@@ -980,9 +980,9 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$t_i = 100s$$\n" +
                             "$$t_f = 190s$$\n" +
                             "Since \\(x_f\\) is missing, we use this formula:\n" +
-                            "$$x_f = v_{av} \\cdot (t_f – t_f) + x_i$$\n" +
+                            "$$x_f = v_{av} \\cdot (t_f - t_f) + x_i$$\n" +
                             "SOLUTION: <br>\n" +
-                            "$$x_i = 100{m \\over s} \\cdot (190s – 100s) + 0m$$\n" +
+                            "$$x_i = 100{m \\over s} \\cdot (190s - 100s) + 0m$$\n" +
                             "$$x_i = 100{m \\over s} \\cdot 90s + 0m$$\n" +
                             "$$x_i = 9000m + 0m$$\n" +
                             "$$x_i = 9000m$$\n" +
@@ -997,11 +997,11 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$t_i = ?$$\n" +
                             "$$t_f = 190s$$\n" +
                             "Since \\(t_i\\) is missing, we use this formula:\n" +
-                            "$$t_i = t_f - {{x_f – x_i} \\over {v_{av}}}$$\n" +
+                            "$$t_i = t_f - {{x_f - x_i} \\over {v_{av}}}$$\n" +
                             "SOLUTION: <br>\n" +
-                            "$$t_i = {190s – {{9000m – 0m} \\over {100{m \\over s}}}}$$\n" +
-                            "$$t_i = {190s – {{9000m} \\over {100{m \\over s}}}}$$\n" +
-                            "$$t_i = 190s – 90s$$\n" +
+                            "$$t_i = {190s - {{9000m - 0m} \\over {100{m \\over s}}}}$$\n" +
+                            "$$t_i = {190s - {{9000m} \\over {100{m \\over s}}}}$$\n" +
+                            "$$t_i = 190s - 90s$$\n" +
                             "$$t_i = 100s$$\n" +
                             "ANSWER: <br>\n" +
                             "$$100s$$\n","Average Velocity"},
@@ -1014,7 +1014,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$t_i = 100s$$\n" +
                             "$$t_f = ?$$\n" +
                             "Since \\(t_f\\) is missing, we use this formula:\n" +
-                            "$$t_f = {{x_f – x_i} \\over {v_{av}}} + t_i$$\n" +
+                            "$$t_f = {{x_f - x_i} \\over {v_{av}}} + t_i$$\n" +
                             "SOLUTION: <br>\n" +
                             "$$t_f = {{9000m - 0m} \\over 100{m \\over s}} + 100s$$\n" +
                             "$$t_f = {9000m \\over 100{m \\over s}} + 100s$$\n" +
@@ -1031,9 +1031,9 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$v_f = 100{m \\over s}$$\n" +
                             "$$t = 5s$$\n" +
                             "Since \\(a\\) is missing, we use this formula:\n" +
-                            "$$a = {{v_f – v_i} \\over {t}}$$\n" +
+                            "$$a = {{v_f - v_i} \\over {t}}$$\n" +
                             "SOLUTION: <br>\n" +
-                            "$$a = {{100{m \\over s} – 0{m \\over s}} \\over {5s}}$$\n" +
+                            "$$a = {{100{m \\over s} - 0{m \\over s}} \\over {5s}}$$\n" +
                             "$$a = {100{m \\over s} \\over 5s}$$\n" +
                             "$$a = 20{{m} \\over {s^2}}$$\n" +
                             "ANSWER: <br>\n" +
@@ -1046,7 +1046,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$v_f = 0{m \\over s}$$\n" +
                             "$$t = 5s$$\n" +
                             "Since \\(v_i\\) is missing, we use this formula:\n" +
-                            "$$v_i = v_f – a \\cdot t$$\n" +
+                            "$$v_i = v_f - a \\cdot t$$\n" +
                             "SOLUTION: <br>\n" +
                             "$$v_i = {100{m \\over s} - 20{{m} \\over {s^2}} \\cdot 5s}$$\n" +
                             "$$v_i = 100{m \\over s} - 100{m \\over s}$$\n" +
@@ -1076,7 +1076,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$v_f = 100{m \\over s}$$\n" +
                             "$$t = ?$$\n" +
                             "Since \\(t\\) is missing, we use this formula:\n" +
-                            "$$t = {{v_f – v_i} \\over {a}}$$\n" +
+                            "$$t = {{v_f - v_i} \\over {a}}$$\n" +
                             "SOLUTION: <br>\n" +
                             "$$t = {{100{m \\over s} - 0{m \\over s}} \\over 20{{m} \\over {s^2}}}$$\n" +
                             "$$t = {100{m \\over s} \\over 20{{m} \\over {s^2}}}$$\n" +
@@ -1093,9 +1093,9 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$t_i = 10s$$\n" +
                             "$$t_f = 15s$$\n" +
                             "Since \\(a_{av}\\) is missing, we use this formula:\n" +
-                            "$$a_{av} = {{v_f – v_i} \\over {t_f – t_i}}$$\n" +
+                            "$$a_{av} = {{v_f - v_i} \\over {t_f - t_i}}$$\n" +
                             "SOLUTION: <br>\n" +
-                            "$$a_{av} = {{5{m \\over s} – 3{m \\over s}} \\over {15s – 10s}}$$\n" +
+                            "$$a_{av} = {{5{m \\over s} - 3{m \\over s}} \\over {15s - 10s}}$$\n" +
                             "$$a_{av} = {2{m \\over s} \\over 5s}$$\n" +
                             "$$a_{av} = 0.4{{m} \\over {s^2}}$$\n" +
                             "ANSWER: <br>\n" +
@@ -1109,11 +1109,11 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$t_i = 10s$$\n" +
                             "$$t_f = 15s$$\n" +
                             "Since \\(v_i\\) is missing, we use this formula:\n" +
-                            "$$v_i = v_f – a_{av} \\cdot (t_f – t_i)$$\n" +
+                            "$$v_i = v_f - a_{av} \\cdot (t_f - t_i)$$\n" +
                             "SOLUTION: <br>\n" +
-                            "$$v_i = 5{m \\over s} – (0.4{{m} \\over {s^2}} \\cdot (15s – 10s))$$\n" +
-                            "$$v_i = 5{m \\over s} – (0.4{{m} \\over {s^2}} \\cdot (5s))$$\n" +
-                            "$$v_i = 5{m \\over s} – 2{m \\over s}$$\n" +
+                            "$$v_i = 5{m \\over s} - (0.4{{m} \\over {s^2}} \\cdot (15s - 10s))$$\n" +
+                            "$$v_i = 5{m \\over s} - (0.4{{m} \\over {s^2}} \\cdot (5s))$$\n" +
+                            "$$v_i = 5{m \\over s} - 2{m \\over s}$$\n" +
                             "$$v_i = 3{m \\over s}$$\n" +
                             "ANSWER: <br>\n" +
                             "$$3{m \\over s} $$\n", "Average Acceleration"},
@@ -1126,9 +1126,9 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$t_i = 10s$$\n" +
                             "$$t_f = 15s$$\n" +
                             "Since \\(v_f\\) is missing, we use this formula:\n" +
-                            "$$v_f = a_{av} \\cdot (t_f – t_i) + v_i$$\n" +
+                            "$$v_f = a_{av} \\cdot (t_f - t_i) + v_i$$\n" +
                             "SOLUTION: <br>\n" +
-                            "$$v_f = 0.4{{m} \\over {s^2}} \\cdot (15s – 10s) + 3{m \\over s}$$\n" +
+                            "$$v_f = 0.4{{m} \\over {s^2}} \\cdot (15s - 10s) + 3{m \\over s}$$\n" +
                             "$$v_f = 0.4{{m} \\over {s^2}} \\cdot 5s + 3{m \\over s}$$\n" +
                             "$$v_f = 2{m \\over s} + 3{m \\over s} $$\n" +
                             "$$v_f = 5{m \\over s} $$\n" +
@@ -1143,11 +1143,11 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$t_i = ?$$\n" +
                             "$$t_f = 15s$$\n" +
                             "Since \\(t_i\\) is missing, we use this formula:\n" +
-                            "$$t_i = t_f – {{v_f – v_i} \\over {a_{av}}}$$\n" +
+                            "$$t_i = t_f - {{v_f - v_i} \\over {a_{av}}}$$\n" +
                             "SOLUTION: <br>\n" +
-                            "$$t_i = 15s – {{5{m \\over s} – 3{m \\over s}} \\over 0.4{{m} \\over {s^2}}}$$\n" +
-                            "$$t_i = 15s – {{2{m \\over s}} \\over 0.4{{m} \\over {s^2}}}$$\n" +
-                            "$$t_i = 15s – 5s$$\n" +
+                            "$$t_i = 15s - {{5{m \\over s} - 3{m \\over s}} \\over 0.4{{m} \\over {s^2}}}$$\n" +
+                            "$$t_i = 15s - {{2{m \\over s}} \\over 0.4{{m} \\over {s^2}}}$$\n" +
+                            "$$t_i = 15s - 5s$$\n" +
                             "$$t_i = 10s$$\n" +
                             "ANSWER: <br>\n" +
                             "$$10s$$\n", "Average Acceleration"},
@@ -1160,9 +1160,9 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$t_i = 10s$$\n" +
                             "$$t_f = ?$$\n" +
                             "Since \\(t_f\\) is missing, we use this formula:\n" +
-                            "$$t_f = {{v_f – v_i} \\over {a_{av}}} + t_i$$\n" +
+                            "$$t_f = {{v_f - v_i} \\over {a_{av}}} + t_i$$\n" +
                             "SOLUTION: <br>\n" +
-                            "$$t_f = {{5{m \\over s} – 3{m \\over s}} \\over 0.4{{m} \\over {s^2}}} + 10s$$\n" +
+                            "$$t_f = {{5{m \\over s} - 3{m \\over s}} \\over 0.4{{m} \\over {s^2}}} + 10s$$\n" +
                             "$$t_f = {{2{m \\over s}} \\over 0.4{{m} \\over {s^2}}} + 10s$$\n" +
                             "$$t_f = 5s + 10s$$\n" +
                             "$$t_f = 15s$$\n" +
@@ -1190,7 +1190,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$u = ?$$\n" +
                             "$$t = 5s$$\n" +
                             "Since \\(u\\) is missing, we use this formula:\n" +
-                            "$$u = v_y – g \\cdot t$$\n" +
+                            "$$u = v_y - g \\cdot t$$\n" +
                             "SOLUTION: <br>\n" +
                             "$$u = 50{m \\over s} - 9.8{{m} \\over {s^2}} \\cdot 5s$$\n" +
                             "$$u = 50{m \\over s} - 49{m \\over s}$$\n" +
@@ -1278,7 +1278,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$v_i = 5{m \\over s}$$\n" +
                             "$$d = ?$$\n" +
                             "Since \\(d\\) is missing, we use this formula:\n" +
-                            "$$d = {{v_f^2 – v_i^2} \\over {2 \\cdot g}}$$\n" +
+                            "$$d = {{v_f^2 - v_i^2} \\over {2 \\cdot g}}$$\n" +
                             "SOLUTION: <br>\n" +
                             "$$d = {{10{m \\over s}^2 - 5{m \\over s}^2)} \\over {2 \\cdot 9.8{{m} \\over {s^2}}}}$$\n" +
                             "$$d = {{100{{m^2} \\over {s^2}}- 25{{m^2} \\over {s^2}}} \\over {19.6m/s^2}}$$\n" +
@@ -1430,7 +1430,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "SOLUTION: <br>\n" +
                             "$$m = {{50N s} \\over {5{m \\over s}}}$$\n" +
                             "$$m = {{50{kgm \\over s}} \\over {5{m \\over s}}}$$\n" +
-                            "$$10kg$$\n" +
+                            "$$m = 10kg$$\n" +
                             "ANSWER: <br>\n" +
                             "$$10kg$$\n", "Momentum"},
                     {"Velocity", "QUESTION: <br>\n" +
@@ -1626,7 +1626,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$\\Delta W = 200J$$\n" +
                             "$$\\Delta t = ?$$\n" +
                             "Since \\(P_{av}\\) is missing, we use this formula:\n" +
-                            "$$}\\Delta t = {{\\Delta W} \\over {P_{av }}$$\n" +
+                            "$$\\Delta t = {{\\Delta W} \\over {P_{av}}}$$\n" +
                             "SOLUTION: <br>\n" +
                             "$$\\Delta t = {200J \\over 40W}$$\n" +
                             "$$\\Delta t = {200{{kgm^2} \\over {s^2}} \\over 40{{kgm^2} \\over {s^3}}}$$\n" +
@@ -1684,7 +1684,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$v = {{\\Delta S} \\over {\\Delta t}}$$\n" +
                             "SOLUTION: <br>\n" +
                             "$$v = {1000m \\over 20s}$$\n" +
-                            "$$v = 50m/s$$\n" +
+                            "$$v = 50{m \\over s}$$\n" +
                             "ANSWER: <br>\n" +
                             "$$50{m \\over s}$$\n", "Tangential Velocity"},
                     {"Length of Arc", "QUESTION: <br>\n" +
@@ -1765,7 +1765,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "$$\\Delta \\theta = 6.2832rad$$\n" +
                             "$$\\Delta t = 2358720s$$\n" +
                             "Since \\(\\omega \\) is missing, we use this formula:\n" +
-                            "$$\\omega = {{\\Dleta \\theta} \\over {\\Delta t}}$$\n" +
+                            "$$\\omega = {{\\Delta \\theta} \\over {\\Delta t}}$$\n" +
                             "SOLUTION: <br>\n" +
                             "$$\\omega = {6.2832rad \\over 2358720s}$$\n" +
                             "$$\\omega = 2.6638E-6{rad \\over s}$$\n" +
