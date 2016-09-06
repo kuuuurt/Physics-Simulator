@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -29,6 +30,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.ps.physicssimulator.data.DataContract;
 import com.ps.physicssimulator.utils.ConversionUtils;
 import com.ps.physicssimulator.utils.ExpressionBuilderModified;
@@ -50,21 +54,37 @@ public class CalculatorActivity extends AppCompatActivity {
     String variableToSolve;
     String mChapter, mLesson;
     String formulaName;
+
+    //Container for entered values
     String[][] values;
+
+    //Calculator button
     Button btnCalc;
-    Bundle b;
+
+    //Intent flags and vars
     boolean fromConstants, fromLesson;
+    Bundle b;
+
+    //Spinners
     Spinner spnChapters, spnLessons, spnFormula, spnVar;
 
-    List<TextInputLayout> inputFields = new ArrayList<>();
-    List<Spinner> inputSpinners = new ArrayList<>();
-    List<ConversionUtils> conversionHelpers = new ArrayList<>();
-    List<MathView> inputConversion = new ArrayList<>();
+    //Containers for generated views
+    List<TextInputLayout> inputFields;
+    List<Spinner> inputSpinners;
+    List<ConversionUtils> conversionHelpers;
+    List<MathView> inputConversion;
 
+    //For final units
     String finalUnit;
     int finalUnitIndex;
     String finalType;
     ConversionUtils finalConversionHelper;
+
+
+    //Instuctions
+    List<View> views;
+    List<String> titles;
+    List<String> instructions;
 
     @Nullable
     @Override
@@ -85,6 +105,8 @@ public class CalculatorActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final Button btnChangeConstants = (Button) findViewById(R.id.button_change_constants);
@@ -94,6 +116,11 @@ public class CalculatorActivity extends AppCompatActivity {
                         null, null, null, "HasCalc"),
                 new String[]{DataContract.ChapterEntry.COLUMN_NAME}
         );
+
+        inputFields = new ArrayList<>();
+        inputSpinners = new ArrayList<>();
+        conversionHelpers = new ArrayList<>();
+        inputConversion = new ArrayList<>();
 
         spnChapters = (Spinner) findViewById(R.id.spinner_chapters);
         spnLessons = (Spinner) findViewById(R.id.spinner_lessons);
@@ -452,6 +479,65 @@ public class CalculatorActivity extends AppCompatActivity {
                                                 fromConstants = false;
                                                 fromLesson = false;
 
+                                                if(isFirstTime()){
+                                                    //initialize instructions
+                                                    views = new ArrayList<>();
+                                                    titles = new ArrayList<>();
+                                                    instructions = new ArrayList<>();
+
+                                                    views.add(findViewById(R.id.spinner_chapters));
+                                                    views.add(findViewById(R.id.spinner_lessons));
+                                                    views.add(findViewById(R.id.spinner_formula));
+                                                    views.add(findViewById(R.id.spinner_variable));
+                                                    views.add(inputFields.get(0));
+                                                    views.add(inputSpinners.get(0));
+                                                    views.add(inputConversion.get(0));
+
+                                                    titles.add("Chapters");
+                                                    titles.add("Lessons");
+                                                    titles.add("Formulas");
+                                                    titles.add("Variables");
+                                                    titles.add("Input");
+                                                    titles.add("Units");
+                                                    titles.add("Converted Values");
+
+                                                    instructions.add("Select the chapter for the formula here.");
+                                                    instructions.add("You can also change the lessons.");
+                                                    instructions.add("Next, select the formula you want to solve.");
+                                                    instructions.add("If you want to solve for a different variable, you can change it here,");
+                                                    instructions.add("Enter the values of the variables here.");
+                                                    instructions.add("Enter the values of the variables here.");
+                                                    instructions.add("Enter the values of the variables here.");
+
+
+                                                    new ShowcaseView.Builder(CalculatorActivity.this)
+                                                            .setContentTitle("Calculator")
+                                                            .setContentText("Hello! This is the calculator where you can solve different formulas!")
+                                                            .hideOnTouchOutside()
+                                                            .setShowcaseEventListener(new OnShowcaseEventListener() {
+                                                                @Override
+                                                                public void onShowcaseViewHide(ShowcaseView showcaseView) {
+                                                                    showInstruction(0);
+                                                                }
+
+                                                                @Override
+                                                                public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+
+                                                                }
+
+                                                                @Override
+                                                                public void onShowcaseViewShow(ShowcaseView showcaseView) {
+
+                                                                }
+
+                                                                @Override
+                                                                public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
+
+                                                                }
+                                                            })
+                                                            .build().show();
+                                                }
+
                                             }
 
                                             @Override
@@ -506,6 +592,8 @@ public class CalculatorActivity extends AppCompatActivity {
             }
             spnChapters.setSelection(b.getInt("currentChapter"));
         }
+
+
     }
 
 
@@ -840,6 +928,52 @@ public class CalculatorActivity extends AppCompatActivity {
     public void resetSteps() {
         LinearLayout stepsContainer = (LinearLayout) findViewById(R.id.steps_container);
         stepsContainer.removeAllViews();
+    }
+
+    private void showInstruction(int idTarget){
+        final int nextTarget = idTarget + 1;
+        new ShowcaseView.Builder(CalculatorActivity.this)
+                .setTarget(new ViewTarget(views.get(idTarget)))
+                .setContentTitle(titles.get(idTarget))
+                .setContentText(instructions.get(idTarget))
+                .hideOnTouchOutside()
+                .setShowcaseEventListener(new OnShowcaseEventListener() {
+                    @Override
+                    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+                        if(nextTarget != views.size())
+                            showInstruction(nextTarget);
+                    }
+
+                    @Override
+                    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+
+                    }
+
+                    @Override
+                    public void onShowcaseViewShow(ShowcaseView showcaseView) {
+
+                    }
+
+                    @Override
+                    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
+
+                    }
+                })
+                .build().show();
+    }
+
+    private boolean isFirstTime()
+    {
+        return true;
+//        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+//        boolean ranBefore = preferences.getBoolean("RanBefore", false);
+//        if (!ranBefore) {
+//            // first time
+//            SharedPreferences.Editor editor = preferences.edit();
+//            editor.putBoolean("RanBefore", true);
+//            editor.commit();
+//        }
+//        return !ranBefore;
     }
 
 }
