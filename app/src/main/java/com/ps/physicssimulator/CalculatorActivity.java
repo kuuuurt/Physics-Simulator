@@ -14,6 +14,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -24,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -510,10 +512,12 @@ public class CalculatorActivity extends AppCompatActivity {
                                                     instructions.add("Enter the values of the variables here.");
 
 
-                                                    new ShowcaseView.Builder(CalculatorActivity.this)
+                                                    ShowcaseView sv = new ShowcaseView.Builder(CalculatorActivity.this)
                                                             .setContentTitle("Calculator")
                                                             .setContentText("Hello! This is the calculator where you can solve different formulas!")
+                                                            .setStyle(R.style.CustomShowcaseTheme)
                                                             .hideOnTouchOutside()
+                                                            .withNewStyleShowcase()
                                                             .setShowcaseEventListener(new OnShowcaseEventListener() {
                                                                 @Override
                                                                 public void onShowcaseViewHide(ShowcaseView showcaseView) {
@@ -535,7 +539,21 @@ public class CalculatorActivity extends AppCompatActivity {
 
                                                                 }
                                                             })
-                                                            .build().show();
+                                                            .build();
+
+                                                    Button btnSkip = (Button) LayoutInflater.from(CalculatorActivity.this).inflate(com.github.amlcurran.showcaseview.R.layout.showcase_button, null);
+                                                    RelativeLayout.LayoutParams  params = new RelativeLayout.LayoutParams(
+                                                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                                            RelativeLayout.LayoutParams.WRAP_CONTENT
+                                                    );
+                                                    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                                                    params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                                                    params.setMargins(16,16,16,16);
+                                                    btnSkip.setLayoutParams(params);
+                                                    btnSkip.setGravity(Gravity.BOTTOM | Gravity.END);
+
+                                                    sv.addView(btnSkip, sv.getChildCount()-1);
+                                                    sv.show();
                                                 }
 
                                             }
@@ -936,6 +954,8 @@ public class CalculatorActivity extends AppCompatActivity {
                 .setTarget(new ViewTarget(views.get(idTarget)))
                 .setContentTitle(titles.get(idTarget))
                 .setContentText(instructions.get(idTarget))
+                .setStyle(R.style.CustomShowcaseTheme)
+                .withNewStyleShowcase()
                 .hideOnTouchOutside()
                 .setShowcaseEventListener(new OnShowcaseEventListener() {
                     @Override

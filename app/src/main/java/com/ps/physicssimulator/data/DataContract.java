@@ -263,7 +263,7 @@ public class DataContract   {
         public static final String TABLE_NAME = "example";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_CONTENT = "content";
-        public static final String COLUMN_SECTION_KEY = "section_key";
+        public static final String COLUMN_SECTION_KEY = "section_id";
 
 
 
