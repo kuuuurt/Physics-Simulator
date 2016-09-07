@@ -2,7 +2,10 @@ package com.ps.physicssimulator;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -26,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -87,6 +91,10 @@ public class CalculatorActivity extends AppCompatActivity {
     List<View> views;
     List<String> titles;
     List<String> instructions;
+    boolean skip;
+    boolean isScrollBlocked;
+    ScrollView page;
+    Toolbar toolbar;
 
     @Nullable
     @Override
@@ -104,9 +112,16 @@ public class CalculatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        page = (ScrollView)findViewById(R.id.scroll_calculator);
+        page.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return isScrollBlocked;
+            }
+        });
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -482,78 +497,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                 fromLesson = false;
 
                                                 if(isFirstTime()){
-                                                    //initialize instructions
-                                                    views = new ArrayList<>();
-                                                    titles = new ArrayList<>();
-                                                    instructions = new ArrayList<>();
-
-                                                    views.add(findViewById(R.id.spinner_chapters));
-                                                    views.add(findViewById(R.id.spinner_lessons));
-                                                    views.add(findViewById(R.id.spinner_formula));
-                                                    views.add(findViewById(R.id.spinner_variable));
-                                                    views.add(inputFields.get(0));
-                                                    views.add(inputSpinners.get(0));
-                                                    views.add(inputConversion.get(0));
-
-                                                    titles.add("Chapters");
-                                                    titles.add("Lessons");
-                                                    titles.add("Formulas");
-                                                    titles.add("Variables");
-                                                    titles.add("Input");
-                                                    titles.add("Units");
-                                                    titles.add("Converted Values");
-
-                                                    instructions.add("Select the chapter for the formula here.");
-                                                    instructions.add("You can also change the lessons.");
-                                                    instructions.add("Next, select the formula you want to solve.");
-                                                    instructions.add("If you want to solve for a different variable, you can change it here,");
-                                                    instructions.add("Enter the values of the variables here.");
-                                                    instructions.add("Enter the values of the variables here.");
-                                                    instructions.add("Enter the values of the variables here.");
-
-
-                                                    ShowcaseView sv = new ShowcaseView.Builder(CalculatorActivity.this)
-                                                            .setContentTitle("Calculator")
-                                                            .setContentText("Hello! This is the calculator where you can solve different formulas!")
-                                                            .setStyle(R.style.CustomShowcaseTheme)
-                                                            .hideOnTouchOutside()
-                                                            .withNewStyleShowcase()
-                                                            .setShowcaseEventListener(new OnShowcaseEventListener() {
-                                                                @Override
-                                                                public void onShowcaseViewHide(ShowcaseView showcaseView) {
-                                                                    showInstruction(0);
-                                                                }
-
-                                                                @Override
-                                                                public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
-
-                                                                }
-
-                                                                @Override
-                                                                public void onShowcaseViewShow(ShowcaseView showcaseView) {
-
-                                                                }
-
-                                                                @Override
-                                                                public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
-
-                                                                }
-                                                            })
-                                                            .build();
-
-                                                    Button btnSkip = (Button) LayoutInflater.from(CalculatorActivity.this).inflate(com.github.amlcurran.showcaseview.R.layout.showcase_button, null);
-                                                    RelativeLayout.LayoutParams  params = new RelativeLayout.LayoutParams(
-                                                            RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                                            RelativeLayout.LayoutParams.WRAP_CONTENT
-                                                    );
-                                                    params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                                                    params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                                                    params.setMargins(16,16,16,16);
-                                                    btnSkip.setLayoutParams(params);
-                                                    btnSkip.setGravity(Gravity.BOTTOM | Gravity.END);
-
-                                                    sv.addView(btnSkip, sv.getChildCount()-1);
-                                                    sv.show();
+                                                    startInstructions();
                                                 }
 
                                             }
@@ -639,7 +583,7 @@ public class CalculatorActivity extends AppCompatActivity {
         Object[] steps = results.toArray();
         MathView txtSub = (MathView) findViewById(R.id.text_substitute);
         String formulaDisplay = txtSub.getText();
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.steps_container);
+        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.steps_container);
         LinearLayout linearLayoutCon = (LinearLayout) findViewById(R.id.steps_container_conversion);
         linearLayoutCon.setVisibility(View.GONE);
 
@@ -774,6 +718,12 @@ public class CalculatorActivity extends AppCompatActivity {
             }
 
         }
+        page.post(new Runnable() {
+            @Override
+            public void run() {
+                page.smoothScrollTo(0, linearLayout.getBottom());
+            }
+        });
     }
 
     private void removeEditTextFocus() {
@@ -931,6 +881,8 @@ public class CalculatorActivity extends AppCompatActivity {
             }
             startActivity(intent);
             return true;
+        } else if (id == R.id.action_help){
+            startInstructions();
         }
 
         return super.onOptionsItemSelected(item);
@@ -938,7 +890,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_converter, menu);
+        getMenuInflater().inflate(R.menu.menu_calculator, menu);
         return true;
     }
 
@@ -948,20 +900,64 @@ public class CalculatorActivity extends AppCompatActivity {
         stepsContainer.removeAllViews();
     }
 
-    private void showInstruction(int idTarget){
-        final int nextTarget = idTarget + 1;
-        new ShowcaseView.Builder(CalculatorActivity.this)
-                .setTarget(new ViewTarget(views.get(idTarget)))
-                .setContentTitle(titles.get(idTarget))
-                .setContentText(instructions.get(idTarget))
+    private void startInstructions(){
+        //initialize instructions
+        views = new ArrayList<>();
+        titles = new ArrayList<>();
+        instructions = new ArrayList<>();
+
+        views.add(findViewById(R.id.spinner_chapters));
+        views.add(findViewById(R.id.spinner_lessons));
+        views.add(findViewById(R.id.spinner_formula));
+        views.add(findViewById(R.id.spinner_variable));
+        views.add(inputFields.get(0));
+        views.add(inputSpinners.get(0));
+        views.add(inputConversion.get(0));
+        views.add(toolbar.findViewById(R.id.action_converter));
+        views.add(btnCalc);
+        views.add(findViewById(R.id.steps_container));
+        views.add(toolbar.findViewById(R.id.action_help));
+
+        titles.add("Chapters");
+        titles.add("Lessons");
+        titles.add("Formulas");
+        titles.add("Variables");
+        titles.add("Input");
+        titles.add("Units");
+        titles.add("Converted Values");
+        titles.add("Unit Conversions");
+        titles.add("Calculate");
+        titles.add("Results");
+        titles.add("Done!");
+
+        instructions.add("Select the chapter for the formula here.");
+        instructions.add("You can also change the lessons.");
+        instructions.add("Next, select the formula you want to solve.");
+        instructions.add("If you want to solve for a different variable, you can change it here,");
+        instructions.add("Enter the values of the variables here.");
+        instructions.add("You can change the unit of the value you entered.");
+        instructions.add("All values would be converted to their base unit (e.g. km -> m, minutes -> seconds, etc.)");
+        instructions.add("If you want to see how the values were converted, go to the Unit Converter Calculator.");
+        instructions.add("If everything is done, just tap on the calculate button to show the results.");
+        instructions.add("The results would be shown here at the bottom part of the page.");
+        instructions.add("If you want to repeat this tutorial, tap on the help button on the toolbar.");
+
+        skip = false;
+        isScrollBlocked = true;
+
+        final ShowcaseView sv = new ShowcaseView.Builder(CalculatorActivity.this)
+                .setContentTitle("Calculator")
+                .setContentText("Hello! This is the calculator where you can solve different formulas!")
                 .setStyle(R.style.CustomShowcaseTheme)
-                .withNewStyleShowcase()
                 .hideOnTouchOutside()
+                .withNewStyleShowcase()
                 .setShowcaseEventListener(new OnShowcaseEventListener() {
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {
-                        if(nextTarget != views.size())
-                            showInstruction(nextTarget);
+                        if(!skip)
+                            showInstruction(0);
+                        else
+                            isScrollBlocked = false;
                     }
 
                     @Override
@@ -979,21 +975,116 @@ public class CalculatorActivity extends AppCompatActivity {
 
                     }
                 })
-                .build().show();
+                .build();
+
+        Button btnSkip = (Button) LayoutInflater.from(CalculatorActivity.this).inflate(com.github.amlcurran.showcaseview.R.layout.showcase_button, null);
+        RelativeLayout.LayoutParams  params = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        params.setMargins(16,16,16,16);
+        btnSkip.setLayoutParams(params);
+        btnSkip.setText("Skip");
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                skip = true;
+                sv.hide();
+                isScrollBlocked = false;
+            }
+        });
+        btnSkip.getBackground().setColorFilter(Color.parseColor("#33B5E5"), PorterDuff.Mode.MULTIPLY);
+
+        sv.addView(btnSkip, sv.getChildCount()-1);
+        sv.show();
+    }
+
+    private void showInstruction(final int idTarget){
+        final int nextTarget = idTarget + 1;
+        page.post(new Runnable() {
+            @Override
+            public void run() {
+                page.smoothScrollTo(0, views.get(idTarget).getTop());
+            }
+        });
+        final ShowcaseView sv = new ShowcaseView.Builder(CalculatorActivity.this)
+                .setTarget(new ViewTarget(views.get(idTarget)))
+                .setContentTitle(titles.get(idTarget))
+                .setContentText(instructions.get(idTarget))
+                .setStyle(R.style.CustomShowcaseTheme)
+                .withNewStyleShowcase()
+                .hideOnTouchOutside()
+                .setShowcaseEventListener(new OnShowcaseEventListener() {
+                    @Override
+                    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+                        if(!skip) {
+                            if (nextTarget != views.size()) {
+                                showInstruction(nextTarget);
+                            } else {
+                                isScrollBlocked = false;
+                            }
+                        } else {
+                            isScrollBlocked = false;
+                        }
+
+                    }
+
+                    @Override
+                    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+
+                    }
+
+                    @Override
+                    public void onShowcaseViewShow(ShowcaseView showcaseView) {
+
+                    }
+
+                    @Override
+                    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
+
+                    }
+                })
+                .build();
+        if(idTarget != views.size()) {
+
+            Button btnSkip = (Button) LayoutInflater.from(CalculatorActivity.this).inflate(com.github.amlcurran.showcaseview.R.layout.showcase_button, null);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            params.setMargins(16, 16, 16, 16);
+            btnSkip.setLayoutParams(params);
+            btnSkip.setText("Skip");
+            btnSkip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    skip = true;
+                    sv.hide();
+                    isScrollBlocked = false;
+                }
+            });
+            btnSkip.getBackground().setColorFilter(Color.parseColor("#33B5E5"), PorterDuff.Mode.MULTIPLY);
+
+            sv.addView(btnSkip);
+        }
+        sv.show();
     }
 
     private boolean isFirstTime()
     {
-        return true;
-//        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-//        boolean ranBefore = preferences.getBoolean("RanBefore", false);
-//        if (!ranBefore) {
-//            // first time
-//            SharedPreferences.Editor editor = preferences.edit();
-//            editor.putBoolean("RanBefore", true);
-//            editor.commit();
-//        }
-//        return !ranBefore;
+        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+        boolean ranBefore = preferences.getBoolean("CalculatorRanBefore", false);
+        if (!ranBefore) {
+            // first time
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("CalculatorRanBefore", true);
+            editor.commit();
+        }
+        return !ranBefore;
     }
 
 }
