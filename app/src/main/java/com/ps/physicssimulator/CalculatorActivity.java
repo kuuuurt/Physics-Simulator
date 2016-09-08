@@ -1064,7 +1064,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     }
                 })
                 .build();
-        if(idTarget != views.size()) {
+        if(idTarget != views.size()-1) {
 
             Button btnSkip = (Button) LayoutInflater.from(CalculatorActivity.this).inflate(com.github.amlcurran.showcaseview.R.layout.showcase_button, null);
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
