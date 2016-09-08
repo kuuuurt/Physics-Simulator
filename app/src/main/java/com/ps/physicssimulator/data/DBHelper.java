@@ -140,7 +140,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Two-dimensional Motion","Projectile Motion","ic_chapter_two_dimensional_motion", "1"},
                     {"Isaac Newton's Laws of Motion","Newton's Laws of Motion, Friction, Free Body Diagrams","ic_chapter_newtons_laws", "1"},
                     {"Work, Energy, and Power","Work, Energy, Power","ic_chapter_work_energy_power", "1"},
-                    {"Momentum and Impulse","Momentum and Impulse","ic_chapter_momentum_impulse", "1"},
+                    {"Momentum and Impulse","Momentum and Impulse, Law of Conservation of Energy","ic_chapter_momentum_impulse", "1"},
                     {"Uniform Circular Motion","Uniform Circular Motion, Centripetal and Centrifugal Forces, Rotational Motion","ic_chapter_uniform_circular_motion", "1"}
             };
             for(String[] s : chapters){
@@ -211,7 +211,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "ic_lesson_centripetal_and_centrifugal_force", "1", "1", "9s1IRJbL2Co", "audio_lesson_centripetal_and_centrifugal_forces"},
                     {"Rotational Motion", "Uniform Circular Motion", "Definition, Moment of " +
                             "Torque",
-                            "ic_lesson_rotational_motion", "1", "0", "fmXFWi", "audio_lesson_rotational_motion"}
+                            "ic_lesson_rotational_motion", "1", "0", "5Zrphnd_0VI", "audio_lesson_rotational_motion"}
             };
 
             for(String[] s : lessons){
@@ -250,36 +250,39 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Physics","Physics Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Physics: <br/>" +
-                                    "\t •\tis the natural science that involves the study of matter and its motion through space and time<br/>"},
+                                    "\t •\tis the natural science that involves the study of matter and its motion through space and time<sup>[1]</sup><br/>"},
                     {"Physics","Physics",
                             "<h2><b>Physics</b></h2>" +
-                                    "Before studying the basics of Physics, the person must be knowledgeable of the following subjects: Algebra, Geometry and Trigonometry. <br/><br/>" +
+                                    "Before studying the basics of Physics, the person must be knowledgeable of the following subjects: Algebra, Geometry and Trigonometry" +
+                                    ".<br/><br/>" +
                                     "There are a lot of topics under Physics, but not all will be discussed in this application. The following topics are the only ones that are included in this " +
                                     "application: Conversion of Units, Scalar and Vector Quantities, Speed and Velocity, Acceleration, Free-fall, Projectile Motion, Newton’s Laws, Friction, " +
                                     "Free-body Diagrams, Work, Energy, Power, Momentum and Impulse, Law of Conservation of Energy, Uniform Circular Motion, Centripetal and Centrifugal Forces, and " +
                                     "Rotational Motion. <br/><br/>" +
-                                    "Other topics under Physics includes: Oscillation and Mechanical Waves, Fluids, Thermodynamics, Circuits, Magnetic Forces, Electromagnetic Waves, and others."},
-                    {"Physics", "Physics References", "<b><center>References</center></b><br> Introduction to the Language of Kinematics (2016). Retrieved from http://www.physicsclassroom" +
+                                    "Other topics under Physics includes: Oscillation and Mechanical Waves, Fluids, Thermodynamics, Circuits, Magnetic Forces, Electromagnetic Waves, and others" +
+                                    ".<sup>[2]</sup><sup>[3]</sup>"},
+                    {"Physics", "Physics References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Why Physics is a Basic Science. Physics A Basic Science  (4th ed., pp.1-2). Quezon City, " +
+                            "Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
+                            "<sup>[2]</sup>Introduction to the Language of Kinematics (2016). Retrieved from http://www.physicsclassroom" +
                             ".com/class/1DKin/Lesson-1/Introduction<br><br>\n" +
-                            "Carasco, J. (2016). Introduction to Physics. Retrieved from http://www.introduction-to-physics.com<br><br>\n" +
-                            "Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Why Physics is a Basic Science. Physics A Basic Science  (4th ed., pp.1-2). Quezon City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Walker, J. S. (2010). Physics and the Laws of Nature. Physics (4th ed., p.2). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Why Study Physics. University Physics with Modern Physics (2nd ed. , pp.8-9). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016"},
+                            "<sup>[3]</sup>Carasco, J. (2016). Introduction to Physics. Retrieved from http://www.introduction-to-physics.com<br><br>\n"
+                            },
                     {"Conversion of Units","Conversion of Units Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Units: <br/>" +
-                                    "\t •\tare standards for measurement of physical quantities that need clear definitions to be useful<br/>" +
+                                    "\t •\tare standards for measurement of physical quantities that need clear definitions to be useful<sup>[1]</sup><br/>" +
                                     "Conversion: <br/>" +
-                                    "\t •\tthe act or an instance of converting or the process of being converted<br/>" +
+                                    "\t •\tthe act or an instance of converting or the process of being converted<sup>[1]</sup><br/>" +
                                     "Unit Conversion: <br/>" +
-                                    "\t •\tis a multi-step process that involves multiplication or division by a numerical factor<br/>"},
+                                    "\t •\tis a multi-step process that involves multiplication or division by a numerical factor<sup>[1]</sup><br/>"},
                     {"Conversion of Units","Conversion of Units",
                             "<h2><b>Conversion of Units</b></h2>" +
                                     "The best way in unit conversion is by multiplying the given unit by a conversion factor which cancels out the unwanted units and replaces it with the desired " +
                                     "unit. <br/><br/>" +
                                     "For example, to convert 4 hours to seconds you first convert it to minutes, and then convert the minutes into seconds. <br/><br/>\n" +
                                     "There are 60 minutes in one hour, hence: " +
-                                    "$$\\require{cancel} 4 \\cancel{hr} \\cdot {{60 min} \\over {1 \\cancel{hr}}} = 240 min$$ " +
+                                    "$$\\require{cancel} 4 \\cancel{hr} \\cdot {{60 min} \\over {1 \\cancel{hr}}} = 240 min$$" +
                                     "And, 60 seconds in one minute, hence:\n" +
                                     "$$240 \\cancel{min} \\cdot {{60 sec} \\over {1 \\cancel{min}}} = 14400 sec$$" +
                                     "In converting hours to minutes, you see that \\(hr\\) is both in the numerator and denominator, so the \\(hr\\) cancels out, leaving you with \\(min\\). Same goes with converting minutes to seconds where \\(min\\) cancels out and \\(sec\\) remains. <br><br>" +
@@ -287,7 +290,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\\(m \\over s\\) you convert kilometers \\(km\\) to meters \\(m\\) and hours \\(hr\\) to seconds \\(s\\):<br/><br/>" +
                                     "<i>Note: There are 1000 meters in 1 kilometer</i><br/><br/>" +
                                     "$$50 {{\\cancel{km}} \\over {1 \\cancel{hr}}} \\cdot {{1000 m} \\over {1 \\cancel{km}}} \\cdot {{1 \\cancel{hr}} \\over {60 \\cancel{min}}} \\cdot {{1 " +
-                                    "\\cancel{min}} \\over {60 sec}} = 13.8888{m \\over s}$$<br/>"},
+                                    "\\cancel{min}} \\over {60 sec}} = 13.8888{m \\over s}$$<sup>[2]</sup><sup>[3]</sup><br/>"},
                     {"Conversion of Units","Metric System and Conversion",
                             "<h2><b>Metric System and Conversion</b></h2>" +
                                     "The following is the Metric System along with its multiplier for conversion:<br/>" +
@@ -306,61 +309,62 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\t•\t nano \\(n = 10^{-9}\\) or \\(0.000000001\\)<br/>" +
                                     "\t•\t pico \\(p = 10^{-12}\\) or \\(0.000000000001\\)<br/>" +
                                     "\t•\t femto \\(f = 10^{-15}\\) or \\(0.000000000000001\\)<br/>" +
-                                    "\t•\t atto \\(a = 10^{-18}\\) or \\(0.000000000000000001\\)<br/>"},
+                                    "\t•\t atto \\(a = 10^{-18}\\) or \\(0.000000000000000001\\)<sup>[4]</sup><br/>"},
                     {"Conversion of Units","Units of Time and Conversion",
                             "<h2><b>Units of Time and Conversion</b></h2>" +
-                                    "The following are the units of time along with its conversion to other units of time: <br/>\n" +
+                                    "The following are the units of time along with its conversion to other units of time:<br/>\n" +
                                     "\t•\t \\(1 minute = 60 seconds\\)<br/>" +
                                     "\t•\t \\(1 hour = 60 minutes\\)<br/>" +
                                     "\t•\t \\(1 day = 24hours\\)<br/>" +
                                     "\t•\t \\(1 week = 7 days\\)<br/>" +
                                     "\t•\t \\(1 year = 52 weeks\\)<br/>" +
                                     "\t•\t \\(1 year = 12 months\\)<br/>" +
-                                    "\t•\t \\(1 year = 365 days\\)<br/>"},
+                                    "\t•\t \\(1 year = 365 days\\)<sup>[4]</sup><br/>"},
                     {"Conversion of Units","Units of Angles and Conversion",
                             "<h2><b>Units of Angles and Conversion</b></h2>" +
-                                    "There are two units for angles namely, degrees and radians. The following are the conversion of degrees to radians and radians to degree: <br/>" +
+                                    "There are two units for angles namely, degrees and radians. The following are the conversion of degrees to radians and radians to degree:<br/>" +
                                     "To convert degrees to radians, just multiply the degrees by \\(\\pi \\over 180\\).<br/>" +
-                                    "To convert radians to degrees, just multiply the radians by \\(180 \\over \\pi\\). "},
-                    {"Conversion of Units", "Conversion of Units References", "<b><center>References</center></b><br> Metric Units (2016). Retrieved from http://www.ck12.org/physics/Metric-Units/lesson/Metric-Units-PPC<br><br>\n" +
-                            "Unit Conversion (2016). Retrieved from http://www.ck12.org/physics/Unit-Conversions/lesson/Unit-Conversions-PPC<br><br>" +
-                            "Walker, J. S. (2010). Converting Units. Physics (4th ed., p.8). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Unit Conversion. Physics (4th ed. , pp.13-16). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "To convert radians to degrees, just multiply the radians by \\(180 \\over \\pi\\).<sup>[4]</sup> "},
+                    {"Conversion of Units", "Conversion of Units References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Walker, J. S. (2010). Converting Units. Physics (4th ed., p.8). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August " +
+                            "5, 2016<br><br>" +
+                            "<sup>[2]</sup>Metric Units (2016). Retrieved from http://www.ck12.org/physics/Metric-Units/lesson/Metric-Units-PPC<br><br>\n" +
+                            "<sup>[3]</sup>Unit Conversion (2016). Retrieved from http://www.ck12.org/physics/Unit-Conversions/lesson/Unit-Conversions-PPC<br><br>" +
+                            "<sup>[4]</sup>Wilson, J. D., & Buffa, J. A. (2003). Unit Conversion. Physics (4th ed. , pp.13-16). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August " +
+                            "5, 2016"},
                     {"Scalar and Vector Values","Distance and Displacement",
                             "<h2><b>Distance and Displacement</b></h2>" +
                                     "Distance:<br/>" +
                                     "\t•\tis a scalar quantity<br/>" +
-                                    "\t•\tmeasures the interval between two points that is measured along the actual path that was made that connects them<br/><br/>" +
+                                    "\t•\tmeasures the interval between two points that is measured along the actual path that was made that connects them<sup>[1]</sup><br/><br/>" +
                                     "Displacement:<br/>" +
                                     "\t•\tis a vector quantity<br/>" +
-                                    "\t•\tmeasures the interval between two points along the shortest path that connects them <br/>"},
+                                    "\t•\tmeasures the interval between two points along the shortest path that connects them <sup>[1]</sup><br/>"},
                     {"Scalar and Vector Values","Scalar and Vector Values Formula",
                             "The SI unit used for distance and displacement is meters (\\(m\\)).<br/><br/>" +
                                     "Displacement can be calculated using this formula:<br/>" +
                                     "$$d = {x_f - x_i}$$" +
                                     "Where:<br/>" +
                                     "\\(x_i\\) = initial position of the object<br/>" +
-                                    "\\(x_f\\) = final position of the object<br/>"},
-                    {"Scalar and Vector Values", "Scalar and Vector Values References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Scalar and Vectors (2016). Retrieved from http://www.physicsclassroom.com/class/1DKin/Lesson-1/Scalars-and-Vectors<br><br>\n" +
-                            "Distance and Displacement (2016). Retrieved from http://www.physicsclassroom.com/class/1DKin/Lesson-1/Distance-and-Displacement<br><br>\n" +
-                            "Walker, J. S. (2010). Scalars and Vectors. Physics (4th ed., p.11). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Vectors. University Physics with Modern Physics (2nd ed. , pp.23-29). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Scalar and Vector Quantities. Physics (4th ed. , pp.33-35). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "\\(x_f\\) = final position of the object<sup>[2]</sup><sup>[3]</sup><br/>"},
+                    {"Scalar and Vector Values", "Scalar and Vector Values References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Scalar and Vectors (2016). Retrieved from http://www.physicsclassroom.com/class/1DKin/Lesson-1/Scalars-and-Vectors<br><br>\n" +
+                            "<sup>[2]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[3]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n"
+                            },
                     {"Velocity", "Velocity Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Speed:<br/>" +
-                                    "\t•\tshows the rate at which an object is able to move<br/><br/>" +
+                                    "\t•\tshows the rate at which an object is able to move<sup>[1]</sup><br/><br/>" +
                                     "Velocity:<br/>" +
-                                    "\t•\tshows the rate at which an object is able to move in a given direction<br/><br/>" +
-                                    "The SI unit used for speed and velocity is meter per second (\\({m \\over s}\\)).<br/>"},
+                                    "\t•\tshows the rate at which an object is able to move in a given direction<sup>[1]</sup><br/><br/>" +
+                                    "The SI unit used for speed and velocity is meter per second (\\({m \\over s}\\)).<sup>[2]</sup><br/>"},
                     {"Velocity", "Speed and Velocity",
                             "<h2><b>Speed and Velocity</b></h2>" +
                                     "Speed can be calculated by dividing distance over time:<br/>" +
                                     "$$s = {d \\over t}$$" +
                                     "Velocity can be calculated by dividing displacement over time:<br/>" +
-                                    "$$v = {x_f - x_i \\over t}$$"},
+                                    "$$v = {x_f - x_i \\over t}$$<sup>[2]</sup><sup>[3]</sup>"},
                     {"Velocity", "Average Velocity",
                             "<h2><b>Average Velocity</b></h2>" +
                                     "Average velocity is the ratio of total displacement (\\(\\Delta x\\)) taken over time interval (\\(\\Delta t\\))<br/>|" +
@@ -372,28 +376,24 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\\(x_i\\) = initial position of the object<br/>" +
                                     "\\(x_f\\) = final position of the object<br/>" +
                                     "\\(t_i\\) = time when the object was at position \\(x_i\\)<br/>" +
-                                    "\\(t_f\\) = time when the object was at position \\(x_f\\)<br/>"},
+                                    "\\(t_f\\) = time when the object was at position \\(x_f\\)<sup>[2]</sup><sup>[3]</sup><br/>"},
                     {"Velocity", "Instantaneous Velocity",
                             "<h2><b>Instantaneous Velocity</b></h2>" +
-                                    "Instantaneous velocity is the measure of the velocity of an object at a particular moment.<br/>"},
-                    {"Velocity", "Velocity References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "Speed and Velocity (2016). Retrieved from http://www.physicsclassroom.com/class/1DKin/Lesson-1/Speed-and-Velocity<br><br>\n" +
-                            "Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Distance, Velocity and Acceleration. Physics A Basic Science  (4th ed., pp.70-76). Quezon City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Walker, J. S. (2010). Average Speed and Velocity. Physics (4th ed., p.20). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Velocity, Average Velocity and Speed. University Physics with Modern Physics (2nd ed. , p.42). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Velocity. Physics (4th ed. , pp.36-38). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "Instantaneous velocity is the measure of the velocity of an object at a particular moment.<sup>[1]</sup><sup>[2]</sup><br/>"},
+                    {"Velocity", "Velocity References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
+                            "<sup>[2]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[3]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n"},
                     {"Acceleration", "Acceleration Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Acceleration:<br/>" +
                                     "\t•\tis the rate of change of velocity with respect to time<br/>" +
-                                    "\t•\tcan be positive (speeding up) or negative (slowing down)<br/><br/>" +
-                                    "The SI unit used for acceleration is meter per second squared (\\({m \\over s^2}\\)).<br/>"},
+                                    "\t•\tcan be positive (speeding up) or negative (slowing down)<sup>[1]</sup><sup>[2]</sup><br/><br/>" +
+                                    "The SI unit used for acceleration is meter per second squared (\\({m \\over s^2}\\)).<sup>[3]</sup><sup>[4]</sup><br/>"},
                     {"Acceleration", "Acceleration",
                             "<h2><b>Acceleration</b></h2>" +
                                     "Acceleration is the ratio of total velocity change (\\(\\Delta v\\)) taken over time interval (\\(\\Delta t\\)).<br/>" +
-                                    "$$a = {v_f - v_i \\over t}$$"},
+                                    "$$a = {v_f - v_i \\over t}$$<sup>[3]</sup><sup>[4]</sup>"},
                     {"Acceleration", "Average Acceleration",
                             "<h2><b>Average Acceleration</b></h2>" +
                                     "Average acceleration can be calculated using this formula:<br/>" +
@@ -402,18 +402,17 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\\(v_i\\) = initial velocity of the object<br/>" +
                                     "\\(v_f\\) = final velocity of the object<br/>" +
                                     "\\(t_i\\) = time when the object had velocity \\(v_i\\)<br/>" +
-                                    "\\(t_f\\) = time when the object had velocity \\(v_f\\)<br/>"},
+                                    "\\(t_f\\) = time when the object had velocity \\(v_f\\)<sup>[3]</sup><sup>[4]</sup><br/>"},
                     {"Acceleration", "Instantaneous Acceleration",
                             "<h2><b>Instantaneous Acceleration</b></h2>" +
-                                    "Instantaneous acceleration is the change of velocity at infinitesimal (very small) time interval.<br/>"},
-                    {"Acceleration", "Acceleration References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Distance, Velocity and Acceleration. Physics A Basic Science  (4th ed., pp.70-76). Quezon City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Walker, J. S. (2010). Acceleration. Physics (4th ed., p.26). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Displacement and Velocity from Acceleration. University Physics with Modern Physics (2nd ed. , pp.48-49). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Acceleration. Physics (4th ed. , pp.42-46). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016" +
-                            "Acceleration (2016). Retrieved from http://www.physicsclassroom.com/class/1DKin/Lesson-1/Acceleration<br><br>\n"},
+                                    "Instantaneous acceleration is the change of velocity at infinitesimal (very small) time interval.<sup>[1]</sup><sup>[2]</sup><br/>"},
+                    {"Acceleration", "Acceleration References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
+                            "<sup>[2]</sup>Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Distance, Velocity and Acceleration. Physics A Basic Science  (4th ed., pp.70-76). Quezon City, " +
+                            "Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
+                            "<sup>[3]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. " +
+                            "Retrieved from https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[4]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n"},
                     {"Newton's Laws of Motion", "Newton's Laws of Motion",
                             "<h2><b>Newton's Laws of Motion</b></h2>" +
                                     "There are three laws of motion. These laws are the physical laws that laid the foundation for classical" +
@@ -422,34 +421,33 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Newton’s Laws of Motion have been expressed in several various ways, and can be summarized as the" +
                                     "following:<br><br>" +
                                     "\t•\t<b>First Law</b>: An object in motion tends to stay in motion and an object at rest tends to stay at rest" +
-                                    "unless acted upon by an external force.<br><br>" +
-                                    "\t•\t<b>Second Law</b>: Force is equal to mass times acceleration.<br><br>" +
-                                    "\t•\t<b>Third Law</b>: For every action there is an equal and opposite reaction."},
-                    {"Newton's Laws of Motion", "Newton's Laws of Motion References", "<b><center>References</center></b><br> Nave, R. Newton’s First Law. Retrieved from http://www.bibme.org/citation-guide/apa/website<br><br>\n" +
-                            "Nave, R. Newton’s Second Law. Retrieved from http://www.bibme.org/citation-guide/apa/website<br><br>\n" +
-                            "Nave, R. Newton’s Third Law. Retrieved from http://www.bibme.org/citation-guide/apa/website<br><br>\n" +
-                            "Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Newton’s First, Second, and Third Law of Motion. Physics A Basic Science  (4th ed., pp.85-95). Quezon City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Walker, J. S. (2010). Newton’s Law of Motion. Physics (4th ed., pp.112-122). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Newton’s Law of Motion. University Physics with Modern Physics (2nd ed. , p.103). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Newton’s Law of Motion. Physics (4th ed. , pp.101-110). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "unless acted upon by an external force.<sup>[1]</sup><sup>[4]</sup><br><br>" +
+                                    "\t•\t<b>Second Law</b>: Force is equal to mass times acceleration.<sup>[2]</sup><sup>[4]</sup><br><br>" +
+                                    "\t•\t<b>Third Law</b>: For every action there is an equal and opposite reaction.<sup>[3]</sup><sup>[4]</sup>"},
+                    {"Newton's Laws of Motion", "Newton's Laws of Motion References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Nave, R. Newton’s First Law. Retrieved from http://www.bibme.org/citation-guide/apa/website<br><br>\n" +
+                            "<sup>[2]</sup>Nave, R. Newton’s Second Law. Retrieved from http://www.bibme.org/citation-guide/apa/website<br><br>\n" +
+                            "<sup>[3]</sup>Nave, R. Newton’s Third Law. Retrieved from http://www.bibme.org/citation-guide/apa/website<br><br>\n" +
+                            "<sup>[4]</sup>Walker, J. S. (2010). Newton’s Law of Motion. Physics (4th ed., pp.112-122). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. " +
+                            "Retrieved August 5, 2016<br><br>"},
                     {"Free-fall", "Free-fall Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Free fall:<br/>" +
                                     "\t•\trefers to the motion of an object where its motion is affected only by gravity<br/>" +
-                                    "\t•\tacts only along the y-axis<br/><br/>" +
+                                    "\t•\tacts only along the y-axis<sup>[1]</sup><br/><br/>" +
                                     "Acceleration due to gravity:\t<br/>" +
                                     "\t•\tis equal to 9.8 \\({m \\over s^2}\\)<br/>" +
-                                    "\t•\tis constant regardless of the object’s mass<br/>"},
+                                    "\t•\tis constant regardless of the object’s mass<sup>[1]</sup><br/>"},
                     {"Free-fall", "Free-fall Velocity",
                             "<h2><b>Free fall</b></h2>|" +
                                     "An object is thrown with an initial velocity (\\(v_i\\)) along the y-axis. The position and speed of an object in free fall motion can be calculated from the " +
                                     "motion " +
                                     "equations.<br/><br/>" +
                                     "Velocity along the y-axis at any instant t:<br/>" +
-                                    "$$v_f = v_i + g \\cdot t$$"},
+                                    "$$v_f = v_i + g \\cdot t$$<sup>[2]</sup><sup>[3]</sup>"},
                     {"Free-fall", "Free-fall Displacement",
                             "The displacement along y-axis at any instant t:<br/>" +
-                                    "$$d = {1 \\over 2}g  \\cdot t^2$$"},
+                                    "$$d = {1 \\over 2}g  \\cdot t^2$$<sup>[2]</sup><sup>[3]</sup>"},
                     {"Free-fall", "Free-fall Upward Motion",
                             "In the case where an object is initially thrown upwards, the following formula can be used:<br/>" +
                                     "$$v_f^2 = v_i^2 + 2 \\cdot g \\cdot d$$" +
@@ -458,24 +456,24 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\\(v_f\\) = final velocity<br/>" +
                                     "\\(d\\) = vertical distance<br/>" +
                                     "\\(g\\) = acceleration due to gravity<br/>" +
-                                    "\\(t\\) = time duration"},
-                    {"Free-fall", "Free-fall References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Falling Bodies. Physics A Basic Science  (4th ed., pp.78-83). Quezon City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Walker, J. S. (2010). Freely Falling Objects. Physics (4th ed., p.39). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Free-fall. University Physics with Modern Physics (2nd ed. , pp.56-59). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Free-fall. Physics (4th ed. , pp.50-54). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "\\(t\\) = time duration<sup>[4]</sup>"},
+                    {"Free-fall", "Free-fall References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Falling Bodies. Physics A Basic Science  (4th ed., pp.78-83). Quezon City, Philippines: KEN " +
+                            "Incorporated. Retrieved August 5, 2016<br><br>" +
+                            "<sup>[2]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from " +
+                            "https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[3]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[4]</sup>CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n"},
                     {"Projectile Motion", "Projectile Motion Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Projectile:<br/>" +
                                     "\t•\tis an object thrown with an initial velocity in a vertical plane<br/>" +
                                     "\t•\tmoves in two dimensions<br/>" +
-                                    "\t•\tacts under the action of gravity alone without being propelled<br/><br/>" +
+                                    "\t•\tacts under the action of gravity alone without being propelled<sup>[3]</sup><sup>[5]</sup><br/><br/>" +
                                     "Projectile Motion:<br/>" +
-                                    "\t•\tis the motion done by the projectile<br/><br/>" +
+                                    "\t•\tis the motion done by the projectile<sup>[1]</sup><sup>[2]</sup><br/><br/>" +
                                     "Trajectory:<br/>" +
-                                    "\t•\tIs the path passed by the projectile<br/>"},
+                                    "\t•\tIs the path passed by the projectile<sup>[1]</sup><sup>[2]</sup><br/>"},
                     {"Projectile Motion", "Projectile Motion",
                             "<h2><b>Projectile Motion</b></h2>" +
                                     "Projectile motion is a two dimensional motion. Any two dimensional motion case can be split up into two cases of one dimensional motion.<br/><br/>" +
@@ -496,7 +494,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\\(v_t\\) = velocity of the object along y-axis<br/>" +
                                     "\\(v_{yi}\\) = initial velocity of the object along y-axis<br/>" +
                                     "\\(g\\) = acceleration due to gravity <br/>" +
-                                    "\\(t\\) = time duration<br/><br/>"},
+                                    "\\(t\\) = time duration<sup>[3]</sup><sup>[4]</sup><sup>[5]</sup><br/><br/>"},
                     {"Projectile Motion", "Trajectory",
                             "Formulas related to trajectory motion is given by the following:<br/>" +
                                     "Time of flight (\\(s\\)):<br/>" +
@@ -508,55 +506,57 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Where:<br/>" +
                                     "\\(v_1\\) = initial velocity of the object<br/>" +
                                     "\\(sin \\theta\\) = component along y-axis<br/>" +
-                                    "\\(cos \\theta\\) = component along x-axis<br/>"},
-                    {"Projectile Motion", "Projectile Motion References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "Projectile Motion Formula (2016). Retrieved from http://formulas.tutorvista.com/physics/projectile-motion-formula.html<br><br>\n" +
-                            "Walker, J. S. (2010). Projectile Motion Basic Equation. Physics (4th ed., p.86). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Ideal Projectile Motion. University Physics with Modern Physics (2nd ed. , pp.74 -80). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Projectile Motion. Physics (4th ed. , pp.83-85). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "\\(cos \\theta\\) = component along x-axis<sup>[3]</sup><sup>[4]</sup><sup>[5]</sup><br/>"},
+                    {"Projectile Motion", "Projectile Motion References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Walker, J. S. (2010). Projectile Motion Basic Equation. Physics (4th ed., p.86). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. " +
+                            "Retrieved August 5, 2016<br><br>" +
+                            "<sup>[2]</sup>CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
+                            "<sup>[3]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google" +
+                            ".com/store/apps<br><br>\n" +
+                            "<sup>[4]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[5]</sup>Projectile Motion Formula (2016). Retrieved from http://formulas.tutorvista.com/physics/projectile-motion-formula.html<br><br>\n"},
                     {"Friction", "Friction Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Friction Force:<br/>" +
-                                    "\t•\tis the force that is exerted by a surface as an object moves across it<br/>" +
+                                    "\t•\tis the force that is exerted by a surface as an object moves across it<sup>[1]</sup><br/>" +
                                     "|" +
                                     "When an object is being pushed across a surface, the surface offers resistance to the movement of the object.<br/><br/>" +
-                                    "The friction force is opposite to the direction of the motion of the object.<br/>"},
+                                    "The friction force is opposite to the direction of the motion of the object.<sup>[2]</sup><br/>"},
                     {"Friction", "Friction",
                             "<h2><b>Two types of Friction</b></h2>" +
                                     "1. Static Friction:<br/>" +
-                                    "\t•\tis the friction between multiple solid objects that are not moving relative to each other<br/><br/>" +
+                                    "\t•\tis the friction between multiple solid objects that are not moving relative to each other<sup>[3]</sup><sup>[4]</sup><br/><br/>" +
                                     "2. Kinetic Friction:<br/>" +
-                                    "\t•\tis the friction between multiple solid objects that are moving relative to each other<br/>" +
+                                    "\t•\tis the friction between multiple solid objects that are moving relative to each other<sup>[3]</sup><sup>[4]</sup><br/>" +
                                     "The friction force is dependent on two factors:<br/>" +
                                     "\t•\tthe material of the objects that are in contact<br/>" +
-                                    "\t•\tthe force that pushes both surfaces together<br/>" +
+                                    "\t•\tthe force that pushes both surfaces together<sup>[3]</sup><br/>" +
                                     "The following is the equation that summarizes the topic:<br/>" +
                                     "$$F_f = \\mu \\cdot F_n$$" +
                                     "Where:<br/>" +
                                     "\\(F_f\\) = frictional force <br/>" +
                                     "\\(\\mu\\) = coefficient of friction<br/>" +
-                                    "\\(F_n\\) = normal force<br/>"},
-                    {"Friction", "Friction References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Work and Friction. Physics A Basic Science  (4th ed., pp.135-139). Quezon City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014).Friction Force. University Physics with Modern Physics (2nd ed. , pp.114-116). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Friction. Physics (4th ed. , pp.121-124). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "\\(F_n\\) = normal force<sup>[3]</sup><sup>[4]</sup><br/>"},
+                    {"Friction", "Friction References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Work and Friction. Physics A Basic Science  (4th ed., pp.135-139). Quezon City, Philippines: KEN " +
+                            "Incorporated. Retrieved August 5, 2016<br><br>" +
+                            "<sup>[2]</sup>CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>" +
+                            "<sup>[3]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from " +
+                            "https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[4]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n"},
                     {"Free-body Diagrams", "Free Body Diagrams Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Free Body Diagrams:<br/>" +
                                     "\t•\talso known as “Force Diagram”<br/>" +
                                     "\t•\ta graphical illustration used to visualize the applied forces, movements and resulting reaction on a body in a steady state condition<br/>" +
-                                    "\t•\tshows all the forces acting on an object or a “body” that is singled out from or “freed” from a group of objects<br/>"},
+                                    "\t•\tshows all the forces acting on an object or a “body” that is singled out from or “freed” from a group of objects<sup>[1]</sup><br/>"},
                     {"Free-body Diagrams", "Free Body Diagrams",
                             "<h2><b>Free Body Diagrams</b></h2>" +
                                     "There are four types of forces typically used in free body diagrams. These are the forces used.<br/>" +
                                     "1. Weight (W) - gravitational force that is directed towards the ground (downwards).<br/>" +
                                     "2. Normal (N) - its force is directed perpendicular to the object’s surface.<br/>" +
                                     "3. Tension (T) - its force is directed along a string, rope, chain or anything an object is attached to.<br/>" +
-                                    "4. Friction (fr) - its force’s direction opposes the relative motion of the object.<br/>" +
+                                    "4. Friction (fr) - its force’s direction opposes the relative motion of the object.<sup>[2]</sup><br/>" +
                                     "<br/>" +
                                     "Drawing Free Body Diagrams<br/>" +
                                     "<br/>" +
@@ -564,7 +564,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "1.\tAlways draw the forces from the center of the object.<br/>" +
                                     "2.\tThe stronger the force is, the longer the arrow is.<br/>" +
                                     "3.\tThe arrow should point in the direction for force is acting.<br/>" +
-                                    "4.\tLabel the forces acting with letters/symbols.<br/>" +
+                                    "4.\tLabel the forces acting with letters/symbols.<sup>[2]</sup><br/>" +
                                     "<br/>" +
                                     "|" +
                                     "<br/>" +
@@ -572,19 +572,17 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "\t•\tThe force of gravity or weight always points straight down. <br/>" +
                                     "\t•\tThe normal force will always push straight up from a surface.<br/>" +
                                     "\t•\tIf an object is moving in one direction, friction is acting in the opposite direction.<br/>" +
-                                    "\t•\tThink about whether the forces on opposite sides are balanced or not. If they are, the two arrows should be about the same length. <br/>"},
-                    {"Free-body Diagrams", "Free-body Diagrams References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Drawing Free-Body Diagrams (2016). Retrieved from http://www.physicsclassroom.com/class/newtlaws/Lesson-2/Drawing-Free-Body-Diagrams<br><br>\n" +
-                            "Walker, J. S. (2010). Free Body Diagrams. Physics (4th ed., pp.128-132). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Free Body Diagrams. University Physics with Modern Physics (2nd ed. , pp.102-103). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Free Body Diagrams and Translational Equilibrium. Physics (4th ed. , pp.111-113). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "\t•\tThink about whether the forces on opposite sides are balanced or not. If they are, the two arrows should be about the same length.<sup>[1]</sup><br/>"},
+                    {"Free-body Diagrams", "Free-body Diagrams References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Drawing Free-Body Diagrams (2016). Retrieved from http://www.physicsclassroom.com/class/newtlaws/Lesson-2/Drawing-Free-Body-Diagrams<br><br>\n" +
+                            "<sup>[2]</sup>Walker, J. S. (2010). Free Body Diagrams. Physics (4th ed., pp.128-132). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved" +
+                            " August 5, 2016<br><br>"},
                     {"Momentum and Impulse", "Impulse and Momentum Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Momentum:<br/>" +
                                     "\t•\tis defined as “mass in motion”<br/>" +
                                     "\t•\tdepends upon the variables mass and velocity<br/>" +
-                                    "\t•\tis a vector quantity<br/>"},
+                                    "\t•\tis a vector quantity<sup>[1]</sup><sup>[2]</sup><br/>"},
                     {"Momentum and Impulse", "Momentum",
                             "<h2><b>Momentum</b></h2>" +
                                     "In terms of an equation, the momentum of an object is equal to the mass of the object times the velocity of the object. <br/><br/>" +
@@ -597,7 +595,8 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "The equation illustrates that momentum is:<br/>" +
                                     "\t•\tdirectly proportional to an object's mass <br/>" +
                                     "\t•\tdirectly proportional to the object's velocity<br/>" +
-                                    "Momentum is also a vector quantity. The momentum of an object then is fully described by both magnitude and direction.<br/>"},
+                                    "Momentum is also a vector quantity. The momentum of an object then is fully described by both magnitude and direction" +
+                                    ".<sup>[3]</sup><sup>[4]</sup><sup>[5]</sup><br/>"},
                     {"Momentum and Impulse", "Impulse",
                             "<h2><b>Impulse</b></h2>" +
                                     "Impulse is known as quantity force multiplied by time. <br/><br/>" +
@@ -606,20 +605,22 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "$$F \\cdot t = m \\cdot \\Delta v$$" +
                                     "In a collision:<br/>" +
                                     "\t•\tobjects experience an impulse<br/>" +
-                                    "\t•\tthe impulse causes and is equal to the change in momentum<br/>"},
-                    {"Momentum and Impulse", "Momentum and Impulse References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "Momentum and Impulse Connection (2016). Retrieved from http://www.physicsclassroom.com/class/momentum/Lesson-1/Momentum-and-Impulse-Connection<br><br>\n" +
-                            "Walker, J. S. (2010). Momentum, Newton’s Second Law and Impulse. Physics (4th ed., pp.257-258). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Linear Momentum and Impulse. University Physics with Modern Physics (2nd ed. , pp.195-197). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Linear Momentum and Impulse. Physics (4th ed. , pp.173-179). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "\t•\tthe impulse causes and is equal to the change in momentum<sup>[3]</sup><sup>[4]</sup><sup>[5]</sup><br/>"},
+                    {"Momentum and Impulse", "Momentum and Impulse References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Momentum and Impulse Connection (2016). Retrieved from http://www.physicsclassroom.com/class/momentum/Lesson-1/Momentum-and-Impulse-Connection<br><br>\n" +
+                            "<sup>[2]</sup>Walker, J. S. (2010). Momentum, Newton’s Second Law and Impulse. Physics (4th ed., pp.257-258). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education " +
+                            "Incorporated. Retrieved August 5, 2016<br><br>" +
+                            "<sup>[3]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from " +
+                            "https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[4]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[5]</sup>CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n"},
                     {"Law of Conservation of Energy", "Law of Conservation of Energy Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Law of Conservation of Energy<br/>" +
                                     "\t•\tstates that the total energy of an isolated system remains constant<br/>" +
                                     "\t•\tIt implies that energy can neither be created nor destroyed, but can be change from one form to another<br/>" +
-                                    "\t•\tthe change in energy of an object due to a transformation is equal to the work done on the object or by the object for that transformation<br/>"},
+                                    "\t•\tthe change in energy of an object due to a transformation is equal to the work done on the object or by the object for that " +
+                                    "transformation<sup>[1]</sup><sup>[2]</sup><br/>"},
                     {"Law of Conservation of Energy", "Law of Conservation of Energy",
                             "<h2><b>Conservation of Energy</b></h2>" +
                                     "The different types of energy are the potential energy, kinetic energy, and the total mechanical energy. These types of energy will further be discussed in a different part (Energy) of this application.<br/><br/>" +
@@ -632,18 +633,21 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Where:<br/>" +
                                     "\\(m\\) = mass of the object<br/>" +
                                     "\\(v\\) = final velocity after falling from a height of <b>h</b><br/>" +
-                                    "\\(g\\) = acceleration due to gravity<br/>" +
+                                    "\\(g\\) = acceleration due to gravity<sup>[3]</sup><sup>[4]</sup><br/>" +
                                     "<br/>"},
-                    {"Law of Conservation of Energy", "Law of Conservation of Energy References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Tuckerman, M. (2011). Law of conservation of energy. Retrieved from http://www.nyu.edu/classes/tuckerman/adv.chem/lectures/lecture_2/node4.html<br><br>\n" +
-                            "Walker, J. S. (2010). Work, Energy and Power. Physics (4th ed., p.315). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016"},
+                    {"Law of Conservation of Energy", "Law of Conservation of Energy References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Tuckerman, M. (2011). Law of conservation of energy. Retrieved from http://www.nyu.edu/classes/tuckerman/adv.chem/lectures/lecture_2/node4.html<br><br>\n" +
+                            "<sup>[2]</sup>Walker, J. S. (2010). Work, Energy and Power. Physics (4th ed., p.315). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved " +
+                            "August 5, 2016" +
+                            "<sup>[3]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google" +
+                            ".com/store/apps<br><br>\n" +
+                            "<sup>[4]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n"},
                     {"Work", "Work Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Work:<br/>" +
-                                    "\t•\tis the measure of energy being transferred occurring when an object is moved over a distance<br/>" +
+                                    "\t•\tis the measure of energy being transferred occurring when an object is moved over a distance<sup>[1]</sup><br/>" +
                                     "|" +
-                                    "The SI unit used for work is Joule (\\(J\\)). Joule’s base units is \\(kg \\cdot {m^2 \\over s^2}\\)<br/>"},
+                                    "The SI unit used for work is Joule (\\(J\\)). Joule’s base units is \\(kg \\cdot {m^2 \\over s^2}\\)<sup>[2]</sup><br/>"},
                     {"Work", "Work",
                             "<h2><b>Work</b></h2>" +
                                     "A force is doing work when it acts on an object which displaces it from the point of application. The force vector and the position vector in a work is " +
@@ -653,22 +657,19 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Where:<br/>" +
                                     "\\(\\vec{F}\\) = force vector<br/>" +
                                     "\\(\\vec{x}\\) = position vector<br/>" +
-                                    "\\(cos \\theta\\) = component along x-axis<br/>"},
-                    {"Work", "Work References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "Definition and Mathematics of Work (2016). Retrieved from http://www.physicsclassroom.com/class/energy/Lesson-1/Definition-and-Mathematics-of-Work<br><br>\n" +
-                            "Calculating the Amount of Work Done by Forces (2016). Retrieved from http://www.physicsclassroom.com/class/energy/Lesson-1/Calculating-the-Amount-of-Work-Done-by-Forces<br><br>\n" +
-                            "Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Work and Friction. Physics A Basic Science  (4th ed., pp.133-139). Quezon City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Walker, J. S. (2010). Work, Energy and Power. Physics (4th ed., pp.191-194). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Work. University Physics with Modern Physics (2nd ed. , pp.138-140). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Work and Energy. Physics (4th ed. , pp.138-143). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "\\(cos \\theta\\) = component along x-axis<sup>[2]</sup><sup>[3]</sup><br/>"},
+                    {"Work", "Work References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Definition and Mathematics of Work (2016). Retrieved from http://www.physicsclassroom" +
+                            ".com/class/energy/Lesson-1/Definition-and-Mathematics-of-Work<br><br>\n" +
+                            "<sup>[2]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application " +
+                            "Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[3]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n"},
                     {"Energy", "Energy Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Energy:<br/>" +
                                     "\t•\tis the capacity of performing work<br/>" +
-                                    "\t•\tmay exist in various forms (potential, kinetic, electric, chemical etc.)<br/>" +
-                                    "The SI unit for energy is the same with work, Joule (\\(J\\)).<br/>"},
+                                    "\t•\tmay exist in various forms (potential, kinetic, electric, chemical etc.)<sup>[6]</sup><br/>" +
+                                    "The SI unit for energy is the same with work, Joule (\\(J\\)).<sup>[1]</sup><br/>"},
                     {"Energy", "Kinetic Energy",
                             "<h2><b>Kinetic Energy</b></h2>" +
                                     "Kinetic energy is an energy that is possessed by means of its motion.<br/><br/>" +
@@ -676,7 +677,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "$$KE = {mv^2 \\over 2}$$" +
                                     "Where:<br/>" +
                                     "\\(m\\) = mass of the object<br/>" +
-                                    "\\(v\\) = velocity of the object<br/>"},
+                                    "\\(v\\) = velocity of the object<sup>[2]</sup><sup>[3]</sup><sup>[4]</sup><sup>[5]</sup><br/>"},
                     {"Energy", "Potential Energy",
                             "<h2><b>Potential Energy</b></h2>" +
                                     "Potential energy is an energy that is possessed by means of its position relative to others.<br/><br/>" +
@@ -689,27 +690,27 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Where:<br/>" +
                                     "\\(m\\) = mass of the object<br/>" +
                                     "\\(h\\) = height of the object above the ground<br/>" +
-                                    "\\(g\\) = acceleration due to gravity<br/><br/>"},
+                                    "\\(g\\) = acceleration due to gravity<sup>[2]</sup><sup>[3]</sup><sup>[4]</sup><sup>[6]</sup><sup>[7]</sup><br/><br/>"},
                     {"Energy", "Total Mechanical Energy",
                             "<h2><b>Total Mechanical Energy</b></h2>" +
                                     "Total mechanical energy is the sum of the kinetic and potential energy of a conservative system:<br/>" +
-                                    "$$TME = KE + PE - 0$$"},
-                    {"Energy", "Energy References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "Potential Energy (2016). Retrieved from http://www.physicsclassroom.com/class/energy/Lesson-1/Potential-Energy<br><br>\n" +
-                            "Kinetic Energy (2016). Retrieved from http://www.physicsclassroom.com/class/energy/Lesson-1/Kinetic-Energy<br><br>\n" +
-                            "Potential Energy (2016). Retrieved from http://www.ck12.org/physics/Potential-Energy/lesson/Potential-Energy-PPC<br><br>\n" +
-                            "Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Energy, it’s Transformation and Conservation. Physics A Basic Science  (4th ed., pp.139-145). Quezon City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Walker, J. S. (2010). Work, Energy and Power. Physics (4th ed., pp.195-199). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Energy. University Physics with Modern Physics (2nd ed. , pp.135-136). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Work and Energy. Physics (4th ed. , pp.145-152). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "$$TME = KE + PE - 0$$<sup>[2]</sup><sup>[3]</sup>"},
+                    {"Energy", "Energy References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Energy, it’s Transformation and Conservation. Physics A Basic Science  (4th ed., pp.139-145). Quezon" +
+                            " City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
+                            "<sup>[2]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application " +
+                            "Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[3]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[4]</sup>CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
+                            "<sup>[6]</sup>Kinetic Energy (2016). Retrieved from http://www.physicsclassroom.com/class/energy/Lesson-1/Kinetic-Energy<br><br>\n" +
+                            "<sup>[5]</sup>Potential Energy (2016). Retrieved from http://www.physicsclassroom.com/class/energy/Lesson-1/Potential-Energy<br><br>\n" +
+                            "<sup>[7]</sup>Potential Energy (2016). Retrieved from http://www.ck12.org/physics/Potential-Energy/lesson/Potential-Energy-PPC<br><br>\n"},
                     {"Power", "Power Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Power:<br/>" +
                                     "\t•\tis the rate of doing work<br/>" +
                                     "\t•\thas no direction<br/>" +
-                                    "\t•\tis a scalar quantity<br/>" +
+                                    "\t•\tis a scalar quantity<sup>[1]</sup><br/>" +
                                     "The SI unit for power is Watt (\\(W\\)), or Joule per second (\\(J \\over s\\)).<br/>"},
                     {"Power", "Average Power",
                             "<h2><b>Average Power</b></h2>" +
@@ -718,15 +719,14 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "$$P_{av} = {\\Delta W \\over \\Delta t}$$" +
                                     "Where:<br/>" +
                                     "\\(\\Delta W\\) = amount of work performed<br/>" +
-                                    "\\(\\Delta t\\) = time duration<br/>"},
-                    {"Power", "Power References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "Power (2016). Retrieved from http://www.physicsclassroom.com/class/energy/Lesson-1/Power<br><br>\n" +
-                            "Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Power and Mechanical Advantage. Physics A Basic Science  (4th ed., pp.147-152). Quezon City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Walker, J. S. (2010). Work, Energy and Power. Physics (4th ed., pp.199-204). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Power. University Physics with Modern Physics (2nd ed. , pp.150-153). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Power. Physics (4th ed. , p.160). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "\\(\\Delta t\\) = time duration<sup>[2]</sup><sup>[3]</sup><sup>[4]</sup><br/>"},
+                    {"Power", "Power References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Power and Mechanical Advantage. Physics A Basic Science  (4th ed., pp.147-152). Quezon City, " +
+                            "Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
+                            "<sup>[2]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. " +
+                            "Retrieved from https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[3]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[4]</sup>CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n"},
 //                    {"Power", "Instantaneous Power",
 //                            "<h2><b>Instantaneous Power</b></h2>" +
 //                                    "Instantaneous power is the limiting value of the average power as the time interval approaches to zero.<br/><br/>" +
@@ -742,7 +742,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Uniform Circular Motion", "Uniform Circular Motion Definition",
                             "<h2><b>Definition</b></h2>" +
                                     "Uniform Circular Motion:<br/>" +
-                                    "\t•\tis the motion of an object traveling at a constant speed on a path that is circular<br/>"},
+                                    "\t•\tis the motion of an object traveling at a constant speed on a path that is circular<sup>[1]</sup><br/>"},
                     {"Uniform Circular Motion", "Measurements of a Circle",
                             "<h2><b>Measurements of a Circle</b></h2>" +
                                     "The arc of a circle is a portion of the circumference.<br/><br/>" +
@@ -750,7 +750,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "The radian is the standard unit of angular measure. When it is drawn as a central angle, it subtends an arc whose length is equal to the length of the radius of the circle.<br/>" +
                                     "|" +
                                     "The relationship between the degrees and radians is:<br/>" +
-                                    "<center><i>radians = degrees * \\(\\pi \\over 180\\)</i></center>"},
+                                    "<center><i>radians = degrees * \\(\\pi \\over 180\\)</i></center><sup>[2]</sup>"},
                     {"Uniform Circular Motion", "Frequency",
                             "<h2><b>Frequency</b></h2>" +
                                     "The frequency (\\(f\\)) is the number of revolutions completed per time unit.<br/><br/>" +
@@ -758,24 +758,24 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Another unit of measure for frequency is cycles per second (\\(cycles \\over seconds\\)). 60 RPM is equal to 1 hertz.<br/><br/>" +
                                     "Period (\\(T\\)):<br/>" +
                                     "\t•\tis the time an object takes to travel one revolution around the circle.<br/>" +
-                                    "The SI unit used for period is second \\(s\\). This is based on the reciprocal value of frequency where (\\(T = {1 \\over f}\\)).<br/>"},
+                                    "The SI unit used for period is second \\(s\\). This is based on the reciprocal value of frequency where (\\(T = {1 \\over f}\\)).<sup>[2]</sup><br/>"},
                     {"Uniform Circular Motion", "Angular Displacement",
                             "<h2><b>Angular Displacement</b></h2>" +
                                     "|" +
-                                    "The angular displacement (Δθ) is the angle traveled by the object while moving from point B to C around the circular path.<br/>"},
+                                    "The angular displacement (Δθ) is the angle traveled by the object while moving from point B to C around the circular path.<sup>[2]</sup><br/>"},
                     {"Uniform Circular Motion", "Length of Arc",
                             "<h2><b>Length of Arc</b></h2>" +
                                     "The length of arc (\\(\\Delta S\\)) is directly proportional to the angular displacement subtended traced at the center of circle by the ends of the arc.<br/><br/>" +
                                     "Length of arc can be calculated using this formula:<br/>" +
-                                    "$$\\Delta S = r \\cdot \\Delta \\theta$$"},
+                                    "$$\\Delta S = r \\cdot \\Delta \\theta$$<sup>[3]</sup><sup>[4]</sup>"},
                     {"Uniform Circular Motion", "Tangential Velocity",
                             "<h2><b>Tangential Velocity</b></h2>" +
                                     "The tangential velocity (\\(v\\) is the velocity measured at any tangential point in a circle.<br/>" +
                                     "Tangential velocity can be calculated using this formula:<br/>" +
-                                    "$$v = {\\Delta S \\over \\Delta t}$$"},
+                                    "$$v = {\\Delta S \\over \\Delta t}$$<sup>[3]</sup><sup>[4]</sup>"},
                     {"Uniform Circular Motion", "Velocity around a Circle",
                             "The velocity around the circle can be calculated using this formula:<br/>" +
-                                    "$$v = 2 \\cdot \\pi \\cdot {r \\over t}$$"},
+                                    "$$v = 2 \\cdot \\pi \\cdot {r \\over t}$$<sup>[3]</sup><sup>[4]</sup>"},
                     {"Uniform Circular Motion", "Angular Velocity",
                             "<h2><b>Angular Velocity</b></h2>" +
                                     "The angular velocity (ω) is rate of change of angular position of a body that is rotating.<br/><br/>" +
@@ -784,27 +784,27 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "$$\\omega = {\\Delta \\theta \\over \\Delta t}$$" +
                                     "Since angular velocity is a vector quantity, it is defined as positive when the motion in the circle is in counter-clockwise, and is defined as negative when the motion in the circle is in clockwise.<br/><br/>" +
                                     "The relationship between the linear velocity and angular velocity is:<br/>" +
-                                    "$$v = {\\Delta S \\over \\Delta t} = r \\cdot {\\Delta \\theta \\over \\Delta t} = r \\cdot \\omega$$"},
+                                    "$$v = {\\Delta S \\over \\Delta t} = r \\cdot {\\Delta \\theta \\over \\Delta t} = r \\cdot \\omega$$<sup>[3]</sup><sup>[4]</sup>"},
                     {"Uniform Circular Motion", "Centripetal Acceleration",
                             "<h2><b>Centripetal Acceleration</b></h2>" +
                                     "The centripetal acceleration is the rate of change of tangential velocity.<br/><br/>" +
                                     "The centripetal acceleration is always pointing towards the center of the circle in motion.<br/>" +
                                     "Centripetal acceleration can be calculated using this formula:<br/>" +
-                                    "$$a_c = {{\\omega ^2} \\over {r}}$$"},
-                    {"Uniform Circular Motion", "Uniform Circular Motion References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "Uniform Circular Motion (2016). Retrieved from http://www.physicsclassroom.com/mmedia/circmot/ucm.cfm<br><br>\n" +
-                            "Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Uniform Circular Motion. Physics A Basic Science  (4th ed., pp.101-106). Quezon City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Polar Coordinates. University Physics with Modern Physics (2nd ed. , pp.261-268). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Uniform Circular Motion and Centripetal Acceleration. Physics (4th ed. , pp.217-221). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "$$a_c = {{\\omega ^2} \\over {r}}$$<sup>[3]</sup><sup>[4]</sup>"},
+                    {"Uniform Circular Motion", "Uniform Circular Motion References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Uniform Circular Motion. Physics A Basic Science  (4th ed., pp.101-106). Quezon City, Philippines: " +
+                            "KEN Incorporated. Retrieved August 5, 2016<br><br>" +
+                            "<sup>[2]</sup>CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
+                            "<sup>[3]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from " +
+                            "https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[4]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n"},
                     {"Centripetal and Centrifugal Forces", "Centripetal and Centrifugal Forces Definition",
                             "<p><h2><b>Definition</b></h2>" +
                                     "Centripetal Force:<br/>" +
-                                    "\t•\tis a force that acts on an object that is moving in a circular path and is directed towards the center where the object is moving<br/><br/>" +
+                                    "\t•\tis a force that acts on an object that is moving in a circular path and is directed towards the center where the object is moving<sup>[3]</sup><br/><br/>" +
                                     "Centrifugal Force:<br/>" +
                                     "\t•\tis the opposing reaction force of the centripetal force<br/>" +
-                                    "\t•\tis a force acting outwards of an object that is moving in a circular path<br/>"},
+                                    "\t•\tis a force acting outwards of an object that is moving in a circular path<sup>[1]</sup><br/>"},
                     {"Centripetal and Centrifugal Forces", "Centripetal and Centrifugal Forces",
                             "<h2><b>Centripetal and Centrifugal Forces</b></h2>" +
                                     "According the Newton’s second law motion, where there is an acceleration (centripetal acceleration), there is a force (centripetal force).<br/>" +
@@ -814,19 +814,18 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "Where:<br/>" +
                                     "\\(m\\) = mass of the object<br/>" +
                                     "\\(v\\) = tangential velocity of the object<br/>" +
-                                    "\\(r\\) = radius of curvature cause by the force<br/><br/>" +
+                                    "\\(r\\) = radius of curvature cause by the force<sup>[2]</sup><sup>[3]</sup><br/><br/>" +
                                     "Newton’s third law of motion states that every action has an equal and opposite reaction. Therefore, in this case, there must be an equal and opposite reaction force to the centripetal force which is called the centrifugal force.<br/></p>"},
-                    {"Centripetal and Centrifugal Forces", "Centripetal and Centrifugal Forces References", "<b><center>References</center></b><br>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "The Centripetal Force Requirement (2016). Retrieved from http://www.physicsclassroom.com/mmedia/circmot/cf.cfm<br><br>\n" +
-                            "Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Uniform Circular Motion. Physics A Basic Science  (4th ed., pp.107-110). Quezon City, Philippines: KEN Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Centripetal Force. University Physics with Modern Physics (2nd ed. , pp.220-275). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Centripetal Force. Physics (4th ed. , pp.222-226). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                    {"Centripetal and Centrifugal Forces", "Centripetal and Centrifugal Forces References", "<b><center>References</center></b><br>" +
+                            "<sup>[3]</sup>Verwiebe, F. L., Hooft, G. E., & Suchy, R. R. (1965). Uniform Circular Motion. Physics A Basic Science  (4th ed., pp.107-110). Quezon City, Philippines: " +
+                            "KEN Incorporated. Retrieved August 5, 2016<br><br>" +
+                            "<sup>[1]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from " +
+                            "https://play.google.com/store/apps<br><br>\n" +
+                            "<sup>[2]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n"},
                     {"Rotational Motion", "Rotational Motion Definition",
                             "<p><h2><b>Definition</b></h2>" +
                                     "Rotational Motion:<br/>" +
-                                    "\t•\tis a motion of an object in a circular path around a center (or point) of rotation<br/>"},
+                                    "\t•\tis a motion of an object in a circular path around a center (or point) of rotation<sup>[1]</sup><br/>"},
 //                    {"Rotational Motion", "Moment of Inertia",
 //                            "<h2><b>Moment of Inertia</b></h2>" +
 //                                    "The moment of inertia \\(I\\) is the measure of the object’s resistance to the change to its rotation. It is dependent to the object’s mass \\(m\\) and distance \\(r\\) of the mass further from the center of the rotational motion.<br/><br/>" +
@@ -837,13 +836,14 @@ public class DBHelper extends SQLiteOpenHelper {
                                     "The torque \\(\\tau \\) is the twisting force \\(F\\) that tends to cause the rotation of an object which is at position \\(r\\) from its axis of rotation. " +
                                     "The position is perpendicular to the force.<br/><br/>" +
                                     "Torque can be calculated using this formula:<br/>" +
-                                    "$$\\tau = r \\cdot F$$"},
-                    {"Rotational Motion", "Rotational Motion References", "<b><center>References</center></b><br> Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br><br>\n" +
-                            "Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br>`<br>\n" +
-                            "CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n" +
-                            "Walker, J. S. (2010). Work, Energy and Power. Physics (4th ed., pp.298). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved August 5, 2016<br><br>" +
-                            "Bauer, W., & Westfall, G. D. (2014). Rotation. University Physics with Modern Physics (2nd ed. , pp.291-312). 1121 Avenues of the Americas, New York, NY: McGraw-Hill. Retrieved August 5, 2016<br><br>" +
-                            "Wilson, J. D., & Buffa, J. A. (2003). Rotational Motion. Physics (4th ed. , p.251). Philippines: PEARSON EDUCATION South Asia PTE LTD. Retrieved August 5, 2016"},
+                                    "$$\\tau = r \\cdot F$$<sup>[2]</sup><sup>[3]</sup><sup>[4]</sup>"},
+                    {"Rotational Motion", "Rotational Motion References", "<b><center>References</center></b><br>" +
+                            "<sup>[1]</sup>Walker, J. S. (2010). Work, Energy and Power. Physics (4th ed., pp.298). 1900 E. Lake Avenue, Glennew, IL 60025: Pearson Education Incorporated. Retrieved" +
+                            " August 5, 2016<br><br>" +
+                            "<sup>[2]</sup>Paul Cotarlea (2014). Learn Physics (Version 1.0.6) [Mobile Application Software]. Retrieved from https://play.google" +
+                            ".com/store/apps<br><br>\n" +
+                            "<sup>[3]</sup>Geckonization (2016). Pocket Physics (Version 3.0.92) [Mobile Application Software]. Retrieved from https://play.google.com/store/apps<br>`<br>\n" +
+                            "<sup>[4]</sup>CK-12 Exploration Series | Physics Simulations (2016). Retrieved from http://interactives.ck12.org/simulations<br><br>\n"},
 //                    {"Rotational Motion", "Angular Momentum",
 //                            "<h2><b>Angular Momentum</b></h2>" +
 //                                    "The angular momentum \\(L\\) is the quantity of rotation of a body. It is dependent on the moment of inertia \\(I\\) of the object and its angular velocity vector \\(\\omega \\).<br/><br/>" +
@@ -2229,7 +2229,7 @@ public class DBHelper extends SQLiteOpenHelper {
                             "Acceleration", "Acceleration due to Gravity"},
                     //zxcv
                     //
-                    {"Vertical Velocity at a Certain Time", "Vertical Velocity","$$v_y = {(g \\cdot {t}) + v_{yi}}$$", "vi + (g * t)", "v_y", "v", "{{m} \\over {s}}", "Speed"},
+                    {"Vertical Velocity at a Certain Time", "Vertical Velocity","$$v_y = {(g \\cdot {t}) + v_{yi}}$$", "(g * t) + vi", "v_y", "v", "{{m} \\over {s}}", "Speed"},
                     {"Vertical Velocity at a Certain Time", "Initial Velocity along the y-axis", "$$v_{yi} = {v_y - (g \\cdot {t})}$$", "v - (g * t)","v_{yi}", "vi", "{{m} \\over {s}}", "Speed"},
                     {"Vertical Velocity at a Certain Time", "Time","$$t = {(v_y - v_{yi}) \\over g}$$", "(v - vi) / g", "{t}", "t", "{{s}}", "Duration"},
                     {"Vertical Velocity at a Certain Time", "Acceleration due to Gravity","$$g = {(v_y - v_{yi}) \\over {t}}$$", "(v - vi) / t", "g", "g", "{{m} \\over {s^2}}", "Acceleration",

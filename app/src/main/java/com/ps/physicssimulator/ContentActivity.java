@@ -28,11 +28,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -173,10 +171,6 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                     .split("\\|");
 
 
-            final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setIndeterminate(true);
-            progressDialog.show();
-
             for (int l = 0; l < contentText.length; l++) {
                 SpannableString text = new SpannableString(contentText[l]);
 
@@ -195,14 +189,22 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                 sectionContainer.addView(txtContent);
 
                 if(l == contentText.length-1) {
-                    txtContent.setWebViewClient(new WebViewClient() {
+                    final ProgressDialog dialog = new ProgressDialog(ContentActivity.this);
+                    dialog.setCancelable(false);
+                    dialog.setMessage("Loading Lessons...");
+                    dialog.setIndeterminate(true);
+                    dialog.show();
+                    new Thread(new Runnable() {
                         @Override
-                        public void onPageFinished(WebView view, String url) {
-                            progressDialog.dismiss();
-                            ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_content);
-                            scrollView.setVisibility(View.VISIBLE);
+                        public void run() {
+                            try {
+                                Thread.sleep(3000);
+                            } catch (Exception e) {
+
+                            }
+                            dialog.dismiss();
                         }
-                    });
+                    }).start();
                     Cursor examples = this.getContentResolver().query(
                             DataContract.ExampleEntry.buildExampleSection(sections.getString(
                                     sections.getColumnIndex(DataContract.SectionEntry.COLUMN_NAME))),
@@ -336,6 +338,8 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         YouTubePlayerFragment youtubePlayer = (YouTubePlayerFragment)getFragmentManager()
                 .findFragmentById(R.id.youtube_fragment);
         youtubePlayer.initialize(youTubeAPIKey, this);
+
+
 
     }
 

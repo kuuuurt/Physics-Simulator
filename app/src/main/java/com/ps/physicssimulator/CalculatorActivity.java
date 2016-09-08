@@ -1,5 +1,6 @@
 package com.ps.physicssimulator;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -721,7 +722,23 @@ public class CalculatorActivity extends AppCompatActivity {
         page.post(new Runnable() {
             @Override
             public void run() {
-                page.smoothScrollTo(0, linearLayout.getBottom());
+                final ProgressDialog dialog = new ProgressDialog(CalculatorActivity.this);
+                dialog.setCancelable(false);
+                dialog.setMessage("Calculating...");
+                dialog.setIndeterminate(true);
+                dialog.show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(500);
+                        } catch (Exception e) {
+
+                        }
+                        dialog.dismiss();
+                        page.smoothScrollTo(0, linearLayout.getBottom());
+                    }
+                }).start();
             }
         });
     }

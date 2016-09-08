@@ -1,2 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/io.github.kexanie.library/MathView/0.0.6/jars/libs/chunk-templates-3.0.1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="ac60a044eb6c8a3f77498b3ffaf9ada21df4c1bf">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/chunk-templates-3.0.1_020b704bcffda1067e1e4059e9a0b53a733c6c1d.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="787871951412550519b0222aba3c9df4cea49875">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-24.1.1_b9280d0aaefab35352af9de205d417d381081746.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/libs/jscience.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="3cf905c5fef64bc14c1ff3cdf19a2181e9069d1c">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/jscience_027665f9d35d35558feec09e6a495dd3517fef05.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support.test/exposed-instrumentation-api-publish/0.5/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="905f3e63973d47fedf2d945fa31d8c0f0c98816e">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/com.android.support.test-exposed-instrumentation-api-publish-0.5_0c9671ab4a04f638121cfbef8f3e0870b2ff5957.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support.test.espresso/espresso-contrib/2.2.2/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="56576e0b04aae5e9756bf6e791f74b5e3850ac03">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/com.android.support.test.espresso-espresso-contrib-2.2.2_16b965cc01af9e8ad0b79d73b2ff36a85aa9437c.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/.gradle/caches/modules-2/files-2.1/javax.annotation/javax.annotation-api/1.2/479c1e06db31c432330183f5cae684163f186146/javax.annotation-api-1.2.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="479c1e06db31c432330183f5cae684163f186146">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/javax.annotation-api-1.2_19de26c3d479a1b3a1a2557a1db9fea856b7336b.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="42a25dc3219429f0e5d060061f71acb49bf010a0">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/hamcrest-core-1.3_b04f711cb49cbf7939ab25ff1d05a56f7c001687.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/.gradle/caches/modules-2/files-2.1/net.objecthunter/exp4j/0.4.7/f910cbcc730e5bd5e7699d8c14905c07c6c12d47/exp4j-0.4.7.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="f910cbcc730e5bd5e7699d8c14905c07c6c12d47">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/exp4j-0.4.7_7f0c9bd81eb5c7ab57c27d59fed92d902488fac1.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support.test.espresso/espresso-core/2.2.2/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="d115b0e9e1501135fe91254ba884fcbd83d374c0">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/com.android.support.test.espresso-espresso-core-2.2.2_9cdd095d80b316d23e78556649b971900a12b3ff.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-library/1.3/4785a3c21320980282f9f33d0d1264a69040538f/hamcrest-library-1.3.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="4785a3c21320980282f9f33d0d1264a69040538f">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/hamcrest-library-1.3_2ebbaa3ca9b60ac0456ea96420e36da31870c10b.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="c936c1bd42f0c018c18920c7bec619ef056b24f8">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-24.1.1_ffb2d85a4de8efbfdefaa44415b7c0691fa2a39f.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support.test/runner/0.5/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="796f9229948e907471c5595fbe94655ccf03ff73">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/com.android.support.test-runner-0.5_8974e7eadeb7957a703db5af44450c6790ffeee2.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="2973d150c0dc1fefe998f834810d68f278ea58ec">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/junit-4.12_4cbb31f9a796531b3a849a18677a276e08e78326.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/2.0.1/516c03b21d50a644d538de0f0369c620989cd8f0/jsr305-2.0.1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="516c03b21d50a644d538de0f0369c620989cd8f0">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/jsr305-2.0.1_fe50c5f24ef5b8f98575d8984ee50a61840ba987.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="6975da39a7040257bd51d21a231b76c915872d38">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/javax.inject-1_1204d413acfda31e1a7f74da1cdfb6f74b34eb8f.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/libs/YouTubeAndroidPlayerApi.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="3c4f96ff493456651cc7bdb0b47e10eb25545a16">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/YouTubeAndroidPlayerApi_d50e75b2cc37cfb94a27a5f74d59b4f1cdf84449.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support.test.espresso/espresso-idling-resource/2.2.2/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="a890ee8445927649d9ed50f625a315d8758688be">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/com.android.support.test.espresso-espresso-idling-resource-2.2.2_496973c7d16a825b187e3ceba32b7c79c3d94867.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="6d7d803871e3203465f71a163e7af104f807b446">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-24.1.1_f31f6e47ada6143ba3564a8cba374256078082d8.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.1.1/jars/libs/internal_impl-24.1.1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="f78c2f395cb096f9dc1dc07e729922b8fcd3c4f5">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/internal_impl-24.1.1_9afd7947f39c25e7937d1a6ebea1873af382a7f3.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support.test/rules/0.5/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="7e11799d8a26bfa5d48acafe012ee5545b9bf468">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/com.android.support.test-rules-0.5_4d7d5eb510caed1dcdcb2aee3a7b55bcd0e50032.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support/design/24.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="e195bd694d5389acfba27ff4fdfa64c4c65b2c05">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/com.android.support-design-24.1.1_313783ce33f24fc5a0e8f750226325874a7d667b.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-integration/1.3/5de0c73fef18917cd85d0ab70bb23818685e4dfd/hamcrest-integration-1.3.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="5de0c73fef18917cd85d0ab70bb23818685e4dfd">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/hamcrest-integration-1.3_d28cddd950a722a454e02d88ca51850989686916.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="f62e763609f65e47dc6c498760a4accf02776788">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-24.1.1_e5bc056a50140fbc29e5a128ab132d38005d3875.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/io.github.kexanie.library/MathView/0.0.6/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="28ebb0f0c104d23021519707b27d6b86039772b6">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/io.github.kexanie.library-MathView-0.0.6_99091638ff04db5ea3116b5ce2f3985d342a41d4.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/.gradle/caches/modules-2/files-2.1/com.google.android.apps.common.testing.accessibility.framework/accessibility-test-framework/2.0/7837f95bdff9f797003454247fef02b78d49ae75/accessibility-test-framework-2.0.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="7837f95bdff9f797003454247fef02b78d49ae75">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/accessibility-test-framework-2.0_90e3306ddad6e4659c07456e3aa24f33abebab27.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/libs/unity-classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="c789e274b309ed403302526f413d651c1731bbca">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/unity-classes_9465f131e778f2133b46cb1d5b65120697286190.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-sdk/extras/android/m2repository/com/android/support/support-annotations/24.1.1/support-annotations-24.1.1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="3af19f153122737b372622fa6c81dd11a1c6b999">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/support-annotations-24.1.1_09c6d6ef2a95e6b0d6f8046231180491610bd995.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.github.amlcurran.showcaseview/library/5.4.3/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="a06b0579dbe59192ef460e3de04657720925d05b">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/com.github.amlcurran.showcaseview-library-5.4.3_ebfc0284096613206d51048f88de9e2bb9fa770c.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.1.1/67ff45d9ae02e583d0f9b3432a5ebbe05c30c966/javawriter-2.1.1.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="67ff45d9ae02e583d0f9b3432a5ebbe05c30c966">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/androidTest/debug/javawriter-2.1.1_4ff7d40dc5846348156ea2612f3c67a584ab9c03.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="1256c10604bb098490eab070d76754ac5ceab35c">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-24.1.1_c9700213a9630f59fcee5c78fe53f0c8a65e931d.jar" />
+    </item>
+    <item
+        jar="/home/qwerasdf/android-apps/PhysicsSimulator/app/libs/unit-ri-0.9.jar"
+        jumboMode="false"
+        revision="24.0.0"
+        sha1="ae8642267911950e7a4b4f02c0df1e8d80d3a492">
+        <dex dex="/home/qwerasdf/android-apps/PhysicsSimulator/app/build/intermediates/pre-dexed/debug/unit-ri-0.9_abc1ac31df20f5045c0b2209c1898156656888bc.jar" />
+    </item>
+
+</items>
