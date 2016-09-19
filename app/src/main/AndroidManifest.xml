@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.ps.physicssimulator">
 
@@ -59,7 +60,7 @@
             android:name=".ContentActivity"
             android:label="@string/title_activity_content"
             android:parentActivityName=".LessonActivity"
-            android:screenOrientation="portrait"
+
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

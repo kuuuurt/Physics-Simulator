@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -58,6 +59,8 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
     FloatingActionButton fab;
     int textSize;
     List<MathView> contents;
+    ProgressDialog dialog;
+    boolean ytFullscreen;
 
     private final String youTubeAPIKey = "AIzaSyC5kxF8pAU4jQqc2XUoa-58CH08C8BOvCY";
     private static final int RQS_ErrorDialog = 1;
@@ -72,6 +75,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
 
     @Override
     public boolean onSupportNavigateUp() {
+
         audioPlayer.pause();
         audioPlayer.seekTo(0);
         audioPlayer.release();
@@ -80,16 +84,21 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
 
     @Override
     public void onBackPressed() {
-        audioPlayer.pause();
-        audioPlayer.seekTo(0);
-        audioPlayer.release();
-        super.onBackPressed();
+        if(ytFullscreen){
+            ytFullscreen = false;
+            mPlayer.setFullscreen(false);
+        } else {
+            audioPlayer.pause();
+            audioPlayer.seekTo(0);
+            audioPlayer.release();
+            super.onBackPressed();
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ytFullscreen = false;
         setContentView(R.layout.activity_content);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -97,7 +106,8 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(audioPlayer.isPlaying()){
+                if(audioPlayer.isPlaying())
+                {
                     fab.setImageResource(R.drawable.ic_play);
                     audioPlayer.pause();
                     Snackbar.make(view, "Audio lesson paused", Snackbar.LENGTH_LONG)
@@ -139,6 +149,11 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
     }
 
     public void renderLesson(){
+        dialog = new ProgressDialog(ContentActivity.this);
+        dialog.setCancelable(false);
+        dialog.setMessage("Loading Lessons...");
+        dialog.setIndeterminate(true);
+        dialog.show();
         mContentContainer = (LinearLayout) findViewById(R.id.content_container);
 
         contents = new ArrayList<>();
@@ -189,11 +204,8 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                 sectionContainer.addView(txtContent);
 
                 if(l == contentText.length-1) {
-                    final ProgressDialog dialog = new ProgressDialog(ContentActivity.this);
-                    dialog.setCancelable(false);
-                    dialog.setMessage("Loading Lessons...");
-                    dialog.setIndeterminate(true);
-                    dialog.show();
+
+
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -202,7 +214,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                             } catch (Exception e) {
 
                             }
-                            dialog.dismiss();
+                            dialog.dismiss()        ;
                         }
                     }).start();
                     Cursor examples = this.getContentResolver().query(
@@ -338,6 +350,8 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         YouTubePlayerFragment youtubePlayer = (YouTubePlayerFragment)getFragmentManager()
                 .findFragmentById(R.id.youtube_fragment);
         youtubePlayer.initialize(youTubeAPIKey, this);
+        youtubePlayer.setRetainInstance(true);
+
 
 
 
@@ -516,9 +530,25 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
     }
 
     @Override
-    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, final YouTubePlayer youTubePlayer, boolean b) {
         if (!b) {
+            youTubePlayer.setFullscreenControlFlags(YouTubePlayer.FULLSCREEN_FLAG_CONTROL_ORIENTATION);
+            youTubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
+                @Override
+                public void onFullscreen(boolean b) {
+                if(!b){
+                    if(dialog.isShowing()){
+                        dialog.dismiss();
+                    }
+                    ContentActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    ytFullscreen = false;
+                } else {
+                    ytFullscreen = true;
+                }
+                }
+            });
             youTubePlayer.cueVideo(video);
+            mPlayer = youTubePlayer;
         }
 
     }
