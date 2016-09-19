@@ -10,175 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3719038e-d94d-4dca-b181-dddd4d411d61" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/0171467e0e54aaa479b7817091b06588" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/059e7d511f5f4a1498f289d6f83f53d5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/05d73121446dcd34e8d9e6527c7a0d1e" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/0ee376d09a795de4dabc57647c9eaf14" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/0ee376d09a795de4dabc57647c9eaf14.resource.split0" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/0ee376d09a795de4dabc57647c9eaf14.resource.split1" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/0ee376d09a795de4dabc57647c9eaf14.resource.split2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/0ee376d09a795de4dabc57647c9eaf14.resource.split3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/0ee376d09a795de4dabc57647c9eaf14.resource.split4" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/15d206b7f58eb7f4d81f6aad2cf03eb8" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/1752ce38455b00c408572c86665b19ed" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/1893a4b25867f944a86381a436b97d79" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/1893a4b25867f944a86381a436b97d79.resource" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/19c51f4ed159d704f8eef2b101b0ae2a" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/1cd2d476a70cac4478365f13855298cc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/50e76ed505bc93d49a29e2690226dd4d" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/5e33ffa019a9c77418d2878e88f19326" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/616ee0f7ab22099429087814228a8f8c" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/65b83c6109eb6d648afb637af9b1ee58" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/698537e71de603c4ca7a50b8b0115b47" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/750db03a2f9dfa24684ee5738972fe02" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/7a5232ed4bb1fc64c9d59810a08e19aa" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/7faa8c60eb3ae3e479a83a98e9ee175f" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/7fd76a817f1445643860a89beaf7450a" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/878bfb2aa8993db40aa6f95dd6cb948f" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/8b2da729fa37bf045aaed48957936a00" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/913541f2cf0d16e41b000c27f7212144" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/UnityEngine.dll.mdb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/a92176250798d2442a446bf92bd82aea" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/c632acc3bd9876d4180c26134bbe5d23" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/de3b901afb8aa5e4581814f82d6e6029" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/f44de2f933c77be469903b9fdaefff9b" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/f55006f6a32a71b45a114b4680c1e575" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/f6b13bbb24c340043a0eb64acd20b8d6" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/fcb928df4bd203c49bb3bc8a0933eae3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level11" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets10.assets.split0" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets10.assets.split1" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets10.assets.split2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets10.assets.split3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets10.assets.split4" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets10.assets.split5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets11.assets.split0" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets11.assets.split1" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets11.assets.split2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets11.assets.split3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets11.assets.split4" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets11.assets.split5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets3.assets.split0" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets3.assets.split1" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets3.assets.split2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets3.assets.split3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets3.assets.split4" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets3.assets.split5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets4.assets" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets5.assets.split2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets5.assets.split3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets5.assets.split4" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets5.assets.split5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets6.assets.split0" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets6.assets.split1" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets6.assets.split2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets6.assets.split3" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets6.assets.split4" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets6.assets.split5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split17" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split18" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split19" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split20" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split21" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets9.assets" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/splash.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/0000000000000000f000000000000000" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/0000000000000000f000000000000000" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/Assembly-CSharp.dll" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/Assembly-CSharp.dll" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/Assembly-UnityScript-firstpass.dll" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/Assembly-UnityScript-firstpass.dll" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/Mono.Security.dll" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/Mono.Security.dll" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/System.Core.dll" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/System.Core.dll" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/System.dll" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/System.dll" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/UnityEngine.Networking.dll" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/UnityEngine.Networking.dll" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/UnityEngine.UI.dll" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/UnityEngine.UI.dll" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/UnityEngine.dll" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/UnityEngine.dll" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/mscorlib.dll" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Managed/mscorlib.dll" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Resources/unity_builtin_extra" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/Resources/unity_builtin_extra" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/b096cdcc424be46e983a275f7b744e2e" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/b096cdcc424be46e983a275f7b744e2e" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/globalgamemanagers" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/globalgamemanagers" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/globalgamemanagers.assets" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/globalgamemanagers.assets" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level0" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level1" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level10" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level10" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level2" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level3" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level4" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level5" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level5" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level6" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level6" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level7" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level7" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level8" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level8" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level9" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/level9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets0.assets.split0" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets0.assets.split0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets0.assets.split1" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets0.assets.split1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets0.assets.split2" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets0.assets.split2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets0.assets.split3" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets0.assets.split3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets0.assets.split4" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets0.assets.split4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split0" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split1" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split2" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split3" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split4" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split5" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets1.assets.split5" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split0" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split2" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split3" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split4" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split5" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split5" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets5.assets.split0" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets5.assets.split0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets5.assets.split1" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets5.assets.split1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split0" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split2" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split3" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split4" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split5" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split5" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split0" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split0" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split1" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split10" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split10" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split11" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split11" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split12" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split12" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split13" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split13" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split14" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split14" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split15" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split15" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split16" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split16" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split2" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split2" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split3" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split4" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split4" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split5" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split5" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split6" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split6" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split7" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split7" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split8" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split8" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split9" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets8.assets.split9" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/unity default resources" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/unity default resources" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_24_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_24_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_24_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_24_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/design_24_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/design_24_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/espresso_contrib_2_2_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/espresso_contrib_2_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/espresso_core_2_2_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/espresso_core_2_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/espresso_idling_resource_2_2_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/espresso_idling_resource_2_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/exposed_instrumentation_api_publish_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/exposed_instrumentation_api_publish_0_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_24_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_24_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/rules_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/rules_0_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/runner_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/runner_0_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_annotations_24_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_24_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_24_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_24_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_24_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_24_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/settings.xml" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split1" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets2.assets.split1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split1" afterPath="$PROJECT_DIR$/app/src/main/assets/bin/Data/sharedassets7.assets.split1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/ps/physicssimulator/ContentActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/ps/physicssimulator/ContentActivity.java" />
     </list>
     <ignored path="PhysicsSimulator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -219,11 +52,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContentActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ContentActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ps/physicssimulator/ContentActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4623656">
-              <caret line="542" column="66" selection-start-line="542" selection-start-column="66" selection-end-line="542" selection-end-column="66" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="558" column="0" selection-start-line="558" selection-start-column="0" selection-end-line="558" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -239,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.06666667">
+              <caret line="55" column="62" selection-start-line="55" selection-start-column="62" selection-end-line="55" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -1975,8 +1808,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/src/main/java/com/ps/physicssimulator/CalculatorActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/ps/physicssimulator/ContentActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -2020,6 +1853,44 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="PhysicsSimulator" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhysicsSimulator" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhysicsSimulator" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhysicsSimulator" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="manifests" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -2307,6 +2178,13 @@
       <option name="number" value="Default" />
       <updated>1474176810717</updated>
     </task>
+    <task id="LOCAL-00001" summary="Fixed YouTube Player errors in Orientation Changes">
+      <created>1474294443178</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1474294443179</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2352,6 +2230,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixed YouTube Player errors in Orientation Changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed YouTube Player errors in Orientation Changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -2592,8 +2474,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ps/physicssimulator/ContentActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4623656">
-          <caret line="542" column="66" selection-start-line="542" selection-start-column="66" selection-end-line="542" selection-end-column="66" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="558" column="0" selection-start-line="558" selection-start-column="0" selection-end-line="558" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2602,14 +2484,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -2626,6 +2500,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="247" column="58" selection-start-line="247" selection-start-column="47" selection-end-line="247" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06666667">
+          <caret line="55" column="62" selection-start-line="55" selection-start-column="62" selection-end-line="55" selection-end-column="62" />
           <folding />
         </state>
       </provider>

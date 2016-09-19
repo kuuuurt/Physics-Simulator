@@ -60,7 +60,7 @@
             android:name=".ContentActivity"
             android:label="@string/title_activity_content"
             android:parentActivityName=".LessonActivity"
-
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
