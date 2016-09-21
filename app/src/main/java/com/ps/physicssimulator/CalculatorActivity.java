@@ -53,6 +53,8 @@ import javax.measure.unit.NonSI;
 
 import io.github.kexanie.library.MathView;
 
+
+
 public class CalculatorActivity extends AppCompatActivity {
 
     ExpressionBuilderModified expressionBuilder;
@@ -72,6 +74,10 @@ public class CalculatorActivity extends AppCompatActivity {
     boolean fromConstants, fromLesson;
     Bundle b;
 
+    //Constants
+    List<String> constValues;
+    Button btnChangeConstants;
+
     //Spinners
     Spinner spnChapters, spnLessons, spnFormula, spnVar;
 
@@ -86,6 +92,11 @@ public class CalculatorActivity extends AppCompatActivity {
     int finalUnitIndex;
     String finalType;
     ConversionUtils finalConversionHelper;
+
+    //ActivityForResult
+    int CONSTANT = 0;
+    long constantId = 0;
+    int constantIndex = 0;
 
 
     //Instuctions
@@ -109,6 +120,37 @@ public class CalculatorActivity extends AppCompatActivity {
         return super.getSupportParentActivityIntent();
     }
 
+    /**
+     * Dispatch incoming result to the correct fragment.
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CONSTANT){
+            Cursor a = CalculatorActivity.this.getContentResolver().query(
+                    DataContract.ConstantEntry.buildConstantUri(constantId),
+                    null,
+                    null,
+                    null,
+                    null);
+            a.moveToFirst();
+            String val = a.getString(a.getColumnIndex(DataContract.ConstantEntry.COLUMN_CURRENT));
+
+            String value = a.getString(a.getColumnIndex(DataContract.ConstantEntry.COLUMN_SYMBOL)) + " = " + val + values[constantIndex][1];
+            constValues.clear();
+            constValues.add(value);
+            values[constantIndex][2] = val;
+            renderConstants();
+            substituteValues();
+        }
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,7 +169,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final Button btnChangeConstants = (Button) findViewById(R.id.button_change_constants);
+        btnChangeConstants = (Button) findViewById(R.id.button_change_constants);
 
         final SimpleCursorAdapter chaptersAdap = setSpinnerAdapter(
                 this.getContentResolver().query(DataContract.ChapterEntry.CONTENT_URI,
@@ -265,15 +307,14 @@ public class CalculatorActivity extends AppCompatActivity {
                                                 TableLayout inputContainer = (TableLayout)findViewById(R.id.table_input);
                                                 inputContainer.removeViews(1, inputContainer.getChildCount()-1);
 
-                                                LinearLayout constContainer = (LinearLayout) findViewById(R.id.const_container);
-                                                constContainer.removeAllViews();
+
 
                                                 inputFields.clear();
                                                 inputSpinners.clear();
                                                 conversionHelpers.clear();
                                                 inputConversion.clear();
 
-                                                List<String> constValues = new ArrayList<>();
+                                                constValues = new ArrayList<>();
 
                                                 for (int k = 0; k < c.getCount(); k++) {
 
@@ -313,7 +354,12 @@ public class CalculatorActivity extends AppCompatActivity {
                                                                             .replace("}", "")
                                                                             .replace("\\", "")
                                                                     + ")");
+
+                                                            //
+//                                                            txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
                                                             txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+
                                                             txtInput.setFilters(new InputFilter[] {new InputFilter.LengthFilter(15)});
                                                             txtInput.setEms(10);
                                                             txtInput.addTextChangedListener(createTextWatcher(symbolC, varCtr));
@@ -393,8 +439,10 @@ public class CalculatorActivity extends AppCompatActivity {
 
 
                                                         } else {
+                                                            constantId = const_id;
+                                                            constantIndex = varCtr;
                                                             Cursor a = CalculatorActivity.this.getContentResolver().query(
-                                                                    DataContract.ConstantEntry.buildConstantUri(const_id),
+                                                                    DataContract.ConstantEntry.buildConstantUri(constantId),
                                                                     null,
                                                                     null,
                                                                     null,
@@ -465,35 +513,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                     btnCalc.setEnabled(true);
                                                 else
                                                     btnCalc.setEnabled(false);
-                                                TextView txt = (TextView) findViewById(R.id.text_constants_label);
-
-                                                if (constValues.size() > 0) {
-                                                    txt.setVisibility(View.VISIBLE);
-                                                    for (int j = 0; j < constValues.size(); j++) {
-                                                        MathView txtConstant = new MathView(CalculatorActivity.this, null);
-                                                        txtConstant.setLayoutParams(new LinearLayout.LayoutParams(
-                                                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                                                ViewGroup.LayoutParams.WRAP_CONTENT
-                                                        ));
-                                                        txtConstant.setEngine(MathView.Engine.KATEX);
-                                                        String constants = "";
-                                                        try {
-                                                            for (int o = 0; o < 5; o++) {
-                                                                constants += constValues.get(j++) + ", ";
-                                                            }
-                                                        } catch (Exception ex) {
-
-                                                        }
-                                                        txtConstant.setText("$$" + constants.substring(0, constants.length() - 2) + "$$");
-                                                        constContainer.addView(txtConstant);
-                                                    }
-                                                    btnChangeConstants.setVisibility(View.VISIBLE);
-
-                                                } else {
-                                                    txt.setVisibility(View.GONE);
-                                                    constContainer.removeAllViews();
-                                                    btnChangeConstants.setVisibility(View.GONE);
-                                                }
+                                                renderConstants();
 
                                                 substituteValues();
                                                 expression = expressionBuilder.build();
@@ -550,7 +570,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 for (String[] value : values) {
                     intent.putExtra("value"+ i++, value);
                 }
-                startActivity(intent);
+                startActivityForResult(intent, CONSTANT);
             }
         });
 
@@ -566,6 +586,40 @@ public class CalculatorActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void renderConstants(){
+        TextView txt = (TextView) findViewById(R.id.text_constants_label);
+        LinearLayout constContainer = (LinearLayout) findViewById(R.id.const_container);
+        constContainer.removeAllViews();
+
+        if (constValues.size() > 0) {
+            txt.setVisibility(View.VISIBLE);
+            for (int j = 0; j < constValues.size(); j++) {
+                MathView txtConstant = new MathView(CalculatorActivity.this, null);
+                txtConstant.setLayoutParams(new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                ));
+                txtConstant.setEngine(MathView.Engine.KATEX);
+                String constants = "";
+                try {
+                    for (int o = 0; o < 5; o++) {
+                        constants += constValues.get(j++) + ", ";
+                    }
+                } catch (Exception ex) {
+
+                }
+                txtConstant.setText("$$" + constants.substring(0, constants.length() - 2) + "$$");
+                constContainer.addView(txtConstant);
+            }
+            btnChangeConstants.setVisibility(View.VISIBLE);
+
+        } else {
+            txt.setVisibility(View.GONE);
+            constContainer.removeAllViews();
+            btnChangeConstants.setVisibility(View.GONE);
+        }
     }
 
 

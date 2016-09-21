@@ -33,6 +33,24 @@ public class ConstantActivity extends AppCompatActivity implements LoaderManager
         return backIntent;
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = getSupportParentActivityIntent();
+        setResult(RESULT_OK, intent);
+
+        super.finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
