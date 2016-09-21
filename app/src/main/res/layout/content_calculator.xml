@@ -310,6 +310,21 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            style="?android:horizontalDivider"
+            android:text="Final Answer"
+            android:visibility="gone"
+            android:id="@+id/text_final_label"/>
+
+        <io.github.kexanie.library.MathView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            auto:engine="KaTeX"
+            android:id="@+id/text_final_answer"/>
+
 
     </LinearLayout>
 

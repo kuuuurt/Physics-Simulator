@@ -647,6 +647,7 @@ public class CalculatorActivity extends AppCompatActivity {
         Object[] steps = results.toArray();
         MathView txtSub = (MathView) findViewById(R.id.text_substitute);
         String formulaDisplay = txtSub.getText();
+        String finalAnswer = "";
         final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.steps_container);
         final LinearLayout linearLayoutCon = (LinearLayout) findViewById(R.id.steps_container_conversion);
         linearLayoutCon.setVisibility(View.GONE);
@@ -681,9 +682,10 @@ public class CalculatorActivity extends AppCompatActivity {
                     if (formulaDisplay.contains("{" + strForm + "}")) {
                         formulaDisplay = formulaDisplay.replace("{" + strForm + "}", strForm);
                     }
-                    if(i == steps.length-1)
+                    if(i == steps.length-1) {
+                        finalAnswer = result[0] + finalUnit;
                         formulaDisplay = formulaDisplay.replace(strForm, result[0] + finalUnit);
-                    else
+                    } else
                         formulaDisplay = formulaDisplay.replace(strForm, result[0] + result[1]);
                     txtStep.setText(formulaDisplay);
                     linearLayout.addView(txtStep);
@@ -758,6 +760,11 @@ public class CalculatorActivity extends AppCompatActivity {
                                         formulaDisplay = formulaDisplay.replace("{" + strForm2 + "}", strForm2);
                                     }
 
+                                    finalAnswer = resultCon[0] + resultCon[1].replace("µ", "\\mu ").replace(NonSI
+                                                    .DEGREE_ANGLE
+                                                    .toString(),
+                                            "^{{\\circ}}");
+
                                     formulaDisplay = formulaDisplay.replace(strForm2, resultCon[0] + resultCon[1].replace("µ", "\\mu ").replace(NonSI
                                             .DEGREE_ANGLE
                                             .toString(),
@@ -782,6 +789,12 @@ public class CalculatorActivity extends AppCompatActivity {
             }
 
         }
+        TextView txtFinal = (TextView)findViewById(R.id.text_final_label);
+        txtFinal.setVisibility(View.VISIBLE);
+
+        MathView txtAnswer = (MathView)findViewById(R.id.text_final_answer);
+        txtAnswer.setText("$$" + finalAnswer + "$$");
+
         page.post(new Runnable() {
             @Override
             public void run() {
