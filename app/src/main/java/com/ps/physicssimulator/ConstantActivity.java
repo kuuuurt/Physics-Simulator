@@ -50,17 +50,18 @@ public class ConstantActivity extends AppCompatActivity implements LoaderManager
         if(intent != null){
             formulaName = intent.getStringExtra("formulaName");
             Bundle b = intent.getExtras();
-            backIntent = super.getSupportParentActivityIntent();
-            backIntent.putExtra("currentChapter", b.getInt("currentChapter"));
-            backIntent.putExtra("currentLesson", b.getInt("currentLesson"));
-            backIntent.putExtra("currentFormula", b.getInt("currentFormula"));
-            backIntent.putExtra("currentVariable", b.getInt("currentVariable"));
-            backIntent.putExtra("formulaName", b.getString("formulaName"));
-            backIntent.putExtra("size", b.getInt("size"));
-            int size = intent.getIntExtra("size", 0);
-            for (int i = 0; i < size; i++) {
-                backIntent.putExtra("value" + i, b.getStringArray("value" + i));
-            }
+            backIntent = intent;
+//            backIntent = super.getSupportParentActivityIntent();
+//            backIntent.putExtra("currentChapter", b.getInt("currentChapter"));
+//            backIntent.putExtra("currentLesson", b.getInt("currentLesson"));
+//            backIntent.putExtra("currentFormula", b.getInt("currentFormula"));
+//            backIntent.putExtra("currentVariable", b.getInt("currentVariable"));
+//            backIntent.putExtra("formulaName", b.getString("formulaName"));
+//            backIntent.putExtra("size", b.getInt("size"));
+//            int size = intent.getIntExtra("size", 0);
+//            for (int i = 0; i < size; i++) {
+//                backIntent.putExtra("value" + i, b.getStringArray("value" + i));
+//            }
         }
 
         setTitle("Constants in " + formulaName);

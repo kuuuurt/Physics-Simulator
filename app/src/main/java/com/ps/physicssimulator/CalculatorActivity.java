@@ -375,6 +375,9 @@ public class CalculatorActivity extends AppCompatActivity {
                                                                     }
                                                                 }
 
+
+
+
                                                                 @Override
                                                                 public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -497,6 +500,12 @@ public class CalculatorActivity extends AppCompatActivity {
                                                 fromConstants = false;
                                                 fromLesson = false;
 
+                                                TextView conversionHeader = (TextView)findViewById(R.id.text_conversion_divider);
+                                                conversionHeader.setVisibility(View.GONE);
+
+                                                LinearLayout linearLayoutCon = (LinearLayout)findViewById(R.id.steps_container_conversion);
+                                                linearLayoutCon.removeAllViews();
+
                                                 if(isFirstTime()){
                                                     startInstructions();
                                                 }
@@ -585,7 +594,7 @@ public class CalculatorActivity extends AppCompatActivity {
         MathView txtSub = (MathView) findViewById(R.id.text_substitute);
         String formulaDisplay = txtSub.getText();
         final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.steps_container);
-        LinearLayout linearLayoutCon = (LinearLayout) findViewById(R.id.steps_container_conversion);
+        final LinearLayout linearLayoutCon = (LinearLayout) findViewById(R.id.steps_container_conversion);
         linearLayoutCon.setVisibility(View.GONE);
 
         TextView conversionHeader = (TextView)findViewById(R.id.text_conversion_divider);
@@ -731,12 +740,12 @@ public class CalculatorActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(1000);
                         } catch (Exception e) {
 
                         }
                         dialog.dismiss();
-                        page.smoothScrollTo(0, linearLayout.getBottom());
+                        page.smoothScrollTo(0, linearLayoutCon.getBottom());
                     }
                 }).start();
             }
@@ -746,8 +755,8 @@ public class CalculatorActivity extends AppCompatActivity {
     private void removeEditTextFocus() {
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.input_container);
         try {
-            ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
-                    linearLayout.getFocusedChild().getWindowToken(),0);
+            ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
         } catch (Exception ex) {}
     }
 

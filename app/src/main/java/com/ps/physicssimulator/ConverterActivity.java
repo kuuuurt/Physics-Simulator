@@ -1,5 +1,6 @@
 package com.ps.physicssimulator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,13 @@ public class ConverterActivity extends AppCompatActivity {
 
     ConversionUtils conversionHelper = new ConversionUtils();
 
+    private static Intent backIntent;
+
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        return backIntent;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,8 @@ public class ConverterActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        backIntent = getIntent();
 
         expressionBuilder = new ExpressionBuilderModified("x * (y / z)");
         expressionBuilder.variable("x");
