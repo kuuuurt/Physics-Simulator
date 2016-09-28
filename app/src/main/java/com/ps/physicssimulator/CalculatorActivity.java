@@ -355,11 +355,11 @@ public class CalculatorActivity extends AppCompatActivity {
                                                                             .replace("\\", "")
                                                                     + ")");
 
-                                                            //
-//                                                            txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-
-                                                            txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
-
+                                                            if(Boolean.parseBoolean(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_ALLOW_NEGATIVE)))) {
+                                                                txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+                                                            } else {
+                                                                txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                                                            }
                                                             txtInput.setFilters(new InputFilter[] {new InputFilter.LengthFilter(15)});
                                                             txtInput.setEms(10);
                                                             txtInput.addTextChangedListener(createTextWatcher(symbolC, varCtr));

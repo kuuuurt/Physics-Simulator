@@ -189,6 +189,7 @@ public class DataContract   {
         public static final String COLUMN_CONSTANT_KEY = "constant_id";
         public static final String COLUMN_UNIT = "unit";
         public static final String COLUMN_UNIT_TYPE = "unit_type";
+        public static final String COLUMN_ALLOW_NEGATIVE = "allow_negative";
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" +
