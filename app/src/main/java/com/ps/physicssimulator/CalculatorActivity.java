@@ -355,7 +355,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                                             .replace("\\", "")
                                                                     + ")");
 
-                                                            if(Boolean.parseBoolean(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_ALLOW_NEGATIVE)))) {
+                                                            if(c.getString(c.getColumnIndex(DataContract.VariableEntry.COLUMN_ALLOW_NEGATIVE)).equals("1")) {
                                                                 txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
                                                             } else {
                                                                 txtInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
@@ -592,6 +592,7 @@ public class CalculatorActivity extends AppCompatActivity {
         TextView txt = (TextView) findViewById(R.id.text_constants_label);
         LinearLayout constContainer = (LinearLayout) findViewById(R.id.const_container);
         constContainer.removeAllViews();
+
 
         if (constValues.size() > 0) {
             txt.setVisibility(View.VISIBLE);

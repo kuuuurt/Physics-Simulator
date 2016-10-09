@@ -16,6 +16,7 @@ public class UnityPlayerActivity extends Activity
 	protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
 	private String mLesson;
 	private String mChapter;
+	private String sceneName;
 
 	@Override
 	public void onBackPressed() {
@@ -39,13 +40,17 @@ public class UnityPlayerActivity extends Activity
 		if(intent != null){
 			mLesson = intent.getStringExtra("Lesson");
 			mChapter = intent.getStringExtra("Chapter");
+			sceneName = mLesson;
+			if(mLesson.equals("Work") || mLesson.equals("Power")){
+				sceneName = "WorkPower";
+			}
 		}
 
 
 
 		mUnityPlayer = new UnityPlayer(this);
 
-		mUnityPlayer.UnitySendMessage("Application", "LoadScene", mLesson);
+		mUnityPlayer.UnitySendMessage("Application", "LoadScene", sceneName);
 		setContentView(mUnityPlayer);
 		mUnityPlayer.requestFocus();
 	}
