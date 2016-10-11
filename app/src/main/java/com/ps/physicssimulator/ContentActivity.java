@@ -75,9 +75,6 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
 
     @Override
     public boolean onSupportNavigateUp() {
-
-        audioPlayer.pause();
-        audioPlayer.seekTo(0);
         audioPlayer.release();
         return super.onSupportNavigateUp();
     }
@@ -88,8 +85,6 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
             ytFullscreen = false;
             mPlayer.setFullscreen(false);
         } else {
-            audioPlayer.pause();
-            audioPlayer.seekTo(0);
             audioPlayer.release();
             super.onBackPressed();
         }
@@ -106,8 +101,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(audioPlayer.isPlaying())
-                {
+                if(audioPlayer.isPlaying()) {
                     fab.setImageResource(R.drawable.ic_play);
                     audioPlayer.pause();
                     Snackbar.make(view, "Audio lesson paused", Snackbar.LENGTH_LONG)
@@ -154,6 +148,30 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         dialog.setMessage("Loading Lessons...");
         dialog.setIndeterminate(true);
         dialog.show();
+
+        Cursor lesson = this.getContentResolver().query(
+                DataContract.LessonEntry.buildLessonTitle(mLesson),
+                null, null, null, null
+        );
+        lesson.moveToFirst();
+
+        audioPlayer = MediaPlayer.create(this, getResources().getIdentifier(
+                lesson.getString(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_AUDIO)),
+                "raw", this.getPackageName()));
+
+        audioPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mediaPlayer.seekTo(0);
+                ///Toast.makeText(ContentActivity.this, "The audio lesson has finished playing.", Toast.LENGTH_SHORT).show();
+                fab.setImageResource(R.drawable.ic_play);
+            }
+        });
+
+        if(autoplay){
+            fab.setImageResource(R.drawable.ic_pause);
+        }
+
         mContentContainer = (LinearLayout) findViewById(R.id.content_container);
 
         contents = new ArrayList<>();
@@ -214,7 +232,10 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                             } catch (Exception e) {
 
                             }
-                            dialog.dismiss()        ;
+                            dialog.dismiss();
+                            if(autoplay){
+                                audioPlayer.start();
+                            }
                         }
                     }).start();
                     Cursor examples = this.getContentResolver().query(
@@ -296,17 +317,6 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
         }
         changeFontSize();
 
-
-
-
-
-        Cursor lesson = this.getContentResolver().query(
-                DataContract.LessonEntry.buildLessonTitle(mLesson),
-                null, null, null, null
-        );
-
-
-        lesson.moveToFirst();
         video = lesson.getString(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_VIDEO_ID));
         hasCalc = lesson.getInt(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_HAS_CALCULATOR));
         Button btnSimulate = (Button)findViewById(R.id.button_simulate);
@@ -314,8 +324,10 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
             btnSimulate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    audioPlayer.pause();
-                    audioPlayer.seekTo(0);
+                    if(audioPlayer.isPlaying()) {
+                        audioPlayer.pause();
+                        audioPlayer.seekTo(0);
+                    }
                     fab.setImageResource(R.drawable.ic_play);
                     Intent intent = new Intent(ContentActivity.this, UnityPlayerActivity.class);
                     intent.putExtra("Lesson", mLesson);
@@ -327,23 +339,9 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
             btnSimulate.setVisibility(View.GONE);
         }
 
-        audioPlayer = MediaPlayer.create(this, getResources().getIdentifier(
-                lesson.getString(lesson.getColumnIndex(DataContract.LessonEntry.COLUMN_AUDIO)),
-                "raw", this.getPackageName()));
 
-        audioPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                mediaPlayer.seekTo(0);
-                ///Toast.makeText(ContentActivity.this, "The audio lesson has finished playing.", Toast.LENGTH_SHORT).show();
-                fab.setImageResource(R.drawable.ic_play);
-            }
-        });
 
-        if(autoplay){
-            audioPlayer.start();
-            fab.setImageResource(R.drawable.ic_pause);
-        }
+
 
 
 
