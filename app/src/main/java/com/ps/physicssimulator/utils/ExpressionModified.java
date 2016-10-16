@@ -313,7 +313,7 @@ public class ExpressionModified {
 
                 double[] args = new double[numArguments];
                 for (int j = numArguments - 1; j >= 0; j--) {
-                    args[j] = Double.parseDouble(output.pop());
+                    args[j] = Double.parseDouble(output.pop().replace("(", "").replace(")",""));
                     String arg = String.valueOf(args[j]);
                     if(args[j] % 1 == 0)
                         arg = arg.replace(".0", "");
