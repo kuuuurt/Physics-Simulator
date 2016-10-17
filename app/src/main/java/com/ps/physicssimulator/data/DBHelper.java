@@ -2187,8 +2187,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Average Velocity", "Average Velocity", "$$v_{av} = {(x_f - x_i) \\over (t_f - t_i)}$$", "(xf - xi) / (tf - ti)", "v_{av}", "vel", "{{m} \\over {s}}", "Speed", "1"},
                     {"Average Velocity", "Initial Position", "$$x_i = {x_f - (v_{av} \\cdot (t_f - t_i))}$$", "xf - (vel * (tf - ti))", "x_i", "xi", "{{m}}", "Length", "1"},
                     {"Average Velocity", "Final Position",  "$$x_f = {(v_{av} \\cdot (t_f - t_i)) + x_i}$$", "(vel * (tf - ti)) + xi", "x_f", "xf", "{{m}}", "Length", "1"},
-                    {"Average Velocity", "Initial Time","$$t_i = {t_f - {(x_f - x_i) \\over v_{av}}}$$", "tf - ((xf - xi) / vel)", "t_i","ti", "{{s}}", "Duration", "1"},
-                    {"Average Velocity", "Final Time", "$$t_f = {{(x_f - x_i) \\over v_{av}} + t_i}$$", "((xf - xi) / vel) + ti", "t_f", "tf", "{{s}}", "Duration", "1"},
+                    {"Average Velocity", "Initial Time","$$t_i = {t_f - {(x_f - x_i) \\over v_{av}}}$$", "tf - ((xf - xi) / vel)", "t_i","ti", "{{s}}", "Duration", "0"},
+                    {"Average Velocity", "Final Time", "$$t_f = {{(x_f - x_i) \\over v_{av}} + t_i}$$", "((xf - xi) / vel) + ti", "t_f", "tf", "{{s}}", "Duration", "0"},
                     //
                     {"Acceleration", "Acceleration", "$$a = {(v_f - v_i) \\over {t}}$$", "(vf - vi) / t", "a", "a", "{{m} \\over {s^2}}", "Acceleration", "1"},
                     {"Acceleration", "Initial Velocity", "$$v_i = {v_f - (a \\cdot {t})}$$", "vf - (a * t)", "v_i", "vi", "{{m} \\over {s}}", "Speed", "1"},
@@ -2198,8 +2198,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     {"Average Acceleration", "Average Acceleration", "$$a_{av} = {(v_f - v_i) \\over (t_f - t_i)}$$", "(vf - vi) / (tf - ti)","a_{av}", "a", "{{m} \\over {s^2}}", "Acceleration", "1"},
                     {"Average Acceleration", "Initial Velocity", "$$v_i = {v_f - (a_{av} \\cdot (t_f - t_i))}$$", "vf - (a * (tf - ti))","v_i", "vi", "{{m} \\over {s}}", "Speed", "1"},
                     {"Average Acceleration", "Final Velocity", "$$v_f = {(a_{av} \\cdot (t_f - t_i)) + v_i}$$", "(a * (tf - ti)) + vi","v_f", "vf", "{{m} \\over {s}}", "Speed", "1"},
-                    {"Average Acceleration", "Initial Time", "$$t_i = {t_f - {(v_f - v_i) \\over a_{av}}}$$", "tf - ((vf - vi) / a)","t_i","ti", "{{s}}", "Duration", "1"},
-                    {"Average Acceleration", "Final Time", "$$t_f = {{(v_f - v_i) \\over a_{av}} + t_i}$$", "((vf - vi) / a) + ti","t_f", "tf", "{{s}}", "Duration", "1"},
+                    {"Average Acceleration", "Initial Time", "$$t_i = {t_f - {(v_f - v_i) \\over a_{av}}}$$", "tf - ((vf - vi) / a)","t_i","ti", "{{s}}", "Duration", "0"},
+                    {"Average Acceleration", "Final Time", "$$t_f = {{(v_f - v_i) \\over a_{av}} + t_i}$$", "((vf - vi) / a) + ti","t_f", "tf", "{{s}}", "Duration", "0"},
                     //
                     {"Free-fall Velocity", "Velocity", "$$v_y = {u + (g \\cdot {t})}$$", "u + (g * t)","v_y", "v", "{{m} \\over {s}}", "Speed", "0"},
                     {"Free-fall Velocity", "Initial Velocity", "$$u = {v_y - (g \\cdot {t})}$$", "v - (g * t)", "u", "u", "{{m} \\over {s}}", "Speed", "0"},
@@ -2386,7 +2386,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     values.put(DataContract.VariableEntry.COLUMN_CONSTANT_KEY, -1);
                 }
 
-                c.close();
+                 c.close();
                 long asdf = database.insert(DataContract.VariableEntry.TABLE_NAME, null, values);
                 String test = "";
             }

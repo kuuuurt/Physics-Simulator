@@ -665,7 +665,8 @@ public class CalculatorActivity extends AppCompatActivity {
             txtStep.setEngine(MathView.Engine.KATEX);
             try {
                 String result[] = (String[]) steps[i];
-                if (Double.parseDouble(result[0].toString().replace("(", "").replace(")", "")) % 1 == 0) {
+                double val =Double.parseDouble(result[0].toString().replace("(", "").replace(")", ""));
+                if (val % 1 == 0 && !((Math.abs(val) > Math.pow(10, 6)) || Math.abs(val) < Math.pow(10, -3))) {
                     result[0] = result[0].replace(".0", "");
                 }
 
@@ -740,7 +741,8 @@ public class CalculatorActivity extends AppCompatActivity {
                             txtConversion.setEngine(MathView.Engine.KATEX);
                             try {
                                 String resultCon[] = (String[]) steps[k];
-                                if (Double.parseDouble(resultCon[0].toString().replace("(", "").replace(")","")) % 1 == 0) {
+                                val =Double.parseDouble(result[0].toString().replace("(", "").replace(")", ""));
+                                if (val % 1 == 0 && !((Math.abs(val) > Math.pow(10, 6)) || Math.abs(val) < Math.pow(10, -3))) {
                                     resultCon[0] = resultCon[0].replace(".0", "");
                                 }
 

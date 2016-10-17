@@ -243,12 +243,12 @@ public class ExpressionModified {
                             steps.add(new String[]{strRightArg, rightUnit, formula});
                         }
                     }
-                    int pow = (int)(Math.log(leftArg)/Math.log(10));
+                    int pow = (int)(Math.log(Math.abs(leftArg))/Math.log(10));
                     if((Math.abs(leftArg) > 0) && (Math.abs(leftArg) < Math.pow(10,-3)) || pow > 6) {
                         strLeftArg = "(" + new DecimalFormat("#.####E0").format(leftArg) + ")";
                     }
 
-                    pow = (int)(Math.log(rightArg)/Math.log(10));
+                    pow = (int)(Math.log(Math.abs(rightArg))/Math.log(10));
 
                     if((Math.abs(rightArg) > 0) && (Math.abs(rightArg) < Math.pow(10,-3)) || pow > 6) {
                         strRightArg = "(" + new DecimalFormat("#.####E0").format(rightArg) + ")";
@@ -270,7 +270,7 @@ public class ExpressionModified {
                     if(unit.equals("{{\\circ}}"))
                         unit = "^{{\\circ}}";
 
-                    int power = (int)(Math.log(res)/Math.log(10));
+                    int power = (int)(Math.log(Math.abs(res))/Math.log(10));
 
                     String strRes = df.format(res);
                     if((Math.abs(res) > 0) && (Math.abs(res) < Math.pow(10,-3)) || power > 6) {
@@ -315,7 +315,9 @@ public class ExpressionModified {
                 for (int j = numArguments - 1; j >= 0; j--) {
                     args[j] = Double.parseDouble(output.pop().replace("(", "").replace(")",""));
                     String arg = String.valueOf(args[j]);
-                    if(args[j] % 1 == 0)
+                    if(((Math.abs(args[j]) > Math.pow(10, 6)) || (Math.abs(args[j]) < Math.pow(10,-3))))
+                        arg = "(" + arg + ")";
+                    else if(args[j] % 1 == 0)
                         arg = arg.replace(".0", "");
                     formula += arg;
                     unit = output.pop();
@@ -341,6 +343,11 @@ public class ExpressionModified {
                     else if(function.equals("sin") || function.equals("cos"))
                         unit = "";
                     formula += ")";
+                }
+
+                int pow = (int)(Math.log(Math.abs(res))/Math.log(10));
+                if((Math.abs(res) > 0) && (Math.abs(res) < Math.pow(10,-3)) || pow > 6) {
+                    strRes = "(" + new DecimalFormat("#.####E0").format(res) + ")";
                 }
 
 
