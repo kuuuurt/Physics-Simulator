@@ -663,10 +663,15 @@ public class CalculatorActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT
             ));
             txtStep.setEngine(MathView.Engine.KATEX);
+//            txtStep.config("MathJax.Hub.Config({\n"+
+//                    "  CommonHTML: { linebreaks: { width: \"80%\" } },\n"+
+//                    "  \"HTML-CSS\": { linebreaks: { width: \"80%\" } },\n"+
+//                    "         SVG: { linebreaks: { width: \"80%\" } }\n"+
+//                    "});");
             try {
                 String result[] = (String[]) steps[i];
                 double val =Double.parseDouble(result[0].toString().replace("(", "").replace(")", ""));
-                if (val % 1 == 0 && !((Math.abs(val) > Math.pow(10, 6)) || Math.abs(val) < Math.pow(10, -3))) {
+                if (val % 1 == 0 && !((Math.abs(val) >= Math.pow(10, 7)) || Math.abs(val) < Math.pow(10, -3))) {
                     result[0] = result[0].replace(".0", "");
                 }
 
@@ -729,6 +734,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                 ViewGroup.LayoutParams.WRAP_CONTENT
                         ));
                         txtSubs.setEngine(MathView.Engine.KATEX);
+//                        txtSubs.setText("$$\\small" + result[0] + result[1] + " = " + formulaDisplay + "$$");
                         txtSubs.setText("$$" + result[0] + result[1] + " = " + formulaDisplay + "$$");
                         linearLayoutCon.addView(txtSubs);
 
@@ -742,7 +748,7 @@ public class CalculatorActivity extends AppCompatActivity {
                             try {
                                 String resultCon[] = (String[]) steps[k];
                                 val =Double.parseDouble(result[0].toString().replace("(", "").replace(")", ""));
-                                if (val % 1 == 0 && !((Math.abs(val) > Math.pow(10, 6)) || Math.abs(val) < Math.pow(10, -3))) {
+                                if (val % 1 == 0 && !((Math.abs(val) >= Math.pow(10, 7)) || Math.abs(val) < Math.pow(10, -3))) {
                                     resultCon[0] = resultCon[0].replace(".0", "");
                                 }
 
@@ -810,7 +816,7 @@ public class CalculatorActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         try {
-                            Thread.sleep(1000);
+                            Thread.sleep(2000);
                         } catch (Exception e) {
 
                         }
@@ -944,6 +950,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
     public void substituteValues() {
         String formula = currentFormula;
+//        formula = formula.replace("*", "\\cdot").replace("$$", "");
         formula = formula.replace("*", "\\cdot");
         formula = formula.replace("/", "\\over");
         formula = formula.replace("\\pi", String.valueOf(new DecimalFormat("#.####").format(Math.PI)));
@@ -956,6 +963,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
         MathView txtSub = (MathView) findViewById(R.id.text_substitute);
         txtSub.setText(formula);
+//        txtSub.setText("$$\\small " + formula + "$$");
         //txtSub.setText("$$" + variableToSolve + " = {" + formula + "}$$");
     }
 
@@ -1028,7 +1036,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
         instructions.add("Select the chapter for the formula here.");
         instructions.add("You can also change the lessons.");
-        instructions.add("Next, select the formula you want to solve.");
+        instructions.add("Here, you can see the different formulas used in the selected lesson.");
         instructions.add("If you want to solve for a different variable, you can change it here,");
         instructions.add("Enter the values of the variables here.");
         instructions.add("You can change the unit of the value you entered.");

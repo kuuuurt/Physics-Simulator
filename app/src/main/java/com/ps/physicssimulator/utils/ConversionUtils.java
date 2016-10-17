@@ -38,6 +38,7 @@ import static javax.measure.unit.SI.PICO;
 import static javax.measure.unit.SI.RADIAN;
 import static javax.measure.unit.SI.SECOND;
 import static javax.measure.unit.SI.TERA;
+import static javax.measure.unit.SI.WATT;
 import static javax.measure.unit.SI.YOCTO;
 import static javax.measure.unit.SI.YOTTA;
 import static javax.measure.unit.SI.ZEPTO;
@@ -48,8 +49,8 @@ import static javax.measure.unit.SI.ZETTA;
 public class ConversionUtils {
     public static String types[] = {"Mass", "Length", "Duration", "Speed", "Acceleration", "Force", "Work", "Energy", "Power", "Angle Degrees", "Angle Radians", "Momentum", "Torque"};
     public static String typesConverter[] = {"Mass", "Length", "Duration", "Speed", "Acceleration", "Force", "Work", "Energy", "Power", "Angle", "Momentum", "Torque"};
-    public static Unit<?> baseUnits[] = {GRAM, METRE, null, null, null, null, null, null, null, null, null, null, null, null, null};
-    public static String keywords[] = {"grams", "meters", null, null, null, null, null, null, null, null, null, null, null, null, null};
+    public static Unit<?> baseUnits[] = {GRAM, METRE, null, null, null, NEWTON, JOULE, JOULE, WATT, null, null, null, null, null, null};
+    public static String keywords[] = {"grams", "meters", null, null, null, "newtons", "joules", "joules", "watts", null, null, null, null, null, null};
     public int defaultUnit;
     public List<Double> unitFactor = new ArrayList<>();
     public List<String> units = new ArrayList<>();
@@ -59,7 +60,7 @@ public class ConversionUtils {
         unitSymbol.clear();
         unitFactor.clear();
         units.clear();
-        if (type.equals("Mass") || type.equals("Length")) {
+        if (type.equals("Mass") || type.equals("Length") || type.equals("Force") || type.equals("Work") || type.equals("Energy") || type.equals("Power")) {
             unitSymbol.add("{" + YOCTO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 24));
             unitSymbol.add("{" + ZEPTO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 21));
             unitSymbol.add("{" + ATTO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 18));

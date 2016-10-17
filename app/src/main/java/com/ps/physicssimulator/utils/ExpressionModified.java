@@ -203,25 +203,40 @@ public class ExpressionModified {
                     }
 //                    String strRightArg = String.valueOf(rightArg);
                     String strRightArg = df.format(rightArg);
-                    boolean exp = false;
-                    for(int z = -4; z > -25; z--){
-                        exp = rightArg == Math.pow(10, z);
-                        if(exp)
-                            break;
-                    }
 
-                    if(rightArg % 1 == 0  || exp){
-                        strRightArg = strRightArg.replace(".0" , "");
-                    }
                     //String strLeftArg = String.valueOf(leftArg);
                     String strLeftArg = df.format(leftArg);
-                    for(int z = -3; z > -25; z--){
-                        exp = leftArg == Math.pow(10, z);
-                        if(exp)
-                            break;
+
+                    boolean exp = false;
+                    int pow = (int)(Math.log(Math.abs(leftArg))/Math.log(10));
+                    if((Math.abs(leftArg) > 0) && ((Math.abs(leftArg) < Math.pow(10,-3)) || (Math.abs(leftArg) >= Math.pow(10,7)))) {
+                        strLeftArg = "(" + new DecimalFormat("#.####E0").format(leftArg) + ")";
+                        exp = false;
+                        for(int z = 50; z > -50; z--){
+                            exp = leftArg == Math.pow(10, z);
+                            if(exp) {
+                                strLeftArg = strLeftArg.replace(".0", "");
+                                break;
+                            }
+                        }
+                    } else if(leftArg % 1 == 0){
+                        strLeftArg = strLeftArg.replace(".0", "");
                     }
-                    if(leftArg % 1 == 0 || exp){
-                        strLeftArg = strLeftArg.replace(".0" , "");
+
+                    pow = (int)(Math.log(Math.abs(rightArg))/Math.log(10));
+
+                    if((Math.abs(rightArg) > 0) && ((Math.abs(rightArg) < Math.pow(10,-3)) || (Math.abs(rightArg) >= Math.pow(10,7)))) {
+                        strRightArg = "(" + new DecimalFormat("#.####E0").format(rightArg) + ")";
+                        exp = false;
+                        for(int z = 50; z > -50; z--){
+                            exp = rightArg == Math.pow(10, z);
+                            if(exp) {
+                                strRightArg = strRightArg.replace(".0", "");
+                                break;
+                            }
+                        }
+                    } else if(rightArg % 1 == 0){
+                        strRightArg = strRightArg.replace(".0", "");
                     }
 
                     if(!leftUnit.equals(rightUnit) && !(rightUnit.equals("") || leftUnit.equals("")) ) {
@@ -243,16 +258,7 @@ public class ExpressionModified {
                             steps.add(new String[]{strRightArg, rightUnit, formula});
                         }
                     }
-                    int pow = (int)(Math.log(Math.abs(leftArg))/Math.log(10));
-                    if((Math.abs(leftArg) > 0) && (Math.abs(leftArg) < Math.pow(10,-3)) || pow > 6) {
-                        strLeftArg = "(" + new DecimalFormat("#.####E0").format(leftArg) + ")";
-                    }
 
-                    pow = (int)(Math.log(Math.abs(rightArg))/Math.log(10));
-
-                    if((Math.abs(rightArg) > 0) && (Math.abs(rightArg) < Math.pow(10,-3)) || pow > 6) {
-                        strRightArg = "(" + new DecimalFormat("#.####E0").format(rightArg) + ")";
-                    }
 
 
                     String formula = getFormula(strLeftArg,leftUnit,getFormattedSymbol(op.getOperator().getSymbol()),strRightArg,rightUnit);
@@ -273,15 +279,22 @@ public class ExpressionModified {
                     int power = (int)(Math.log(Math.abs(res))/Math.log(10));
 
                     String strRes = df.format(res);
-                    if((Math.abs(res) > 0) && (Math.abs(res) < Math.pow(10,-3)) || power > 6) {
+
+                    if((Math.abs(res) > 0) && ((Math.abs(res) < Math.pow(10,-3)) || (Math.abs(res) >= Math.pow(10,7)))) {
                         strRes = "(" + new DecimalFormat("#.####E0").format(res) + ")";
-                        boolean test = false;
-                        for(int z = -3; z > -25; z--){
-                            exp = rightArg == Math.pow(10, z);
-                            if(exp)
+                        exp = false;
+                        for(int z = 50; z > -50; z--){
+                            exp = res == Math.pow(10, z);
+                            if(exp) {
+                                strRes = strRes.replace(".0", "");
                                 break;
+                            }
                         }
+                    }else if(res % 1 == 0){
+                        strRes = strRes.replace(".0", "");
                     }
+
+
 
                     steps.add(new String[]{strRes, unit, formula} );
 
@@ -315,10 +328,20 @@ public class ExpressionModified {
                 for (int j = numArguments - 1; j >= 0; j--) {
                     args[j] = Double.parseDouble(output.pop().replace("(", "").replace(")",""));
                     String arg = String.valueOf(args[j]);
-                    if(((Math.abs(args[j]) > Math.pow(10, 6)) || (Math.abs(args[j]) < Math.pow(10,-3))))
+                    if((Math.abs(args[j]) > 0) && ((Math.abs(args[j]) < Math.pow(10,-3)) || (Math.abs(args[j]) >= Math.pow(10,7)))) {
                         arg = "(" + arg + ")";
-                    else if(args[j] % 1 == 0)
+                        boolean exp = false;
+                        for(int z = 50; z > -50; z--){
+                            exp = args[j] == Math.pow(10, z);
+                            if(exp) {
+                                arg = arg.replace(".0", "");
+                                break;
+                            }
+                        }
+
+                    }else if(args[j] % 1 == 0) {
                         arg = arg.replace(".0", "");
+                    }
                     formula += arg;
                     unit = output.pop();
                     formula += unit;
@@ -345,9 +368,22 @@ public class ExpressionModified {
                     formula += ")";
                 }
 
+
                 int pow = (int)(Math.log(Math.abs(res))/Math.log(10));
-                if((Math.abs(res) > 0) && (Math.abs(res) < Math.pow(10,-3)) || pow > 6) {
+
+
+                if((Math.abs(res) > 0) && ((Math.abs(res) < Math.pow(10,-3)) || (Math.abs(res) >= Math.pow(10,7)))) {
                     strRes = "(" + new DecimalFormat("#.####E0").format(res) + ")";
+                    boolean exp = false;
+                    for(int z = 50; z > -50; z--){
+                        exp = res == Math.pow(10, z);
+                        if(res % 1 == 0 || exp) {
+                            strRes = strRes.replace(".0", "");
+                            break;
+                        }
+                    }
+                }else if(res % 1 == 0){
+                    strRes = strRes.replace(".0", "");
                 }
 
 
@@ -363,8 +399,18 @@ public class ExpressionModified {
         if(!convertUnit(finalUnit).equals(finalUnit)) {
             String strRes = df.format(finalRes);
             int power = (int)(Math.log(finalRes)/Math.log(10));
-            if((Math.abs(finalRes) > 0) && (Math.abs(finalRes) < Math.pow(10,-3)) || power > 6) {
+            if((Math.abs(finalRes) > 0) && ((Math.abs(finalRes) < Math.pow(10,-3)) || (Math.abs(finalRes) >= Math.pow(10,7)))) {
                 strRes = "(" + new DecimalFormat("#.####E0").format(finalRes) + ")";
+                boolean exp = false;
+                for(int z = 50; z > -50; z--){
+                    exp = finalRes == Math.pow(10, z);
+                    if(finalRes % 1 == 0 || exp) {
+                        strRes = strRes.replace(".0", "");
+                        break;
+                    }
+                }
+            }else if(finalRes % 1 == 0){
+                strRes = strRes.replace(".0", "");
             }
             finalFormula = strRes +finalUnit;
             finalUnit = convertUnit(finalUnit);
