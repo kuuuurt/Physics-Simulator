@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -434,10 +435,24 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
 
         getMenuInflater().inflate(R.menu.menu_content, menu);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            final Snackbar sb = Snackbar.make(fab, "No text to search...", Snackbar.LENGTH_INDEFINITE);
             final SearchView search = (SearchView) menu.findItem(R.id.action_search).setActionView(new SearchView(this)).getActionView();
+            MenuItemCompat.setOnActionExpandListener(menu.findItem(R.id.action_search), new MenuItemCompat.OnActionExpandListener() {
+                @Override
+                public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                    sb.show();
+                    return true;
+                }
 
+                @Override
+                public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                    sb.dismiss();
+                    return true;
+                }
+            });
             search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
+                int count = 0;
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     return false;
@@ -449,9 +464,29 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                     if (!query.equals("")) {
                         View mathView = null;
                         int i = 0;
+                        count = 0;
                         while ((mathView = mContentContainer.findViewWithTag("content" + i++)) != null) {
                             MathView txtContent = (MathView) mathView;
+                            ((MathView) mathView).setFindListener(new WebView.FindListener() {
+                                @Override
+                                public void onFindResultReceived(int i, int i1, boolean b) {
+                                    if(b) {
+                                        count += i1;
+                                    }
+                                    if (count == 0) {
+                                        sb.setText("Found no results!");
+                                    } else if (count == 1){
+                                        sb.setText("Found 1 result!");
+                                    } else {
+                                        sb.setText("Found " + count + " results!");
+                                    }
+                                }
+                            });
+
+
                             txtContent.findAllAsync(query);
+
+
 
                             try {
                                 Method m = WebView.class.getMethod("setFindIsUp", Boolean.TYPE);
@@ -459,7 +494,17 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
                             } catch (Throwable ignored) {
                             }
                         }
+
                         return true;
+                    } else {
+                        View mathView = null;
+                        int i = 0;
+
+                        while ((mathView = mContentContainer.findViewWithTag("content" + i++)) != null) {
+                            MathView txtContent = (MathView) mathView;
+                            txtContent.clearMatches();
+                        }
+                        sb.setText("No text to search...");
                     }
 
                     return false;

@@ -60,7 +60,7 @@ public class ConversionUtils {
         unitSymbol.clear();
         unitFactor.clear();
         units.clear();
-        if (type.equals("Mass") || type.equals("Length") || type.equals("Force") || type.equals("Work") || type.equals("Energy") || type.equals("Power")) {
+        if (type.equals("Length") || type.equals("Force") || type.equals("Work") || type.equals("Energy") || type.equals("Power")) {
             unitSymbol.add("{" + YOCTO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 24));
             unitSymbol.add("{" + ZEPTO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 21));
             unitSymbol.add("{" + ATTO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 18));
@@ -96,14 +96,58 @@ public class ConversionUtils {
             units.add("Deka" + stringUnit + " (" + DEKA(unit) + ")");
             units.add("Hecto" + stringUnit + " (" + HECTO(unit) + ")");
             units.add("Kilo" + stringUnit + " (" + KILO(unit) + ")");
-            units.add("Giga" + stringUnit + " (" + GIGA(unit) + ")");
             units.add("Mega" + stringUnit + " (" + MEGA(unit) + ")");
+            units.add("Giga" + stringUnit + " (" + GIGA(unit) + ")");
             units.add("Tera" + stringUnit + " (" + TERA(unit) + ")");
             units.add("Peta" + stringUnit + " (" + PETA(unit) + ")");
             units.add("Exa" + stringUnit + " (" + EXA(unit) + ")");
             units.add("Zetta" + stringUnit + " (" + ZETTA(unit) + ")");
             units.add("Yotta" + stringUnit + " (" + YOTTA(unit) + ")");
             defaultUnit = 10;
+        } else if(type.equals("Mass")){
+            unitSymbol.add("{" + YOCTO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 27));
+            unitSymbol.add("{" + ZEPTO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 24));
+            unitSymbol.add("{" + ATTO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 21));
+            unitSymbol.add("{" + FEMTO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 18));
+            unitSymbol.add("{" + PICO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 15));
+            unitSymbol.add("{" + NANO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 12));
+            unitSymbol.add("{" + MICRO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 9));
+            unitSymbol.add("{" + MILLI(unit).toString() + "}"); unitFactor.add(Math.pow(10, 6));
+            unitSymbol.add("{" + CENTI(unit).toString() + "}"); unitFactor.add(Math.pow(10, 5));
+            unitSymbol.add("{" + DECI(unit).toString() + "}"); unitFactor.add(Math.pow(10, 4));
+            unitSymbol.add("{" + unit.toString() + "}"); unitFactor.add(Math.pow(10, 3));
+            unitSymbol.add("{" + DEKA(unit).toString() + "}"); unitFactor.add(Math.pow(10, 2));
+            unitSymbol.add("{" + HECTO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 1));
+            unitSymbol.add("{" + KILO(unit).toString() + "}"); unitFactor.add(Math.pow(10, 0));
+            unitSymbol.add("{" + MEGA(unit).toString() + "}"); unitFactor.add(Math.pow(10, 3));
+            unitSymbol.add("{" + GIGA(unit).toString() + "}"); unitFactor.add(Math.pow(10, 6));
+            unitSymbol.add("{" + TERA(unit).toString() + "}"); unitFactor.add(Math.pow(10, 9));
+            unitSymbol.add("{" + PETA(unit).toString() + "}"); unitFactor.add(Math.pow(10, 12));
+            unitSymbol.add("{" + EXA(unit).toString() + "}"); unitFactor.add(Math.pow(10, 15));
+            unitSymbol.add("{" + ZETTA(unit).toString() + "}"); unitFactor.add(Math.pow(10, 18));
+            unitSymbol.add("{" + YOTTA(unit).toString() + "}"); unitFactor.add(Math.pow(10, 21));
+            units.add("Yocto" + stringUnit + " (" + YOCTO(unit) + ")");
+            units.add("Zepto" + stringUnit + " (" + ZEPTO(unit) + ")");
+            units.add("Atto" + stringUnit + " (" + ATTO(unit) + ")");
+            units.add("Femto" + stringUnit + " (" + FEMTO(unit) + ")");
+            units.add("Pico" + stringUnit + " (" + PICO(unit) + ")");
+            units.add("Nano" + stringUnit + " (" + NANO(unit) + ")");
+            units.add("Micro" + stringUnit + " (" + MICRO(unit) + ")");
+            units.add("Milli" + stringUnit + " (" + MILLI(unit) + ")");
+            units.add("Centi" + stringUnit + " (" + CENTI(unit) + ")");
+            units.add("Deci" + stringUnit + " (" + DECI(unit) + ")");
+            units.add(stringUnit.substring(0, 1).toUpperCase() + stringUnit.substring(1) +  " (" + unit + ")");
+            units.add("Deka" + stringUnit + " (" + DEKA(unit) + ")");
+            units.add("Hecto" + stringUnit + " (" + HECTO(unit) + ")");
+            units.add("Kilo" + stringUnit + " (" + KILO(unit) + ")");
+            units.add("Mega" + stringUnit + " (" + MEGA(GRAM) + ")");
+            units.add("Giga" + stringUnit + " (" + GIGA(unit) + ")");
+            units.add("Tera" + stringUnit + " (" + TERA(unit) + ")");
+            units.add("Peta" + stringUnit + " (" + PETA(unit) + ")");
+            units.add("Exa" + stringUnit + " (" + EXA(unit) + ")");
+            units.add("Zetta" + stringUnit + " (" + ZETTA(unit) + ")");
+            units.add("Yotta" + stringUnit + " (" + YOTTA(unit) + ")");
+            defaultUnit = 13;
         } else if (type.equals("Duration")) {
             unitSymbol.add("{" + NANO(SECOND).toString() + "}"); unitFactor.add(Math.pow(10, 9));
             unitSymbol.add("{" + MILLI(SECOND).toString() + "}"); unitFactor.add(Math.pow(10, 3));

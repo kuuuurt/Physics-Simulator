@@ -468,7 +468,9 @@ public class CalculatorActivity extends AppCompatActivity {
                                                         Spinner spnFinal = (Spinner)findViewById(R.id.spinner_unit_final);
                                                         finalConversionHelper = new ConversionUtils();
                                                         int typeIndex = ConversionUtils.findTypeIndex(finalType);
-                                                        if(typeIndex > 0) {
+                                                        if(typeIndex > -1) {
+                                                            ((TextView)findViewById(R.id.text_final_unit_label)).setVisibility(View.VISIBLE);
+                                                            spnFinal.setVisibility(View.VISIBLE);
                                                             List<String> units = finalConversionHelper.populateLists(finalType, finalConversionHelper.baseUnits[typeIndex],
                                                                     finalConversionHelper.keywords[typeIndex]);
                                                             spnFinal.setAdapter(new ArrayAdapter<String>(CalculatorActivity.this, android.R.layout.simple_spinner_dropdown_item, units));
@@ -485,6 +487,7 @@ public class CalculatorActivity extends AppCompatActivity {
                                                                 }
                                                             });
                                                         } else {
+                                                            ((TextView)findViewById(R.id.text_final_unit_label)).setVisibility(View.GONE);
                                                             spnFinal.setVisibility(View.GONE);
                                                         }
 
