@@ -67,6 +67,7 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
     private static final int RQS_ErrorDialog = 1;
     private YouTubePlayer mPlayer;
     private String video;
+    private int currentTime = 0, prevTime = 0;
 
     @Override
     public Intent getSupportParentActivityIntent() {
@@ -92,8 +93,21 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("currentTime", currentTime);
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            currentTime = savedInstanceState.getInt("currentTime");
+        } catch(Exception e){
+
+        }
+        prevTime = currentTime;
         ytFullscreen = false;
         setContentView(R.layout.activity_content);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -574,23 +588,59 @@ public class ContentActivity extends AppCompatActivity implements YouTubePlayer.
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, final YouTubePlayer youTubePlayer, boolean b) {
+
         if (!b) {
             youTubePlayer.setFullscreenControlFlags(YouTubePlayer.FULLSCREEN_FLAG_CONTROL_ORIENTATION);
             youTubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
                 @Override
                 public void onFullscreen(boolean b) {
-                if(!b){
-                    if(dialog.isShowing()){
-                        dialog.dismiss();
+                    currentTime = mPlayer.getCurrentTimeMillis();
+                    if(!b){
+                        if(dialog.isShowing()){
+                            dialog.dismiss();
+                        }
+                        ContentActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        ytFullscreen = false;
+                    } else {
+                        ytFullscreen = true;
                     }
-                    ContentActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    ytFullscreen = false;
-                } else {
-                    ytFullscreen = true;
-                }
+                    youTubePlayer.seekToMillis(prevTime);
                 }
             });
             youTubePlayer.cueVideo(video);
+            youTubePlayer.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
+
+                @Override
+                public void onLoading() {
+
+                }
+
+                @Override
+                public void onLoaded(String s) {
+                    youTubePlayer.seekToMillis(prevTime);
+                }
+
+                @Override
+                public void onAdStarted() {
+
+                }
+
+                @Override
+                public void onVideoStarted() {
+
+                }
+
+                @Override
+                public void onVideoEnded() {
+
+                }
+
+                @Override
+                public void onError(YouTubePlayer.ErrorReason errorReason) {
+
+                }
+            });
+
             mPlayer = youTubePlayer;
         }
 
